@@ -18,7 +18,7 @@ class FontStyles {
     fontWeight: FontWeight.w600,
   );
 
-  static final TextStyle getStarted = GoogleFonts.dmSans(
+  static final TextStyle getStarted = GoogleFonts.inter(
     color: Colors.black,
     fontWeight: FontWeight.w700,
     fontSize: 20,
@@ -29,7 +29,7 @@ class FontStyles {
     fontWeight: FontWeight.w600,
   );
 
-  static final TextStyle signIntext = GoogleFonts.dmSans(
+  static final TextStyle signIntext = GoogleFonts.inter(
     color: Color(0xFFC8FF4D),
     fontWeight: FontWeight.w700,
   );

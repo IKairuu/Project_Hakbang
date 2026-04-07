@@ -13,7 +13,7 @@ class FontStyles {
     fontWeight: FontWeight.w900,
     letterSpacing: -1.5,
   );
-  static final TextStyle appDetails = TextStyle(
+  static final TextStyle appDetails = GoogleFonts.inter(
     color: Color(0xFF828a8a),
     fontWeight: FontWeight.w600,
   );
@@ -24,7 +24,7 @@ class FontStyles {
     fontSize: 20,
   );
 
-  static final TextStyle memberSignIn = TextStyle(
+  static final TextStyle memberSignIn = GoogleFonts.inter(
     color: Color(0xFF828a8a),
     fontWeight: FontWeight.w600,
   );
@@ -44,6 +44,7 @@ class FontStyles {
     fontWeight: FontWeight.w700,
     fontSize: 35,
   );
+  
   static final TextStyle scholarshipAiText = TextStyle(
     fontWeight: FontWeight.w800,
     color: Color(0xFFa755f6),

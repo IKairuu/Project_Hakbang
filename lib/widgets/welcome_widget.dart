@@ -16,7 +16,7 @@ class WelcomeWidget extends StatefulWidget {
 }
 
 class _WelcomeWidgetState extends State<WelcomeWidget> {
-  dynamic scrollIndicator = PageController(keepPage: true);
+  final scrollIndicator = PageController();
   final List<Widget> indicatorPages = [AboutApp(), ExploreContainer()];
   @override
   Widget build(BuildContext context) {
@@ -45,9 +45,11 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   alignment: Alignment.center,
                   child: SmoothPageIndicator(
                     onDotClicked: (index) {
-                      setState(() {
-                        scrollIndicator = index;
-                      });
+                      scrollIndicator.animateToPage(
+                        index,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.linear,
+                      );
                     },
                     controller: scrollIndicator,
                     count: 3,

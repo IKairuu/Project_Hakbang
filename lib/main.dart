@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BackgroundDesign.start_page_color,
+      backgroundColor: BackgroundDesign.startPageColor,
       body: WidgetTree(),
     );
   }

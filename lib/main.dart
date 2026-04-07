@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hakbang/design/background_design.dart';
+import 'package:hakbang/widget_tree.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,9 +33,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(mainAxisAlignment: .center, children: [Container()]),
-      ),
+      backgroundColor: BackgroundDesign.start_page_color,
+      body: WidgetTree(),
     );
   }
 }

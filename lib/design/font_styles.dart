@@ -44,4 +44,8 @@ class FontStyles {
     fontWeight: FontWeight.w700,
     fontSize: 35,
   );
+  static final TextStyle scholarshipAiText = TextStyle(
+    fontWeight: FontWeight.w800,
+    color: Color(0xFFa755f6),
+  );
 }

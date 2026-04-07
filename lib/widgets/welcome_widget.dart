@@ -4,6 +4,7 @@ import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/smooth_page_indicator_design.dart';
 import 'package:hakbang/widgets/about_app.dart';
 import 'package:hakbang/widgets/explore_container.dart';
+import 'package:hakbang/widgets/scholarship_ai.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:hakbang/notifiers.dart';
 
@@ -33,7 +34,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   alignment: Alignment.center,
                   child: PageView(
                     controller: scrollIndicator,
-                    children: [AboutApp(), ExploreContainer()],
+                    children: [AboutApp(), ExploreContainer(), ScholarshipAi()],
                   ),
                 ),
               ),
@@ -49,7 +50,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                       });
                     },
                     controller: scrollIndicator,
-                    count: 2,
+                    count: 3,
                     effect: SmoothPageIndicatorDesign.startPageIndicator,
                     axisDirection: Axis.horizontal,
                   ),

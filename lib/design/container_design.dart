@@ -17,4 +17,9 @@ class ContainerDesign {
     color: Color(0xFF152034),
     borderRadius: BorderRadius.circular(30),
   );
+
+  static final BoxDecoration scholarshipAiDesign = BoxDecoration(
+    color: Color(0xFF2a1b34),
+    borderRadius: BorderRadius.circular(30),
+  );
 }

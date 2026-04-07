@@ -33,4 +33,15 @@ class FontStyles {
     color: Color(0xFFC8FF4D),
     fontWeight: FontWeight.w700,
   );
+
+  static final TextStyle schoolDiscovery = TextStyle(
+    fontWeight: FontWeight.w800,
+    color: Color(0xFF447cdc),
+  );
+
+  static final TextStyle exploreSchools = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+    fontSize: 35,
+  );
 }

@@ -3,6 +3,7 @@ import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/smooth_page_indicator_design.dart';
 import 'package:hakbang/widgets/about_app.dart';
+import 'package:hakbang/widgets/explore_container.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:hakbang/notifiers.dart';
 
@@ -14,25 +15,44 @@ class WelcomeWidget extends StatefulWidget {
 }
 
 class _WelcomeWidgetState extends State<WelcomeWidget> {
-  final scrollIndicator = PageController(viewportFraction: 0.8, keepPage: true);
-  final List<Widget> indicatorPages = [AboutApp()];
+  dynamic scrollIndicator = PageController(keepPage: true);
+  final List<Widget> indicatorPages = [AboutApp(), ExploreContainer()];
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 70),
+      padding: const EdgeInsets.only(top: 20),
       child: ValueListenableBuilder(
         valueListenable: welcomePageIndex,
         builder: (context, index, child) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              indicatorPages[index],
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  child: PageView(
+                    controller: scrollIndicator,
+                    children: [AboutApp(), ExploreContainer()],
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 50, bottom: 30),
-                child: SmoothPageIndicator(
-                  controller: scrollIndicator,
-                  count: 3,
-                  effect: SmoothPageIndicatorDesign.startPageIndicator,
-                  axisDirection: Axis.horizontal,
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  child: SmoothPageIndicator(
+                    onDotClicked: (index) {
+                      setState(() {
+                        scrollIndicator = index;
+                      });
+                    },
+                    controller: scrollIndicator,
+                    count: 2,
+                    effect: SmoothPageIndicatorDesign.startPageIndicator,
+                    axisDirection: Axis.horizontal,
+                  ),
                 ),
               ),
               Padding(

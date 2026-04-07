@@ -12,4 +12,9 @@ class ContainerDesign {
       ),
     ],
   );
+
+  static final BoxDecoration schoolDiscovery = BoxDecoration(
+    color: Color(0xFF152034),
+    borderRadius: BorderRadius.circular(30),
+  );
 }

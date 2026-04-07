@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/design/heights_values.dart';
 
 class AboutApp extends StatelessWidget {
   const AboutApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Padding(
+      padding: const EdgeInsets.only(top: 60),
       child: SizedBox(
+        height: HeightsValues.startPageHeight,
         child: Column(
           children: [
             Container(

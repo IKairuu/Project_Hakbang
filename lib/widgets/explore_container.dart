@@ -58,6 +58,7 @@ class ExploreContainer extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Browse 500+ colleges and universities across the",

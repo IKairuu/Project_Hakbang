@@ -19,46 +19,67 @@ class _ScholarshipAiState extends State<ScholarshipAi> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: HeightsValues.startPageImage,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                image: AssetImage("assets/scholarship.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
+          Expanded(
+            flex: 5,
             child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: ContainerDesign.scholarshipAiDesign,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 5),
-                    child: SvgPicture.asset(
-                      "assets/graduation-hat.svg",
-                      height: 20,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Image.asset("assets/scholarship.png", fit: BoxFit.fill),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: ContainerDesign.scholarshipAiDesign,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: SvgPicture.asset(
+                        "assets/graduation-hat.svg",
+                        height: 20,
+                      ),
                     ),
-                  ),
-                  Text("Scholarship + AI", style: FontStyles.scholarshipAiText),
-                ],
+                    Text(
+                      "Scholarship + AI",
+                      style: FontStyles.scholarshipAiText,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          Text("Find Funding", style: FontStyles.exploreSchools),
-          Text("Get AI guidance.", style: FontStyles.exploreSchools),
-          Text(
-            "Discover scholarships matched to your profile and",
-            style: FontStyles.appDetails,
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Find Funding", style: FontStyles.exploreSchools),
+                Text("Get AI guidance.", style: FontStyles.exploreSchools),
+              ],
+            ),
           ),
-          Text(
-            "chat with Gabay AI — your 24/7 college advisor.",
-            style: FontStyles.appDetails,
+          Expanded(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Discover scholarships matched to your profile and",
+                  style: FontStyles.appDetails,
+                ),
+                Text(
+                  "chat with Gabay AI — your 24/7 college advisor.",
+                  style: FontStyles.appDetails,
+                ),
+              ],
+            ),
           ),
         ],
       ),

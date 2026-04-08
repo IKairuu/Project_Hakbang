@@ -14,43 +14,61 @@ class ExploreContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: HeightsValues.startPageImage,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                image: AssetImage("assets/explore.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
+          Expanded(
+            flex: 5,
             child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: ContainerDesign.schoolDiscovery,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 5),
-                    child: SvgPicture.asset("assets/map.svg", height: 20),
-                  ),
-                  Text("School Discovery", style: FontStyles.schoolDiscovery),
-                ],
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Image.asset("assets/explore.png", fit: BoxFit.fill),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: ContainerDesign.schoolDiscovery,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: SvgPicture.asset("assets/map.svg", height: 20),
+                    ),
+                    Text("School Discovery", style: FontStyles.schoolDiscovery),
+                  ],
+                ),
               ),
             ),
           ),
-          Text("Explore schools", style: FontStyles.exploreSchools),
-          Text("near you.", style: FontStyles.exploreSchools),
-          Text(
-            "Browse 500+ colleges and universities across the",
-            style: FontStyles.appDetails,
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Explore schools", style: FontStyles.exploreSchools),
+                Text("near you.", style: FontStyles.exploreSchools),
+              ],
+            ),
           ),
-          Text(
-            "Philippines. Filter by course, location, and entrance exam",
-            style: FontStyles.appDetails,
+
+          Expanded(
+            flex: 1,
+            child: Column(
+              children: [
+                Text(
+                  "Browse 500+ colleges and universities across the",
+                  style: FontStyles.appDetails,
+                ),
+                Text(
+                  "Philippines. Filter by course, location, and entrance exam",
+                  style: FontStyles.appDetails,
+                ),
+              ],
+            ),
           ),
         ],
       ),

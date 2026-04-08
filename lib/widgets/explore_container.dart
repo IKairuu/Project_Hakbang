@@ -41,10 +41,9 @@ class ExploreContainer extends StatelessWidget {
               style: FontStyles.appDetails,
             ),
             Text(
-              "Philippines. Filter by course, location, and entrance",
+              "Philippines. Filter by course, location, and entrance exam",
               style: FontStyles.appDetails,
             ),
-            Text("exam.", style: FontStyles.appDetails),
           ],
         ),
       ),

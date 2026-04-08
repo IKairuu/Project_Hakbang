@@ -35,7 +35,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 30),
+            padding: const EdgeInsets.only(top: 10),
             child: Container(
               width: double.infinity,
               alignment: Alignment.center,
@@ -55,7 +55,12 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 20,
+              right: 20,
+              bottom: 5,
+            ),
             child: SizedBox(
               height: 65,
               width: double.infinity,

@@ -6,7 +6,6 @@ import 'package:hakbang/widgets/about_app.dart';
 import 'package:hakbang/widgets/explore_container.dart';
 import 'package:hakbang/widgets/scholarship_ai.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:hakbang/notifiers.dart';
 
 class WelcomeWidget extends StatefulWidget {
   const WelcomeWidget({super.key});
@@ -21,78 +20,73 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: ValueListenableBuilder(
-        valueListenable: welcomePageIndex,
-        builder: (context, index, child) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  child: PageView(
-                    controller: scrollIndicator,
-                    children: [AboutApp(), ExploreContainer(), ScholarshipAi()],
-                  ),
-                ),
+      padding: const EdgeInsets.only(top: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              alignment: Alignment.center,
+              child: PageView(
+                controller: scrollIndicator,
+                children: [AboutApp(), ExploreContainer(), ScholarshipAi()],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 50, bottom: 30),
-                child: Container(
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  child: SmoothPageIndicator(
-                    onDotClicked: (index) {
-                      scrollIndicator.animateToPage(
-                        index,
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.linear,
-                      );
-                    },
-                    controller: scrollIndicator,
-                    count: 3,
-                    effect: SmoothPageIndicatorDesign.startPageIndicator,
-                    axisDirection: Axis.horizontal,
-                  ),
-                ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 30),
+            child: Container(
+              width: double.infinity,
+              alignment: Alignment.center,
+              child: SmoothPageIndicator(
+                onDotClicked: (index) {
+                  scrollIndicator.animateToPage(
+                    index,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.linear,
+                  );
+                },
+                controller: scrollIndicator,
+                count: 3,
+                effect: SmoothPageIndicatorDesign.startPageIndicator,
+                axisDirection: Axis.horizontal,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
-                child: SizedBox(
-                  height: 65,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ButtonDesign.getStarted,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Get Started", style: FontStyles.getStarted),
-                        Icon(
-                          Icons.arrow_right_alt_rounded,
-                          color: Colors.black,
-                          size: 20,
-                        ),
-                      ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+            child: SizedBox(
+              height: 65,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ButtonDesign.getStarted,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Get Started", style: FontStyles.getStarted),
+                    Icon(
+                      Icons.arrow_right_alt_rounded,
+                      color: Colors.black,
+                      size: 20,
                     ),
-                  ),
+                  ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Already a member?", style: FontStyles.memberSignIn),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("Sign In", style: FontStyles.signIntext),
-                  ),
-                ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Already a member?", style: FontStyles.memberSignIn),
+              TextButton(
+                onPressed: () {},
+                child: Text("Sign In", style: FontStyles.signIntext),
               ),
             ],
-          );
-        },
+          ),
+        ],
       ),
     );
   }

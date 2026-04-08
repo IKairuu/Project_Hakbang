@@ -21,7 +21,7 @@ class _ScholarshipAiState extends State<ScholarshipAi> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 200),
+            SizedBox(height: 320),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Container(

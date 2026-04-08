@@ -22,4 +22,9 @@ class ContainerDesign {
     color: Color(0xFF2a1b34),
     borderRadius: BorderRadius.circular(30),
   );
+
+  static final BoxDecoration universitySections = BoxDecoration(
+    color: Color(0xFF1c1e27),
+    borderRadius: BorderRadius.circular(20),
+  );
 }

@@ -44,9 +44,21 @@ class FontStyles {
     fontWeight: FontWeight.w700,
     fontSize: 35,
   );
-  
+
   static final TextStyle scholarshipAiText = TextStyle(
     fontWeight: FontWeight.w800,
     color: Color(0xFFa755f6),
+  );
+
+  static final TextStyle schoolNames = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
+  static final TextStyle schoolLocation = GoogleFonts.inter(
+    color: Color(0xFF828a8a),
+    fontWeight: FontWeight.w600,
+    fontSize: 10,
   );
 }

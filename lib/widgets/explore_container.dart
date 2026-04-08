@@ -9,44 +9,50 @@ class ExploreContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 60),
-      child: SizedBox(
-        height: HeightsValues.startPageHeight,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 200),
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Container(
-                padding: EdgeInsets.all(10),
-                decoration: ContainerDesign.schoolDiscovery,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: SvgPicture.asset("assets/map.svg", height: 20),
-                    ),
-                    Text("School Discovery", style: FontStyles.schoolDiscovery),
-                  ],
-                ),
+    return SizedBox(
+      height: HeightsValues.startPageHeight,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: HeightsValues.startPageImage,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              image: DecorationImage(
+                image: AssetImage("assets/explore.png"),
+                fit: BoxFit.cover,
               ),
             ),
-            Text("Explore schools", style: FontStyles.exploreSchools),
-            Text("near you.", style: FontStyles.exploreSchools),
-            Text(
-              "Browse 500+ colleges and universities across the",
-              style: FontStyles.appDetails,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: ContainerDesign.schoolDiscovery,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: SvgPicture.asset("assets/map.svg", height: 20),
+                  ),
+                  Text("School Discovery", style: FontStyles.schoolDiscovery),
+                ],
+              ),
             ),
-            Text(
-              "Philippines. Filter by course, location, and entrance",
-              style: FontStyles.appDetails,
-            ),
-            Text("exam.", style: FontStyles.appDetails),
-          ],
-        ),
+          ),
+          Text("Explore schools", style: FontStyles.exploreSchools),
+          Text("near you.", style: FontStyles.exploreSchools),
+          Text(
+            "Browse 500+ colleges and universities across the",
+            style: FontStyles.appDetails,
+          ),
+          Text(
+            "Philippines. Filter by course, location, and entrance exam",
+            style: FontStyles.appDetails,
+          ),
+        ],
       ),
     );
   }

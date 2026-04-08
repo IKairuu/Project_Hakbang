@@ -9,7 +9,7 @@ class AboutApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 60),
+      padding: const EdgeInsets.only(top: 90),
       child: SizedBox(
         height: HeightsValues.startPageHeight,
         child: Column(

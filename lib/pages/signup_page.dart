@@ -3,6 +3,7 @@ import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/widgets/signup_step1.dart';
+import 'package:hakbang/widgets/signup_step2.dart';
 import 'package:hakbang/widgets/signup_progress_indicator.dart';
 
 class SignupPage extends StatefulWidget {
@@ -23,12 +24,16 @@ class _SignupPageState extends State<SignupPage> {
   late TextEditingController confirmPasswordController;
 
   // Step 2 state
+  int? _selectedAvatarIndex;
+  int? _selectedIdentityIndex;
   late TextEditingController schoolController;
   late TextEditingController gradeController;
 
   bool showPassword = false;
   bool showConfirmPassword = false;
 
+  final List<String> avatars = ['🐶', '🐱', '🐰', '🦊', '🐼'];
+  final List<String> identities = ['Student', 'Parent', 'Teacher'];
 
   @override
   void initState() {
@@ -41,6 +46,10 @@ class _SignupPageState extends State<SignupPage> {
     fullNameController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
+
+    // Step 2 controllers
+    schoolController = TextEditingController();
+    gradeController = TextEditingController();
   }
 
   @override
@@ -50,6 +59,8 @@ class _SignupPageState extends State<SignupPage> {
     fullNameController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    schoolController.dispose();
+    gradeController.dispose();
     super.dispose();
   }
 
@@ -63,6 +74,22 @@ class _SignupPageState extends State<SignupPage> {
         curve: Curves.easeInOut,
       );
     }
+  }
+
+  void _previousStep() {
+    if (_currentStep > 0) {
+      setState(() {
+        _currentStep--;
+      });
+      _pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _onSubmit() {
+    // UI-only form; add submission behavior later.
   }
 
   @override
@@ -130,6 +157,26 @@ class _SignupPageState extends State<SignupPage> {
                     onSignIn: () {
                       // Navigate to sign in
                     },
+                  ),
+                  SignupStep2(
+                    selectedAvatarIndex: _selectedAvatarIndex,
+                    selectedIdentityIndex: _selectedIdentityIndex,
+                    schoolController: schoolController,
+                    gradeController: gradeController,
+                    avatars: avatars,
+                    identities: identities,
+                    onAvatarSelected: (index) {
+                      setState(() {
+                        _selectedAvatarIndex = index;
+                      });
+                    },
+                    onIdentitySelected: (index) {
+                      setState(() {
+                        _selectedIdentityIndex = index;
+                      });
+                    },
+                    onContinue: _onSubmit,
+                    onBack: _previousStep,
                   ),
                 ],
               ),

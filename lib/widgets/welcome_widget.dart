@@ -104,7 +104,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                           MaterialPageRoute(builder: (context) => MainPage()),
                         );
                       },
-                      child: Text("Sign In", style: FontStyles.signIntext),
+                      child: Text("Sign In", style: FontStyles.textButtonStyle),
                     ),
                   ],
                 ),

@@ -60,63 +60,66 @@ class _HomeWidgetState extends State<HomeWidget> {
             ),
           ),
           Expanded(
-            flex: 5,
-            child: Container(
-              decoration: ContainerDesign.reviewUpg,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: Column(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Container(
+                decoration: ContainerDesign.reviewUpg,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("1.87", style: FontStyles.upgNumber),
+                                Text(
+                                  "Current UPG",
+                                  style: FontStyles.labelMainPage,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("1.87", style: FontStyles.upgNumber),
+                              Text("3", style: FontStyles.savedSchoolNumber),
                               Text(
-                                "Current UPG",
+                                "Saved Schools",
                                 style: FontStyles.labelMainPage,
                               ),
                             ],
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("3", style: FontStyles.savedSchoolNumber),
-                            Text(
-                              "Saved Schools",
-                              style: FontStyles.labelMainPage,
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: SizedBox(
+                          child: ElevatedButton(
+                            style: ButtonDesign.mainButton,
+                            onPressed: () {},
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text("Review UPG", style: FontStyles.reviewUpg),
+                                Icon(
+                                  Icons.arrow_right_alt_rounded,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: SizedBox(
-                        child: ElevatedButton(
-                          style: ButtonDesign.mainButton,
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text("Review UPG", style: FontStyles.reviewUpg),
-                              Icon(
-                                Icons.arrow_right_alt_rounded,
-                                color: Colors.black,
-                                size: 20,
-                              ),
-                            ],
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -231,6 +234,27 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ],
                     ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: SizedBox(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: Text("Recent Activity")),
+                      TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          textStyle: FontStyles.textButtonStyle,
+                        ),
+                        child: Text("Clear"),
+                      ),
+                    ],
                   ),
                 ],
               ),

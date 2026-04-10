@@ -29,7 +29,7 @@ class FontStyles {
     fontWeight: FontWeight.w600,
   );
 
-  static final TextStyle signIntext = GoogleFonts.inter(
+  static final TextStyle textButtonStyle = GoogleFonts.inter(
     color: Color(0xFFC8FF4D),
     fontWeight: FontWeight.w700,
   );

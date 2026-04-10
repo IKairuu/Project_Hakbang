@@ -78,7 +78,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                           ),
                         );
                       },
-                      style: ButtonDesign.getStarted,
+                      style: ButtonDesign.mainButton,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

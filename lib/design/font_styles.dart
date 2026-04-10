@@ -72,4 +72,22 @@ class FontStyles {
     fontWeight: FontWeight.w600,
     fontSize: 15,
   );
+
+  static final TextStyle upgNumber = TextStyle(
+    color: Color(0xFF4d8fff),
+    fontSize: 35,
+    fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle savedSchoolNumber = TextStyle(
+    color: Color(0xFFc8ff4d),
+    fontSize: 35,
+    fontWeight: FontWeight.w500,
+  );
+  static final TextStyle labelMainPage = TextStyle(
+    color: Color(0xFF4e5565),
+    fontSize: 10,
+  );
+
+  static final TextStyle reviewUpg = TextStyle(color: Colors.black);
 }

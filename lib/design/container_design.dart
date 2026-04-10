@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 class ContainerDesign {
@@ -35,9 +36,13 @@ class ContainerDesign {
   );
 
   static final BoxDecoration reviewUpg = BoxDecoration(
+    boxShadow: [
+      BoxShadow(color: Color(0xFF21375d)),
+      BoxShadow(color: Colors.black.withOpacity(0.5)),
+    ],
     borderRadius: BorderRadius.circular(20),
     gradient: RadialGradient(
-      center: Alignment(0.8, -0.6),
+      center: Alignment(0.2, -0.5),
       colors: [
         Color(0xFF1E3A8A), // glow color
         Color(0xFF0B1A2B),

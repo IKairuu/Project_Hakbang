@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/design/heights_values.dart';
+import 'package:hakbang/design/padding_design.dart';
+import 'package:hakbang/design/width_values.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -105,7 +109,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               Icon(
                                 Icons.arrow_right_alt_rounded,
                                 color: Colors.black,
-                                size: 15,
+                                size: 20,
                               ),
                             ],
                           ),
@@ -114,6 +118,121 @@ class _HomeWidgetState extends State<HomeWidget> {
                     ),
                   ],
                 ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20, right: 10, left: 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 10,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: WidthValues.mainPageButtonWidth,
+                          height: HeightsValues.mainPageButtonHeight,
+                          child: ElevatedButton(
+                            style: ButtonDesign.findSchoolsContainer,
+                            onPressed: () {},
+                            child: SvgPicture.asset("assets/university.svg"),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: PaddingDesign.mainPageButtonLabel,
+                          ),
+                          child: Text(
+                            "Find Schools",
+                            style: FontStyles.mainPageButtonLabels,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: WidthValues.mainPageButtonWidth,
+                          height: HeightsValues.mainPageButtonHeight,
+                          child: ElevatedButton(
+                            style: ButtonDesign.scholarhipContainer,
+                            onPressed: () {},
+                            child: SvgPicture.asset(
+                              "assets/graduation-hat.svg",
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: PaddingDesign.mainPageButtonLabel,
+                          ),
+                          child: Text(
+                            "Scholarhips",
+                            style: FontStyles.mainPageButtonLabels,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: WidthValues.mainPageButtonWidth,
+                          height: HeightsValues.mainPageButtonHeight,
+                          child: ElevatedButton(
+                            style: ButtonDesign.examHubContainer,
+                            onPressed: () {},
+                            child: SvgPicture.asset("assets/exam.svg"),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: PaddingDesign.mainPageButtonLabel,
+                          ),
+                          child: Text(
+                            "Exam Hub",
+                            style: FontStyles.mainPageButtonLabels,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: WidthValues.mainPageButtonWidth,
+                          height: HeightsValues.mainPageButtonHeight,
+                          child: ElevatedButton(
+                            style: ButtonDesign.askgabayContainer,
+                            onPressed: () {},
+                            child: SvgPicture.asset("assets/robot.svg"),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: PaddingDesign.mainPageButtonLabel,
+                          ),
+                          child: Text(
+                            "Ask Gabay",
+                            style: FontStyles.mainPageButtonLabels,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

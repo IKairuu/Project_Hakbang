@@ -89,5 +89,14 @@ class FontStyles {
     fontSize: 10,
   );
 
-  static final TextStyle reviewUpg = TextStyle(color: Colors.black);
+  static final TextStyle reviewUpg = TextStyle(
+    color: Colors.black,
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
+  );
+
+  static final mainPageButtonLabels = TextStyle(
+    color: Color(0xFF74757a),
+    fontSize: 10,
+  );
 }

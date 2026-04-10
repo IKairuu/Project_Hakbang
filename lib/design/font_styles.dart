@@ -105,4 +105,16 @@ class FontStyles {
     fontSize: 20,
     fontWeight: FontWeight.w600,
   );
+
+  static final activityDescriptionStyle = TextStyle(
+    color: Colors.white,
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final activityDateStyle = TextStyle(
+    color: Color(0xFF7e7f87),
+    fontSize: 10,
+    fontWeight: FontWeight.w400,
+  );
 }

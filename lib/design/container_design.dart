@@ -49,4 +49,14 @@ class ContainerDesign {
       ],
     ),
   );
+
+  static final BoxDecoration activityContainers = BoxDecoration(
+    color: Color(0xFF1c1e27),
+    borderRadius: BorderRadius.circular(20),
+  );
+
+  static final BoxDecoration activityIconContainer = BoxDecoration(
+    color: Color(0xFF232f47),
+    borderRadius: BorderRadius.circular(20),
+  );
 }

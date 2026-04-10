@@ -6,6 +6,7 @@ import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/heights_values.dart';
 import 'package:hakbang/design/padding_design.dart';
 import 'package:hakbang/design/width_values.dart';
+import 'package:hakbang/notifiers.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -236,23 +237,93 @@ class _HomeWidgetState extends State<HomeWidget> {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 4,
             child: SizedBox(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "Recent Activity",
-                          style: FontStyles.recentActivityLabel,
+                  Expanded(
+                    flex: 1,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "Recent Activity",
+                            style: FontStyles.recentActivityLabel,
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text("Clear", style: FontStyles.textButtonStyle),
-                      ),
-                    ],
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Clear",
+                            style: FontStyles.textButtonStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: ValueListenableBuilder(
+                      valueListenable: activityList,
+                      builder: (context, acts, child) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 30),
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: acts.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Container(
+                                  height: 70,
+                                  width: double.infinity,
+                                  padding: EdgeInsets.all(10),
+                                  decoration:
+                                      ContainerDesign.activityContainers,
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 10,
+                                        ),
+                                        child: Container(
+                                          height: 50,
+                                          width: 50,
+                                          padding: EdgeInsets.all(15),
+                                          decoration: ContainerDesign
+                                              .activityIconContainer,
+                                          child: SvgPicture.asset(
+                                            acts[index].iconName,
+                                          ),
+                                        ),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            acts[index].description,
+                                            style: FontStyles
+                                                .activityDescriptionStyle,
+                                          ),
+                                          Text(
+                                            acts[index].date,
+                                            style: FontStyles.activityDateStyle,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

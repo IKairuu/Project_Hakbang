@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/input_design.dart';
+import 'package:hakbang/models/identity_option.dart';
 
 class SignupStep2 extends StatefulWidget {
   final int? selectedAvatarIndex;
@@ -9,7 +10,7 @@ class SignupStep2 extends StatefulWidget {
   final TextEditingController schoolController;
   final TextEditingController gradeController;
   final List<String> avatars;
-  final List<String> identities;
+  final List<IdentityOption> identities;
   final ValueChanged<int?> onAvatarSelected;
   final ValueChanged<int?> onIdentitySelected;
   final VoidCallback onContinue;
@@ -82,7 +83,8 @@ class _SignupStep2State extends State<SignupStep2> {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
+              spacing: 10,
               children: List.generate(5, (index) {
                 final isSelected = widget.selectedAvatarIndex == index;
                 return GestureDetector(
@@ -124,28 +126,49 @@ class _SignupStep2State extends State<SignupStep2> {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
+              spacing: 10,
               children: List.generate(3, (index) {
                 final isSelected = widget.selectedIdentityIndex == index;
+                final identity = widget.identities[index];
                 return GestureDetector(
                   onTap: () => widget.onIdentitySelected(index),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
-                      color: isSelected ? const Color(0xFFC8FF4D) : const Color(0xFF2a2d38),
+                      color: isSelected ? const Color.fromARGB(101, 199, 255, 77) : const Color(0xFF2a2d38),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: isSelected ? const Color(0xFFC8FF4D) : const Color(0xFF2a2d38),
+                        color: isSelected ? const Color(0xFFC8FF4D) : const Color.fromARGB(255, 60, 61, 67),
                         width: 2,
                       ),
                     ),
-                    child: Text(
-                      widget.identities[index],
-                      style: TextStyle(
-                        color: isSelected ? Colors.black : Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          identity.emoji,
+                          style: const TextStyle(fontSize: 24),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          identity.title,
+                          style: TextStyle(
+                            color: isSelected ? Colors.black : Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          identity.subtitle,
+                          style: TextStyle(
+                            color: isSelected ? const Color.fromARGB(255, 100, 100, 100) : const Color.fromARGB(255, 150, 150, 150),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );

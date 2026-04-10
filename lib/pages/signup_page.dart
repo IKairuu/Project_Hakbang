@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/models/identity_option.dart';
 import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
 import 'package:hakbang/widgets/signup_progress_indicator.dart';
@@ -33,7 +34,23 @@ class _SignupPageState extends State<SignupPage> {
   bool showConfirmPassword = false;
 
   final List<String> avatars = ['🦁', '🦊', '🐉', '🦅', '🐬'];
-  final List<String> identities = ['Student', 'Parent', 'Teacher'];
+  final List<IdentityOption> identities = [
+    IdentityOption(
+      emoji: '🧑‍🎓',
+      title: 'Student',
+      subtitle: 'Grade 11 - 12',
+    ),
+    IdentityOption(
+      emoji: '👨‍👩‍👧',
+      title: 'Parent',
+      subtitle: 'Supporting a student',
+    ),
+    IdentityOption(
+      emoji: '🏫',
+      title: 'Counselor',
+      subtitle: 'School Staff',
+    ),
+  ];
 
   @override
   void initState() {

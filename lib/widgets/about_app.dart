@@ -17,7 +17,7 @@ class AboutApp extends StatelessWidget {
             Container(
               height: 100,
               width: 100,
-              decoration: ContainerDesign.start_image,
+              decoration: ContainerDesign.startImage,
               child: Icon(Icons.image),
             ),
             Padding(

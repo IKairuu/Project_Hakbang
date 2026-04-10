@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/smooth_page_indicator_design.dart';
+import 'package:hakbang/pages/signup_page.dart';
 import 'package:hakbang/widgets/about_app.dart';
 import 'package:hakbang/widgets/explore_container.dart';
 import 'package:hakbang/widgets/scholarship_ai.dart';
@@ -68,7 +69,14 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                     height: 65,
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignupPage(),
+                          ),
+                        );
+                      },
                       style: ButtonDesign.getStarted,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

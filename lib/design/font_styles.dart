@@ -61,4 +61,15 @@ class FontStyles {
     fontWeight: FontWeight.w600,
     fontSize: 10,
   );
+
+  static final TextStyle mainPageheader = GoogleFonts.inter(
+    color: Colors.white,
+    fontWeight: FontWeight.w600,
+    fontSize: 30,
+  );
+  static final TextStyle mainPageUnderName = GoogleFonts.inter(
+    color: Color(0xFF828a8a),
+    fontWeight: FontWeight.w600,
+    fontSize: 15,
+  );
 }

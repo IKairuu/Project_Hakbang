@@ -27,4 +27,21 @@ class ContainerDesign {
     color: Color(0xFF1c1e27),
     borderRadius: BorderRadius.circular(20),
   );
+
+  static final BoxDecoration homeAvatar = BoxDecoration(
+    color: Color(0xFF232a17),
+    borderRadius: BorderRadius.circular(20),
+    border: BoxBorder.all(color: Color(0xFFc8ff4d)),
+  );
+
+  static final BoxDecoration reviewUpg = BoxDecoration(
+    borderRadius: BorderRadius.circular(20),
+    gradient: RadialGradient(
+      center: Alignment(0.8, -0.6),
+      colors: [
+        Color(0xFF1E3A8A), // glow color
+        Color(0xFF0B1A2B),
+      ],
+    ),
+  );
 }

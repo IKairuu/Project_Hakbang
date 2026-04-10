@@ -174,6 +174,7 @@ class _SignupStep1State extends State<SignupStep1> {
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
+              height: 45,
               child: ElevatedButton(
                 onPressed: widget.onContinue,
                 style: ButtonDesign.signUpButton,

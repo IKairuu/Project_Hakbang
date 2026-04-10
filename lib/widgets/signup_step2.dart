@@ -157,7 +157,7 @@ class _SignupStep2State extends State<SignupStep2> {
 
                           Text(
                             identity.title,
-                            maxLines: 1,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -171,7 +171,7 @@ class _SignupStep2State extends State<SignupStep2> {
 
                           Text(
                             identity.subtitle,
-                            maxLines: 1,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -272,19 +272,12 @@ class _SignupStep2State extends State<SignupStep2> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ElevatedButton(
-                  onPressed: widget.onBack,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2a2d38),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 0,
-                  ),
+                  onPressed: widget.onContinue,
+                  style: ButtonDesign.signUpButton,
                   child: Text(
-                    '← Back',
+                    'Continue →',
                     style: GoogleFonts.inter(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                     ),
@@ -294,12 +287,23 @@ class _SignupStep2State extends State<SignupStep2> {
                 const SizedBox(height: 16),
 
                 ElevatedButton(
-                  onPressed: widget.onContinue,
-                  style: ButtonDesign.signUpButton,
+                  onPressed: widget.onBack,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF0c0d10),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: const BorderSide(
+                        color: Color.fromARGB(255, 104, 104, 104),
+                        width: 1,
+                      ),
+                    ),
+                  ),
                   child: Text(
-                    'Continue →',
+                    '← Back',
                     style: GoogleFonts.inter(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                     ),

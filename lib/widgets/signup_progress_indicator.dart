@@ -15,15 +15,16 @@ class SignupProgressIndicator extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(totalSteps, (index) {
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          height: 3,
-          width: 90,
-          decoration: BoxDecoration(
-            color: index <= currentStep
-                ? const Color(0xFFC8FF4D) // Active step - lime green
-                : const Color(0xFF2a2d38), // Inactive step - gray
-            borderRadius: BorderRadius.circular(2),
+        return Expanded(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            height: 3,
+            decoration: BoxDecoration(
+              color: index <= currentStep
+                  ? const Color(0xFFC8FF4D) // Active step - lime green
+                  : const Color(0xFF2a2d38), // Inactive step - gray
+              borderRadius: BorderRadius.circular(2),
+            ),
           ),
         );
       }),

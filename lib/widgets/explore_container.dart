@@ -49,8 +49,8 @@ class ExploreContainer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Explore schools", style: FontStyles.exploreSchools),
-                Text("near you.", style: FontStyles.exploreSchools),
+                Text("Explore schools", style: FontStyles.header),
+                Text("near you.", style: FontStyles.header),
               ],
             ),
           ),

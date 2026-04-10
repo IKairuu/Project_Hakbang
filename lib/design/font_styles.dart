@@ -39,7 +39,7 @@ class FontStyles {
     color: Color(0xFF447cdc),
   );
 
-  static final TextStyle exploreSchools = TextStyle(
+  static final TextStyle header = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.w700,
     fontSize: 35,

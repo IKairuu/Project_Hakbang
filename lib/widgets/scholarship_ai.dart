@@ -60,8 +60,8 @@ class _ScholarshipAiState extends State<ScholarshipAi> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Find Funding", style: FontStyles.exploreSchools),
-                Text("Get AI guidance.", style: FontStyles.exploreSchools),
+                Text("Find Funding", style: FontStyles.header),
+                Text("Get AI guidance.", style: FontStyles.header),
               ],
             ),
           ),

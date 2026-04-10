@@ -32,7 +32,7 @@ class _SignupPageState extends State<SignupPage> {
   bool showPassword = false;
   bool showConfirmPassword = false;
 
-  final List<String> avatars = ['🐶', '🐱', '🐰', '🦊', '🐼'];
+  final List<String> avatars = ['🦁', '🦊', '🐉', '🦅', '🐬'];
   final List<String> identities = ['Student', 'Parent', 'Teacher'];
 
   @override

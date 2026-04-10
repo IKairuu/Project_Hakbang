@@ -30,18 +30,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Text(
-                              "Hello, NAME",
-                              style: FontStyles.mainPageheader,
-                            ),
-                          ),
-                          Text("👋", style: TextStyle(fontSize: 35)),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Text(
+                          "Hello, NAME",
+                          style: FontStyles.mainPageheader,
+                        ),
                       ),
+
                       Text(
                         "Where would you like to go?",
                         style: FontStyles.mainPageUnderName,
@@ -246,13 +242,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                 children: [
                   Row(
                     children: [
-                      Expanded(child: Text("Recent Activity")),
+                      Expanded(
+                        child: Text(
+                          "Recent Activity",
+                          style: FontStyles.recentActivityLabel,
+                        ),
+                      ),
                       TextButton(
                         onPressed: () {},
-                        style: TextButton.styleFrom(
-                          textStyle: FontStyles.textButtonStyle,
-                        ),
-                        child: Text("Clear"),
+                        child: Text("Clear", style: FontStyles.textButtonStyle),
                       ),
                     ],
                   ),

@@ -99,4 +99,10 @@ class FontStyles {
     color: Color(0xFF74757a),
     fontSize: 10,
   );
+
+  static final recentActivityLabel = TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+  );
 }

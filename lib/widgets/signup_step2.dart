@@ -87,23 +87,25 @@ class _SignupStep2State extends State<SignupStep2> {
               spacing: 10,
               children: List.generate(5, (index) {
                 final isSelected = widget.selectedAvatarIndex == index;
-                return GestureDetector(
-                  onTap: () => widget.onAvatarSelected(index),
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: isSelected ? const Color.fromARGB(101, 199, 255, 77) : const Color(0xFF2a2d38),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: isSelected ? const Color(0xFFC8FF4D) : const Color.fromARGB(255, 60, 61, 67),
-                        width: 1,
+                return Expanded(
+                  child: GestureDetector(
+                    onTap: () => widget.onAvatarSelected(index),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: isSelected ? const Color.fromARGB(105, 198, 255, 75) : const Color(0xFF2a2d38),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: isSelected ? const Color(0xFFC8FF4D) : const Color.fromARGB(255, 60, 61, 67),
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        widget.avatars[index],
-                        style: const TextStyle(fontSize: 24),
+                      child: Center(
+                        child: Text(
+                          widget.avatars[index],
+                          style: const TextStyle(fontSize: 24),
+                        ),
                       ),
                     ),
                   ),
@@ -126,49 +128,59 @@ class _SignupStep2State extends State<SignupStep2> {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              spacing: 10,
               children: List.generate(3, (index) {
                 final isSelected = widget.selectedIdentityIndex == index;
                 final identity = widget.identities[index];
-                return GestureDetector(
-                  onTap: () => widget.onIdentitySelected(index),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    decoration: BoxDecoration(
-                      color: isSelected ? const Color.fromARGB(101, 199, 255, 77) : const Color(0xFF2a2d38),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: isSelected ? const Color(0xFFC8FF4D) : const Color.fromARGB(255, 60, 61, 67),
-                        width: 2,
+
+                return Expanded( 
+                  child: GestureDetector(
+                    onTap: () => widget.onIdentitySelected(index),
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 10), 
+                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? const Color.fromARGB(101, 199, 255, 77)
+                            : const Color(0xFF2a2d38),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: isSelected
+                              ? const Color(0xFFC8FF4D)
+                              : const Color.fromARGB(255, 60, 61, 67),
+                          width: 2,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          identity.emoji,
-                          style: const TextStyle(fontSize: 24),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          identity.title,
-                          style: TextStyle(
-                            color: isSelected ? Colors.black : Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                      child: Column(
+                        children: [
+                          Text(identity.emoji, style: const TextStyle(fontSize: 24)),
+                          const SizedBox(height: 4),
+
+                          Text(
+                            identity.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          identity.subtitle,
-                          style: TextStyle(
-                            color: isSelected ? const Color.fromARGB(255, 100, 100, 100) : const Color.fromARGB(255, 150, 150, 150),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
+
+                          const SizedBox(height: 2),
+
+                          Text(
+                            identity.subtitle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 150, 150, 150),
+                              fontSize: 10,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -177,72 +189,124 @@ class _SignupStep2State extends State<SignupStep2> {
 
             const SizedBox(height: 20),
 
-            // Two text boxes (user will design these)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                "SCHOOL / INSTITUTION",
+                style: GoogleFonts.unbounded(
+                  color: const Color.fromARGB(255, 97, 105, 109),
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+
             TextField(
-              controller: widget.schoolController,
-              decoration: _getInputDecoration('School/University'),
+              controller: widget.gradeController,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
+              ),
+              decoration: _getInputDecoration('e.g. Ateneo de Manila HS').copyWith(
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 12, right: 6),
+                    child: Opacity(
+                      opacity: 0.5,
+                      child: const Text(
+                      '🏫',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
+                prefixIconConstraints: const BoxConstraints(
+                  minWidth: 0,
+                  minHeight: 0,
+                ),
               ),
             ),
 
             const SizedBox(height: 16),
 
-            TextField(
-              controller: widget.gradeController,
-              decoration: _getInputDecoration('Grade/Year Level'),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                "GRADE LEVEL",
+                style: GoogleFonts.unbounded(
+                  color: const Color.fromARGB(255, 97, 105, 109),
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
+
+          TextField(
+            controller: widget.gradeController,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+            decoration: _getInputDecoration('e.g. Grade 12').copyWith(
+              prefixIcon: Padding(
+                padding: const EdgeInsets.only(left: 12, right: 6),
+                    child: Opacity(
+                      opacity: 0.5,
+                      child: const Text(
+                      '📋',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+              ),
+              prefixIconConstraints: const BoxConstraints(
+                minWidth: 0,
+                minHeight: 0,
+              ),
+            ),
+          ),
 
             const SizedBox(height: 32),
 
             // Continue and Back buttons
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: widget.onBack,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF2a2d38),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 0,
+                ElevatedButton(
+                  onPressed: widget.onBack,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF2a2d38),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Text(
-                      '← Back',
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    '← Back',
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: widget.onContinue,
-                    style: ButtonDesign.signUpButton,
-                    child: Text(
-                      'Continue →',
-                      style: GoogleFonts.inter(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+
+                const SizedBox(height: 16),
+
+                ElevatedButton(
+                  onPressed: widget.onContinue,
+                  style: ButtonDesign.signUpButton,
+                  child: Text(
+                    'Continue →',
+                    style: GoogleFonts.inter(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),

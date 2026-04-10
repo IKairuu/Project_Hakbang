@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/smooth_page_indicator_design.dart';
+import 'package:hakbang/pages/main_page.dart';
 import 'package:hakbang/pages/signup_page.dart';
 import 'package:hakbang/widgets/about_app.dart';
 import 'package:hakbang/widgets/explore_container.dart';
@@ -97,7 +98,12 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   children: [
                     Text("Already a member?", style: FontStyles.memberSignIn),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainPage()),
+                        );
+                      },
                       child: Text("Sign In", style: FontStyles.signIntext),
                     ),
                   ],

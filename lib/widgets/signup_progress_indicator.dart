@@ -18,7 +18,7 @@ class SignupProgressIndicator extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 4),
           height: 3,
-          width: 40,
+          width: 90,
           decoration: BoxDecoration(
             color: index <= currentStep
                 ? const Color(0xFFC8FF4D) // Active step - lime green

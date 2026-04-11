@@ -136,8 +136,10 @@ class _SignupStep2State extends State<SignupStep2> {
                   child: GestureDetector(
                     onTap: () => widget.onIdentitySelected(index),
                     child: Container(
-                      margin: const EdgeInsets.only(right: 10), 
-                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+                      margin: EdgeInsets.only(
+                        right: index != 2 ? 10 : 0,
+                      ), 
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
                         color: isSelected
                             ? const Color.fromARGB(101, 199, 255, 77)
@@ -157,7 +159,7 @@ class _SignupStep2State extends State<SignupStep2> {
 
                           Text(
                             identity.title,
-                            maxLines: 2,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -171,7 +173,7 @@ class _SignupStep2State extends State<SignupStep2> {
 
                           Text(
                             identity.subtitle,
-                            maxLines: 2,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -271,41 +273,36 @@ class _SignupStep2State extends State<SignupStep2> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ElevatedButton(
-                  onPressed: widget.onContinue,
-                  style: ButtonDesign.signUpButton,
-                  child: Text(
-                    'Continue →',
-                    style: GoogleFonts.inter(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
+                SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: widget.onContinue,
+                    style: ButtonDesign.signUpButton,
+                    child: Text(
+                      'Continue →',
+                      style: GoogleFonts.inter(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
 
                 const SizedBox(height: 16),
 
-                ElevatedButton(
-                  onPressed: widget.onBack,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0c0d10),
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 104, 104, 104),
-                        width: 1,
+                SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: widget.onBack,
+                    style: ButtonDesign.backButton,
+                    child: Text(
+                      '← Back',
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
                       ),
-                    ),
-                  ),
-                  child: Text(
-                    '← Back',
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),

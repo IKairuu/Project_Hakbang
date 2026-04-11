@@ -72,11 +72,11 @@ class _ScholarshipAiState extends State<ScholarshipAi> {
               children: [
                 Text(
                   "Discover scholarships matched to your profile and",
-                  style: FontStyles.appDetails,
+                  style: FontStyles.obSlideDesc,
                 ),
                 Text(
                   "chat with Gabay AI — your 24/7 college advisor.",
-                  style: FontStyles.appDetails,
+                  style: FontStyles.obSlideDesc,
                 ),
               ],
             ),

@@ -35,13 +35,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                         padding: const EdgeInsets.only(right: 10),
                         child: Text(
                           "Hello, NAME",
-                          style: FontStyles.mainPageheader,
+                          style: FontStyles.homeGreeting,
                         ),
                       ),
 
                       Text(
                         "Where would you like to go?",
-                        style: FontStyles.mainPageUnderName,
+                        style: FontStyles.obSlideDesc,
                       ),
                     ],
                   ),
@@ -175,7 +175,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             top: PaddingDesign.mainPageButtonLabel,
                           ),
                           child: Text(
-                            "Scholarhips",
+                            "Scholarships",
                             style: FontStyles.mainPageButtonLabels,
                           ),
                         ),

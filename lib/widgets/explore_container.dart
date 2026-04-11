@@ -61,11 +61,11 @@ class ExploreContainer extends StatelessWidget {
               children: [
                 Text(
                   "Browse 500+ colleges and universities across the",
-                  style: FontStyles.appDetails,
+                  style: FontStyles.obSlideDesc,
                 ),
                 Text(
                   "Philippines. Filter by course, location, and entrance exam",
-                  style: FontStyles.appDetails,
+                  style: FontStyles.obSlideDesc,
                 ),
               ],
             ),

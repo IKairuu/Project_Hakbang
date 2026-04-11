@@ -8,13 +8,13 @@ ValueNotifier<List<Activity>> activityList = ValueNotifier([
     // FOR TESTING PURPOSES
     description: "Viewed UPCAT",
     iconName: "assets/exam.svg",
-    date: "Mar. 2, 2026",
+    date: "Mar. 3, 2026",
   ),
   Activity(
     // FOR TESTING PURPOSES
     description: "Viewed UPCAT",
     iconName: "assets/exam.svg",
-    date: "Mar. 2, 2026",
+    date: "Mar. 33, 2026",
   ),
   Activity(
     // FOR TESTING PURPOSES

@@ -10,7 +10,7 @@ class InputDesign {
       hintText: hintText,
       prefixIcon: prefixIcon,
       prefixIconConstraints: const BoxConstraints(
-        minWidth: 40, // 👈 prevents overflow + keeps spacing clean
+        minWidth: 40,
       ),
 
       hintStyle: const TextStyle(

@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 
 class InputDesign {
   // Unfocused state
-  static InputDecoration unfocusedInputDecoration(String hintText) {
+  static InputDecoration unfocusedInputDecoration(
+    String hintText, {
+    Widget? prefixIcon,
+  }) {
     return InputDecoration(
       hintText: hintText,
+      prefixIcon: prefixIcon,
+      prefixIconConstraints: const BoxConstraints(
+        minWidth: 40, // 👈 prevents overflow + keeps spacing clean
+      ),
+
       hintStyle: const TextStyle(
         color: Color(0xFF828a8a),
         fontSize: 14,
@@ -31,9 +39,17 @@ class InputDesign {
   }
 
   // Focused state - lime green accent
-  static InputDecoration focusedInputDecoration(String hintText) {
+  static InputDecoration focusedInputDecoration(
+    String hintText, {
+    Widget? prefixIcon,
+  }) {
     return InputDecoration(
       hintText: hintText,
+      prefixIcon: prefixIcon,
+      prefixIconConstraints: const BoxConstraints(
+        minWidth: 40,
+      ),
+
       hintStyle: const TextStyle(
         color: Color(0xFF828a8a),
         fontSize: 14,

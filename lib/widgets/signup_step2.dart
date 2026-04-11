@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
+import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/input_design.dart';
 import 'package:hakbang/models/identity_option.dart';
 
@@ -93,14 +94,9 @@ class _SignupStep2State extends State<SignupStep2> {
                     child: Container(
                       width: 50,
                       height: 50,
-                      decoration: BoxDecoration(
-                        color: isSelected ? const Color.fromARGB(105, 198, 255, 75) : const Color(0xFF2a2d38),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: isSelected ? const Color(0xFFC8FF4D) : const Color.fromARGB(255, 60, 61, 67),
-                          width: 1,
-                        ),
-                      ),
+                      decoration: isSelected
+                          ? ContainerDesign.signupSelectionOptionSelected
+                          : ContainerDesign.signupIdentityOptionUnselected,
                       child: Center(
                         child: Text(
                           widget.avatars[index],
@@ -138,20 +134,11 @@ class _SignupStep2State extends State<SignupStep2> {
                     child: Container(
                       margin: EdgeInsets.only(
                         right: index != 2 ? 10 : 0,
-                      ), 
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? const Color.fromARGB(101, 199, 255, 77)
-                            : const Color(0xFF2a2d38),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: isSelected
-                              ? const Color(0xFFC8FF4D)
-                              : const Color.fromARGB(255, 60, 61, 67),
-                          width: 2,
-                        ),
                       ),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      decoration: isSelected
+                          ? ContainerDesign.signupSelectionOptionSelected
+                          : ContainerDesign.signupIdentityOptionUnselected,
                       child: Column(
                         children: [
                           Text(identity.emoji, style: const TextStyle(fontSize: 24)),

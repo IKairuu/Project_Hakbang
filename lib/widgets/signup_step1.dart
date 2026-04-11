@@ -234,34 +234,6 @@ class _SignupStep1State extends State<SignupStep1> {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account?",
-                    style: GoogleFonts.inter(
-                      color: const Color(0xFF828a8a),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  GestureDetector(
-                    onTap: widget.onSignIn,
-                    child: Text(
-                      "Sign In",
-                      style: GoogleFonts.inter(
-                        color: const Color(0xFFC8FF4D),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),

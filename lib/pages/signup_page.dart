@@ -198,6 +198,34 @@ class _SignupPageState extends State<SignupPage> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Divider(color: Color(0xFF2a2d38), thickness: 1),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account? ",
+                        style: FontStyles.memberSignIn,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // Navigate to sign in
+                        },
+                        child: Text(
+                          "Sign In",
+                          style: FontStyles.signIntext,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

@@ -8,13 +8,31 @@ class ButtonDesign {
     ),
   );
 
-  // Sign Up button - lime green
+  // Sign Up button 
   static final ButtonStyle signUpButton = ElevatedButton.styleFrom(
     backgroundColor: const Color(0xFFC8FF4D),
-    padding: const EdgeInsets.symmetric(vertical: 14),
+    minimumSize: const Size(double.infinity, 52),
+    padding: const EdgeInsets.symmetric(vertical: 20),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(12),
     ),
     elevation: 0,
+  );
+
+  // Back Button
+  static final ButtonStyle backButton = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF0c0d10),
+
+    minimumSize: const Size(double.infinity, 52),
+
+    elevation: 0,
+
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+      side: const BorderSide(
+        color: Color.fromARGB(255, 104, 104, 104),
+        width: 1,
+      ),
+    ),
   );
 }

@@ -66,6 +66,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
                   child: SizedBox(
+                    height: 50,
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {

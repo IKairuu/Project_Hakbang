@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hakbang/objects/activity.dart';
+import 'package:hakbang/models/activity.dart';
 
 ValueNotifier<int> welcomePageIndex = ValueNotifier(0);
 ValueNotifier<int> navigationBarIndex = ValueNotifier(0);

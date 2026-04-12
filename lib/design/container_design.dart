@@ -59,4 +59,36 @@ class ContainerDesign {
     color: Color(0xFF232f47),
     borderRadius: BorderRadius.circular(20),
   );
+
+  static final BoxDecoration signupSelectionOption = BoxDecoration(
+    color: Color(0xFF2a2d38),
+    borderRadius: BorderRadius.circular(12),
+    border: Border.all(color: Color.fromARGB(255, 60, 61, 67), width: 1),
+    boxShadow: [
+      BoxShadow(
+        color: Color(0xFFC8FF4D).withValues(alpha: 0.15),
+        blurRadius: 15,
+        spreadRadius: 3,
+      ),
+    ],
+  );
+
+  static final BoxDecoration signupSelectionOptionSelected = BoxDecoration(
+    color: Color.fromARGB(105, 198, 255, 75),
+    borderRadius: BorderRadius.circular(12),
+    border: Border.all(color: Color(0xFFC8FF4D), width: 2),
+    boxShadow: [
+      BoxShadow(
+        color: Color(0xFFC8FF4D).withValues(alpha: 0.15),
+        blurRadius: 15,
+        spreadRadius: 3,
+      ),
+    ],
+  );
+
+  static final BoxDecoration signupIdentityOptionUnselected = BoxDecoration(
+    color: Color(0xFF2a2d38),
+    borderRadius: BorderRadius.circular(12),
+    border: Border.all(color: Color.fromARGB(255, 60, 61, 67), width: 1),
+  );
 }

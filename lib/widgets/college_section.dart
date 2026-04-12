@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
@@ -14,104 +13,107 @@ class CollegeSection extends StatefulWidget {
 class _CollegeSectionState extends State<CollegeSection> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.all(20),
-          backgroundColor: Color(0xFF1c1e27),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadiusGeometry.circular(20),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.all(20),
+            backgroundColor: Color(0xFF1c1e27),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(20),
+            ),
           ),
-        ),
-        onPressed: () {
-          selectedSchool.value = widget.college.collegeName;
-        },
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: SvgPicture.network(
-                  widget.college.logoLink,
-                  height: 60,
-                  width: 60,
+          onPressed: () {
+            selectedSchool.value = widget.college.collegeName;
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Image.network(
+                    widget.college.logoLink,
+                    height: 60,
+                    width: 60,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.college.collegeName,
-                    style: GoogleFonts.dmSans(
-                      color: Colors.white,
-                      fontSize: 15,
-                      letterSpacing: -0.3,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      "📍${widget.college.address}",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.college.collegeName,
                       style: GoogleFonts.dmSans(
-                        fontSize: 10,
-                        color: Color(0xFF818289),
+                        color: Colors.white,
+                        fontSize: 15,
+                        letterSpacing: -0.3,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: Container(
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        "📍${widget.college.address}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.dmSans(
+                          fontSize: 10,
+                          color: Color(0xFF818289),
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color(0xFF213536),
+                            ),
+                            child: Text(
+                              widget.college.tags[0],
+                              style: GoogleFonts.dmSans(
+                                fontSize: 10,
+                                color: Color(0xFF4cf9b4),
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Color(0xFF213536),
+                            color: Color(0xFF312746),
                           ),
                           child: Text(
-                            widget.college.tags[0],
+                            widget.college.tags[1],
                             style: GoogleFonts.dmSans(
                               fontSize: 10,
-                              color: Color(0xFF4cf9b4),
+                              color: Color(0xFFa253ee),
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color(0xFF312746),
-                        ),
-                        child: Text(
-                          widget.college.tags[1],
-                          style: GoogleFonts.dmSans(
-                            fontSize: 10,
-                            color: Color(0xFFa253ee),
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

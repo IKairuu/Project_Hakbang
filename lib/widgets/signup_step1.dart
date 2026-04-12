@@ -81,7 +81,19 @@ class _SignupStep1State extends State<SignupStep1> {
             ),
             TextField(
               controller: widget.fullNameController,
-              decoration: _getInputDecoration('Maria dela Cruz'),
+              decoration: _getInputDecoration('Maria dela Cruz').copyWith(
+                prefixIcon: const Padding(
+                  padding: EdgeInsets.only(left: 12, right: 6),
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: Text('👤', style: TextStyle(fontSize: 16)),
+                  ),
+                ),
+                prefixIconConstraints: const BoxConstraints(
+                  minWidth: 0,
+                  minHeight: 0,
+                ),
+              ),
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14,
@@ -102,11 +114,16 @@ class _SignupStep1State extends State<SignupStep1> {
             ),
             TextField(
               controller: widget.emailController,
-              decoration: _getInputDecoration('you@example.com'),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
+              decoration: InputDesign.unfocusedInputDecoration(
+                'you@example.com',
+                prefixIcon: const Opacity(
+                  opacity: 0.5,
+                  child: Icon(
+                    Icons.email_outlined,
+                    size: 20,
+                    color: Color(0xFF828a8a), // keep or remove, either is fine
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 5),
@@ -124,16 +141,30 @@ class _SignupStep1State extends State<SignupStep1> {
             TextField(
               controller: widget.passwordController,
               obscureText: !widget.showPassword,
-              decoration: _getInputDecoration('Create a strong password').copyWith(
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    widget.showPassword ? Icons.visibility : Icons.visibility_off,
-                    color: const Color(0xFF828a8a),
-                    size: 20,
+              decoration: _getInputDecoration('Create a strong password')
+                  .copyWith(
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.only(left: 12, right: 6),
+                      child: Opacity(
+                        opacity: 0.5,
+                        child: Text('🔒', style: TextStyle(fontSize: 16)),
+                      ),
+                    ),
+                    prefixIconConstraints: const BoxConstraints(
+                      minWidth: 0,
+                      minHeight: 0,
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        widget.showPassword
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: const Color(0xFF828a8a),
+                        size: 20,
+                      ),
+                      onPressed: widget.onPasswordVisibilityToggle,
+                    ),
                   ),
-                  onPressed: widget.onPasswordVisibilityToggle,
-                ),
-              ),
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14,
@@ -156,9 +187,22 @@ class _SignupStep1State extends State<SignupStep1> {
               controller: widget.confirmPasswordController,
               obscureText: !widget.showConfirmPassword,
               decoration: _getInputDecoration('Re-enter password').copyWith(
+                prefixIcon: const Padding(
+                  padding: EdgeInsets.only(left: 12, right: 6),
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: Text('🔒', style: TextStyle(fontSize: 16)),
+                  ),
+                ),
+                prefixIconConstraints: const BoxConstraints(
+                  minWidth: 0,
+                  minHeight: 0,
+                ),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    widget.showConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                    widget.showConfirmPassword
+                        ? Icons.visibility
+                        : Icons.visibility_off,
                     color: const Color(0xFF828a8a),
                     size: 20,
                   ),
@@ -173,6 +217,7 @@ class _SignupStep1State extends State<SignupStep1> {
             ),
             const SizedBox(height: 20),
             SizedBox(
+              height: 50,
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: widget.onContinue,
@@ -185,34 +230,6 @@ class _SignupStep1State extends State<SignupStep1> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account?",
-                    style: GoogleFonts.inter(
-                      color: const Color(0xFF828a8a),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  GestureDetector(
-                    onTap: widget.onSignIn,
-                    child: Text(
-                      "Sign In",
-                      style: GoogleFonts.inter(
-                        color: const Color(0xFFC8FF4D),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
           ],

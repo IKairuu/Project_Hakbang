@@ -117,4 +117,8 @@ class FontStyles {
     fontSize: 10,
     fontWeight: FontWeight.w400,
   );
+  static final TextStyle signIntext = GoogleFonts.inter(
+    color: Color(0xFFC8FF4D),
+    fontWeight: FontWeight.w700,
+  );
 }

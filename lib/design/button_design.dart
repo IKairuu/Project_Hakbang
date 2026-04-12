@@ -34,4 +34,20 @@ class ButtonDesign {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     padding: EdgeInsets.all(15),
   );
+
+  static final ButtonStyle backButton = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF0c0d10),
+
+    minimumSize: const Size(double.infinity, 52),
+
+    elevation: 0,
+
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+      side: const BorderSide(
+        color: Color.fromARGB(255, 104, 104, 104),
+        width: 1,
+      ),
+    ),
+  );
 }

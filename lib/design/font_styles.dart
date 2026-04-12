@@ -138,4 +138,15 @@ class FontStyles {
     color: Color(0xFFC8FF4D),
     fontWeight: FontWeight.w700,
   );
+
+  static final TextStyle discoveryHeader = GoogleFonts.dmSans(
+    color: Colors.white,
+    fontWeight: FontWeight.w800,
+    fontSize: 27,
+  );
+
+  static final TextStyle filterLabel = TextStyle(
+    color: Color(0xFFc6fd4c),
+    fontWeight: FontWeight.w700,
+  );
 }

@@ -50,4 +50,13 @@ class ButtonDesign {
       ),
     ),
   );
+
+  static final ButtonStyle filterUniversity = ElevatedButton.styleFrom(
+    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+    backgroundColor: Color(0xFF232a17),
+    shape: RoundedRectangleBorder(
+      side: BorderSide(color: Color(0xFFc6fd4c)),
+      borderRadius: BorderRadiusGeometry.circular(20),
+    ),
+  );
 }

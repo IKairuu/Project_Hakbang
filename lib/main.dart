@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/design/background_design.dart';
+import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/widget_tree.dart';
 
-void main() {
+Future main() async {
+  await Database.getCollege();
   runApp(const MyApp());
 }
 

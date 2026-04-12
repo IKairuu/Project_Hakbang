@@ -69,4 +69,6 @@ class ButtonDesign {
           borderRadius: BorderRadiusGeometry.circular(20),
         ),
       );
+
+  static final ButtonStyle collegeSection = ElevatedButton.styleFrom();
 }

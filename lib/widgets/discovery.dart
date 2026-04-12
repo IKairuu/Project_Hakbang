@@ -39,68 +39,65 @@ class _DiscoveryState extends State<Discovery> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 5, bottom: 10),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: ValueListenableBuilder(
-                valueListenable: selectedFilter,
-                builder: (context, selected, child) {
-                  return SizedBox(
-                    child: Row(
-                      spacing: 5,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              selectedFilter.value = [true, false, false];
-                            });
-                          },
+            child: ValueListenableBuilder(
+              valueListenable: selectedFilter,
+              builder: (context, selected, child) {
+                return SizedBox(
+                  child: Row(
+                    spacing: 5,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            selectedFilter.value = [true, false, false];
+                          });
+                        },
+                        style: selected[0]
+                            ? ButtonDesign.filterUniversitySelected
+                            : ButtonDesign.filterUniversityUnselected,
+                        child: Text(
+                          "All",
                           style: selected[0]
-                              ? ButtonDesign.filterUniversitySelected
-                              : ButtonDesign.filterUniversityUnselected,
-                          child: Text(
-                            "All",
-                            style: selected[0]
-                                ? FontStyles.filterLabelSelected
-                                : FontStyles.filterLabelUnselected,
-                          ),
+                              ? FontStyles.filterLabelSelected
+                              : FontStyles.filterLabelUnselected,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              selectedFilter.value = [false, true, false];
-                            });
-                          },
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            selectedFilter.value = [false, true, false];
+                          });
+                        },
+                        style: selected[1]
+                            ? ButtonDesign.filterUniversitySelected
+                            : ButtonDesign.filterUniversityUnselected,
+                        child: Text(
+                          "State University",
                           style: selected[1]
-                              ? ButtonDesign.filterUniversitySelected
-                              : ButtonDesign.filterUniversityUnselected,
-                          child: Text(
-                            "State University",
-                            style: selected[1]
-                                ? FontStyles.filterLabelSelected
-                                : FontStyles.filterLabelUnselected,
-                          ),
+                              ? FontStyles.filterLabelSelected
+                              : FontStyles.filterLabelUnselected,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              selectedFilter.value = [false, false, true];
-                            });
-                          },
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            selectedFilter.value = [false, false, true];
+                          });
+                        },
+                        style: selected[2]
+                            ? ButtonDesign.filterUniversitySelected
+                            : ButtonDesign.filterUniversityUnselected,
+                        child: Text(
+                          "Private",
                           style: selected[2]
-                              ? ButtonDesign.filterUniversitySelected
-                              : ButtonDesign.filterUniversityUnselected,
-                          child: Text(
-                            "Private",
-                            style: selected[2]
-                                ? FontStyles.filterLabelSelected
-                                : FontStyles.filterLabelUnselected,
-                          ),
+                              ? FontStyles.filterLabelSelected
+                              : FontStyles.filterLabelUnselected,
                         ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
           Expanded(
@@ -116,22 +113,27 @@ class _DiscoveryState extends State<Discovery> {
                   padding: const EdgeInsets.only(top: 10),
                   child: SizedBox(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "${univ.isEmpty ? "No" : univ.length} available ${univ.length <= 1 ? "school" : "schools"}",
                           style: FontStyles.availSchoolsLabel,
                         ),
-                        ValueListenableBuilder(
-                          valueListenable: selectedFilter,
-                          builder: (context, value, child) {
-                            return ListView.builder(
-                              itemBuilder: (context, index) {
-                                if (value[0]) {
-                                  return CollegeSection(college: univ[index]);
-                                }
-                              },
-                            );
-                          },
+                        Expanded(
+                          flex: 2,
+                          child: ValueListenableBuilder(
+                            valueListenable: selectedFilter,
+                            builder: (context, value, child) {
+                              return ListView.builder(
+                                itemCount: univ.length,
+                                itemBuilder: (context, index) {
+                                  if (value[0]) {
+                                    return CollegeSection(college: univ[index]);
+                                  }
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),

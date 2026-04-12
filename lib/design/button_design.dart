@@ -51,7 +51,7 @@ class ButtonDesign {
     ),
   );
 
-  static final ButtonStyle filterUniversity = ElevatedButton.styleFrom(
+  static final ButtonStyle filterUniversitySelected = ElevatedButton.styleFrom(
     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
     backgroundColor: Color(0xFF232a17),
     shape: RoundedRectangleBorder(
@@ -59,4 +59,14 @@ class ButtonDesign {
       borderRadius: BorderRadiusGeometry.circular(20),
     ),
   );
+
+  static final ButtonStyle filterUniversityUnselected =
+      ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        backgroundColor: Color(0xFF1c1e27),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Color(0xFF2a2c35)),
+          borderRadius: BorderRadiusGeometry.circular(20),
+        ),
+      );
 }

@@ -4,6 +4,7 @@ import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/input_design.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/widgets/college_section.dart';
 
 class Discovery extends StatefulWidget {
   const Discovery({super.key});
@@ -40,30 +41,65 @@ class _DiscoveryState extends State<Discovery> {
             padding: const EdgeInsets.only(top: 5, bottom: 10),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: SizedBox(
-                child: Row(
-                  spacing: 5,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonDesign.filterUniversity,
-                      child: Text("All", style: FontStyles.filterLabel),
+              child: ValueListenableBuilder(
+                valueListenable: selectedFilter,
+                builder: (context, selected, child) {
+                  return SizedBox(
+                    child: Row(
+                      spacing: 5,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              selectedFilter.value = [true, false, false];
+                            });
+                          },
+                          style: selected[0]
+                              ? ButtonDesign.filterUniversitySelected
+                              : ButtonDesign.filterUniversityUnselected,
+                          child: Text(
+                            "All",
+                            style: selected[0]
+                                ? FontStyles.filterLabelSelected
+                                : FontStyles.filterLabelUnselected,
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              selectedFilter.value = [false, true, false];
+                            });
+                          },
+                          style: selected[1]
+                              ? ButtonDesign.filterUniversitySelected
+                              : ButtonDesign.filterUniversityUnselected,
+                          child: Text(
+                            "State University",
+                            style: selected[1]
+                                ? FontStyles.filterLabelSelected
+                                : FontStyles.filterLabelUnselected,
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              selectedFilter.value = [false, false, true];
+                            });
+                          },
+                          style: selected[2]
+                              ? ButtonDesign.filterUniversitySelected
+                              : ButtonDesign.filterUniversityUnselected,
+                          child: Text(
+                            "Private",
+                            style: selected[2]
+                                ? FontStyles.filterLabelSelected
+                                : FontStyles.filterLabelUnselected,
+                          ),
+                        ),
+                      ],
                     ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonDesign.filterUniversity,
-                      child: Text(
-                        "State University",
-                        style: FontStyles.filterLabel,
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonDesign.filterUniversity,
-                      child: Text("Private", style: FontStyles.filterLabel),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           ),
@@ -84,6 +120,18 @@ class _DiscoveryState extends State<Discovery> {
                         Text(
                           "${univ.isEmpty ? "No" : univ.length} available ${univ.length <= 1 ? "school" : "schools"}",
                           style: FontStyles.availSchoolsLabel,
+                        ),
+                        ValueListenableBuilder(
+                          valueListenable: selectedFilter,
+                          builder: (context, value, child) {
+                            return ListView.builder(
+                              itemBuilder: (context, index) {
+                                if (value[0]) {
+                                  return CollegeSection(college: univ[index]);
+                                }
+                              },
+                            );
+                          },
                         ),
                       ],
                     ),

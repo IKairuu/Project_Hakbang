@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/models/activity.dart';
+import 'package:hakbang/models/college.dart';
 
 ValueNotifier<int> welcomePageIndex = ValueNotifier(0);
 ValueNotifier<int> navigationBarIndex = ValueNotifier(0);
@@ -23,3 +24,5 @@ ValueNotifier<List<Activity>> activityList = ValueNotifier([
     date: "Mar. 2, 2026",
   ),
 ]);
+
+ValueNotifier<List<College>> availableColleges = ValueNotifier([]);

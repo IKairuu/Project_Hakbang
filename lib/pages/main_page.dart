@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/widgets/discovery.dart';
 import 'package:hakbang/widgets/home_widget.dart';
+import 'package:hakbang/widgets/scholarship.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -12,7 +13,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<Widget> navigationWidgets = [HomeWidget(), Discovery()];
+  List<Widget> navigationWidgets = [HomeWidget(), Discovery(), Scholarship()];
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(

@@ -91,4 +91,9 @@ class ContainerDesign {
     borderRadius: BorderRadius.circular(12),
     border: Border.all(color: Color.fromARGB(255, 60, 61, 67), width: 1),
   );
+
+  static final BoxDecoration universityLocation = BoxDecoration(
+    borderRadius: BorderRadius.circular(20),
+    color: Color(0xFF0c1621),
+  );
 }

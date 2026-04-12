@@ -24,5 +24,7 @@ ValueNotifier<List<Activity>> activityList = ValueNotifier([
     date: "Mar. 2, 2026",
   ),
 ]);
-
+ValueNotifier<List<bool>> selectedFilter = ValueNotifier([true, false, false]);
+ValueNotifier<String?> selectedSchool = ValueNotifier(null);
 ValueNotifier<List<College>> availableColleges = ValueNotifier([]);
+ValueNotifier<List<College>> collegeSection = ValueNotifier([]);

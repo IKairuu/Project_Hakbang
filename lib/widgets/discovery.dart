@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/design/button_design.dart';
+import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/input_design.dart';
+import 'package:hakbang/functions/filter.dart';
+import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/widgets/college_section.dart';
 
 class Discovery extends StatefulWidget {
   const Discovery({super.key});
@@ -20,66 +24,126 @@ class _DiscoveryState extends State<Discovery> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Discover Schools", style: FontStyles.discoveryHeader),
-          Expanded(
-            flex: 1,
-            child: TextField(
-              controller: searchInput,
-              decoration: InputDesign.unfocusedInputDecoration(
-                'Search school',
-                prefixIcon: const Opacity(
-                  opacity: 0.5,
-                  child: Icon(
-                    Icons.search_outlined,
-                    size: 20,
-                    color: Color(0xFF828a8a), // keep or remove, either is fine
-                  ),
+          TextField(
+            controller: searchInput,
+            decoration: InputDesign.unfocusedInputDecoration(
+              'Search school',
+              prefixIcon: const Opacity(
+                opacity: 0.5,
+                child: Icon(
+                  Icons.search_outlined,
+                  size: 20,
+                  color: Color(0xFF828a8a), // keep or remove, either is fine
                 ),
               ),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: SizedBox(
+          Padding(
+            padding: const EdgeInsets.only(top: 5, bottom: 10),
+            child: ValueListenableBuilder(
+              valueListenable: selectedFilter,
+              builder: (context, selected, child) {
+                return SizedBox(
                   child: Row(
                     spacing: 5,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonDesign.filterUniversity,
-                        child: Text("All", style: FontStyles.filterLabel),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonDesign.filterUniversity,
+                        onPressed: () {
+                          setState(() {
+                            selectedFilter.value = [true, false, false];
+                          });
+                          Filter.filterCollegeSection(availableColleges.value);
+                        },
+                        style: selected[0]
+                            ? ButtonDesign.filterUniversitySelected
+                            : ButtonDesign.filterUniversityUnselected,
                         child: Text(
-                          "State University",
-                          style: FontStyles.filterLabel,
+                          "All",
+                          style: selected[0]
+                              ? FontStyles.filterLabelSelected
+                              : FontStyles.filterLabelUnselected,
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonDesign.filterUniversity,
-                        child: Text("Private", style: FontStyles.filterLabel),
+                        onPressed: () {
+                          setState(() {
+                            selectedFilter.value = [false, true, false];
+                          });
+                          Filter.filterCollegeSection(availableColleges.value);
+                        },
+                        style: selected[1]
+                            ? ButtonDesign.filterUniversitySelected
+                            : ButtonDesign.filterUniversityUnselected,
+                        child: Text(
+                          "State University",
+                          style: selected[1]
+                              ? FontStyles.filterLabelSelected
+                              : FontStyles.filterLabelUnselected,
+                        ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonDesign.filterUniversity,
+                        onPressed: () {
+                          setState(() {
+                            selectedFilter.value = [false, false, true];
+                          });
+                          Filter.filterCollegeSection(availableColleges.value);
+                        },
+                        style: selected[2]
+                            ? ButtonDesign.filterUniversitySelected
+                            : ButtonDesign.filterUniversityUnselected,
                         child: Text(
-                          "With Scholarhship",
-                          style: FontStyles.filterLabel,
+                          "Private",
+                          style: selected[2]
+                              ? FontStyles.filterLabelSelected
+                              : FontStyles.filterLabelUnselected,
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
-          Container(),
+          Expanded(
+            flex: 3,
+            child: Container(decoration: ContainerDesign.universityLocation),
+          ),
+          Expanded(
+            flex: 3,
+            child: ValueListenableBuilder(
+              valueListenable: collegeSection,
+              builder: (context, univ, child) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: SizedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${univ.isEmpty ? "No" : univ.length} available ${univ.length <= 1 ? "school" : "schools"}",
+                          style: FontStyles.availSchoolsLabel,
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: ValueListenableBuilder(
+                            valueListenable: selectedFilter,
+                            builder: (context, value, child) {
+                              return ListView.builder(
+                                itemCount: univ.length,
+                                itemBuilder: (context, index) {
+                                  return CollegeSection(college: univ[index]);
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

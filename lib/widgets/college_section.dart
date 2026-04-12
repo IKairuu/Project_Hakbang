@@ -14,7 +14,7 @@ class _CollegeSectionState extends State<CollegeSection> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.only(bottom: 10),
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton(

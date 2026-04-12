@@ -129,6 +129,7 @@ class _DiscoveryState extends State<Discovery> {
                             valueListenable: selectedFilter,
                             builder: (context, value, child) {
                               return ListView.builder(
+                                padding: EdgeInsets.only(top: 10),
                                 itemCount: univ.length,
                                 itemBuilder: (context, index) {
                                   return CollegeSection(college: univ[index]);

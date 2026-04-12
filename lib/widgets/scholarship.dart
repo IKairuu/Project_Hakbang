@@ -152,6 +152,114 @@ class _ScholarshipState extends State<Scholarship> {
               ],
             ),
           ),
+          SizedBox(height: 25),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "All Scholarships",
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  letterSpacing: -0.5,
+                ),
+              ),
+              Text(
+                "Filter",
+                style: GoogleFonts.inter(
+                  color: AppColors.accent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  letterSpacing: -0.5,
+                )
+              )
+            ],
+          ),
+          SizedBox(height: 10,),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              children: [
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Color(0xFF1C1E26),
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF2A2D3A),
+                        borderRadius: BorderRadius.circular(14)
+                      ),
+                      child: Center(child: Text("🏛️", style: TextStyle(fontSize: 24))),
+                    ),
+                    SizedBox(width: 12,),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("UP Socialized Tuition",
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            ),
+                          ),
+                          Text("University of the Philippines System",
+                          style: GoogleFonts.inter(
+                            fontSize: 11,
+                            color: Colors.white54,
+                            ),
+                          ),
+                          SizedBox(height: 6),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                decoration: BoxDecoration(
+                                border: Border.all(color: Color(0xFF4D8FFF)),
+                                borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: Text("Full tuition",
+                                style: GoogleFonts.inter(
+                                  fontSize: 11,
+                                  color: Color(0xFF4D8FFF),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 6),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xFF4DFFB8)),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: Text("Ongoing",
+                                style: GoogleFonts.inter(
+                                  fontSize: 11,
+                                  color: Color(0xFF4DFFB8),
+                                ))
+                              )
+                            ]
+                          )
+
+                        ]
+                      )
+                    )
+                  ]
+                )
+              )
+            ],
+            
+            )
+          )
         ],
       ),
     );

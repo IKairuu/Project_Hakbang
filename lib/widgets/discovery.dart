@@ -3,6 +3,7 @@ import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/input_design.dart';
+import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/widgets/college_section.dart';
 
@@ -51,6 +52,7 @@ class _DiscoveryState extends State<Discovery> {
                           setState(() {
                             selectedFilter.value = [true, false, false];
                           });
+                          Filter.filterCollegeSection(availableColleges.value);
                         },
                         style: selected[0]
                             ? ButtonDesign.filterUniversitySelected
@@ -67,6 +69,7 @@ class _DiscoveryState extends State<Discovery> {
                           setState(() {
                             selectedFilter.value = [false, true, false];
                           });
+                          Filter.filterCollegeSection(availableColleges.value);
                         },
                         style: selected[1]
                             ? ButtonDesign.filterUniversitySelected
@@ -83,6 +86,7 @@ class _DiscoveryState extends State<Discovery> {
                           setState(() {
                             selectedFilter.value = [false, false, true];
                           });
+                          Filter.filterCollegeSection(availableColleges.value);
                         },
                         style: selected[2]
                             ? ButtonDesign.filterUniversitySelected
@@ -107,7 +111,7 @@ class _DiscoveryState extends State<Discovery> {
           Expanded(
             flex: 3,
             child: ValueListenableBuilder(
-              valueListenable: availableColleges,
+              valueListenable: collegeSection,
               builder: (context, univ, child) {
                 return Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -127,9 +131,7 @@ class _DiscoveryState extends State<Discovery> {
                               return ListView.builder(
                                 itemCount: univ.length,
                                 itemBuilder: (context, index) {
-                                  if (value[0]) {
-                                    return CollegeSection(college: univ[index]);
-                                  }
+                                  return CollegeSection(college: univ[index]);
                                 },
                               );
                             },

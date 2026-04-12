@@ -149,4 +149,10 @@ class FontStyles {
     color: Color(0xFFc6fd4c),
     fontWeight: FontWeight.w700,
   );
+
+  static final TextStyle availSchoolsLabel = GoogleFonts.dmSans(
+    fontSize: 15,
+    color: Color(0xFF7d7e81),
+    fontWeight: FontWeight.w700,
+  );
 }

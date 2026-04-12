@@ -18,7 +18,6 @@ class FontStyles {
   static final TextStyle obSlideDesc = GoogleFonts.dmSans(
     fontSize: 14,
     fontWeight: FontWeight.w700,
-    height: 1.6,
     color: Color(0xF0F1F5).withOpacity(0.65),
   );
 

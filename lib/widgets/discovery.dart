@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakbang/design/font_styles.dart';
 
 class Discovery extends StatefulWidget {
   const Discovery({super.key});
@@ -10,6 +11,11 @@ class Discovery extends StatefulWidget {
 class _DiscoveryState extends State<Discovery> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
+      child: Column(
+        children: [Text("Discover Schools", style: FontStyles.header)],
+      ),
+    );
   }
 }

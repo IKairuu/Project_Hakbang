@@ -132,7 +132,10 @@ class _DiscoveryState extends State<Discovery> {
                                 padding: EdgeInsets.only(top: 10),
                                 itemCount: univ.length,
                                 itemBuilder: (context, index) {
-                                  return CollegeSection(college: univ[index]);
+                                  return CollegeSection(
+                                    college: univ[index],
+                                    sectionIndex: index,
+                                  );
                                 },
                               );
                             },

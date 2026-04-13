@@ -98,6 +98,10 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
+  void _onSubmit() {
+    // UI-only form; add submission behavior later.
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -194,7 +198,10 @@ class _SignupPageState extends State<SignupPage> {
                     onContinue: _nextStep,
                     onBack: _previousStep,
                   ),
-                  const SignupStep3(),
+                  SignupStep3(
+                    onCreate: _onSubmit,
+                    onBack: _previousStep,
+                  ),
                 ],
               ),
             ),

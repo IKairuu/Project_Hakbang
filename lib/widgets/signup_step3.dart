@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/design/button_design.dart';
 
 class SignupStep3 extends StatelessWidget {
-  const SignupStep3({super.key});
+  final VoidCallback onCreate;
+  final VoidCallback onBack;
+
+  const SignupStep3({
+    super.key,
+    required this.onCreate,
+    required this.onBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +106,43 @@ class SignupStep3 extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            const SizedBox(height: 32),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: onCreate,
+                    style: ButtonDesign.signUpButton,
+                    child: Text(
+                      'Create My Account 🎉',
+                      style: GoogleFonts.inter(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: onBack,
+                    style: ButtonDesign.backButton,
+                    child: Text(
+                      '← Back',
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

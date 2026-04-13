@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:latlong2/latlong.dart';
 
 class CollegeSection extends StatefulWidget {
   const CollegeSection({
@@ -44,6 +46,10 @@ class _CollegeSectionState extends State<CollegeSection> {
                 setState(() {
                   Initialization.refreshCollegeSelection();
                   selectedSchoolHover.value[widget.sectionIndex] = true;
+                  selectedSchoolPosition.value = LatLng(
+                    widget.college.latitude,
+                    widget.college.longitude,
+                  );
                 });
               },
               child: Row(

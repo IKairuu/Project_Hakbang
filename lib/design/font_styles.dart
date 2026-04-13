@@ -160,4 +160,9 @@ class FontStyles {
     color: Color(0xFF7d7e81),
     fontWeight: FontWeight.w700,
   );
+
+  static final TextStyle mapLabel = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+  );
 }

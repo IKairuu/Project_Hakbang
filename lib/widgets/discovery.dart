@@ -23,178 +23,210 @@ class _DiscoveryState extends State<Discovery> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Discover Schools", style: FontStyles.discoveryHeader),
-          TextField(
-            controller: searchInput,
-            decoration: InputDesign.unfocusedInputDecoration(
-              'Search school',
-              prefixIcon: const Opacity(
-                opacity: 0.5,
-                child: Icon(
-                  Icons.search_outlined,
-                  size: 20,
-                  color: Color(0xFF828a8a), // keep or remove, either is fine
+      child: ValueListenableBuilder(
+        valueListenable: selectedSchoolHover,
+        builder: (context, schoolSelected, child) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Discover Schools", style: FontStyles.discoveryHeader),
+              TextField(
+                controller: searchInput,
+                decoration: InputDesign.unfocusedInputDecoration(
+                  'Search school',
+                  prefixIcon: const Opacity(
+                    opacity: 0.5,
+                    child: Icon(
+                      Icons.search_outlined,
+                      size: 20,
+                      color: Color(
+                        0xFF828a8a,
+                      ), // keep or remove, either is fine
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 5, bottom: 10),
-            child: ValueListenableBuilder(
-              valueListenable: selectedFilter,
-              builder: (context, selected, child) {
-                return SizedBox(
-                  child: Row(
-                    spacing: 5,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedFilter.value = [true, false, false];
-                          });
-                          Filter.filterCollegeSection(availableColleges.value);
-                        },
-                        style: selected[0]
-                            ? ButtonDesign.filterUniversitySelected
-                            : ButtonDesign.filterUniversityUnselected,
-                        child: Text(
-                          "All",
-                          style: selected[0]
-                              ? FontStyles.filterLabelSelected
-                              : FontStyles.filterLabelUnselected,
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedFilter.value = [false, true, false];
-                          });
-                          Filter.filterCollegeSection(availableColleges.value);
-                        },
-                        style: selected[1]
-                            ? ButtonDesign.filterUniversitySelected
-                            : ButtonDesign.filterUniversityUnselected,
-                        child: Text(
-                          "State University",
-                          style: selected[1]
-                              ? FontStyles.filterLabelSelected
-                              : FontStyles.filterLabelUnselected,
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedFilter.value = [false, false, true];
-                          });
-                          Filter.filterCollegeSection(availableColleges.value);
-                        },
-                        style: selected[2]
-                            ? ButtonDesign.filterUniversitySelected
-                            : ButtonDesign.filterUniversityUnselected,
-                        child: Text(
-                          "Private",
-                          style: selected[2]
-                              ? FontStyles.filterLabelSelected
-                              : FontStyles.filterLabelUnselected,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Container(
-              decoration: ContainerDesign.universityLocation,
-              child: FlutterMap(
-                options: MapOptions(
-                  initialCenter: LatLng(
-                    13.9411,
-                    121.1622,
-                  ), // Center the map over London, UK
-                  initialZoom: 6,
-                  maxZoom: 6,
-                ),
-                children: [
-                  TileLayer(
-                    // Bring your own tiles
-                    urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: "com.example.hakbang",
-                  ),
-                  ValueListenableBuilder(
-                    valueListenable: userPosition,
-                    builder: (context, user, child) {
-                      return MarkerLayer(
-                        markers: [
-                          Marker(
-                            point: LatLng(13.9411, 121.1622),
-                            child: Icon(
-                              Icons.location_on_rounded,
-                              color: Colors.red,
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 10),
+                child: ValueListenableBuilder(
+                  valueListenable: selectedFilter,
+                  builder: (context, selected, child) {
+                    return SizedBox(
+                      child: Row(
+                        spacing: 5,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedFilter.value = [true, false, false];
+                              });
+                              Filter.filterCollegeSection(
+                                availableColleges.value,
+                              );
+                            },
+                            style: selected[0]
+                                ? ButtonDesign.filterUniversitySelected
+                                : ButtonDesign.filterUniversityUnselected,
+                            child: Text(
+                              "All",
+                              style: selected[0]
+                                  ? FontStyles.filterLabelSelected
+                                  : FontStyles.filterLabelUnselected,
                             ),
                           ),
-                          Marker(
-                            point: LatLng(user!.latitude, user.longitude),
-                            child: Icon(
-                              Icons.location_on_rounded,
-                              color: Colors.red,
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedFilter.value = [false, true, false];
+                              });
+                              Filter.filterCollegeSection(
+                                availableColleges.value,
+                              );
+                            },
+                            style: selected[1]
+                                ? ButtonDesign.filterUniversitySelected
+                                : ButtonDesign.filterUniversityUnselected,
+                            child: Text(
+                              "State University",
+                              style: selected[1]
+                                  ? FontStyles.filterLabelSelected
+                                  : FontStyles.filterLabelUnselected,
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedFilter.value = [false, false, true];
+                              });
+                              Filter.filterCollegeSection(
+                                availableColleges.value,
+                              );
+                            },
+                            style: selected[2]
+                                ? ButtonDesign.filterUniversitySelected
+                                : ButtonDesign.filterUniversityUnselected,
+                            child: Text(
+                              "Private",
+                              style: selected[2]
+                                  ? FontStyles.filterLabelSelected
+                                  : FontStyles.filterLabelUnselected,
                             ),
                           ),
                         ],
-                      );
-                    },
-                  ),
-                ],
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: ValueListenableBuilder(
-              valueListenable: collegeSection,
-              builder: (context, univ, child) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: SizedBox(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${univ.isEmpty ? "No" : univ.length} available ${univ.length <= 1 ? "school" : "schools"}",
-                          style: FontStyles.availSchoolsLabel,
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: ValueListenableBuilder(
-                            valueListenable: selectedFilter,
-                            builder: (context, value, child) {
-                              return ListView.builder(
-                                padding: EdgeInsets.only(top: 10),
-                                itemCount: univ.length,
-                                itemBuilder: (context, index) {
-                                  return CollegeSection(
-                                    college: univ[index],
-                                    sectionIndex: index,
-                                  );
-                                },
-                              );
-                            },
+              Expanded(
+                flex: 3,
+                child: Container(
+                  decoration: ContainerDesign.universityLocation,
+                  child: schoolSelected.contains(true)
+                      ? ValueListenableBuilder(
+                          valueListenable: userPosition,
+                          builder: (context, user, child) {
+                            return ValueListenableBuilder(
+                              valueListenable: selectedSchoolPosition,
+                              builder: (context, school, child) {
+                                return FlutterMap(
+                                  options: MapOptions(
+                                    initialCenter: LatLng(
+                                      user!.latitude,
+                                      user.longitude,
+                                    ), // Center the map over London, UK
+                                    initialZoom: 9,
+                                    maxZoom: 9,
+                                  ),
+                                  children: [
+                                    TileLayer(
+                                      // Bring your own tiles
+                                      urlTemplate:
+                                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                      userAgentPackageName:
+                                          "com.example.hakbang",
+                                    ),
+                                    MarkerLayer(
+                                      markers: [
+                                        Marker(
+                                          point: LatLng(
+                                            school!.latitude,
+                                            school.longitude,
+                                          ),
+                                          child: Icon(
+                                            Icons.location_on_rounded,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        Marker(
+                                          point: LatLng(
+                                            user.latitude,
+                                            user.longitude,
+                                          ),
+                                          child: Icon(
+                                            Icons.location_history_rounded,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        )
+                      : Center(
+                          child: Text(
+                            "There is no selected university",
+                            style: FontStyles.mapLabel,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: ValueListenableBuilder(
+                  valueListenable: collegeSection,
+                  builder: (context, univ, child) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${univ.isEmpty ? "No" : univ.length} available ${univ.length <= 1 ? "school" : "schools"}",
+                              style: FontStyles.availSchoolsLabel,
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: ValueListenableBuilder(
+                                valueListenable: selectedFilter,
+                                builder: (context, value, child) {
+                                  return ListView.builder(
+                                    padding: EdgeInsets.only(top: 10),
+                                    itemCount: univ.length,
+                                    itemBuilder: (context, index) {
+                                      return CollegeSection(
+                                        college: univ[index],
+                                        sectionIndex: index,
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

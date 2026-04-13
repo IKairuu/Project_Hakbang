@@ -6,8 +6,8 @@ class College {
   String fbPage;
   String telephone;
   String type;
-  String latitude;
-  String longitude;
+  double latitude;
+  double longitude;
   String logoLink;
   List<dynamic> programs;
   List<dynamic> tags;

@@ -44,6 +44,8 @@ dependencies:
   flutter_map: ^8.2.2
   latlong2: ^0.9.1
   flutter_map_tile_caching: ^10.1.1
+  flutter_osm_plugin: ^1.4.3
+  flutter_dotenv: ^6.0.0
 
 dev_dependencies:
   flutter_test:

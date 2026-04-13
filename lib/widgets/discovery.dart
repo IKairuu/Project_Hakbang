@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
@@ -129,48 +130,55 @@ class _DiscoveryState extends State<Discovery> {
                             return ValueListenableBuilder(
                               valueListenable: selectedSchoolPosition,
                               builder: (context, school, child) {
-                                return FlutterMap(
-                                  options: MapOptions(
-                                    initialCenter: LatLng(
-                                      user!.latitude,
-                                      user.longitude,
-                                    ), // Center the map over London, UK
-                                    initialZoom: 9,
-                                    maxZoom: 9,
+                                return ClipRRect(
+                                  borderRadius: BorderRadiusGeometry.circular(
+                                    20,
                                   ),
-                                  children: [
-                                    TileLayer(
-                                      // Bring your own tiles
-                                      urlTemplate:
-                                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                      userAgentPackageName:
-                                          "com.example.hakbang",
+                                  child: FlutterMap(
+                                    options: MapOptions(
+                                      initialCenter: LatLng(
+                                        user!.latitude,
+                                        user.longitude,
+                                      ), // Center the map over London, UK
+                                      initialZoom: 7,
+                                      maxZoom: 7,
                                     ),
-                                    MarkerLayer(
-                                      markers: [
-                                        Marker(
-                                          point: LatLng(
-                                            school!.latitude,
-                                            school.longitude,
+                                    children: [
+                                      TileLayer(
+                                        // Bring your own tiles
+                                        urlTemplate:
+                                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                        userAgentPackageName:
+                                            "com.example.hakbang",
+                                      ),
+                                      MarkerLayer(
+                                        markers: [
+                                          Marker(
+                                            rotate: true,
+                                            point: LatLng(
+                                              school!.latitude,
+                                              school.longitude,
+                                            ),
+                                            child: Icon(
+                                              Icons.location_on_rounded,
+                                              color: Colors.red,
+                                            ),
                                           ),
-                                          child: Icon(
-                                            Icons.location_on_rounded,
-                                            color: Colors.red,
+                                          Marker(
+                                            rotate: true,
+                                            point: LatLng(
+                                              user.latitude,
+                                              user.longitude,
+                                            ),
+                                            child: Icon(
+                                              Icons.location_history_rounded,
+                                              color: Colors.red,
+                                            ),
                                           ),
-                                        ),
-                                        Marker(
-                                          point: LatLng(
-                                            user.latitude,
-                                            user.longitude,
-                                          ),
-                                          child: Icon(
-                                            Icons.location_history_rounded,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 );
                               },
                             );

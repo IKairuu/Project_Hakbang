@@ -5,7 +5,7 @@ import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/input_design.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/widgets/college_section.dart';
+import 'package:hakbang/builds/college_section.dart';
 
 class Discovery extends StatefulWidget {
   const Discovery({super.key});

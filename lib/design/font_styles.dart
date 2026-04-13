@@ -165,4 +165,16 @@ class FontStyles {
     color: Colors.white,
     fontWeight: FontWeight.w700,
   );
+
+  static final TextStyle inputLabel = GoogleFonts.unbounded(
+    color: Color.fromARGB(255, 97, 105, 109),
+    fontSize: 10,
+    fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle stepSubtitle = GoogleFonts.unbounded(
+    color: Color.fromARGB(255, 97, 105, 109),
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+  );
 }

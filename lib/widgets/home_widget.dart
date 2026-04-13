@@ -139,7 +139,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                           height: HeightsValues.mainPageButtonHeight,
                           child: ElevatedButton(
                             style: ButtonDesign.findSchoolsContainer,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                navigationBarIndex.value = 1;
+                              });
+                            },
                             child: SvgPicture.asset("assets/university.svg"),
                           ),
                         ),
@@ -164,7 +168,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                           height: HeightsValues.mainPageButtonHeight,
                           child: ElevatedButton(
                             style: ButtonDesign.scholarhipContainer,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                navigationBarIndex.value = 2;
+                              });
+                            },
                             child: SvgPicture.asset(
                               "assets/graduation-hat.svg",
                             ),

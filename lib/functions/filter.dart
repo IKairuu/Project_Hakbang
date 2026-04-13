@@ -25,4 +25,27 @@ class Filter {
     }
     Initialization.refreshCollegeSelection();
   }
+
+  static void searchCollege(String input) {
+    collegeSection.value = [];
+    for (var colleges in availableColleges.value) {
+      for (String key in input.toLowerCase().split(" ")) {
+        if (selectedFilter.value[0]) {
+          if (colleges.collegeName.toLowerCase().split(" ").contains(key)) {
+            collegeSection.value.add(colleges);
+          }
+        } else if (selectedFilter.value[1]) {
+          if (colleges.collegeName.toLowerCase().split(" ").contains(key) &&
+              colleges.type == "state university") {
+            collegeSection.value.add(colleges);
+          }
+        } else {
+          if (colleges.collegeName.toLowerCase().split(" ").contains(key) &&
+              colleges.type == "private") {
+            collegeSection.value.add(colleges);
+          }
+        }
+      }
+    }
+  }
 }

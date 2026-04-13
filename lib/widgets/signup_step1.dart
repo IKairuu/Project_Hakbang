@@ -110,6 +110,11 @@ class _SignupStep1State extends State<SignupStep1> {
                   ),
                 ),
               ),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             const SizedBox(height: 5),
             Padding(

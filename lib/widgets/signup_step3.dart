@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/models/identity_option.dart';
 
 class SignupStep3 extends StatefulWidget {
   final VoidCallback onCreate;
@@ -12,6 +13,9 @@ class SignupStep3 extends StatefulWidget {
   final List<String> avatars;
   final String fullName;
   final String email;
+  final int? selectedIdentityIndex;
+  final List<IdentityOption> identities;
+  final String grade;
 
   const SignupStep3({
     super.key,
@@ -21,6 +25,9 @@ class SignupStep3 extends StatefulWidget {
     required this.avatars,
     required this.fullName,
     required this.email,
+    required this.selectedIdentityIndex,
+    required this.identities,
+    required this.grade,
   });
 
   @override
@@ -67,20 +74,19 @@ class _SignupStep3State extends State<SignupStep3> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 12),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        width: 70,
-                        height: 70,
+                        width: 50,
+                        height: 50,
                         decoration: ContainerDesign.signupSelectionOptionSelected,
                         child: Center(
                           child: Text(
                             widget.selectedAvatarIndex != null
                                 ? widget.avatars[widget.selectedAvatarIndex!]
                                 : '🙂',
-                            style: const TextStyle(fontSize: 36),
+                            style: const TextStyle(fontSize: 20),
                           ),
                         ),
                       ),
@@ -99,7 +105,6 @@ class _SignupStep3State extends State<SignupStep3> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            const SizedBox(height: 4),
                             Text(
                               widget.email.isNotEmpty
                                   ? widget.email
@@ -111,6 +116,41 @@ class _SignupStep3State extends State<SignupStep3> {
                               ),
                             ),
                           ],
+
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: ContainerDesign.pillTagIdentity,
+                        child: Text(
+                          widget.selectedIdentityIndex != null
+                              ? widget.identities[widget.selectedIdentityIndex!].title
+                              : 'Identity',
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: ContainerDesign.pillTagGrade,
+                        child: Text(
+                          widget.grade.isNotEmpty
+                              ? widget.grade
+                              : 'Grade Level',
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],

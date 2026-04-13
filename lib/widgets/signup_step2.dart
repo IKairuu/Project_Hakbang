@@ -171,7 +171,7 @@ class _SignupStep2State extends State<SignupStep2> {
             ),
 
             TextField(
-              controller: widget.gradeController,
+              controller: widget.schoolController,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14,

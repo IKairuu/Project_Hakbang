@@ -96,4 +96,14 @@ class ContainerDesign {
     borderRadius: BorderRadius.circular(20),
     color: Color(0xFF0c1621),
   );
+
+  static final BoxDecoration pillTagIdentity = BoxDecoration(
+    color: Color.fromARGB(69, 199, 255, 77),
+    borderRadius: BorderRadius.circular(20),
+  );
+
+  static final BoxDecoration pillTagGrade = BoxDecoration(
+    color: Color.fromARGB(69, 0, 83, 151),
+    borderRadius: BorderRadius.circular(20),
+  );
 }

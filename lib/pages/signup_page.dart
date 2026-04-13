@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/models/identity_option.dart';
+import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/pages/main_page.dart';
 import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
 import 'package:hakbang/widgets/signup_step3.dart';
@@ -203,6 +206,9 @@ class _SignupPageState extends State<SignupPage> {
                     avatars: avatars,
                     fullName: fullNameController.text,
                     email: emailController.text,
+                    selectedIdentityIndex: _selectedIdentityIndex,
+                    identities: identities,
+                    grade: gradeController.text,
                     onCreate: _onSubmit,
                     onBack: _previousStep,
                   ),
@@ -223,9 +229,14 @@ class _SignupPageState extends State<SignupPage> {
                         "Already have an account? ",
                         style: FontStyles.memberSignIn,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          // Navigate to sign in
+                      TextButton(
+                        onPressed: () async {
+                          userPosition.value = await Locations.getUserLocation();
+                          if (!mounted) return;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const MainPage()),
+                          );
                         },
                         child: Text("Sign In", style: FontStyles.signIntext),
                       ),

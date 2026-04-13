@@ -199,6 +199,10 @@ class _SignupPageState extends State<SignupPage> {
                     onBack: _previousStep,
                   ),
                   SignupStep3(
+                    selectedAvatarIndex: _selectedAvatarIndex,
+                    avatars: avatars,
+                    fullName: fullNameController.text,
+                    email: emailController.text,
                     onCreate: _onSubmit,
                     onBack: _previousStep,
                   ),

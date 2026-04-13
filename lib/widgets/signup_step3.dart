@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
+import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 
 class SignupStep3 extends StatefulWidget {
   final VoidCallback onCreate;
   final VoidCallback onBack;
+  final int? selectedAvatarIndex;
+  final List<String> avatars;
+  final String fullName;
+  final String email;
 
   const SignupStep3({
     super.key,
     required this.onCreate,
     required this.onBack,
+    required this.selectedAvatarIndex,
+    required this.avatars,
+    required this.fullName,
+    required this.email,
   });
 
   @override
@@ -58,53 +67,53 @@ class _SignupStep3State extends State<SignupStep3> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Profile summary',
-                    style: GoogleFonts.unbounded(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
                   const SizedBox(height: 12),
-                  Text(
-                    'This page will show a final review of your selections before you create your account. For now, use this space to display a clean overview of the data you selected in the previous steps.',
-                    style: GoogleFonts.inter(
-                      color: const Color(0xFF9FA1A8),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF272C3F),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Preview will appear here',
-                          style: GoogleFonts.inter(
-                            color: const Color(0xFF9FA1A8),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 70,
+                        height: 70,
+                        decoration: ContainerDesign.signupSelectionOptionSelected,
+                        child: Center(
+                          child: Text(
+                            widget.selectedAvatarIndex != null
+                                ? widget.avatars[widget.selectedAvatarIndex!]
+                                : '🙂',
+                            style: const TextStyle(fontSize: 36),
                           ),
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          'No inputs or buttons yet. This section will later show your final profile preview and confirmation details.',
-                          style: GoogleFonts.inter(
-                            color: const Color(0xFF7A7F8C),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.fullName.isNotEmpty
+                                  ? widget.fullName
+                                  : 'Your Name',
+                              style: GoogleFonts.unbounded(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              widget.email.isNotEmpty
+                                  ? widget.email
+                                  : 'you@example.com',
+                              style: GoogleFonts.inter(
+                                color: const Color(0xFF9FA1A8),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),

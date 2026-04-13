@@ -3,7 +3,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
-import 'package:hakbang/design/input_design.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/builds/college_section.dart';
@@ -32,17 +31,18 @@ class _DiscoveryState extends State<Discovery> {
               Text("Discover Schools", style: FontStyles.discoveryHeader),
               TextField(
                 controller: searchInput,
-                decoration: InputDesign.unfocusedInputDecoration(
-                  'Search school',
-                  prefixIcon: const Opacity(
-                    opacity: 0.5,
-                    child: Icon(
-                      Icons.search_outlined,
-                      size: 20,
-                      color: Color(
-                        0xFF828a8a,
-                      ), // keep or remove, either is fine
-                    ),
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(color: Color(0xFFC8FF4D)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFC8FF4D)),
+                  ),
+                  hintText: "Search school",
+                  suffixIcon: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.search_outlined),
                   ),
                 ),
               ),
@@ -141,6 +141,7 @@ class _DiscoveryState extends State<Discovery> {
                                       ), // Center the map over London, UK
                                       initialZoom: 7,
                                       maxZoom: 7,
+                                      minZoom: 6,
                                     ),
                                     children: [
                                       TileLayer(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
+import 'package:hakbang/design/font_styles.dart';
 
-class SignupStep3 extends StatelessWidget {
+class SignupStep3 extends StatefulWidget {
   final VoidCallback onCreate;
   final VoidCallback onBack;
 
@@ -11,6 +13,14 @@ class SignupStep3 extends StatelessWidget {
     required this.onCreate,
     required this.onBack,
   });
+
+  @override
+  State<SignupStep3> createState() => _SignupStep3State();
+}
+
+class _SignupStep3State extends State<SignupStep3> {
+  bool agreeToTerms = false;
+  bool sendTipsEmail = false;
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +117,102 @@ class SignupStep3 extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(height: 24),
+            // Checkbox options
+            Theme(
+              data: Theme.of(context).copyWith(
+                checkboxTheme: ButtonDesign.checkboxDesign,
+              ),
+              child: Column(
+                children: [
+                  // Terms and Services checkbox
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          value: agreeToTerms,
+                          onChanged: (value) {
+                            setState(() {
+                              agreeToTerms = value ?? false;
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: RichText(
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'I agree to the ',
+                                style: FontStyles.memberSignIn,
+                              ),
+                              TextSpan(
+                                text: 'Terms of Service',
+                                style: FontStyles.signIntext,
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    // Handle Terms of Service tap
+                                  },
+                              ),
+                              TextSpan(
+                                text: ' and ',
+                                style: FontStyles.memberSignIn,
+                              ),
+                              TextSpan(
+                                text: 'Privacy Policy',
+                                style: FontStyles.signIntext,
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    // Handle Privacy Policy tap
+                                  },
+                              ),
+                              TextSpan(
+                                text: '. I understand that my data will be used to personalize my college-planning experience.',
+                                style: FontStyles.memberSignIn,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  // Send tips via email checkbox
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          value: sendTipsEmail,
+                          onChanged: (value) {
+                            setState(() {
+                              sendTipsEmail = value ?? false;
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          'Send me helpful scholarship alerts and study reminders via email. (Optional)',
+                          style: FontStyles.memberSignIn,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: 32),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -114,7 +220,7 @@ class SignupStep3 extends StatelessWidget {
                 SizedBox(
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: onCreate,
+                    onPressed: widget.onCreate,
                     style: ButtonDesign.signUpButton,
                     child: Text(
                       'Create My Account 🎉',
@@ -130,7 +236,7 @@ class SignupStep3 extends StatelessWidget {
                 SizedBox(
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: onBack,
+                    onPressed: widget.onBack,
                     style: ButtonDesign.backButton,
                     child: Text(
                       '← Back',

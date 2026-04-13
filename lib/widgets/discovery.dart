@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
@@ -6,6 +7,7 @@ import 'package:hakbang/design/input_design.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/builds/college_section.dart';
+import 'package:latlong2/latlong.dart';
 
 class Discovery extends StatefulWidget {
   const Discovery({super.key});
@@ -16,6 +18,7 @@ class Discovery extends StatefulWidget {
 
 class _DiscoveryState extends State<Discovery> {
   TextEditingController searchInput = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -106,7 +109,50 @@ class _DiscoveryState extends State<Discovery> {
           ),
           Expanded(
             flex: 3,
-            child: Container(decoration: ContainerDesign.universityLocation),
+            child: Container(
+              decoration: ContainerDesign.universityLocation,
+              child: FlutterMap(
+                options: MapOptions(
+                  initialCenter: LatLng(
+                    13.9411,
+                    121.1622,
+                  ), // Center the map over London, UK
+                  initialZoom: 6,
+                  maxZoom: 6,
+                ),
+                children: [
+                  TileLayer(
+                    // Bring your own tiles
+                    urlTemplate:
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName: "com.example.hakbang",
+                  ),
+                  ValueListenableBuilder(
+                    valueListenable: userPosition,
+                    builder: (context, user, child) {
+                      return MarkerLayer(
+                        markers: [
+                          Marker(
+                            point: LatLng(13.9411, 121.1622),
+                            child: Icon(
+                              Icons.location_on_rounded,
+                              color: Colors.red,
+                            ),
+                          ),
+                          Marker(
+                            point: LatLng(user!.latitude, user.longitude),
+                            child: Icon(
+                              Icons.location_on_rounded,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
           Expanded(
             flex: 3,

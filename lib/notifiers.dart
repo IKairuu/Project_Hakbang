@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hakbang/models/activity.dart';
 import 'package:hakbang/models/college.dart';
 
@@ -25,6 +26,7 @@ ValueNotifier<List<Activity>> activityList = ValueNotifier([
   ),
 ]);
 ValueNotifier<List<bool>> selectedFilter = ValueNotifier([true, false, false]);
+ValueNotifier<Position?> userPosition = ValueNotifier(null);
 ValueNotifier<String?> selectedSchool = ValueNotifier(null);
 ValueNotifier<List<bool>> selectedSchoolHover = ValueNotifier([]);
 ValueNotifier<List<College>> availableColleges = ValueNotifier([]);

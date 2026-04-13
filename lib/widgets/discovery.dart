@@ -30,6 +30,10 @@ class _DiscoveryState extends State<Discovery> {
             children: [
               Text("Discover Schools", style: FontStyles.discoveryHeader),
               TextField(
+                style: TextStyle(color: Colors.white),
+                onSubmitted: (value) {
+                  Filter.searchCollege(searchInput.text);
+                },
                 controller: searchInput,
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
@@ -41,7 +45,9 @@ class _DiscoveryState extends State<Discovery> {
                   ),
                   hintText: "Search school",
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Filter.searchCollege(searchInput.text);
+                    },
                     icon: Icon(Icons.search_outlined),
                   ),
                 ),
@@ -60,6 +66,7 @@ class _DiscoveryState extends State<Discovery> {
                               setState(() {
                                 selectedFilter.value = [true, false, false];
                               });
+                              searchInput.clear();
                               Filter.filterCollegeSection(
                                 availableColleges.value,
                               );
@@ -79,6 +86,7 @@ class _DiscoveryState extends State<Discovery> {
                               setState(() {
                                 selectedFilter.value = [false, true, false];
                               });
+                              searchInput.clear();
                               Filter.filterCollegeSection(
                                 availableColleges.value,
                               );
@@ -98,6 +106,7 @@ class _DiscoveryState extends State<Discovery> {
                               setState(() {
                                 selectedFilter.value = [false, false, true];
                               });
+                              searchInput.clear();
                               Filter.filterCollegeSection(
                                 availableColleges.value,
                               );

@@ -83,25 +83,23 @@ class _SignupStep2State extends State<SignupStep2> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            Wrap(
+              alignment: WrapAlignment.start,
               spacing: 10,
               children: List.generate(5, (index) {
                 final isSelected = widget.selectedAvatarIndex == index;
-                return Expanded(
-                  child: GestureDetector(
-                    onTap: () => widget.onAvatarSelected(index),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: isSelected
-                          ? ContainerDesign.signupSelectionOptionSelected
-                          : ContainerDesign.signupIdentityOptionUnselected,
-                      child: Center(
-                        child: Text(
-                          widget.avatars[index],
-                          style: const TextStyle(fontSize: 24),
-                        ),
+                return GestureDetector(
+                  onTap: () => widget.onAvatarSelected(index),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: isSelected
+                        ? ContainerDesign.signupSelectionOptionSelected
+                        : ContainerDesign.signupIdentityOptionUnselected,
+                    child: Center(
+                      child: Text(
+                        widget.avatars[index],
+                        style: const TextStyle(fontSize: 24),
                       ),
                     ),
                   ),

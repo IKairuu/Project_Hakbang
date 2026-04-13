@@ -5,6 +5,7 @@ import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/models/identity_option.dart';
 import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
+import 'package:hakbang/widgets/signup_step3.dart';
 import 'package:hakbang/widgets/signup_progress_indicator.dart';
 
 class SignupPage extends StatefulWidget {
@@ -95,10 +96,6 @@ class _SignupPageState extends State<SignupPage> {
         curve: Curves.easeInOut,
       );
     }
-  }
-
-  void _onSubmit() {
-    // UI-only form; add submission behavior later.
   }
 
   @override
@@ -194,9 +191,10 @@ class _SignupPageState extends State<SignupPage> {
                         _selectedIdentityIndex = index;
                       });
                     },
-                    onContinue: _onSubmit,
+                    onContinue: _nextStep,
                     onBack: _previousStep,
                   ),
+                  const SignupStep3(),
                 ],
               ),
             ),

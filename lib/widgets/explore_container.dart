@@ -60,11 +60,7 @@ class ExploreContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Browse 500+ colleges and universities across the",
-                  style: FontStyles.obSlideDesc,
-                ),
-                Text(
-                  "Philippines. Filter by course, location, and entrance exam",
+                  "Browse 500+ colleges and universities across the Philippines. Filter by course, location, and entrance exam",
                   style: FontStyles.obSlideDesc,
                 ),
               ],

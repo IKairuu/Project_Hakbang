@@ -50,4 +50,45 @@ class ButtonDesign {
       ),
     ),
   );
+
+  static final ButtonStyle filterUniversitySelected = ElevatedButton.styleFrom(
+    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+    backgroundColor: Color(0xFF232a17),
+    shape: RoundedRectangleBorder(
+      side: BorderSide(color: Color(0xFFc6fd4c)),
+      borderRadius: BorderRadiusGeometry.circular(20),
+    ),
+  );
+
+  static final ButtonStyle filterUniversityUnselected =
+      ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        backgroundColor: Color(0xFF1c1e27),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Color(0xFF2a2c35)),
+          borderRadius: BorderRadiusGeometry.circular(20),
+        ),
+      );
+
+  static final ButtonStyle collegeSection = ElevatedButton.styleFrom();
+
+  // Checkbox design - lime green when checked
+  static final CheckboxThemeData checkboxDesign = CheckboxThemeData(
+    fillColor: WidgetStateProperty.resolveWith<Color>(
+      (Set<WidgetState> states) {
+        if (states.contains(WidgetState.selected)) {
+          return const Color(0xFFC8FF4D); // Lime green when checked
+        }
+        return const Color(0xFF343943); // Dark gray when unchecked
+      },
+    ),
+    checkColor: WidgetStateProperty.all(Colors.black),
+    side: const BorderSide(
+      color: Color(0xFF343943),
+      width: 1.5,
+    ),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(4),
+    ),
+  );
 }

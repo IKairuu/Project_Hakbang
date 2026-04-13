@@ -18,7 +18,6 @@ class FontStyles {
   static final TextStyle obSlideDesc = GoogleFonts.dmSans(
     fontSize: 14,
     fontWeight: FontWeight.w700,
-    height: 1.6,
     color: Color(0xF0F1F5).withOpacity(0.65),
   );
 
@@ -138,5 +137,44 @@ class FontStyles {
   static final TextStyle signIntext = GoogleFonts.inter(
     color: Color(0xFFC8FF4D),
     fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle discoveryHeader = GoogleFonts.dmSans(
+    color: Colors.white,
+    fontWeight: FontWeight.w800,
+    fontSize: 27,
+  );
+
+  static final TextStyle filterLabelSelected = TextStyle(
+    color: Color(0xFFc6fd4c),
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle filterLabelUnselected = TextStyle(
+    color: Color(0xFF7d7e86),
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle availSchoolsLabel = GoogleFonts.dmSans(
+    fontSize: 15,
+    color: Color(0xFF7d7e81),
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle mapLabel = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle inputLabel = GoogleFonts.unbounded(
+    color: Color.fromARGB(255, 97, 105, 109),
+    fontSize: 10,
+    fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle stepSubtitle = GoogleFonts.unbounded(
+    color: Color.fromARGB(255, 97, 105, 109),
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
   );
 }

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/input_design.dart';
+import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/models/identity_option.dart';
 
 class SignupStep2 extends StatefulWidget {
@@ -52,22 +53,14 @@ class _SignupStep2State extends State<SignupStep2> {
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
                 "Your profile 🎓",
-                style: GoogleFonts.unbounded(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.header,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
               child: Text(
                 "Step 2 of 3 — Let us personalize your experience",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.stepSubtitle,
               ),
             ),
 
@@ -76,11 +69,7 @@ class _SignupStep2State extends State<SignupStep2> {
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
                 "CHOOSE YOUR AVATAR",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.inputLabel,
               ),
             ),
             Row(
@@ -114,11 +103,7 @@ class _SignupStep2State extends State<SignupStep2> {
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
                 "I AM A",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.inputLabel,
               ),
             ),
             Row(
@@ -181,11 +166,7 @@ class _SignupStep2State extends State<SignupStep2> {
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
                 "SCHOOL / INSTITUTION",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.inputLabel,
               ),
             ),
 
@@ -218,11 +199,7 @@ class _SignupStep2State extends State<SignupStep2> {
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
                 "GRADE LEVEL",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.inputLabel,
               ),
             ),
 

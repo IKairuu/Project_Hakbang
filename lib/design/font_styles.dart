@@ -25,7 +25,7 @@ class FontStyles {
   );
 
   static final TextStyle memberSignIn = GoogleFonts.inter(
-    color: Color(0xFF828a8a),
+    color: Color.fromRGBO(240, 240, 245, 0.50),
     fontWeight: FontWeight.w600,
   );
 
@@ -120,5 +120,17 @@ class FontStyles {
   static final TextStyle signIntext = GoogleFonts.inter(
     color: Color(0xFFC8FF4D),
     fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle inputLabel = GoogleFonts.unbounded(
+    color: Color.fromARGB(255, 97, 105, 109),
+    fontSize: 10,
+    fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle stepSubtitle = GoogleFonts.unbounded(
+    color: Color.fromARGB(255, 97, 105, 109),
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
   );
 }

@@ -34,22 +34,14 @@ class _SignupStep3State extends State<SignupStep3> {
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
                 "Almost done! 🚀",
-                style: GoogleFonts.unbounded(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.header,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
               child: Text(
                 "Step 3 of 3 — Review and confirm",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.stepSubtitle,
               ),
             ),
             Container(

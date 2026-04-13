@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/input_design.dart';
+import 'package:hakbang/design/font_styles.dart';
 
 class SignupStep1 extends StatefulWidget {
   final TextEditingController fullNameController;
@@ -50,33 +51,21 @@ class _SignupStep1State extends State<SignupStep1> {
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
                 "Create account ✨",
-                style: GoogleFonts.unbounded(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.header,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
               child: Text(
                 "Step 1 of 3 — Your account details",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.stepSubtitle,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8),
               child: Text(
                 "FULL NAME",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.inputLabel,
               ),
             ),
             TextField(
@@ -105,11 +94,7 @@ class _SignupStep1State extends State<SignupStep1> {
               padding: const EdgeInsets.all(8),
               child: Text(
                 "EMAIL ADDRESS",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.inputLabel,
               ),
             ),
             TextField(
@@ -131,11 +116,7 @@ class _SignupStep1State extends State<SignupStep1> {
               padding: const EdgeInsets.all(8),
               child: Text(
                 "PASSWORD",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.inputLabel,
               ),
             ),
             TextField(
@@ -176,11 +157,7 @@ class _SignupStep1State extends State<SignupStep1> {
               padding: const EdgeInsets.all(8),
               child: Text(
                 "CONFIRM PASSWORD",
-                style: GoogleFonts.unbounded(
-                  color: const Color.fromARGB(255, 97, 105, 109),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: FontStyles.inputLabel,
               ),
             ),
             TextField(

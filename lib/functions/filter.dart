@@ -1,3 +1,4 @@
+import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
 
@@ -22,5 +23,6 @@ class Filter {
         }
       }
     }
+    Initialization.refreshCollegeSelection();
   }
 }

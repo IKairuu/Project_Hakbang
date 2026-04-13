@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
@@ -47,6 +48,7 @@ class _CollegeSectionState extends State<CollegeSection> {
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
@@ -126,6 +128,31 @@ class _CollegeSectionState extends State<CollegeSection> {
                             ),
                           ],
                         ),
+                        selected[widget.sectionIndex]
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    style: ButtonDesign.mainButton,
+                                    onPressed: () {
+                                      setState(() {
+                                        selectedSchool.value =
+                                            widget.college.collegeName;
+                                      });
+                                    },
+                                    child: Text(
+                                      "Select",
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : SizedBox(),
                       ],
                     ),
                   ),

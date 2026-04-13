@@ -71,12 +71,8 @@ class _ScholarshipAiState extends State<ScholarshipAi> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Discover scholarships matched to your profile and",
-                  style: FontStyles.appDetails,
-                ),
-                Text(
-                  "chat with Gabay AI — your 24/7 college advisor.",
-                  style: FontStyles.appDetails,
+                  "Discover scholarships matched to your profile and chat with Gabay AI — your 24/7 college advisor.",
+                  style: FontStyles.obSlideDesc,
                 ),
               ],
             ),

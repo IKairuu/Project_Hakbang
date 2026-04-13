@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'app_colors.dart';
 
 class FontStyles {
+  // HEADING
   static final TextStyle mainHeadingLeft = GoogleFonts.unbounded(
     color: Colors.white,
     fontSize: 35,
@@ -13,23 +15,37 @@ class FontStyles {
     fontWeight: FontWeight.w900,
     letterSpacing: -1.5,
   );
-  static final TextStyle appDetails = GoogleFonts.inter(
+  static final TextStyle obSlideDesc = GoogleFonts.dmSans(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: Color(0xF0F1F5).withOpacity(0.65),
+  );
+
+  static final TextStyle homeGreeting = GoogleFonts.dmSans(
+    fontSize: 28,
+    fontWeight: FontWeight.w900,
+    letterSpacing: -0.5,
+    height: 1.2,
+    color: AppColors.textPrimary,
+  );
+
+  static final TextStyle appDetails = GoogleFonts.dmSans(
     color: Color(0xFF828a8a),
     fontWeight: FontWeight.w600,
   );
 
-  static final TextStyle getStarted = GoogleFonts.inter(
+  static final TextStyle getStarted = GoogleFonts.dmSans(
     color: Colors.black,
     fontWeight: FontWeight.w700,
     fontSize: 20,
   );
 
-  static final TextStyle memberSignIn = GoogleFonts.inter(
-    color: Color.fromRGBO(240, 240, 245, 0.50),
+  static final TextStyle memberSignIn = GoogleFonts.dmSans(
+    color: Color(0xFF828a8a),
     fontWeight: FontWeight.w600,
   );
 
-  static final TextStyle textButtonStyle = GoogleFonts.inter(
+  static final TextStyle textButtonStyle = GoogleFonts.dmSans(
     color: Color(0xFFC8FF4D),
     fontWeight: FontWeight.w700,
   );
@@ -41,7 +57,7 @@ class FontStyles {
 
   static final TextStyle header = TextStyle(
     color: Colors.white,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w800,
     fontSize: 35,
   );
 
@@ -50,24 +66,24 @@ class FontStyles {
     color: Color(0xFFa755f6),
   );
 
-  static final TextStyle schoolNames = GoogleFonts.inter(
+  static final TextStyle schoolNames = GoogleFonts.dmSans(
     fontSize: 14,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
 
-  static final TextStyle schoolLocation = GoogleFonts.inter(
+  static final TextStyle schoolLocation = GoogleFonts.dmSans(
     color: Color(0xFF828a8a),
     fontWeight: FontWeight.w600,
     fontSize: 10,
   );
 
-  static final TextStyle mainPageheader = GoogleFonts.inter(
+  static final TextStyle mainPageheader = GoogleFonts.dmSans(
     color: Colors.white,
     fontWeight: FontWeight.w600,
     fontSize: 30,
   );
-  static final TextStyle mainPageUnderName = GoogleFonts.inter(
+  static final TextStyle mainPageUnderName = GoogleFonts.dmSans(
     color: Color(0xFF828a8a),
     fontWeight: FontWeight.w600,
     fontSize: 15,
@@ -103,7 +119,8 @@ class FontStyles {
   static final recentActivityLabel = TextStyle(
     color: Colors.white,
     fontSize: 20,
-    fontWeight: FontWeight.w600,
+    letterSpacing: -0.3,
+    fontWeight: FontWeight.w800,
   );
 
   static final activityDescriptionStyle = TextStyle(
@@ -119,6 +136,33 @@ class FontStyles {
   );
   static final TextStyle signIntext = GoogleFonts.inter(
     color: Color(0xFFC8FF4D),
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle discoveryHeader = GoogleFonts.dmSans(
+    color: Colors.white,
+    fontWeight: FontWeight.w800,
+    fontSize: 27,
+  );
+
+  static final TextStyle filterLabelSelected = TextStyle(
+    color: Color(0xFFc6fd4c),
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle filterLabelUnselected = TextStyle(
+    color: Color(0xFF7d7e86),
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle availSchoolsLabel = GoogleFonts.dmSans(
+    fontSize: 15,
+    color: Color(0xFF7d7e81),
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle mapLabel = TextStyle(
+    color: Colors.white,
     fontWeight: FontWeight.w700,
   );
 

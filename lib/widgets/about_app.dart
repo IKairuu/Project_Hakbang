@@ -33,17 +33,17 @@ class AboutApp extends StatelessWidget {
             ),
             Text(
               "Your intelligent guide to college in the",
-              style: FontStyles.appDetails,
+              style: FontStyles.obSlideDesc,
             ),
             Text(
               "Philippines. Explore schools, find",
-              style: FontStyles.appDetails,
+              style: FontStyles.obSlideDesc,
             ),
             Text(
               "scholarships, and plan your path — all in",
-              style: FontStyles.appDetails,
+              style: FontStyles.obSlideDesc,
             ),
-            Text("one place.", style: FontStyles.appDetails),
+            Text("one place.", style: FontStyles.obSlideDesc),
           ],
         ),
       ),

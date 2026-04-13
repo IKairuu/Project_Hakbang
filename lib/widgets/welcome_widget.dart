@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/smooth_page_indicator_design.dart';
+import 'package:hakbang/functions/locations.dart';
+import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/main_page.dart';
 import 'package:hakbang/pages/signup_page.dart';
 import 'package:hakbang/widgets/about_app.dart';
@@ -98,7 +100,8 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   children: [
                     Text("Already a member?", style: FontStyles.memberSignIn),
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        userPosition.value = await Locations.getUserLocation();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => MainPage()),

@@ -29,6 +29,10 @@ class Database {
           logoLink: college["logo_link"],
           programs: college["program_offered"],
           tags: college["tags"],
+          collegeImage: college["college_image"],
+          rating: college["rating"],
+          programNumbers: college["program_numbers"],
+          about: college["about"],
         ),
       );
     }

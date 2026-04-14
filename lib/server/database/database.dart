@@ -34,4 +34,16 @@ class Database {
     }
     availableColleges.value = colleges;
   }
+
+  static Future<void> signupUser(Map<String, dynamic> userData) async {
+    final url = Uri.https("project-hakbang-server.onrender.com", "user/signup");
+    final headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    final data = jsonEncode(userData["data"]);
+    var response = await http.post(url, headers: headers, body: data);
+    final message = jsonDecode(response.body);
+    return message["message"];
+  }
 }

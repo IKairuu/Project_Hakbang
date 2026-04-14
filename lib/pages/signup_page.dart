@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/design/background_design.dart';
+import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/functions/locations.dart';
+import 'package:hakbang/functions/verifications.dart';
+import 'package:hakbang/main.dart';
 import 'package:hakbang/models/identity_option.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/main_page.dart';
+import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
 import 'package:hakbang/widgets/signup_step3.dart';
@@ -101,7 +105,88 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
-  void _onSubmit() {
+  void _onSubmit() async {
+    final data = {
+      "data": {
+        "name": fullNameController.text,
+        "email": emailController.text,
+        "password": passwordController.text,
+        "avatar": avatars[_selectedAvatarIndex!],
+        "occupation": identities[_selectedIdentityIndex!].title,
+        "institution": schoolController.text,
+        "grade": gradeController.text,
+      },
+    };
+    await Database.signupUser(data)
+        .then((value) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                backgroundColor: Color(0xFF343943),
+                title: Text(
+                  "Setup successfull",
+                  style: TextStyle(color: Colors.white),
+                ),
+                actions: [
+                  ElevatedButton(
+                    style: ButtonDesign.alertDialog,
+                    onPressed: () {
+                      fullNameController.clear();
+                      emailController.clear();
+                      passwordController.clear();
+                      confirmPasswordController.clear();
+                      _selectedAvatarIndex = null;
+                      _selectedIdentityIndex = null;
+                      schoolController.clear();
+                      gradeController.clear();
+                      agreeToTerms.value = false;
+                      Navigator.of(context).pop();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyHomePage()),
+                        (route) => false,
+                      );
+                    },
+                    child: Text("Ok"),
+                  ),
+                ],
+              );
+            },
+          );
+        })
+        .onError((error, stackTrace) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text("Server Error"),
+              backgroundColor: Color(0xFF343943),
+              actions: [
+                ElevatedButton(
+                  style: ButtonDesign.alertDialog,
+                  onPressed: () {
+                    fullNameController.clear();
+                    emailController.clear();
+                    passwordController.clear();
+                    confirmPasswordController.clear();
+                    _selectedAvatarIndex = null;
+                    _selectedIdentityIndex = null;
+                    schoolController.clear();
+                    gradeController.clear();
+                    agreeToTerms.value = false;
+                    Navigator.of(context).pop();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyHomePage()),
+                      (route) => false,
+                    );
+                  },
+                  child: Text("Ok"),
+                ),
+              ],
+            ),
+          );
+        });
     // UI-only form; add submission behavior later.
   }
 
@@ -176,7 +261,59 @@ class _SignupPageState extends State<SignupPage> {
                         showConfirmPassword = !showConfirmPassword;
                       });
                     },
-                    onContinue: _nextStep,
+                    onContinue: () {
+                      if (!Verifications.verifyCredentials([
+                        fullNameController.text,
+                        emailController.text,
+                        passwordController.text,
+                        passwordController.text,
+                      ])) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text("Required fields are not filled"),
+                          ),
+                        );
+                      } else if (!Verifications.checkPasswordLength(
+                        passwordController.text,
+                      )) {
+                        passwordController.clear();
+                        confirmPasswordController.clear();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text("Password must be 8 characters long"),
+                          ),
+                        );
+                      } else if (!Verifications.checkPasswordFormat(
+                        passwordController.text,
+                      )) {
+                        passwordController.clear();
+                        confirmPasswordController.clear();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              "Password must contain upper case, lower case and numbers",
+                            ),
+                          ),
+                        );
+                      } else if (!Verifications.checkPasswordMatch(
+                        passwordController.text,
+                        confirmPasswordController.text,
+                      )) {
+                        passwordController.clear();
+                        confirmPasswordController.clear();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text("Passwords do not match"),
+                          ),
+                        );
+                      } else {
+                        _nextStep();
+                      }
+                    },
                     onSignIn: () {
                       // Navigate to sign in
                     },
@@ -198,7 +335,21 @@ class _SignupPageState extends State<SignupPage> {
                         _selectedIdentityIndex = index;
                       });
                     },
-                    onContinue: _nextStep,
+                    onContinue: () {
+                      if (_selectedAvatarIndex == null ||
+                          _selectedIdentityIndex == null ||
+                          schoolController.text.trim().isEmpty ||
+                          gradeController.text.trim().isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text("Required fields are not filled"),
+                          ),
+                        );
+                      } else {
+                        _nextStep();
+                      }
+                    },
                     onBack: _previousStep,
                   ),
                   SignupStep3(
@@ -209,7 +360,20 @@ class _SignupPageState extends State<SignupPage> {
                     selectedIdentityIndex: _selectedIdentityIndex,
                     identities: identities,
                     grade: gradeController.text,
-                    onCreate: _onSubmit,
+                    onCreate: () {
+                      if (!Verifications.checkTerms()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              "Please check if you agree to the terms",
+                            ),
+                          ),
+                        );
+                      } else {
+                        _onSubmit();
+                      }
+                    },
                     onBack: _previousStep,
                   ),
                 ],
@@ -231,11 +395,14 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       TextButton(
                         onPressed: () async {
-                          userPosition.value = await Locations.getUserLocation();
+                          userPosition.value =
+                              await Locations.getUserLocation();
                           if (!mounted) return;
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const MainPage()),
+                            MaterialPageRoute(
+                              builder: (context) => const MainPage(),
+                            ),
                           );
                         },
                         child: Text("Sign In", style: FontStyles.signIntext),

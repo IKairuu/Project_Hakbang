@@ -75,9 +75,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignupPage(),
-                          ),
+                          MaterialPageRoute(builder: (context) => SignupPage()),
                         );
                       },
                       style: ButtonDesign.mainButton,

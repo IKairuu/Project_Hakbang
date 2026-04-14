@@ -26,6 +26,7 @@ ValueNotifier<List<Activity>> activityList = ValueNotifier([
     date: "Mar. 2, 2026",
   ),
 ]);
+ValueNotifier<bool> agreeToTerms = ValueNotifier(false);
 ValueNotifier<List<bool>> selectedFilter = ValueNotifier([true, false, false]);
 ValueNotifier<Position?> userPosition = ValueNotifier(null);
 ValueNotifier<LatLng?> selectedSchoolPosition = ValueNotifier(null);

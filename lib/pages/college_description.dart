@@ -1,10 +1,12 @@
 import 'package:faded_scrollable/faded_scrollable.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/models/college.dart';
+import 'package:latlong2/latlong.dart';
 
 class CollegeDescription extends StatefulWidget {
   const CollegeDescription({super.key, required this.college});
@@ -15,7 +17,8 @@ class CollegeDescription extends StatefulWidget {
 }
 
 class _CollegeDescriptionState extends State<CollegeDescription> {
-  final ScrollController scroll = ScrollController();
+  final ScrollController tagScroll = ScrollController();
+  final ScrollController programScroll = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -282,7 +285,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       gradientFractionOnEnd: 0.3,
                       gradientFractionOnStart: 0.3,
                       child: ListView.builder(
-                        controller: scroll,
+                        controller: tagScroll,
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Container(
@@ -318,22 +321,27 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                   ),
                   SizedBox(
                     height: 150,
-                    child: ListView.builder(
-                      itemCount: widget.college.programs.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Color(0xFF1d1d2a),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Text(
-                            widget.college.programs[index],
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.dmSans(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
+                    child: FadingEdgeScrollView.fromScrollView(
+                      gradientFractionOnEnd: 0.3,
+                      gradientFractionOnStart: 0.3,
+                      child: ListView.builder(
+                        controller: programScroll,
+                        itemCount: widget.college.programs.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Color(0xFF1d1d2a),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text(
+                              widget.college.programs[index],
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.dmSans(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
                           ),
                         ),
@@ -341,6 +349,231 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                     ),
                   ),
                   Divider(color: Color(0xFF7d7e86), thickness: 0.5),
+                  Text(
+                    "CONTACT",
+                    style: GoogleFonts.dmSans(
+                      letterSpacing: 3,
+                      fontSize: 20,
+                      color: Color(0xFF505157),
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Color(0xFF1d1d2a),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Color(0xFF243335),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Icon(
+                                Icons.phone_enabled_rounded,
+                                color: Color(0xFF85f5c7),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "TELEPHONE",
+                                style: GoogleFonts.dmSans(
+                                  letterSpacing: 1,
+                                  fontSize: 15,
+                                  color: Color(0xFF505157),
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              Text(
+                                widget.college.telephone,
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Color(0xFF1d1d2a),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Color(0xFF243335),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Image.network(
+                                "https://images.icon-icons.com/1826/PNG/512/4202011emailgmaillogomailsocialsocialmedia-115677_115624.png",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "EMAIL",
+                                style: GoogleFonts.dmSans(
+                                  letterSpacing: 1,
+                                  fontSize: 15,
+                                  color: Color(0xFF505157),
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              Text(
+                                widget.college.email,
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Color(0xFF1d1d2a),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Color(0xFF243335),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadiusGeometry.circular(10),
+                                child: Image.network(
+                                  "https://img.freepik.com/premium-vector/blue-social-media-logo_197792-1759.jpg?semt=ais_hybrid&w=740&q=80",
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "FACEBOOK",
+                                  style: GoogleFonts.dmSans(
+                                    letterSpacing: 1,
+                                    fontSize: 15,
+                                    color: Color(0xFF505157),
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                Text(
+                                  widget.college.fbPage,
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(color: Color(0xFF7d7e86), thickness: 0.5),
+                  Text(
+                    "LOCATION",
+                    style: GoogleFonts.dmSans(
+                      letterSpacing: 3,
+                      fontSize: 20,
+                      color: Color(0xFF505157),
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 20),
+                    child: SizedBox(
+                      height: 200,
+                      width: double.infinity,
+                      child: ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(20),
+                        child: FlutterMap(
+                          options: MapOptions(
+                            initialCenter: LatLng(
+                              widget.college.latitude,
+                              widget.college.longitude,
+                            ), // Center the map over London, UK
+                            initialZoom: 7,
+                            maxZoom: 7,
+                            minZoom: 6,
+                          ),
+                          children: [
+                            TileLayer(
+                              // Bring your own tiles
+                              urlTemplate:
+                                  'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                              userAgentPackageName: "com.example.hakbang",
+                            ),
+                            MarkerLayer(
+                              markers: [
+                                Marker(
+                                  rotate: true,
+                                  point: LatLng(
+                                    widget.college.latitude,
+                                    widget.college.longitude,
+                                  ),
+                                  child: Icon(
+                                    Icons.location_on_rounded,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

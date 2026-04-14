@@ -47,6 +47,7 @@ dependencies:
   flutter_osm_plugin: ^1.4.3
   flutter_dotenv: ^6.0.0
   faded_scrollable: ^1.0.1
+  fading_edge_scrollview: ^4.1.1
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:faded_scrollable/faded_scrollable.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
@@ -14,6 +15,7 @@ class CollegeDescription extends StatefulWidget {
 }
 
 class _CollegeDescriptionState extends State<CollegeDescription> {
+  final ScrollController scroll = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -276,20 +278,23 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                   ),
                   SizedBox(
                     height: 50,
-                    child: FadedScrollable(
+                    child: FadingEdgeScrollView.fromScrollView(
+                      gradientFractionOnEnd: 0.3,
+                      gradientFractionOnStart: 0.3,
                       child: ListView.builder(
+                        controller: scroll,
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Container(
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Color(0xFF1d1d29),
+                              color: Color(0xFFC8FF4D),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Text(
                               "#${widget.college.tags[index]}",
                               style: GoogleFonts.dmSans(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w800,
                                 fontSize: 20,
                               ),
@@ -301,6 +306,41 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       ),
                     ),
                   ),
+                  Divider(color: Color(0xFF7d7e86), thickness: 0.5),
+                  Text(
+                    "PROGRAMS OFFERED",
+                    style: GoogleFonts.dmSans(
+                      letterSpacing: 3,
+                      fontSize: 20,
+                      color: Color(0xFF505157),
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 150,
+                    child: ListView.builder(
+                      itemCount: widget.college.programs.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Color(0xFF1d1d2a),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Text(
+                            widget.college.programs[index],
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.dmSans(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Divider(color: Color(0xFF7d7e86), thickness: 0.5),
                 ],
               ),
             ),

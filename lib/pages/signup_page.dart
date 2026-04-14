@@ -189,6 +189,8 @@ class _SignupPageState extends State<SignupPage> {
                         );
                       } else if (passwordController.text !=
                           confirmPasswordController.text) {
+                        passwordController.clear();
+                        confirmPasswordController.clear();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             behavior: SnackBarBehavior.floating,

@@ -95,15 +95,115 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Text(
-                    widget.college.collegeName,
-                    style: FontStyles.collegeLabel,
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Image.network(
+                            widget.college.logoLink,
+                            height: 60,
+                            width: 60,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.college.collegeName,
+                              style: FontStyles.collegeLabel,
+                            ),
+                            Text(
+                              "📍 ${widget.college.address}",
+                              style: FontStyles.addressLabel,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Text(
-                  "📍 ${widget.college.address}",
-                  style: FontStyles.addressLabel,
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF1d1d2a),
+                      borderRadius: BorderRadius.circular(15),
+                      border: BoxBorder.all(color: Color(0xFF7d7e86)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.college.programNumbers,
+                                style: GoogleFonts.dmSans(
+                                  color: Color(0xFFd9fe84),
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                "PROGRAMS",
+                                style: GoogleFonts.dmSans(
+                                  color: Color(0xFF7d7e86),
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: VerticalDivider(
+                            width: 5,
+                            color: Color(0xFF7d7e86),
+                            thickness: 1,
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "TOP #${widget.college.ranking}",
+                                style: GoogleFonts.dmSans(
+                                  color: Color(0xFFa755f6),
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                "RANKING",
+                                style: GoogleFonts.dmSans(
+                                  color: Color(0xFF7d7e86),
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

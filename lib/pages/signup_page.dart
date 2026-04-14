@@ -395,15 +395,28 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       TextButton(
                         onPressed: () async {
-                          userPosition.value =
-                              await Locations.getUserLocation();
-                          if (!mounted) return;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MainPage(),
-                            ),
-                          );
+                          try {
+                            await Locations.initializeLocationServices();
+                            userPosition.value =
+                                await Locations.getUserLocation();
+                            if (!mounted) return;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const MainPage(),
+                              ),
+                            );
+                          } catch (e) {
+                            if (!mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                content: Text(
+                                  'Location permission required to sign in',
+                                ),
+                              ),
+                            );
+                          }
                         },
                         child: Text("Sign In", style: FontStyles.signIntext),
                       ),

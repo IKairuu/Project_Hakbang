@@ -9,13 +9,11 @@ import 'package:hakbang/main.dart';
 import 'package:hakbang/models/identity_option.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/main_page.dart';
-import 'package:hakbang/pages/start_page.dart';
 import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
 import 'package:hakbang/widgets/signup_step3.dart';
 import 'package:hakbang/widgets/signup_progress_indicator.dart';
-import 'package:hakbang/widgets/welcome_widget.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});

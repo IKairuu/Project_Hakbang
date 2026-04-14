@@ -176,7 +176,29 @@ class _SignupPageState extends State<SignupPage> {
                         showConfirmPassword = !showConfirmPassword;
                       });
                     },
-                    onContinue: _nextStep,
+                    onContinue: () {
+                      if (fullNameController.text.trim().isEmpty ||
+                          passwordController.text.trim().isEmpty ||
+                          confirmPasswordController.text.trim().isEmpty ||
+                          emailController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text("Required fields are not field"),
+                          ),
+                        );
+                      } else if (passwordController.text !=
+                          confirmPasswordController.text) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text("Passwords does not match"),
+                          ),
+                        );
+                      } else {
+                        _nextStep();
+                      }
+                    },
                     onSignIn: () {
                       // Navigate to sign in
                     },
@@ -231,11 +253,14 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       TextButton(
                         onPressed: () async {
-                          userPosition.value = await Locations.getUserLocation();
+                          userPosition.value =
+                              await Locations.getUserLocation();
                           if (!mounted) return;
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const MainPage()),
+                            MaterialPageRoute(
+                              builder: (context) => const MainPage(),
+                            ),
                           );
                         },
                         child: Text("Sign In", style: FontStyles.signIntext),

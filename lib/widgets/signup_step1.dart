@@ -49,10 +49,7 @@ class _SignupStep1State extends State<SignupStep1> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                "Create account ✨",
-                style: FontStyles.header,
-              ),
+              child: Text("Create account ✨", style: FontStyles.header),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
@@ -63,10 +60,7 @@ class _SignupStep1State extends State<SignupStep1> {
             ),
             Padding(
               padding: const EdgeInsets.all(8),
-              child: Text(
-                "FULL NAME",
-                style: FontStyles.inputLabel,
-              ),
+              child: Text("FULL NAME", style: FontStyles.inputLabel),
             ),
             TextField(
               controller: widget.fullNameController,
@@ -92,10 +86,7 @@ class _SignupStep1State extends State<SignupStep1> {
             const SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.all(8),
-              child: Text(
-                "EMAIL ADDRESS",
-                style: FontStyles.inputLabel,
-              ),
+              child: Text("EMAIL ADDRESS", style: FontStyles.inputLabel),
             ),
             TextField(
               controller: widget.emailController,
@@ -119,10 +110,7 @@ class _SignupStep1State extends State<SignupStep1> {
             const SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.all(8),
-              child: Text(
-                "PASSWORD",
-                style: FontStyles.inputLabel,
-              ),
+              child: Text("PASSWORD", style: FontStyles.inputLabel),
             ),
             TextField(
               controller: widget.passwordController,
@@ -160,10 +148,7 @@ class _SignupStep1State extends State<SignupStep1> {
             const SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.all(8),
-              child: Text(
-                "CONFIRM PASSWORD",
-                style: FontStyles.inputLabel,
-              ),
+              child: Text("CONFIRM PASSWORD", style: FontStyles.inputLabel),
             ),
             TextField(
               controller: widget.confirmPasswordController,

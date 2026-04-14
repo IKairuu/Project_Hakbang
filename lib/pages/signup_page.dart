@@ -184,7 +184,7 @@ class _SignupPageState extends State<SignupPage> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             behavior: SnackBarBehavior.floating,
-                            content: Text("Required fields are not field"),
+                            content: Text("Required fields are not filled"),
                           ),
                         );
                       } else if (passwordController.text !=
@@ -222,7 +222,21 @@ class _SignupPageState extends State<SignupPage> {
                         _selectedIdentityIndex = index;
                       });
                     },
-                    onContinue: _nextStep,
+                    onContinue: () {
+                      if (_selectedAvatarIndex == null ||
+                          _selectedIdentityIndex == null ||
+                          schoolController.text.trim().isEmpty ||
+                          gradeController.text.trim().isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text("Required fields are not filled"),
+                          ),
+                        );
+                      } else {
+                        _nextStep();
+                      }
+                    },
                     onBack: _previousStep,
                   ),
                   SignupStep3(

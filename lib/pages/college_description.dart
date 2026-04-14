@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/models/college.dart';
 
@@ -15,6 +16,11 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFC8FF4D),
+        elevation: 10,
+        shadowColor: Color(0xFFC8FF4D),
+      ),
       backgroundColor: Color(0xFF121318),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -97,6 +103,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
@@ -203,6 +210,61 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                         ),
                       ],
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15, bottom: 10),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ButtonDesign.mainButton,
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Save",
+                            style: GoogleFonts.dmSans(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Icon(
+                            Icons.bookmark_border_outlined,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(color: Color(0xFF7d7e86), thickness: 0.5),
+                Text(
+                  "ABOUT",
+                  style: GoogleFonts.dmSans(
+                    letterSpacing: 3,
+                    fontSize: 20,
+                    color: Color(0xFF505157),
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: Text(
+                    widget.college.about,
+                    style: FontStyles.appDetails,
+                  ),
+                ),
+                Text(
+                  "TAGS",
+                  style: GoogleFonts.dmSans(
+                    letterSpacing: 3,
+                    fontSize: 20,
+                    color: Color(0xFF505157),
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ],

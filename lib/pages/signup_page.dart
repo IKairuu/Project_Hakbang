@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/design/background_design.dart';
+import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/verifications.dart';
+import 'package:hakbang/main.dart';
 import 'package:hakbang/models/identity_option.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/main_page.dart';
@@ -13,6 +15,7 @@ import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
 import 'package:hakbang/widgets/signup_step3.dart';
 import 'package:hakbang/widgets/signup_progress_indicator.dart';
+import 'package:hakbang/widgets/welcome_widget.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -122,9 +125,14 @@ class _SignupPageState extends State<SignupPage> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: Text("Setup successfull"),
+                backgroundColor: Color(0xFF343943),
+                title: Text(
+                  "Setup successfull",
+                  style: TextStyle(color: Colors.white),
+                ),
                 actions: [
-                  TextButton(
+                  ElevatedButton(
+                    style: ButtonDesign.alertDialog,
                     onPressed: () {
                       fullNameController.clear();
                       emailController.clear();
@@ -135,6 +143,12 @@ class _SignupPageState extends State<SignupPage> {
                       schoolController.clear();
                       gradeController.clear();
                       agreeToTerms.value = false;
+                      Navigator.of(context).pop();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyHomePage()),
+                        (route) => false,
+                      );
                     },
                     child: Text("Ok"),
                   ),
@@ -144,7 +158,36 @@ class _SignupPageState extends State<SignupPage> {
           );
         })
         .onError((error, stackTrace) {
-          print(error);
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text("Server Error"),
+              backgroundColor: Color(0xFF343943),
+              actions: [
+                ElevatedButton(
+                  style: ButtonDesign.alertDialog,
+                  onPressed: () {
+                    fullNameController.clear();
+                    emailController.clear();
+                    passwordController.clear();
+                    confirmPasswordController.clear();
+                    _selectedAvatarIndex = null;
+                    _selectedIdentityIndex = null;
+                    schoolController.clear();
+                    gradeController.clear();
+                    agreeToTerms.value = false;
+                    Navigator.of(context).pop();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyHomePage()),
+                      (route) => false,
+                    );
+                  },
+                  child: Text("Ok"),
+                ),
+              ],
+            ),
+          );
         });
     // UI-only form; add submission behavior later.
   }
@@ -270,7 +313,6 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         );
                       } else {
-                        print(passwordController.text);
                         _nextStep();
                       }
                     },

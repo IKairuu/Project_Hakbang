@@ -7,6 +7,8 @@ import 'package:hakbang/functions/verifications.dart';
 import 'package:hakbang/models/identity_option.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/main_page.dart';
+import 'package:hakbang/pages/start_page.dart';
+import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
 import 'package:hakbang/widgets/signup_step3.dart';
@@ -102,7 +104,48 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
-  void _onSubmit() {
+  void _onSubmit() async {
+    final data = {
+      "data": {
+        "name": fullNameController.text,
+        "email": emailController.text,
+        "password": passwordController.text,
+        "avatar": avatars[_selectedAvatarIndex!],
+        "occupation": identities[_selectedIdentityIndex!].title,
+        "institution": schoolController.text,
+        "grade": gradeController.text,
+      },
+    };
+    await Database.signupUser(data)
+        .then((value) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text("Setup successfull"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      fullNameController.clear();
+                      emailController.clear();
+                      passwordController.clear();
+                      confirmPasswordController.clear();
+                      _selectedAvatarIndex = null;
+                      _selectedIdentityIndex = null;
+                      schoolController.clear();
+                      gradeController.clear();
+                      agreeToTerms.value = false;
+                    },
+                    child: Text("Ok"),
+                  ),
+                ],
+              );
+            },
+          );
+        })
+        .onError((error, stackTrace) {
+          print(error);
+        });
     // UI-only form; add submission behavior later.
   }
 

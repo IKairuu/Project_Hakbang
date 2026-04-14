@@ -33,6 +33,7 @@ class Database {
           rating: college["rating"],
           programNumbers: college["program_numbers"],
           about: college["about"],
+          ranking: college["ranking"],
         ),
       );
     }

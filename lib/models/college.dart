@@ -12,9 +12,10 @@ class College {
   List<dynamic> programs;
   List<dynamic> tags;
   String collegeImage;
-  double rating;
+  String rating;
   String programNumbers;
   String about;
+  String ranking;
 
   College({
     required this.id,
@@ -33,5 +34,6 @@ class College {
     required this.rating,
     required this.programNumbers,
     required this.about,
+    required this.ranking,
   });
 }

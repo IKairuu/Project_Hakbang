@@ -19,6 +19,7 @@ class CollegeDescription extends StatefulWidget {
 class _CollegeDescriptionState extends State<CollegeDescription> {
   final ScrollController tagScroll = ScrollController();
   final ScrollController programScroll = ScrollController();
+  final ScrollController fullScroll = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +31,11 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
       backgroundColor: Color(0xFF121318),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: FadedScrollable(
+        child: FadingEdgeScrollView.fromSingleChildScrollView(
+          gradientFractionOnEnd: 0.2,
+          gradientFractionOnStart: 0.2,
           child: SingleChildScrollView(
+            controller: fullScroll,
             child: SizedBox(
               width: double.infinity,
               child: Column(
@@ -282,8 +286,8 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                   SizedBox(
                     height: 50,
                     child: FadingEdgeScrollView.fromScrollView(
-                      gradientFractionOnEnd: 0.3,
-                      gradientFractionOnStart: 0.3,
+                      gradientFractionOnEnd: 0.2,
+                      gradientFractionOnStart: 0.2,
                       child: ListView.builder(
                         controller: tagScroll,
                         itemBuilder: (context, index) => Padding(
@@ -322,8 +326,8 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                   SizedBox(
                     height: 150,
                     child: FadingEdgeScrollView.fromScrollView(
-                      gradientFractionOnEnd: 0.3,
-                      gradientFractionOnStart: 0.3,
+                      gradientFractionOnEnd: 0.2,
+                      gradientFractionOnStart: 0.2,
                       child: ListView.builder(
                         controller: programScroll,
                         itemCount: widget.college.programs.length,

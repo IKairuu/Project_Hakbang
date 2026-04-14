@@ -5,6 +5,7 @@ import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/models/identity_option.dart';
+import 'package:hakbang/notifiers.dart';
 
 class SignupStep3 extends StatefulWidget {
   final VoidCallback onCreate;
@@ -35,7 +36,6 @@ class SignupStep3 extends StatefulWidget {
 }
 
 class _SignupStep3State extends State<SignupStep3> {
-  bool agreeToTerms = false;
   bool sendTipsEmail = false;
 
   @override
@@ -175,12 +175,17 @@ class _SignupStep3State extends State<SignupStep3> {
                       SizedBox(
                         width: 24,
                         height: 24,
-                        child: Checkbox(
-                          value: agreeToTerms,
-                          onChanged: (value) {
-                            setState(() {
-                              agreeToTerms = value ?? false;
-                            });
+                        child: ValueListenableBuilder(
+                          valueListenable: agreeToTerms,
+                          builder: (context, agree, child) {
+                            return Checkbox(
+                              value: agree,
+                              onChanged: (value) {
+                                setState(() {
+                                  agreeToTerms.value = value!;
+                                });
+                              },
+                            );
                           },
                         ),
                       ),

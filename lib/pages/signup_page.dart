@@ -3,6 +3,7 @@ import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/functions/locations.dart';
+import 'package:hakbang/functions/verifications.dart';
 import 'package:hakbang/models/identity_option.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/main_page.dart';
@@ -177,27 +178,56 @@ class _SignupPageState extends State<SignupPage> {
                       });
                     },
                     onContinue: () {
-                      if (fullNameController.text.trim().isEmpty ||
-                          passwordController.text.trim().isEmpty ||
-                          confirmPasswordController.text.trim().isEmpty ||
-                          emailController.text.isEmpty) {
+                      if (!Verifications.verifyCredentials([
+                        fullNameController.text,
+                        emailController.text,
+                        passwordController.text,
+                        passwordController.text,
+                      ])) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             behavior: SnackBarBehavior.floating,
                             content: Text("Required fields are not filled"),
                           ),
                         );
-                      } else if (passwordController.text !=
-                          confirmPasswordController.text) {
+                      } else if (!Verifications.checkPasswordLength(
+                        passwordController.text,
+                      )) {
                         passwordController.clear();
                         confirmPasswordController.clear();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             behavior: SnackBarBehavior.floating,
-                            content: Text("Passwords does not match"),
+                            content: Text("Password must be 8 characters long"),
+                          ),
+                        );
+                      } else if (!Verifications.checkPasswordFormat(
+                        passwordController.text,
+                      )) {
+                        passwordController.clear();
+                        confirmPasswordController.clear();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              "Password must contain upper case, lower case and numbers",
+                            ),
+                          ),
+                        );
+                      } else if (!Verifications.checkPasswordMatch(
+                        passwordController.text,
+                        confirmPasswordController.text,
+                      )) {
+                        passwordController.clear();
+                        confirmPasswordController.clear();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text("Passwords do not match"),
                           ),
                         );
                       } else {
+                        print(passwordController.text);
                         _nextStep();
                       }
                     },
@@ -247,7 +277,20 @@ class _SignupPageState extends State<SignupPage> {
                     selectedIdentityIndex: _selectedIdentityIndex,
                     identities: identities,
                     grade: gradeController.text,
-                    onCreate: _onSubmit,
+                    onCreate: () {
+                      if (!Verifications.checkTerms()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              "Please check if you agree to the terms",
+                            ),
+                          ),
+                        );
+                      } else {
+                        _onSubmit();
+                      }
+                    },
                     onBack: _previousStep,
                   ),
                 ],

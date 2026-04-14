@@ -5,6 +5,7 @@ import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/models/identity_option.dart';
+import 'package:hakbang/notifiers.dart';
 
 class SignupStep3 extends StatefulWidget {
   final VoidCallback onCreate;
@@ -35,7 +36,6 @@ class SignupStep3 extends StatefulWidget {
 }
 
 class _SignupStep3State extends State<SignupStep3> {
-  bool agreeToTerms = false;
   bool sendTipsEmail = false;
 
   @override
@@ -48,10 +48,7 @@ class _SignupStep3State extends State<SignupStep3> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                "Almost done! 🚀",
-                style: FontStyles.header,
-              ),
+              child: Text("Almost done! 🚀", style: FontStyles.header),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
@@ -66,10 +63,7 @@ class _SignupStep3State extends State<SignupStep3> {
               decoration: BoxDecoration(
                 color: const Color(0xFF1f2231),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: const Color(0xFF343943),
-                  width: 1,
-                ),
+                border: Border.all(color: const Color(0xFF343943), width: 1),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +74,8 @@ class _SignupStep3State extends State<SignupStep3> {
                       Container(
                         width: 50,
                         height: 50,
-                        decoration: ContainerDesign.signupSelectionOptionSelected,
+                        decoration:
+                            ContainerDesign.signupSelectionOptionSelected,
                         child: Center(
                           child: Text(
                             widget.selectedAvatarIndex != null
@@ -116,7 +111,6 @@ class _SignupStep3State extends State<SignupStep3> {
                               ),
                             ),
                           ],
-
                         ),
                       ),
                     ],
@@ -125,11 +119,16 @@ class _SignupStep3State extends State<SignupStep3> {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
                         decoration: ContainerDesign.pillTagIdentity,
                         child: Text(
                           widget.selectedIdentityIndex != null
-                              ? widget.identities[widget.selectedIdentityIndex!].title
+                              ? widget
+                                    .identities[widget.selectedIdentityIndex!]
+                                    .title
                               : 'Identity',
                           style: GoogleFonts.inter(
                             color: Colors.white,
@@ -140,7 +139,10 @@ class _SignupStep3State extends State<SignupStep3> {
                       ),
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
                         decoration: ContainerDesign.pillTagGrade,
                         child: Text(
                           widget.grade.isNotEmpty
@@ -161,9 +163,9 @@ class _SignupStep3State extends State<SignupStep3> {
             const SizedBox(height: 24),
             // Checkbox options
             Theme(
-              data: Theme.of(context).copyWith(
-                checkboxTheme: ButtonDesign.checkboxDesign,
-              ),
+              data: Theme.of(
+                context,
+              ).copyWith(checkboxTheme: ButtonDesign.checkboxDesign),
               child: Column(
                 children: [
                   // Terms and Services checkbox
@@ -173,12 +175,17 @@ class _SignupStep3State extends State<SignupStep3> {
                       SizedBox(
                         width: 24,
                         height: 24,
-                        child: Checkbox(
-                          value: agreeToTerms,
-                          onChanged: (value) {
-                            setState(() {
-                              agreeToTerms = value ?? false;
-                            });
+                        child: ValueListenableBuilder(
+                          valueListenable: agreeToTerms,
+                          builder: (context, agree, child) {
+                            return Checkbox(
+                              value: agree,
+                              onChanged: (value) {
+                                setState(() {
+                                  agreeToTerms.value = value!;
+                                });
+                              },
+                            );
                           },
                         ),
                       ),
@@ -214,7 +221,8 @@ class _SignupStep3State extends State<SignupStep3> {
                                   },
                               ),
                               TextSpan(
-                                text: '. I understand that my data will be used to personalize my college-planning experience.',
+                                text:
+                                    '. I understand that my data will be used to personalize my college-planning experience.',
                                 style: FontStyles.memberSignIn,
                               ),
                             ],

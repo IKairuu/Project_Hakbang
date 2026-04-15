@@ -6,11 +6,10 @@ class ButtonDesign {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
   );
 
-  // Sign Up button - lime green
   static final ButtonStyle signUpButton = ElevatedButton.styleFrom(
     backgroundColor: const Color(0xFFC8FF4D),
     padding: const EdgeInsets.symmetric(vertical: 14),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     elevation: 0,
   );
 
@@ -37,13 +36,10 @@ class ButtonDesign {
 
   static final ButtonStyle backButton = ElevatedButton.styleFrom(
     backgroundColor: const Color(0xFF0c0d10),
-
     minimumSize: const Size(double.infinity, 52),
 
-    elevation: 0,
-
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(16),
       side: const BorderSide(
         color: Color.fromARGB(255, 104, 104, 104),
         width: 1,
@@ -74,21 +70,21 @@ class ButtonDesign {
 
   // Checkbox design - lime green when checked
   static final CheckboxThemeData checkboxDesign = CheckboxThemeData(
-    fillColor: WidgetStateProperty.resolveWith<Color>(
-      (Set<WidgetState> states) {
-        if (states.contains(WidgetState.selected)) {
-          return const Color(0xFFC8FF4D); // Lime green when checked
-        }
-        return const Color(0xFF343943); // Dark gray when unchecked
-      },
-    ),
+    fillColor: WidgetStateProperty.resolveWith<Color>((
+      Set<WidgetState> states,
+    ) {
+      if (states.contains(WidgetState.selected)) {
+        return const Color(0xFFC8FF4D); // Lime green when checked
+      }
+      return const Color(0xFF343943); // Dark gray when unchecked
+    }),
     checkColor: WidgetStateProperty.all(Colors.black),
-    side: const BorderSide(
-      color: Color(0xFF343943),
-      width: 1.5,
-    ),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(4),
-    ),
+    side: const BorderSide(color: Color(0xFF343943), width: 1.5),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+  );
+
+  static final ButtonStyle alertDialog = ElevatedButton.styleFrom(
+    backgroundColor: Color(0xFFC8FF4D),
+    padding: EdgeInsets.all(5),
   );
 }

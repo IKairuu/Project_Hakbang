@@ -21,6 +21,23 @@ class WelcomeWidget extends StatefulWidget {
 class _WelcomeWidgetState extends State<WelcomeWidget> {
   final scrollIndicator = PageController();
   final List<Widget> indicatorPages = [AboutApp(), ExploreContainer()];
+
+  @override
+  void initState() {
+    super.initState();
+    _initLocation();
+  }
+
+  Future<void> _initLocation() async {
+    try {
+      await Locations.initializeLocationServices();
+      final position = await Locations.getUserLocation();
+      debugPrint('Location: $position');
+    } catch (e) {
+      debugPrint('Location error: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -75,9 +92,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignupPage(),
-                          ),
+                          MaterialPageRoute(builder: (context) => SignupPage()),
                         );
                       },
                       style: ButtonDesign.mainButton,
@@ -101,11 +116,26 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                     Text("Already a member?", style: FontStyles.memberSignIn),
                     TextButton(
                       onPressed: () async {
-                        userPosition.value = await Locations.getUserLocation();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MainPage()),
-                        );
+                        try {
+                          await Locations.initializeLocationServices();
+                          userPosition.value =
+                              await Locations.getUserLocation();
+                          if (!mounted) return;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MainPage()),
+                          );
+                        } catch (e) {
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              behavior: SnackBarBehavior.floating,
+                              content: Text(
+                                'Location permission required to sign in',
+                              ),
+                            ),
+                          );
+                        }
                       },
                       child: Text("Sign In", style: FontStyles.textButtonStyle),
                     ),

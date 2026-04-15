@@ -1,9 +1,9 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/notifiers.dart';
 
 class Scholarship extends StatefulWidget {
@@ -14,25 +14,6 @@ class Scholarship extends StatefulWidget {
 
 class _ScholarshipState extends State<Scholarship> {
   int matchIndex = Random().nextInt(availableScholarships.value.length - 1);
-  Widget _stat(String value, String label, Color color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          value,
-          style: GoogleFonts.inter(
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
-            color: color,
-          ),
-        ),
-        Text(
-          label,
-          style: GoogleFonts.inter(fontSize: 12, color: Colors.white38),
-        ),
-      ],
-    );
-  }
 
   Widget _scholarshipItem({
     required String title,
@@ -223,10 +204,7 @@ class _ScholarshipState extends State<Scholarship> {
                     SizedBox(width: 8),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Open website: $website')),
-                        );
+                        Launcher.launchBrowserView(Uri.parse(website));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.accent,
@@ -400,7 +378,14 @@ class _ScholarshipState extends State<Scholarship> {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () => _showScholarshipDetails(
+                                title: scholarships[matchIndex].title,
+                                subtitle: scholarships[matchIndex].subtitle,
+                                description:
+                                    scholarships[matchIndex].description,
+                                details: scholarships[matchIndex].details,
+                                website: scholarships[matchIndex].website,
+                              ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Color(0xFFC8FF4D),
                                 foregroundColor: Colors.black,
@@ -424,28 +409,15 @@ class _ScholarshipState extends State<Scholarship> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "All Scholarships",
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                      letterSpacing: -0.5,
-                    ),
-                  ),
-                  Text(
-                    "Filter",
-                    style: GoogleFonts.inter(
-                      color: AppColors.accent,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      letterSpacing: -0.5,
-                    ),
-                  ),
-                ],
+
+              Text(
+                "All Scholarships",
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  letterSpacing: -0.5,
+                ),
               ),
               Expanded(
                 child: ListView.builder(

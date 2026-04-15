@@ -60,6 +60,8 @@ class Database {
           description: scholars["description"],
           details: scholars["details"],
           website: scholars["website"],
+          limit: scholars["limit"],
+          slots: scholars["slots"],
         ),
       );
     }

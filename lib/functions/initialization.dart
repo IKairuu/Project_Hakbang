@@ -6,7 +6,6 @@ class Initialization {
     await Database.getCollege();
     await Database.getScholarships();
 
-    print(availableScholarships.value);
     collegeSection.value = availableColleges.value;
     refreshCollegeSelection();
   }

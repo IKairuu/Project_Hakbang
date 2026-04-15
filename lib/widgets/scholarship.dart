@@ -345,7 +345,10 @@ class _ScholarshipState extends State<Scholarship> {
                     SizedBox(height: 6),
                     Text(
                       "Department of Science and Technology · Philippines",
-                      style: GoogleFonts.inter(fontSize: 13, color: Colors.white54),
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        color: Colors.white54,
+                      ),
                     ),
                     SizedBox(height: 20),
                     Row(

@@ -36,7 +36,6 @@ class ButtonDesign {
 
   static final ButtonStyle backButton = ElevatedButton.styleFrom(
     backgroundColor: const Color(0xFF0c0d10),
-
     minimumSize: const Size(double.infinity, 52),
 
     shape: RoundedRectangleBorder(

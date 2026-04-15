@@ -48,6 +48,7 @@ dependencies:
   flutter_dotenv: ^6.0.0
   faded_scrollable: ^1.0.1
   fading_edge_scrollview: ^4.1.1
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

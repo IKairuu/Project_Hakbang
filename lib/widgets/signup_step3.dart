@@ -80,7 +80,7 @@ class _SignupStep3State extends State<SignupStep3> {
                             widget.selectedAvatarIndex != null
                                 ? widget.avatars[widget.selectedAvatarIndex!]
                                 : '🙂',
-                            style: const TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 25),
                           ),
                         ),
                       ),

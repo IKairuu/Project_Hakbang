@@ -177,4 +177,16 @@ class FontStyles {
     fontSize: 12,
     fontWeight: FontWeight.w500,
   );
+
+  static final TextStyle collegeLabel = GoogleFonts.dmSans(
+    color: Colors.white,
+    fontWeight: FontWeight.w800,
+    fontSize: 18,
+  );
+
+  static final TextStyle addressLabel = GoogleFonts.dmSans(
+    color: Color(0xFF7d7e86),
+    fontWeight: FontWeight.w600,
+    fontSize: 12,
+  );
 }

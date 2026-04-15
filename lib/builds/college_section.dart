@@ -4,6 +4,7 @@ import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/pages/college_description.dart';
 import 'package:latlong2/latlong.dart';
 
 class CollegeSection extends StatefulWidget {
@@ -141,10 +142,15 @@ class _CollegeSectionState extends State<CollegeSection> {
                                   child: ElevatedButton(
                                     style: ButtonDesign.mainButton,
                                     onPressed: () {
-                                      setState(() {
-                                        selectedSchool.value =
-                                            widget.college.collegeName;
-                                      });
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CollegeDescription(
+                                                college: widget.college,
+                                              ),
+                                        ),
+                                      );
                                     },
                                     child: Text(
                                       "Select",

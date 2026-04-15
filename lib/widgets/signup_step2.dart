@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/input_design.dart';
@@ -50,7 +49,7 @@ class _SignupStep2State extends State<SignupStep2> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: 5),
               child: Text(
                 "Your profile 🎓",
                 style: FontStyles.header,
@@ -172,11 +171,7 @@ class _SignupStep2State extends State<SignupStep2> {
 
             TextField(
               controller: widget.schoolController,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: FontStyles.inputText,
               decoration: _getInputDecoration('e.g. Ateneo de Manila HS')
                   .copyWith(
                     prefixIcon: Padding(
@@ -205,11 +200,7 @@ class _SignupStep2State extends State<SignupStep2> {
 
             TextField(
               controller: widget.gradeController,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: FontStyles.inputText,
               decoration: _getInputDecoration('e.g. Grade 12').copyWith(
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 12, right: 6),
@@ -238,11 +229,7 @@ class _SignupStep2State extends State<SignupStep2> {
                     style: ButtonDesign.signUpButton,
                     child: Text(
                       'Continue →',
-                      style: GoogleFonts.inter(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: FontStyles.continueButton,
                     ),
                   ),
                 ),
@@ -256,11 +243,7 @@ class _SignupStep2State extends State<SignupStep2> {
                     style: ButtonDesign.backButton,
                     child: Text(
                       '← Back',
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: FontStyles.backButton,
                     ),
                   ),
                 ),

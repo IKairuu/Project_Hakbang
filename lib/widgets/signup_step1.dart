@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/input_design.dart';
 import 'package:hakbang/design/font_styles.dart';
@@ -48,7 +47,7 @@ class _SignupStep1State extends State<SignupStep1> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: 5),
               child: Text("Create account ✨", style: FontStyles.header),
             ),
             Padding(
@@ -77,11 +76,7 @@ class _SignupStep1State extends State<SignupStep1> {
                   minHeight: 0,
                 ),
               ),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: FontStyles.inputText,
             ),
             const SizedBox(height: 5),
             Padding(
@@ -101,11 +96,7 @@ class _SignupStep1State extends State<SignupStep1> {
                   ),
                 ),
               ),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: FontStyles.inputText,
             ),
             const SizedBox(height: 5),
             Padding(
@@ -139,11 +130,7 @@ class _SignupStep1State extends State<SignupStep1> {
                       onPressed: widget.onPasswordVisibilityToggle,
                     ),
                   ),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: FontStyles.inputText,
             ),
             const SizedBox(height: 5),
             Padding(
@@ -176,11 +163,7 @@ class _SignupStep1State extends State<SignupStep1> {
                   onPressed: widget.onConfirmPasswordVisibilityToggle,
                 ),
               ),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: FontStyles.inputText,
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -191,11 +174,7 @@ class _SignupStep1State extends State<SignupStep1> {
                 style: ButtonDesign.signUpButton,
                 child: Text(
                   'Continue →',
-                  style: GoogleFonts.inter(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: FontStyles.continueButton,
                 ),
               ),
             ),

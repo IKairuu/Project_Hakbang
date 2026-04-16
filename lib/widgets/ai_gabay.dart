@@ -150,7 +150,7 @@ class _AiGabayState extends State<AiGabay> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 20, 24, 14),
+            padding: const EdgeInsets.fromLTRB(24, 58, 24, 14),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hakbang/models/activity.dart';
+import 'package:hakbang/models/ai_message.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/models/scholarship_object.dart';
 import 'package:latlong2/latlong.dart';
@@ -38,3 +39,4 @@ ValueNotifier<List<ScholarshipObject>> availableScholarships = ValueNotifier(
   [],
 );
 ValueNotifier<List<College>> collegeSection = ValueNotifier([]);
+ValueNotifier<List<AiMessage>> chatMessages = ValueNotifier([]);

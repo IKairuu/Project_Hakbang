@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-
-class AiMessage {
-  final String text;
-  final bool isUser;
-
-  AiMessage({required this.text, required this.isUser});
-}
+import 'package:hakbang/models/ai_message.dart';
+import 'package:hakbang/notifiers.dart';
+import 'package:intl/intl.dart';
 
 class AiGabay extends StatefulWidget {
   const AiGabay({super.key});
@@ -18,28 +14,12 @@ class _AiGabayState extends State<AiGabay> {
   final TextEditingController _inputController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
-  final List<AiMessage> _messages = [
-    AiMessage(
-      text:
-          'Hi Maria! 👋 I\'m Gabay, your college planning assistant. I can help you choose the right school, find scholarships, understand entrance exams, and calculate your UPG. What would you like to explore today?',
-      isUser: false,
-    ),
-    AiMessage(
-      text: 'What\'s the difference between ACET and DCAT?',
-      isUser: true,
-    ),
-    AiMessage(
-      text:
-          'Great question! Here\'s a quick comparison:\n\nACET (Ateneo College Entrance Test)\n• Offered by Ateneo de Manila\n• Tests verbal, math, and abstract reasoning\n• Strong focus on communication skills\n\nDCAT (De La Salle College Admissions Test)\n• Offered by DLSU\n• Covers English, math, and science\n• More STEM-focused structure\n\nBoth are competitive — your choice depends on which school fits your program and values best! 🎯',
-      isUser: false,
-    ),
-  ];
   final List<String> _suggestionChips = [
     'What is UPCAT?',
     'Best STEM schools',
     'Scholarship tips',
     'UPG calculator help',
-    'Review timetable',
+    'Review chatTimetable',
   ];
 
   void sendMessage(String text) {
@@ -47,7 +27,13 @@ class _AiGabayState extends State<AiGabay> {
     if (trimmed.isEmpty) return;
 
     setState(() {
-      _messages.add(AiMessage(text: trimmed, isUser: true));
+      chatMessages.value.add(
+        AiMessage(
+          text: trimmed,
+          isUser: true,
+          chatTime: DateFormat('hh:mm a').format(DateTime.now()),
+        ),
+      );
       _inputController.clear();
     });
 
@@ -55,8 +41,12 @@ class _AiGabayState extends State<AiGabay> {
 
     Future.delayed(const Duration(milliseconds: 1200), () {
       setState(() {
-        _messages.add(
-          AiMessage(text: 'Let me look that up for you... 🔍', isUser: false),
+        chatMessages.value.add(
+          AiMessage(
+            text: 'Let me look that up for you... 🔍',
+            isUser: false,
+            chatTime: DateFormat('hh:mm a').format(DateTime.now()),
+          ),
         );
       });
       _scrollToBottom();
@@ -135,7 +125,6 @@ class _AiGabayState extends State<AiGabay> {
     const accent = Color(0xFFC8FF4D);
     const accentDim = Color(0x1CC8FF4D);
     const textPrimary = Color(0xFFF0F1F5);
-    const textSecondary = Color(0x8CF0F1F5);
     const textMuted = Color(0x4DF0F1F5);
 
     return Container(
@@ -144,26 +133,7 @@ class _AiGabayState extends State<AiGabay> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(28, 58, 28, 10),
-            child: Row(
-              children: [
-                const Text(
-                  '9:41',
-                  style: TextStyle(
-                    color: textPrimary,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const Spacer(),
-                Icon(Icons.signal_cellular_alt, size: 18, color: textSecondary),
-                const SizedBox(width: 10),
-                Icon(Icons.battery_full, size: 18, color: textSecondary),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 14),
+            padding: const EdgeInsets.fromLTRB(24, 20, 24, 14),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -218,87 +188,97 @@ class _AiGabayState extends State<AiGabay> {
                     ],
                   ),
                 ),
-                const Text(
-                  '⋯',
-                  style: TextStyle(color: textSecondary, fontSize: 20),
-                ),
               ],
             ),
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 8),
-                  Center(
-                    child: Text(
-                      'Today · 9:38 AM',
-                      style: const TextStyle(color: textMuted, fontSize: 11),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Expanded(
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      padding: EdgeInsets.zero,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: _messages.length,
-                      itemBuilder: (context, index) {
-                        final message = _messages[index];
-                        if (!message.isUser) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Container(
-                                  width: 28,
-                                  height: 28,
-                                  decoration: BoxDecoration(
-                                    color: accentDim,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: accent, width: 1),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      '🤖',
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                _buildBubble(message),
-                              ],
+              child: ValueListenableBuilder(
+                valueListenable: chatMessages,
+                builder: (context, messages, child) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Center(
+                          child: Text(
+                            'Today · ${messages[0].chatTime} ',
+                            style: const TextStyle(
+                              color: textMuted,
+                              fontSize: 11,
                             ),
-                          );
-                        }
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Spacer(),
-                              _buildBubble(message),
-                              const Padding(
-                                padding: EdgeInsets.only(left: 6, bottom: 4),
-                                child: Text(
-                                  '9:40',
-                                  style: TextStyle(
-                                    color: textMuted,
-                                    fontSize: 10,
-                                  ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Expanded(
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          padding: EdgeInsets.zero,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: messages.length,
+                          itemBuilder: (context, index) {
+                            final message = messages[index];
+                            if (!message.isUser) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      width: 28,
+                                      height: 28,
+                                      decoration: BoxDecoration(
+                                        color: accentDim,
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: accent,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          '🤖',
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    _buildBubble(message),
+                                  ],
+                                ),
+                              );
+                            }
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: SizedBox(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    _buildBubble(message),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 4),
+                                      child: Text(
+                                        messages[index].chatTime,
+                                        style: const TextStyle(
+                                          color: textMuted,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ),

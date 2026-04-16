@@ -6,11 +6,10 @@ class ButtonDesign {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
   );
 
-  // Sign Up button - lime green
   static final ButtonStyle signUpButton = ElevatedButton.styleFrom(
     backgroundColor: const Color(0xFFC8FF4D),
     padding: const EdgeInsets.symmetric(vertical: 14),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     elevation: 0,
   );
 
@@ -37,13 +36,10 @@ class ButtonDesign {
 
   static final ButtonStyle backButton = ElevatedButton.styleFrom(
     backgroundColor: const Color(0xFF0c0d10),
-
     minimumSize: const Size(double.infinity, 52),
 
-    elevation: 0,
-
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(16),
       side: const BorderSide(
         color: Color.fromARGB(255, 104, 104, 104),
         width: 1,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
@@ -47,7 +46,7 @@ class _SignupStep3State extends State<SignupStep3> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: 5),
               child: Text("Almost done! 🚀", style: FontStyles.header),
             ),
             Padding(
@@ -81,7 +80,7 @@ class _SignupStep3State extends State<SignupStep3> {
                             widget.selectedAvatarIndex != null
                                 ? widget.avatars[widget.selectedAvatarIndex!]
                                 : '🙂',
-                            style: const TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 25),
                           ),
                         ),
                       ),
@@ -94,21 +93,13 @@ class _SignupStep3State extends State<SignupStep3> {
                               widget.fullName.isNotEmpty
                                   ? widget.fullName
                                   : 'Your Name',
-                              style: GoogleFonts.unbounded(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                              ),
+                              style: FontStyles.previewName,
                             ),
                             Text(
                               widget.email.isNotEmpty
                                   ? widget.email
                                   : 'you@example.com',
-                              style: GoogleFonts.inter(
-                                color: const Color(0xFF9FA1A8),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: FontStyles.previewEmail,
                             ),
                           ],
                         ),
@@ -130,11 +121,7 @@ class _SignupStep3State extends State<SignupStep3> {
                                     .identities[widget.selectedIdentityIndex!]
                                     .title
                               : 'Identity',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: FontStyles.previewPillText,
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -148,11 +135,7 @@ class _SignupStep3State extends State<SignupStep3> {
                           widget.grade.isNotEmpty
                               ? widget.grade
                               : 'Grade Level',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: FontStyles.previewPillText,
                         ),
                       ),
                     ],
@@ -202,7 +185,7 @@ class _SignupStep3State extends State<SignupStep3> {
                               ),
                               TextSpan(
                                 text: 'Terms of Service',
-                                style: FontStyles.signIntext,
+                                style: FontStyles.highlightText,
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     // Handle Terms of Service tap
@@ -214,7 +197,7 @@ class _SignupStep3State extends State<SignupStep3> {
                               ),
                               TextSpan(
                                 text: 'Privacy Policy',
-                                style: FontStyles.signIntext,
+                                style: FontStyles.highlightText,
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     // Handle Privacy Policy tap
@@ -273,11 +256,7 @@ class _SignupStep3State extends State<SignupStep3> {
                     style: ButtonDesign.signUpButton,
                     child: Text(
                       'Create My Account 🎉',
-                      style: GoogleFonts.inter(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: FontStyles.continueButton,
                     ),
                   ),
                 ),
@@ -289,11 +268,7 @@ class _SignupStep3State extends State<SignupStep3> {
                     style: ButtonDesign.backButton,
                     child: Text(
                       '← Back',
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: FontStyles.backButton,
                     ),
                   ),
                 ),

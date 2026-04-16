@@ -144,26 +144,7 @@ class _AiGabayState extends State<AiGabay> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(28, 58, 28, 10),
-            child: Row(
-              children: [
-                const Text(
-                  '9:41',
-                  style: TextStyle(
-                    color: textPrimary,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const Spacer(),
-                Icon(Icons.signal_cellular_alt, size: 18, color: textSecondary),
-                const SizedBox(width: 10),
-                Icon(Icons.battery_full, size: 18, color: textSecondary),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 14),
+            padding: const EdgeInsets.fromLTRB(24, 58, 24, 14),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

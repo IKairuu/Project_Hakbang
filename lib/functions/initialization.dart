@@ -26,7 +26,7 @@ class Initialization {
       AiMessage(
         text:
             'Hi <Name>! 👋 I\'m Gabay, your college planning assistant. I can help you choose the right school, find scholarships, understand entrance exams, and calculate your UPG. What would you like to explore today?',
-        isUser: false,
+        role: "model",
         chatTime: DateFormat('hh:mm a').format(DateTime.now()),
       ),
     );

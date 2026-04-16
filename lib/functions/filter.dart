@@ -1,6 +1,8 @@
 import 'package:hakbang/functions/initialization.dart';
+import 'package:hakbang/models/ai_message.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/server/services/ai_chat.dart';
 
 class Filter {
   static void filterCollegeSection(List<College> colleges) {

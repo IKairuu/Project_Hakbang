@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/models/ai_message.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/server/services/ai_chat.dart';
 import 'package:intl/intl.dart';
 
 class AiGabay extends StatefulWidget {
@@ -22,35 +23,47 @@ class _AiGabayState extends State<AiGabay> {
     'Review chatTimetable',
   ];
 
-  void sendMessage(String text) {
+  void sendMessage(String text) async {
     final trimmed = text.trim();
     if (trimmed.isEmpty) return;
 
+    var messageData = {"message": trimmed};
     setState(() {
       chatMessages.value.add(
         AiMessage(
           text: trimmed,
-          isUser: true,
+          role: "user",
           chatTime: DateFormat('hh:mm a').format(DateTime.now()),
         ),
       );
       _inputController.clear();
     });
 
-    _scrollToBottom();
-
-    Future.delayed(const Duration(milliseconds: 1200), () {
-      setState(() {
-        chatMessages.value.add(
-          AiMessage(
-            text: 'Let me look that up for you... 🔍',
-            isUser: false,
-            chatTime: DateFormat('hh:mm a').format(DateTime.now()),
-          ),
-        );
-      });
-      _scrollToBottom();
-    });
+    await AiChat.sendUsermessage(messageData)
+        .then((value) {
+          setState(() {
+            chatMessages.value.add(
+              AiMessage(
+                text: value,
+                role: "model",
+                chatTime: DateFormat('hh:mm a').format(DateTime.now()),
+              ),
+            );
+          });
+          _scrollToBottom();
+        })
+        .onError((error, stackTrace) {
+          setState(() {
+            chatMessages.value.add(
+              AiMessage(
+                text: 'Server Side error $error',
+                role: "model",
+                chatTime: DateFormat('hh:mm a').format(DateTime.now()),
+              ),
+            );
+          });
+          _scrollToBottom();
+        });
   }
 
   void _scrollToBottom() {
@@ -66,13 +79,13 @@ class _AiGabayState extends State<AiGabay> {
   }
 
   Widget _buildBubble(AiMessage message) {
-    final bubbleColor = message.isUser
+    final bubbleColor = message.role == "user"
         ? const Color(0xFFC8FF4D)
         : const Color(0xFF1C1E27);
-    final textColor = message.isUser
+    final textColor = message.role == "user"
         ? const Color(0xFF0C0D10)
         : const Color(0xFFF0F1F5);
-    final borderRadius = message.isUser
+    final borderRadius = message.role == "user"
         ? const BorderRadius.only(
             topLeft: Radius.circular(18),
             topRight: Radius.circular(18),
@@ -95,7 +108,9 @@ class _AiGabayState extends State<AiGabay> {
         color: bubbleColor,
         borderRadius: borderRadius,
         border: Border.all(
-          color: message.isUser ? Colors.transparent : const Color(0x11FFFFFF),
+          color: message.role == "user"
+              ? Colors.transparent
+              : const Color(0x11FFFFFF),
         ),
       ),
       child: Text(
@@ -104,7 +119,9 @@ class _AiGabayState extends State<AiGabay> {
           color: textColor,
           fontSize: 13,
           height: 1.5,
-          fontWeight: message.isUser ? FontWeight.w500 : FontWeight.w400,
+          fontWeight: message.role == "user"
+              ? FontWeight.w500
+              : FontWeight.w400,
         ),
       ),
     );
@@ -221,7 +238,7 @@ class _AiGabayState extends State<AiGabay> {
                           itemCount: messages.length,
                           itemBuilder: (context, index) {
                             final message = messages[index];
-                            if (!message.isUser) {
+                            if (message.role != "user") {
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 12),
                                 child: Row(

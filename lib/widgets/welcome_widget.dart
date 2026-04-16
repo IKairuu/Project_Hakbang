@@ -4,7 +4,7 @@ import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/smooth_page_indicator_design.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/pages/main_page.dart';
+import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/pages/signup_page.dart';
 import 'package:hakbang/widgets/about_app.dart';
 import 'package:hakbang/widgets/explore_container.dart';
@@ -123,7 +123,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                           if (!mounted) return;
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => MainPage()),
+                            MaterialPageRoute(builder: (context) => LoginPage()),
                           );
                         } catch (e) {
                           if (!mounted) return;

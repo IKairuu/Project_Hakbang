@@ -67,7 +67,7 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
           ),
-          body: navigationWidgets[index],
+          body: Stack(children: <Widget>[navigationWidgets[index]]),
         );
       },
     );

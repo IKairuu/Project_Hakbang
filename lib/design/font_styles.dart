@@ -134,7 +134,7 @@ class FontStyles {
     fontSize: 10,
     fontWeight: FontWeight.w400,
   );
-  static final TextStyle signIntext = GoogleFonts.inter(
+  static final TextStyle highlightText = GoogleFonts.dmSans(
     color: Color(0xFFC8FF4D),
     fontWeight: FontWeight.w700,
   );
@@ -166,15 +166,78 @@ class FontStyles {
     fontWeight: FontWeight.w700,
   );
 
-  static final TextStyle inputLabel = GoogleFonts.unbounded(
+  static final TextStyle inputLabel = GoogleFonts.dmSans(
     color: Color.fromARGB(255, 97, 105, 109),
     fontSize: 10,
+    fontWeight: FontWeight.w800,
+  );
+
+  static final TextStyle stepSubtitle = GoogleFonts.dmSans(
+    color: Color.fromARGB(255, 97, 105, 109),
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle inputText = GoogleFonts.dmSans(
+    color: Colors.white,
+    fontSize: 14,
     fontWeight: FontWeight.w500,
   );
 
-  static final TextStyle stepSubtitle = GoogleFonts.unbounded(
-    color: Color.fromARGB(255, 97, 105, 109),
+  static final TextStyle identityTitle = GoogleFonts.dmSans(
+    color: Colors.white,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final TextStyle identitySubtitle = GoogleFonts.dmSans(
+    color: Color.fromARGB(255, 150, 150, 150),
+    fontSize: 10,
+  );
+
+  static final TextStyle avatarText = GoogleFonts.dmSans(
+    fontSize: 24,
+  );
+
+  static final TextStyle previewName = GoogleFonts.dmSans(
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle previewEmail = GoogleFonts.dmSans(
+    color: const Color(0xFF9FA1A8),
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle previewPillText = GoogleFonts.dmSans(
+    color: Colors.white,
     fontSize: 12,
     fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle collegeLabel = GoogleFonts.dmSans(
+    color: Colors.white,
+    fontWeight: FontWeight.w800,
+    fontSize: 18,
+  );
+
+  static final TextStyle addressLabel = GoogleFonts.dmSans(
+    color: Color(0xFF7d7e86),
+    fontWeight: FontWeight.w600,
+    fontSize: 12,
+  );
+
+  static final TextStyle continueButton = GoogleFonts.dmSans(
+    color: Colors.black,
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle backButton = GoogleFonts.dmSans(
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
   );
 }

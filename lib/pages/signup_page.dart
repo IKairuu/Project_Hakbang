@@ -418,7 +418,7 @@ class _SignupPageState extends State<SignupPage> {
                             );
                           }
                         },
-                        child: Text("Sign In", style: FontStyles.signIntext),
+                        child: Text("Sign In", style: FontStyles.highlightText),
                       ),
                     ],
                   ),

@@ -4,6 +4,8 @@ import 'package:hakbang/server/database/database.dart';
 class Initialization {
   static void mainInitialization() async {
     await Database.getCollege();
+    await Database.getScholarships();
+
     collegeSection.value = availableColleges.value;
     refreshCollegeSelection();
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/input_design.dart';
@@ -41,6 +40,40 @@ class _SignupStep2State extends State<SignupStep2> {
     return InputDesign.unfocusedInputDecoration(hintText);
   }
 
+  Widget _buildInputLabel(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Text(text, style: FontStyles.inputLabel),
+    );
+  }
+
+  Widget _buildEmojiPrefixContent(String emoji) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12, right: 6),
+      child: Opacity(
+        opacity: 0.5,
+        child: Text(emoji, style: const TextStyle(fontSize: 16)),
+      ),
+    );
+  }
+
+  Widget _buildInputField({
+    required TextEditingController controller,
+    required String hintText,
+    Widget? prefixIcon,
+  }) {
+    return TextField(
+      controller: controller,
+      style: FontStyles.inputText,
+      decoration: _getInputDecoration(hintText).copyWith(
+        prefixIcon: prefixIcon,
+        prefixIconConstraints: prefixIcon != null
+            ? const BoxConstraints(minWidth: 0, minHeight: 0)
+            : null,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -50,7 +83,7 @@ class _SignupStep2State extends State<SignupStep2> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: 5),
               child: Text(
                 "Your profile 🎓",
                 style: FontStyles.header,
@@ -65,13 +98,7 @@ class _SignupStep2State extends State<SignupStep2> {
             ),
 
             // Choose your avatar section
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                "CHOOSE YOUR AVATAR",
-                style: FontStyles.inputLabel,
-              ),
-            ),
+            _buildInputLabel("CHOOSE YOUR AVATAR"),
             Row(
               spacing: 8,
               children: List.generate(5, (index) {
@@ -99,13 +126,7 @@ class _SignupStep2State extends State<SignupStep2> {
             const SizedBox(height: 20),
 
             // I am a section
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                "I AM A",
-                style: FontStyles.inputLabel,
-              ),
-            ),
+            _buildInputLabel("I AM A"),
             Row(
               children: List.generate(3, (index) {
                 final isSelected = widget.selectedIdentityIndex == index;
@@ -133,11 +154,7 @@ class _SignupStep2State extends State<SignupStep2> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: FontStyles.identityTitle,
                           ),
 
                           const SizedBox(height: 2),
@@ -147,10 +164,7 @@ class _SignupStep2State extends State<SignupStep2> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 150, 150, 150),
-                              fontSize: 10,
-                            ),
+                            style: FontStyles.identitySubtitle,
                           ),
                         ],
                       ),
@@ -162,67 +176,22 @@ class _SignupStep2State extends State<SignupStep2> {
 
             const SizedBox(height: 20),
 
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                "SCHOOL / INSTITUTION",
-                style: FontStyles.inputLabel,
-              ),
-            ),
+            _buildInputLabel("SCHOOL / INSTITUTION"),
 
-            TextField(
+            _buildInputField(
               controller: widget.schoolController,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
-              decoration: _getInputDecoration('e.g. Ateneo de Manila HS')
-                  .copyWith(
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.only(left: 12, right: 6),
-                      child: Opacity(
-                        opacity: 0.5,
-                        child: const Text('🏫', style: TextStyle(fontSize: 16)),
-                      ),
-                    ),
-                    prefixIconConstraints: const BoxConstraints(
-                      minWidth: 0,
-                      minHeight: 0,
-                    ),
-                  ),
+              hintText: 'e.g. Ateneo de Manila HS',
+              prefixIcon: _buildEmojiPrefixContent('🏫'),
             ),
 
             const SizedBox(height: 16),
 
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                "GRADE LEVEL",
-                style: FontStyles.inputLabel,
-              ),
-            ),
+            _buildInputLabel("GRADE LEVEL"),
 
-            TextField(
+            _buildInputField(
               controller: widget.gradeController,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
-              decoration: _getInputDecoration('e.g. Grade 12').copyWith(
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 12, right: 6),
-                  child: Opacity(
-                    opacity: 0.5,
-                    child: const Text('📋', style: TextStyle(fontSize: 16)),
-                  ),
-                ),
-                prefixIconConstraints: const BoxConstraints(
-                  minWidth: 0,
-                  minHeight: 0,
-                ),
-              ),
+              hintText: 'e.g. Grade 12',
+              prefixIcon: _buildEmojiPrefixContent('📋'),
             ),
 
             const SizedBox(height: 32),
@@ -238,11 +207,7 @@ class _SignupStep2State extends State<SignupStep2> {
                     style: ButtonDesign.signUpButton,
                     child: Text(
                       'Continue →',
-                      style: GoogleFonts.inter(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: FontStyles.continueButton,
                     ),
                   ),
                 ),
@@ -256,11 +221,7 @@ class _SignupStep2State extends State<SignupStep2> {
                     style: ButtonDesign.backButton,
                     child: Text(
                       '← Back',
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: FontStyles.backButton,
                     ),
                   ),
                 ),

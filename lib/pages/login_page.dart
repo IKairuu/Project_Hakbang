@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/main.dart';
+import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/signup_page.dart';
+import 'package:hakbang/server/services/login_system.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -26,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _handleLogin() {
+  void _handleLogin() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
 
@@ -40,11 +42,40 @@ class _LoginPageState extends State<LoginPage> {
 
     setState(() => _showError = false);
 
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const MyHomePage()),
-      (route) => false,
-    );
+    var login = await LoginSystem.userLogin(email, password);
+
+    switch (login["status"]) {
+      case 200:
+        token.value = login["token"];
+        userCredentials.value = login["data"];
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(login["message"]),
+          ),
+        );
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MyHomePage()),
+          (route) => false,
+        );
+        break;
+      case 401:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(login["message"]),
+          ),
+        );
+        break;
+      default:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text("Server Error"),
+          ),
+        );
+    }
   }
 
   @override

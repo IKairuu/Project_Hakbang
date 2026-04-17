@@ -20,324 +20,341 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Text(
-                          "Hello, NAME",
-                          style: FontStyles.homeGreeting,
-                        ),
-                      ),
-
-                      Text(
-                        "Where would you like to go?",
-                        style: FontStyles.obSlideDesc,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  height: 60,
-                  width: 60,
-                  decoration: ContainerDesign.homeAvatar,
-                  child: Text("🦁", style: TextStyle(fontSize: 40)),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Container(
-                decoration: ContainerDesign.reviewUpg,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+      child: ValueListenableBuilder(
+        valueListenable: userCredentials,
+        builder: (context, userData, child) {
+          return Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(right: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("1.87", style: FontStyles.upgNumber),
-                                Text(
-                                  "Current UPG",
-                                  style: FontStyles.labelMainPage,
-                                ),
-                              ],
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Text(
+                              "Hello, ${userData!.name.split("")[0]}",
+                              style: FontStyles.homeGreeting,
                             ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("3", style: FontStyles.savedSchoolNumber),
-                              Text(
-                                "Saved Schools",
-                                style: FontStyles.labelMainPage,
-                              ),
-                            ],
+
+                          Text(
+                            "Where would you like to go?",
+                            style: FontStyles.obSlideDesc,
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: SizedBox(
-                          child: ElevatedButton(
-                            style: ButtonDesign.mainButton,
-                            onPressed: () {},
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text("Review UPG", style: FontStyles.reviewUpg),
-                                Icon(
-                                  Icons.arrow_right_alt_rounded,
-                                  color: Colors.black,
-                                  size: 20,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      height: 60,
+                      width: 60,
+                      decoration: ContainerDesign.homeAvatar,
+                      child: Text(
+                        "${userData.avatar}",
+                        style: TextStyle(fontSize: 40),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 4,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Container(
+                    decoration: ContainerDesign.reviewUpg,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("1.87", style: FontStyles.upgNumber),
+                                    Text(
+                                      "Current UPG",
+                                      style: FontStyles.labelMainPage,
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "3",
+                                    style: FontStyles.savedSchoolNumber,
+                                  ),
+                                  Text(
+                                    "Saved Schools",
+                                    style: FontStyles.labelMainPage,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: SizedBox(
+                              child: ElevatedButton(
+                                style: ButtonDesign.mainButton,
+                                onPressed: () {},
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Review UPG",
+                                      style: FontStyles.reviewUpg,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_right_alt_rounded,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20, right: 10, left: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 10,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: WidthValues.mainPageButtonWidth,
+                              height: HeightsValues.mainPageButtonHeight,
+                              child: ElevatedButton(
+                                style: ButtonDesign.findSchoolsContainer,
+                                onPressed: () {
+                                  setState(() {
+                                    navigationBarIndex.value = 1;
+                                  });
+                                },
+                                child: SvgPicture.asset(
+                                  "assets/university.svg",
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: PaddingDesign.mainPageButtonLabel,
+                              ),
+                              child: Text(
+                                "Find Schools",
+                                style: FontStyles.mainPageButtonLabels,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: WidthValues.mainPageButtonWidth,
+                              height: HeightsValues.mainPageButtonHeight,
+                              child: ElevatedButton(
+                                style: ButtonDesign.scholarhipContainer,
+                                onPressed: () {
+                                  setState(() {
+                                    navigationBarIndex.value = 2;
+                                  });
+                                },
+                                child: SvgPicture.asset(
+                                  "assets/graduation-hat.svg",
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: PaddingDesign.mainPageButtonLabel,
+                              ),
+                              child: Text(
+                                "Scholarships",
+                                style: FontStyles.mainPageButtonLabels,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: WidthValues.mainPageButtonWidth,
+                              height: HeightsValues.mainPageButtonHeight,
+                              child: ElevatedButton(
+                                style: ButtonDesign.examHubContainer,
+                                onPressed: () {},
+                                child: SvgPicture.asset("assets/exam.svg"),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: PaddingDesign.mainPageButtonLabel,
+                              ),
+                              child: Text(
+                                "Exam Hub",
+                                style: FontStyles.mainPageButtonLabels,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: WidthValues.mainPageButtonWidth,
+                              height: HeightsValues.mainPageButtonHeight,
+                              child: ElevatedButton(
+                                style: ButtonDesign.askgabayContainer,
+                                onPressed: () {},
+                                child: SvgPicture.asset("assets/robot.svg"),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: PaddingDesign.mainPageButtonLabel,
+                              ),
+                              child: Text(
+                                "Ask Gabay",
+                                style: FontStyles.mainPageButtonLabels,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20, right: 10, left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 10,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: WidthValues.mainPageButtonWidth,
-                          height: HeightsValues.mainPageButtonHeight,
-                          child: ElevatedButton(
-                            style: ButtonDesign.findSchoolsContainer,
-                            onPressed: () {
-                              setState(() {
-                                navigationBarIndex.value = 1;
-                              });
-                            },
-                            child: SvgPicture.asset("assets/university.svg"),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: PaddingDesign.mainPageButtonLabel,
-                          ),
-                          child: Text(
-                            "Find Schools",
-                            style: FontStyles.mainPageButtonLabels,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: WidthValues.mainPageButtonWidth,
-                          height: HeightsValues.mainPageButtonHeight,
-                          child: ElevatedButton(
-                            style: ButtonDesign.scholarhipContainer,
-                            onPressed: () {
-                              setState(() {
-                                navigationBarIndex.value = 2;
-                              });
-                            },
-                            child: SvgPicture.asset(
-                              "assets/graduation-hat.svg",
+              Expanded(
+                flex: 4,
+                child: SizedBox(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                "Recent Activity",
+                                style: FontStyles.recentActivityLabel,
+                              ),
                             ),
-                          ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Clear",
+                                style: FontStyles.textButtonStyle,
+                              ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: PaddingDesign.mainPageButtonLabel,
-                          ),
-                          child: Text(
-                            "Scholarships",
-                            style: FontStyles.mainPageButtonLabels,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: WidthValues.mainPageButtonWidth,
-                          height: HeightsValues.mainPageButtonHeight,
-                          child: ElevatedButton(
-                            style: ButtonDesign.examHubContainer,
-                            onPressed: () {},
-                            child: SvgPicture.asset("assets/exam.svg"),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: PaddingDesign.mainPageButtonLabel,
-                          ),
-                          child: Text(
-                            "Exam Hub",
-                            style: FontStyles.mainPageButtonLabels,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: WidthValues.mainPageButtonWidth,
-                          height: HeightsValues.mainPageButtonHeight,
-                          child: ElevatedButton(
-                            style: ButtonDesign.askgabayContainer,
-                            onPressed: () {},
-                            child: SvgPicture.asset("assets/robot.svg"),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: PaddingDesign.mainPageButtonLabel,
-                          ),
-                          child: Text(
-                            "Ask Gabay",
-                            style: FontStyles.mainPageButtonLabels,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: SizedBox(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "Recent Activity",
-                            style: FontStyles.recentActivityLabel,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Clear",
-                            style: FontStyles.textButtonStyle,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: ValueListenableBuilder(
-                      valueListenable: activityList,
-                      builder: (context, acts, child) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 30),
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: acts.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: Container(
-                                  height: 70,
-                                  width: double.infinity,
-                                  padding: EdgeInsets.all(10),
-                                  decoration:
-                                      ContainerDesign.activityContainers,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          right: 10,
-                                        ),
-                                        child: Container(
-                                          height: 50,
-                                          width: 50,
-                                          padding: EdgeInsets.all(15),
-                                          decoration: ContainerDesign
-                                              .activityIconContainer,
-                                          child: SvgPicture.asset(
-                                            acts[index].iconName,
-                                          ),
-                                        ),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: ValueListenableBuilder(
+                          valueListenable: activityList,
+                          builder: (context, acts, child) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 30),
+                              child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                itemCount: acts.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Container(
+                                      height: 70,
+                                      width: double.infinity,
+                                      padding: EdgeInsets.all(10),
+                                      decoration:
+                                          ContainerDesign.activityContainers,
+                                      child: Row(
                                         children: [
-                                          Text(
-                                            acts[index].description,
-                                            style: FontStyles
-                                                .activityDescriptionStyle,
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 10,
+                                            ),
+                                            child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              padding: EdgeInsets.all(15),
+                                              decoration: ContainerDesign
+                                                  .activityIconContainer,
+                                              child: SvgPicture.asset(
+                                                acts[index].iconName,
+                                              ),
+                                            ),
                                           ),
-                                          Text(
-                                            acts[index].date,
-                                            style: FontStyles.activityDateStyle,
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                acts[index].description,
+                                                style: FontStyles
+                                                    .activityDescriptionStyle,
+                                              ),
+                                              Text(
+                                                acts[index].date,
+                                                style: FontStyles
+                                                    .activityDateStyle,
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }

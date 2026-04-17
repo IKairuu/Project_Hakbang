@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hakbang/models/activity.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
@@ -103,5 +104,32 @@ class Database {
 
     final response = await http.post(url, headers: headers, body: userMessage);
     return jsonDecode(response.body);
+  }
+
+  static Future<void> getUserActivities(String email) async {
+    final url = Uri.https(
+      "project-hakbang-server.onrender.com",
+      "user/auth/get-activities",
+    );
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+
+    final data = jsonEncode({"email": email});
+    final response = await http.post(url, headers: headers, body: data);
+
+    List<Activity> activities = [];
+    for (Map<String, dynamic> acts in jsonDecode(response.body)["data"]) {
+      activities.add(
+        Activity(
+          description: acts["description"],
+          iconName: acts["iconName"],
+          date: acts["date"],
+        ),
+      );
+    }
+    activityList.value = activities;
   }
 }

@@ -7,6 +7,7 @@ class Initialization {
   static void mainInitialization() async {
     await Database.getCollege();
     await Database.getScholarships();
+    await Database.getUserActivities(userCredentials.value!.email);
     await refreshChat();
 
     collegeSection.value = availableColleges.value;

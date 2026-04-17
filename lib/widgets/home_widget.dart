@@ -37,7 +37,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: Text(
-                              "Hello, ${userData!.name.split("")[0]}",
+                              "Hello, ${userData!.name.split(" ")[0]}",
                               style: FontStyles.homeGreeting,
                             ),
                           ),

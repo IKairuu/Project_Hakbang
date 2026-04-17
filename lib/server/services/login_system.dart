@@ -10,7 +10,7 @@ class LoginSystem {
     final url = Uri.https("project-hakbang-server.onrender.com", "user/login");
     final userMessage = jsonEncode({"email": email, "password": password});
     final headers = {
-      "Conten-Type": "application/json",
+      "Content-Type": "application/json",
       "Accept": "application/json",
     };
 

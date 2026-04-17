@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/main.dart';
+import 'package:hakbang/models/user.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/pages/main_page.dart';
 import 'package:hakbang/pages/signup_page.dart';
 import 'package:hakbang/server/services/login_system.dart';
 
@@ -47,17 +49,24 @@ class _LoginPageState extends State<LoginPage> {
     switch (login["status"]) {
       case 200:
         token.value = login["token"];
-        userCredentials.value = login["data"];
+        userCredentials.value = User(
+          name: login["data"]["name"],
+          email: login["data"]["email"],
+          avatar: login["data"]["avatar"],
+          grade: login["data"]["grade"],
+          institution: login["data"]["institution"],
+          occupation: login["data"]["occupation"],
+        );
+        print("IN HERWE");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,
             content: Text(login["message"]),
           ),
         );
-        Navigator.pushAndRemoveUntil(
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const MyHomePage()),
-          (route) => false,
+          MaterialPageRoute(builder: (context) => MainPage()),
         );
         break;
       case 401:

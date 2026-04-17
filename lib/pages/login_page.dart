@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/functions/initialization.dart';
-import 'package:hakbang/main.dart';
 import 'package:hakbang/models/user.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/main_page.dart';

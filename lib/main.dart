@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/design/background_design.dart';
-import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/widget_tree.dart';
 
 Future main() async {

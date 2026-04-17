@@ -70,27 +70,49 @@ class _LoginPageState extends State<LoginPage> {
                       buildErrorBanner(_errorText),
                     ],
                     const SizedBox(height: 28),
-                    buildTextField('EMAIL ADDRESS', 'you@example.com', '✉', _emailController),
+                    buildTextField(
+                      'EMAIL ADDRESS',
+                      'you@example.com',
+                      '✉',
+                      _emailController,
+                    ),
                     const SizedBox(height: 14),
-                    buildTextField('PASSWORD', 'Enter your password', '🔒', _passwordController,
-                        isPassword: true,
-                        trailing: GestureDetector(
-                          onTap: () => setState(() => _showPassword = !_showPassword),
-                          child: Text(
-                            _showPassword ? '🙈' : '👁',
-                            style: TextStyle(color: AppColors.textMuted, fontSize: 16),
+                    buildTextField(
+                      'PASSWORD',
+                      'Enter your password',
+                      '🔒',
+                      _passwordController,
+                      isPassword: true,
+                      trailing: GestureDetector(
+                        onTap: () =>
+                            setState(() => _showPassword = !_showPassword),
+                        child: Text(
+                          _showPassword ? '🙈' : '👁',
+                          style: TextStyle(
+                            color: AppColors.textMuted,
+                            fontSize: 16,
                           ),
-                        )),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 4),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: TextButton(style: TextButton.styleFrom(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
                           minimumSize: const Size(1, 1),
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         onPressed: () {},
-                        child: Text('Forgot password?', style: GoogleFonts.dmSans(color: AppColors.accent, fontSize: 12, fontWeight: FontWeight.w600)),
+                        child: Text(
+                          'Forgot password?',
+                          style: GoogleFonts.dmSans(
+                            color: AppColors.accent,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 30),
@@ -129,11 +151,18 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const SignupPage()),
+                            MaterialPageRoute(
+                              builder: (context) => const SignupPage(),
+                            ),
                           );
                         },
-                        child: Text('Create Account',
-                          style: GoogleFonts.dmSans(color: AppColors.textPrimary, fontSize: 15, fontWeight: FontWeight.w600),
+                        child: Text(
+                          'Create Account',
+                          style: GoogleFonts.dmSans(
+                            color: AppColors.textPrimary,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
@@ -161,11 +190,21 @@ Widget buildHeader() {
           children: [
             TextSpan(
               text: 'HAK',
-              style: GoogleFonts.unbounded(color: AppColors.textPrimary,fontSize: 24, fontWeight: FontWeight.w900,letterSpacing: -0.5),
+              style: GoogleFonts.unbounded(
+                color: AppColors.textPrimary,
+                fontSize: 24,
+                fontWeight: FontWeight.w900,
+                letterSpacing: -0.5,
+              ),
             ),
             TextSpan(
               text: 'BANG',
-              style: GoogleFonts.unbounded(color: AppColors.accent, fontSize: 24, fontWeight: FontWeight.w900, letterSpacing: -0.5),
+              style: GoogleFonts.unbounded(
+                color: AppColors.accent,
+                fontSize: 24,
+                fontWeight: FontWeight.w900,
+                letterSpacing: -0.5,
+              ),
             ),
           ],
         ),
@@ -180,13 +219,22 @@ Widget buildTitle() {
     children: [
       Text(
         'Welcome back 👋',
-        style: GoogleFonts.inter( color: AppColors.textPrimary, fontSize: 30, fontWeight: FontWeight.w900, letterSpacing: -0.6,
-          height: 1.2),
+        style: GoogleFonts.inter(
+          color: AppColors.textPrimary,
+          fontSize: 30,
+          fontWeight: FontWeight.w900,
+          letterSpacing: -0.6,
+          height: 1.2,
+        ),
       ),
       const SizedBox(height: 6),
       Text(
         'Sign in to continue your college journey.',
-        style: GoogleFonts.dmSans( color: AppColors.textSecondary, fontSize: 13, height: 1.6),
+        style: GoogleFonts.dmSans(
+          color: AppColors.textSecondary,
+          fontSize: 13,
+          height: 1.6,
+        ),
       ),
     ],
   );
@@ -207,7 +255,11 @@ Widget buildErrorBanner(String message) {
         Expanded(
           child: Text(
             message,
-            style: GoogleFonts.dmSans( color: AppColors.coral, fontSize: 12, fontWeight: FontWeight.w500),
+            style: GoogleFonts.dmSans(
+              color: AppColors.coral,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],
@@ -252,9 +304,15 @@ Widget buildTextField(
               fillColor: AppColors.surface2,
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 14, right: 8),
-                child: Text(iconEmoji, style: TextStyle(color: AppColors.textMuted, fontSize: 15)),
+                child: Text(
+                  iconEmoji,
+                  style: TextStyle(color: AppColors.textMuted, fontSize: 15),
+                ),
               ),
-              prefixIconConstraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+              prefixIconConstraints: const BoxConstraints(
+                minWidth: 32,
+                minHeight: 32,
+              ),
               contentPadding: EdgeInsets.only(
                 right: trailing != null ? 44 : 14,
                 top: 13,
@@ -285,7 +343,11 @@ Widget buildDivider() {
       const SizedBox(width: 12),
       Text(
         "Don't have an account?",
-        style: GoogleFonts.dmSans(color: AppColors.textMuted, fontSize: 11, fontWeight: FontWeight.w500),
+        style: GoogleFonts.dmSans(
+          color: AppColors.textMuted,
+          fontSize: 11,
+          fontWeight: FontWeight.w500,
+        ),
       ),
       const SizedBox(width: 12),
       Expanded(child: Container(height: 1, color: AppColors.border)),
@@ -302,13 +364,19 @@ Widget buildFooterText() {
         children: [
           TextSpan(
             text: 'Terms of Service',
-            style: GoogleFonts.dmSans( color: AppColors.accent, fontSize: 13, fontWeight: FontWeight.w700,
+            style: GoogleFonts.dmSans(
+              color: AppColors.accent,
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
             ),
           ),
           const TextSpan(text: ' and '),
           TextSpan(
             text: 'Privacy Policy',
-            style: GoogleFonts.dmSans( color: AppColors.accent, fontSize: 13, fontWeight: FontWeight.w700,
+            style: GoogleFonts.dmSans(
+              color: AppColors.accent,
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
             ),
           ),
           const TextSpan(text: '.'),

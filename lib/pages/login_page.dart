@@ -7,7 +7,7 @@ import 'package:hakbang/models/user.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/main_page.dart';
 import 'package:hakbang/pages/signup_page.dart';
-import 'package:hakbang/server/services/login_system.dart';
+import 'package:hakbang/server/database/database.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
 
     setState(() => _showError = false);
 
-    var login = await LoginSystem.userLogin(email, password);
+    var login = await Database.userLogin(email, password);
     switch (login["status"]) {
       case 200:
         userCredentials.value = User(

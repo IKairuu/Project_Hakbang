@@ -15,7 +15,6 @@ class LoginSystem {
     };
 
     final response = await http.post(url, headers: headers, body: userMessage);
-
     return jsonDecode(response.body);
   }
 }

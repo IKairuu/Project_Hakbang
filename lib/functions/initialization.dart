@@ -7,7 +7,7 @@ class Initialization {
   static void mainInitialization() async {
     await Database.getCollege();
     await Database.getScholarships();
-    refreshChat();
+    await refreshChat();
 
     collegeSection.value = availableColleges.value;
     refreshCollegeSelection();
@@ -20,12 +20,12 @@ class Initialization {
     }
   }
 
-  static void refreshChat() {
+  static Future<void> refreshChat() async {
     chatMessages.value.clear();
     chatMessages.value.add(
       AiMessage(
         text:
-            'Hi <Name>! 👋 I\'m Gabay, your college planning assistant. I can help you choose the right school, find scholarships, understand entrance exams, and calculate your UPG. What would you like to explore today?',
+            'Hi ${userCredentials.value!.name.split(" ")[0]}! 👋 I\'m Gabay, your college planning assistant. I can help you choose the right school, find scholarships, understand entrance exams, and calculate your UPG. What would you like to explore today?',
         role: "model",
         chatTime: DateFormat('hh:mm a').format(DateTime.now()),
       ),

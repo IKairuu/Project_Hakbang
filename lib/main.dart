@@ -5,7 +5,6 @@ import 'package:hakbang/widget_tree.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Initialization.mainInitialization();
   runApp(const MyApp());
 }
 

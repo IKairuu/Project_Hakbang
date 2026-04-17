@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
+import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/main.dart';
 import 'package:hakbang/models/user.dart';
 import 'package:hakbang/notifiers.dart';
@@ -33,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   void _handleLogin() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
-
+    FocusScope.of(context).unfocus();
     if (email.isEmpty || password.isEmpty) {
       setState(() {
         _showError = true;
@@ -45,10 +46,8 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => _showError = false);
 
     var login = await LoginSystem.userLogin(email, password);
-
     switch (login["status"]) {
       case 200:
-        token.value = login["token"];
         userCredentials.value = User(
           name: login["data"]["name"],
           email: login["data"]["email"],
@@ -57,13 +56,16 @@ class _LoginPageState extends State<LoginPage> {
           institution: login["data"]["institution"],
           occupation: login["data"]["occupation"],
         );
-        print("IN HERWE");
+        token.value = "Bearer ${login["token"]}";
+        print(token.value);
+        Initialization.mainInitialization();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,
             content: Text(login["message"]),
           ),
         );
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => MainPage()),

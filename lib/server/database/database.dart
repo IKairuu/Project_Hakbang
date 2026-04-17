@@ -9,11 +9,16 @@ class Database {
   static Future<void> getCollege() async {
     final url = Uri.https(
       "project-hakbang-server.onrender.com",
-      "college/available-colleges",
+      "college/auth/available-colleges",
     );
+    final headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      "Authorization": token.value!,
+    };
 
     List<College> colleges = [];
-    final response = await http.get(url);
+    final response = await http.get(url, headers: headers);
     Map<String, dynamic> data = jsonDecode(response.body);
     for (Map<String, dynamic> college in data["data"]) {
       colleges.add(
@@ -44,11 +49,16 @@ class Database {
   static Future<void> getScholarships() async {
     final url = Uri.https(
       "project-hakbang-server.onrender.com",
-      "scholarship/active-scholarships",
+      "scholarship/auth/active-scholarships",
     );
+    final headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      "Authorization": token.value!,
+    };
 
     List<ScholarshipObject> scholarships = [];
-    final response = await http.get(url);
+    final response = await http.get(url, headers: headers);
     Map<String, dynamic> data = jsonDecode(response.body);
     for (Map<String, dynamic> scholars in data["data"]) {
       scholarships.add(

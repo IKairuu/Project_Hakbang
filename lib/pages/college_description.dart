@@ -244,17 +244,24 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                             onPressed: () {
                               setState(() {
                                 if (saved.contains(widget.college)) {
+                                  ActivityFunctions.addUserActivity(
+                                    DateFormat(
+                                      "MMM dd, yyyy",
+                                    ).format(DateTime.now()),
+                                    "School Unsaved: ${widget.college.collegeName}",
+                                    "assets/university.svg",
+                                  );
                                   SchoolSave.removeSchool(widget.college);
                                 } else {
+                                  ActivityFunctions.addUserActivity(
+                                    DateFormat(
+                                      "MMM dd, yyyy",
+                                    ).format(DateTime.now()),
+                                    "School Saved: ${widget.college.collegeName}",
+                                    "assets/university.svg",
+                                  );
                                   SchoolSave.saveSchool(widget.college);
                                 }
-                                ActivityFunctions.addUserActivity(
-                                  DateFormat(
-                                    "MMM dd, yyyy",
-                                  ).format(DateTime.now()),
-                                  "School Saved: ${widget.college.collegeName}",
-                                  "assets/university.svg",
-                                );
                               });
                             },
                             child: Row(

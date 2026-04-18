@@ -238,7 +238,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                               height: HeightsValues.mainPageButtonHeight,
                               child: ElevatedButton(
                                 style: ButtonDesign.askgabayContainer,
-                                onPressed: () {},
+                                onPressed: () {
+                                  setState(() {
+                                    navigationBarIndex.value = 3;
+                                  });
+                                },
                                 child: SvgPicture.asset("assets/robot.svg"),
                               ),
                             ),

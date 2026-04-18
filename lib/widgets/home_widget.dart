@@ -7,6 +7,7 @@ import 'package:hakbang/design/heights_values.dart';
 import 'package:hakbang/design/padding_design.dart';
 import 'package:hakbang/design/width_values.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:marquee/marquee.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -324,23 +325,43 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               ),
                                             ),
                                           ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                acts[index].description,
-                                                style: FontStyles
-                                                    .activityDescriptionStyle,
-                                              ),
-                                              Text(
-                                                acts[index].date,
-                                                style: FontStyles
-                                                    .activityDateStyle,
-                                              ),
-                                            ],
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        right: 50,
+                                                      ),
+                                                  child: SizedBox(
+                                                    height: 20,
+                                                    child: Marquee(
+                                                      key: ValueKey(index),
+                                                      scrollAxis:
+                                                          Axis.horizontal,
+                                                      text: acts[index]
+                                                          .description,
+                                                      style: FontStyles
+                                                          .activityDescriptionStyle,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      blankSpace: 60.0,
+                                                      velocity: 40.0,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  acts[index].date,
+                                                  style: FontStyles
+                                                      .activityDateStyle,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),

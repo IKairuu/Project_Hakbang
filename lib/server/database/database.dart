@@ -5,6 +5,7 @@ import 'package:hakbang/models/college.dart';
 import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class Database {
   static Future<void> getCollege() async {
@@ -199,6 +200,29 @@ class Database {
     final data = jsonEncode({
       "college_name": collegeName,
       "email": userCredentials.value!.email,
+    });
+
+    final response = await http.post(url, headers: headers, body: data);
+
+    return jsonDecode(response.body);
+  }
+
+  static Future<void> addActivity(Activity activity) async {
+    final url = Uri.https(
+      "project-hakbang-server.onrender.com",
+      "user/auth/post-activity",
+    );
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+    final data = jsonEncode({
+      "date": activity.date,
+      "description": activity.description,
+      "email": userCredentials.value!.email,
+      "iconName": activity.iconName,
     });
 
     final response = await http.post(url, headers: headers, body: data);

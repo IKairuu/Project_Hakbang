@@ -24,3 +24,4 @@ ValueNotifier<List<ScholarshipObject>> availableScholarships = ValueNotifier(
 );
 ValueNotifier<List<College>> collegeSection = ValueNotifier([]);
 ValueNotifier<List<AiMessage>> chatMessages = ValueNotifier([]);
+ValueNotifier<List<College>> savedSchools = ValueNotifier([]);

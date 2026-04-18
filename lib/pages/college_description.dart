@@ -4,7 +4,9 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/functions/school_save.dart';
 import 'package:hakbang/models/college.dart';
+import 'package:hakbang/notifiers.dart';
 import 'package:latlong2/latlong.dart';
 
 class CollegeDescription extends StatefulWidget {
@@ -229,31 +231,48 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15, bottom: 10),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ButtonDesign.mainButton,
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Save",
-                              style: GoogleFonts.dmSans(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
-                              ),
+                    child: ValueListenableBuilder(
+                      valueListenable: savedSchools,
+                      builder: (context, saved, child) {
+                        return SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ButtonDesign.mainButton,
+                            onPressed: () {
+                              setState(() {
+                                if (saved.contains(widget.college)) {
+                                  SchoolSave.removeSchool(widget.college);
+                                } else {
+                                  SchoolSave.saveSchool(widget.college);
+                                }
+                              });
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  saved.contains(widget.college)
+                                      ? "Saved"
+                                      : "Save",
+                                  style: GoogleFonts.dmSans(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Icon(
+                                  saved.contains(widget.college)
+                                      ? Icons.bookmark
+                                      : Icons.bookmark_border,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                              ],
                             ),
-                            Icon(
-                              Icons.bookmark_border_outlined,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   Divider(color: Color(0xFF7d7e86), thickness: 0.5),

@@ -132,4 +132,77 @@ class Database {
     }
     activityList.value = activities;
   }
+
+  static Future<void> getSavedSchools(String email) async {
+    final url = Uri.https(
+      "project-hakbang-server.onrender.com",
+      "user/auth/get-saved-schools",
+    );
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode({"email": email}),
+    );
+    final data = jsonDecode(response.body);
+    if (data["status"] == 200) {
+      for (Map<String, dynamic> collegeNames in data["data"]) {
+        for (College college in availableColleges.value) {
+          if (college.collegeName == collegeNames["college_name"]) {
+            savedSchools.value.add(college);
+          }
+        }
+      }
+    }
+  }
+
+  static Future<void> saveSchool(String collegeName) async {
+    final url = Uri.https(
+      "project-hakbang-server.onrender.com",
+      "user/auth/post-saved-schools",
+    );
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+
+    final data = jsonEncode({
+      "college_name": collegeName,
+      "email": userCredentials.value!.email,
+    });
+
+    final response = await http.post(url, headers: headers, body: data);
+
+    return jsonDecode(response.body);
+  }
+
+  static Future<void> removeSavedSchool(String collegeName) async {
+    final url = Uri.https(
+      "project-hakbang-server.onrender.com",
+      "user/auth/remove-saved-school",
+    );
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+
+    final data = jsonEncode({
+      "college_name": collegeName,
+      "email": userCredentials.value!.email,
+    });
+
+    final response = await http.post(url, headers: headers, body: data);
+
+    return jsonDecode(response.body);
+  }
 }

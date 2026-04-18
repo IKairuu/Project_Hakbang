@@ -16,4 +16,9 @@ class ActivityFunctions {
     activityList.value.insert(0, activity);
     await Database.addActivity(activity);
   }
+
+  static void removeActivities() async {
+    activityList.value = [];
+    await Database.removeActivities();
+  }
 }

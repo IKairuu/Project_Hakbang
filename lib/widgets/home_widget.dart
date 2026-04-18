@@ -6,6 +6,7 @@ import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/heights_values.dart';
 import 'package:hakbang/design/padding_design.dart';
 import 'package:hakbang/design/width_values.dart';
+import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:marquee/marquee.dart';
 
@@ -280,7 +281,18 @@ class _HomeWidgetState extends State<HomeWidget> {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (activityList.value.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      behavior: SnackBarBehavior.floating,
+                                      content: Text("There are no activities"),
+                                    ),
+                                  );
+                                } else {
+                                  ActivityFunctions.removeActivities();
+                                }
+                              },
                               child: Text(
                                 "Clear",
                                 style: FontStyles.textButtonStyle,
@@ -296,79 +308,93 @@ class _HomeWidgetState extends State<HomeWidget> {
                           builder: (context, acts, child) {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 30),
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: acts.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: Container(
-                                      height: 70,
-                                      width: double.infinity,
-                                      padding: EdgeInsets.all(10),
-                                      decoration:
-                                          ContainerDesign.activityContainers,
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              right: 10,
-                                            ),
-                                            child: Container(
-                                              height: 50,
-                                              width: 50,
-                                              padding: EdgeInsets.all(15),
-                                              decoration: ContainerDesign
-                                                  .activityIconContainer,
-                                              child: SvgPicture.asset(
-                                                acts[index].iconName,
-                                              ),
-                                            ),
+                              child: acts.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                        "There are no recent activities",
+                                        style: FontStyles.recentActivityLabel,
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      itemCount: acts.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 10,
                                           ),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                          child: Container(
+                                            height: 70,
+                                            width: double.infinity,
+                                            padding: EdgeInsets.all(10),
+                                            decoration: ContainerDesign
+                                                .activityContainers,
+                                            child: Row(
                                               children: [
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                        right: 50,
+                                                        right: 10,
                                                       ),
-                                                  child: SizedBox(
-                                                    height: 20,
-                                                    child: Marquee(
-                                                      key: ValueKey(index),
-                                                      scrollAxis:
-                                                          Axis.horizontal,
-                                                      text: acts[index]
-                                                          .description,
-                                                      style: FontStyles
-                                                          .activityDescriptionStyle,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      blankSpace: 60.0,
-                                                      velocity: 40.0,
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    padding: EdgeInsets.all(15),
+                                                    decoration: ContainerDesign
+                                                        .activityIconContainer,
+                                                    child: SvgPicture.asset(
+                                                      acts[index].iconName,
                                                     ),
                                                   ),
                                                 ),
-                                                Text(
-                                                  acts[index].date,
-                                                  style: FontStyles
-                                                      .activityDateStyle,
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                              right: 50,
+                                                            ),
+                                                        child: SizedBox(
+                                                          height: 20,
+                                                          child: Marquee(
+                                                            key: ValueKey(
+                                                              index,
+                                                            ),
+                                                            scrollAxis:
+                                                                Axis.horizontal,
+                                                            text: acts[index]
+                                                                .description,
+                                                            style: FontStyles
+                                                                .activityDescriptionStyle,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            blankSpace: 60.0,
+                                                            velocity: 40.0,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        acts[index].date,
+                                                        style: FontStyles
+                                                            .activityDateStyle,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        );
+                                      },
                                     ),
-                                  );
-                                },
-                              ),
                             );
                           },
                         ),

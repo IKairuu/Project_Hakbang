@@ -229,4 +229,22 @@ class Database {
 
     return jsonDecode(response.body);
   }
+
+  static Future<void> removeActivities() async {
+    final url = Uri.https(
+      "project-hakbang-server.onrender.com",
+      "user/auth/remove-activities",
+    );
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+
+    final data = jsonEncode({"email": userCredentials.value!.email});
+    final response = await http.post(url, headers: headers, body: data);
+
+    return jsonDecode(response.body);
+  }
 }

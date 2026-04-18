@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hakbang/pages/profile_page.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/widgets/ai_gabay.dart';
 import 'package:hakbang/widgets/discovery.dart';
@@ -14,7 +15,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<Widget> navigationWidgets = [HomeWidget(), Discovery(), Scholarship(), AiGabay()];
+  final List<Widget> navigationWidgets = [HomeWidget(), Discovery(), Scholarship(), AiGabay(), const ProfilePage(),];
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(

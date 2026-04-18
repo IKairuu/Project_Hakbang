@@ -201,7 +201,7 @@ class FontStyles {
 
   static final TextStyle previewName = GoogleFonts.dmSans(
     color: Colors.white,
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: FontWeight.w700,
   );
 

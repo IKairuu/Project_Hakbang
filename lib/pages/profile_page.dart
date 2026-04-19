@@ -193,13 +193,33 @@ class ProfilePage extends StatelessWidget {
 															child: Column(
 																crossAxisAlignment: CrossAxisAlignment.start,
 																children: [
-																	Text(
-																		'About Me:',
-																		style: GoogleFonts.dmSans(
-																			color: AppColors.textPrimary,
-																			fontSize: 14,
-																			fontWeight: FontWeight.w600,
-																		),
+																	Row(
+																		mainAxisAlignment: MainAxisAlignment.spaceBetween,
+																		children: [
+																			Text(
+																				'About Me:',
+																				style: GoogleFonts.dmSans(
+																					color: AppColors.textPrimary,
+																					fontSize: 14,
+																					fontWeight: FontWeight.w600,
+																				),
+																			),
+																			TextButton.icon(
+																				onPressed: () {
+																					ScaffoldMessenger.of(context).showSnackBar(
+																						const SnackBar(content: Text('Edit About Me tapped')),
+																					);
+																				},
+																				icon: const Icon(Icons.edit_rounded, size: 16),
+																				label: const Text('Edit'),
+																				style: TextButton.styleFrom(
+																					foregroundColor: AppColors.accent,
+																					padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+																					minimumSize: Size.zero,
+																					tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+																				),
+																			),
+																		],
 																	),
 																	const SizedBox(height: 6),
 																	Text(

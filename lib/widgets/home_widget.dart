@@ -12,6 +12,7 @@ import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/profile_page.dart';
 import 'package:marquee/marquee.dart';
+import 'package:hakbang/design/app_colors.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -450,7 +451,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                             Expanded(
                               child: Text(
                                 "Recent Activity",
-                                style: FontStyles.recentActivityLabel,
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  letterSpacing: -0.5,
+                                ),
                               ),
                             ),
                             TextButton(
@@ -472,7 +478,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                               },
                               child: Text(
                                 "Clear",
-                                style: FontStyles.textButtonStyle,
+                                style: GoogleFonts.inter(
+                                  color: AppColors.accent,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                  letterSpacing: -0.5),
                               ),
                             ),
                           ],

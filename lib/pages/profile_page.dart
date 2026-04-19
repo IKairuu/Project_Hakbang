@@ -7,6 +7,7 @@ import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/widgets/edit_about_me_dialog.dart';
+import 'package:hakbang/widgets/saved_school_card.dart';
 
 class ProfilePage extends StatefulWidget {
 	const ProfilePage({super.key});
@@ -93,6 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
 																	'Your Profile',
 																	style: FontStyles.header,
 																),
+
 															],
 														),
 													),
@@ -192,19 +194,19 @@ class _ProfilePageState extends State<ProfilePage> {
 																),
 															],
 														),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                  decoration: ContainerDesign.pillTagGrade,
-                                  child: Text(
-                                    'De La Salle University',
-                                    style: FontStyles.previewPillText,
-                                  ),
-                                ),
-                              ],
-                            ),
+														const SizedBox(height: 8),
+														Row(
+														children: [
+															Container(
+															padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+															decoration: ContainerDesign.pillTagGrade,
+															child: Text(
+																'De La Salle University',
+																style: FontStyles.previewPillText,
+															),
+															),
+														],
+														),
 														const SizedBox(height: 20),
 														Container(
 															width: double.infinity,
@@ -244,7 +246,7 @@ class _ProfilePageState extends State<ProfilePage> {
 																	const SizedBox(height: 6),
 																	Text(
 																		_aboutMeText,
-																		style: GoogleFonts.inter(
+																		style: GoogleFonts.dmSans(
 																			color: AppColors.textMuted,
 																			fontSize: 12,
 																			fontWeight: FontWeight.w500,
@@ -253,8 +255,54 @@ class _ProfilePageState extends State<ProfilePage> {
 																],
 															),
 														),
+														
 													],
 												),
+											),
+											const SizedBox(height: 20),
+											Text(
+														'Saved Schools',
+												style: GoogleFonts.dmSans(
+													color: AppColors.textPrimary,
+													fontSize: 14,
+													fontWeight: FontWeight.w600,
+												),
+											),
+											const SizedBox(height: 10),
+											ValueListenableBuilder(
+												valueListenable: savedSchools,
+												builder: (context, saved, child) {
+													if (saved.isEmpty) {
+														return Container(
+															width: double.infinity,
+															padding: const EdgeInsets.all(16),
+															decoration: ContainerDesign.universitySections,
+															child: Text(
+																'No saved school yet.',
+																style: GoogleFonts.dmSans(
+																	color: AppColors.textMuted,
+																	fontSize: 12,
+																	fontWeight: FontWeight.w500,
+																),
+															),
+														);
+												}
+
+														return Column(
+															children: saved
+																.asMap()
+																.entries
+																.map(
+																	(entry) => Padding(
+																		padding: EdgeInsets.only(
+																			bottom: entry.key == saved.length - 1 ? 0 : 12,
+																		),
+																		child: SavedSchoolCard(college: entry.value),
+																	),
+																)
+																.toList(),
+															);
+											},
 											),
 										],
 									),

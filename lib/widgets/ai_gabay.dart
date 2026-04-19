@@ -14,6 +14,7 @@ class AiGabay extends StatefulWidget {
 class _AiGabayState extends State<AiGabay> {
   final TextEditingController _inputController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  bool chatLoading = false;
 
   final List<String> _suggestionChips = [
     'What is UPCAT?',
@@ -24,6 +25,7 @@ class _AiGabayState extends State<AiGabay> {
   ];
 
   void sendMessage(String text) async {
+    chatLoading = true;
     final trimmed = text.trim();
     if (trimmed.isEmpty) return;
 
@@ -38,6 +40,7 @@ class _AiGabayState extends State<AiGabay> {
       );
       _inputController.clear();
     });
+    _scrollToBottom();
 
     await AiChat.sendUsermessage(messageData)
         .then((value) {
@@ -64,6 +67,7 @@ class _AiGabayState extends State<AiGabay> {
           });
           _scrollToBottom();
         });
+    chatLoading = false;
   }
 
   void _scrollToBottom() {
@@ -310,7 +314,7 @@ class _AiGabayState extends State<AiGabay> {
               itemBuilder: (context, index) {
                 final chip = _suggestionChips[index];
                 return GestureDetector(
-                  onTap: () => sendMessage(chip),
+                  onTap: () => chatLoading ? null : sendMessage(chip),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 14,
@@ -364,7 +368,8 @@ class _AiGabayState extends State<AiGabay> {
                 ),
                 const SizedBox(width: 10),
                 GestureDetector(
-                  onTap: () => sendMessage(_inputController.text),
+                  onTap: () =>
+                      chatLoading ? null : sendMessage(_inputController.text),
                   child: Container(
                     width: 44,
                     height: 44,

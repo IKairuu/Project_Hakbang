@@ -8,6 +8,8 @@ import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/builds/college_section.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:hakbang/design/app_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Discovery extends StatefulWidget {
   const Discovery({super.key});
@@ -229,9 +231,10 @@ class _DiscoveryState extends State<Discovery> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${univ.isEmpty ? "No" : univ.length} available ${univ.length <= 1 ? "school" : "schools"}",
+                              "${univ.isEmpty ? "No" : univ.length} Available ${univ.length <= 1 ? "School" : "Schools"}",
                               style: FontStyles.availSchoolsLabel,
                             ),
+                            SizedBox(height: 20),
                             Expanded(
                               flex: 2,
                               child: ValueListenableBuilder(

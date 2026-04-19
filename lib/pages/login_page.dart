@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
           occupation: login["data"]["occupation"],
         );
         token.value = "Bearer ${login["token"]}";
-        Initialization.mainInitialization();
+        await Initialization.mainInitialization();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
-import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/college_description.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 class CollegeSection extends StatefulWidget {

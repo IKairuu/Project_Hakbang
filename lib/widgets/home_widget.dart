@@ -344,7 +344,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 style: ButtonDesign.scholarhipContainer,
                                 onPressed: () {
                                   setState(() {
-                                    navigationBarIndex.value = 2;
+                                    navigationBarIndex.value = 1;
                                   });
                                 },
                                 child: SvgPicture.asset(

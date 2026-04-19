@@ -6,9 +6,33 @@ import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/design/container_design.dart';
+import 'package:hakbang/widgets/edit_about_me_dialog.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
 	const ProfilePage({super.key});
+
+	@override
+	State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+	String _aboutMeText =
+		'In in ut cupidatat qui officia. Magna pariatur dolore laboris occaecat ad nulla excepteur pariatur sint. Id dolore quis pariatur irure. Amet culpa anim elit sunt. Dolore labore quis aute proident. Esse nostrud commodo ex consectetur ut.';
+
+	Future<void> _showEditAboutMeDialog() async {
+		final editedText = await showEditAboutMeDialog(
+			context,
+			initialText: _aboutMeText,
+		);
+
+		if (editedText == null) {
+			return;
+		}
+
+		setState(() {
+			_aboutMeText = editedText;
+		});
+	}
 
 	@override
 	Widget build(BuildContext context) {
@@ -205,11 +229,7 @@ class ProfilePage extends StatelessWidget {
 																				),
 																			),
 																			TextButton.icon(
-																				onPressed: () {
-																					ScaffoldMessenger.of(context).showSnackBar(
-																						const SnackBar(content: Text('Edit About Me tapped')),
-																					);
-																				},
+																				onPressed: _showEditAboutMeDialog,
 																				icon: const Icon(Icons.edit_rounded, size: 16),
 																				label: const Text('Edit'),
 																				style: TextButton.styleFrom(
@@ -223,7 +243,7 @@ class ProfilePage extends StatelessWidget {
 																	),
 																	const SizedBox(height: 6),
 																	Text(
-																		'In in ut cupidatat qui officia. Magna pariatur dolore laboris occaecat ad nulla excepteur pariatur sint. Id dolore quis pariatur irure. Amet culpa anim elit sunt. Dolore labore quis aute proident. Esse nostrud commodo ex consectetur ut.',
+																		_aboutMeText,
 																		style: GoogleFonts.inter(
 																			color: AppColors.textMuted,
 																			fontSize: 12,

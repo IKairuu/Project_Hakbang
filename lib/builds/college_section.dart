@@ -144,13 +144,6 @@ class _CollegeSectionState extends State<CollegeSection> {
                                   child: ElevatedButton(
                                     style: ButtonDesign.mainButton,
                                     onPressed: () {
-                                      ActivityFunctions.addUserActivity(
-                                        DateFormat(
-                                          "MMM dd, yyyy",
-                                        ).format(DateTime.now()),
-                                        "Viewed ${widget.college.collegeName}",
-                                        "assets/university.svg",
-                                      );
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(

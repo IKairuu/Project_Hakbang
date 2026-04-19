@@ -51,6 +51,7 @@ dependencies:
   url_launcher: ^6.3.2
   intl: ^0.20.2
   marquee: ^2.3.0
+  circle_nav_bar: ^2.2.0
 
 dev_dependencies:
   flutter_test:

@@ -8,7 +8,7 @@ import 'package:hakbang/models/user.dart';
 import 'package:latlong2/latlong.dart';
 
 ValueNotifier<int> welcomePageIndex = ValueNotifier(0);
-ValueNotifier<int> navigationBarIndex = ValueNotifier(0);
+ValueNotifier<int> navigationBarIndex = ValueNotifier(2);
 ValueNotifier<User?> userCredentials = ValueNotifier(null);
 ValueNotifier<String?> token = ValueNotifier(null);
 ValueNotifier<List<Activity>> activityList = ValueNotifier([]);

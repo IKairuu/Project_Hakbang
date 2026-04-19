@@ -37,7 +37,7 @@ class _MainPageState extends State<MainPage> {
             activeIndex: index,
             levels: ["Discovery", "Scholarship", "Home", "Gabay", "Hubs"],
             activeIcons: [
-              SvgPicture.asset("assets/university.svg", height: 10),
+              SvgPicture.asset("assets/university.svg", height: 20),
               SvgPicture.asset("assets/graduation-hat.svg", height: 20),
               SvgPicture.asset("assets/house.svg", height: 20),
               SvgPicture.asset("assets/robot.svg", height: 20),

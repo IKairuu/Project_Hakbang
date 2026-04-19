@@ -5,10 +5,9 @@ import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/verifications.dart';
-import 'package:hakbang/main.dart';
 import 'package:hakbang/models/identity_option.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/pages/main_page.dart';
+import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
@@ -144,7 +143,7 @@ class _SignupPageState extends State<SignupPage> {
                       Navigator.of(context).pop();
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => MyHomePage()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                         (route) => false,
                       );
                     },
@@ -177,7 +176,7 @@ class _SignupPageState extends State<SignupPage> {
                     Navigator.of(context).pop();
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()),
+                      MaterialPageRoute(builder: (context) => LoginPage()),
                       (route) => false,
                     );
                   },
@@ -403,7 +402,7 @@ class _SignupPageState extends State<SignupPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const MainPage(),
+                                  builder: (context) => LoginPage(),
                               ),
                             );
                           } catch (e) {

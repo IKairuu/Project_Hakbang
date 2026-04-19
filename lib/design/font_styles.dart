@@ -111,6 +111,12 @@ class FontStyles {
     fontWeight: FontWeight.w700,
   );
 
+  static final TextStyle availScholars = TextStyle(
+    color: Color(0xFFA855F7),
+    fontSize: 35,
+    fontWeight: FontWeight.w500,
+  );
+
   static final mainPageButtonLabels = TextStyle(
     color: Color(0xFF74757a),
     fontSize: 10,
@@ -243,5 +249,10 @@ class FontStyles {
     fontSize: 22,
     fontWeight: FontWeight.w800,
     color: Colors.white,
+  );
+
+  static final TextStyle scholarShipSubtitle = GoogleFonts.inter(
+    fontSize: 13,
+    color: Colors.white54,
   );
 }

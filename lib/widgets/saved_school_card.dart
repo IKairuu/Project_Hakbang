@@ -15,6 +15,8 @@ class SavedSchoolCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tags = college.tags.take(2).toList();
+    const tagBackgroundColors = [Color(0xFF213536), Color(0xFF312746)];
+    const tagTextColors = [Color(0xFF4CF9B4), Color(0xFFA253EE)];
 
     return Container(
       width: double.infinity,
@@ -58,17 +60,23 @@ class SavedSchoolCard extends StatelessWidget {
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: tags.map((tag) {
+                  children: tags.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final tag = entry.value;
                     return Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 6,
                       ),
-                      decoration: ContainerDesign.pillTagIdentity,
+                      decoration: BoxDecoration(
+                        color: tagBackgroundColors[index %
+                            tagBackgroundColors.length],
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       child: Text(
-                        '#$tag',
+                        '$tag',
                         style: GoogleFonts.dmSans(
-                          color: const Color(0xFFC8FF4D),
+                          color: tagTextColors[index % tagTextColors.length],
                           fontWeight: FontWeight.w700,
                           fontSize: 10,
                         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hakbang/pages/profile_page.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/widgets/ai_gabay.dart';
 import 'package:hakbang/widgets/discovery.dart';
@@ -78,7 +77,6 @@ class _MainPageState extends State<MainPage> {
                   HomeWidget(),
                   AiGabay(),
                   ReviewCenter(),
-                  ProfilePage()
                 ],
               ),
             ],

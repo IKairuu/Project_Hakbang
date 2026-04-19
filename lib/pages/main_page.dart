@@ -1,7 +1,5 @@
-import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/widgets/ai_gabay.dart';
 import 'package:hakbang/widgets/discovery.dart';

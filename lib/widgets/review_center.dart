@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/widgets/scholarship.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/button_design.dart';
 
@@ -43,7 +41,7 @@ class _ReviewCenterState extends State<ReviewCenter> {
                     onChanged: () {
                       _reviewCenterController.clear();
                     },
-                  )
+                  ),
                 ],
               ),
             ),
@@ -72,7 +70,12 @@ Widget buildHeader() {
   );
 }
 
-Widget buildTextField(String label, String iconEmoji, TextEditingController controller, {Widget? trailing}) {
+Widget buildTextField(
+  String label,
+  String iconEmoji,
+  TextEditingController controller, {
+  Widget? trailing,
+}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -92,14 +95,18 @@ Widget buildTextField(String label, String iconEmoji, TextEditingController cont
                 padding: const EdgeInsetsGeometry.only(left: 14, right: 8),
                 child: Text(
                   iconEmoji,
-                  style: TextStyle(color: AppColors.textSecondary, fontSize: 30)
-                )
+                  style: TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 30,
+                  ),
+                ),
               ),
               suffixIcon: IconButton(
                 onPressed: () {
                   // to be updated
-                }, 
-                icon: Icon(Icons.search_outlined)),
+                },
+                icon: Icon(Icons.search_outlined),
+              ),
               contentPadding: EdgeInsets.only(
                 right: trailing != null ? 44 : 14,
                 top: 13,
@@ -115,11 +122,11 @@ Widget buildTextField(String label, String iconEmoji, TextEditingController cont
               ),
             ),
           ),
-        if (trailing != null)
-          Padding(padding: const EdgeInsets.only(right: 14), child: trailing)
-        ]
-      )
-    ]
+          if (trailing != null)
+            Padding(padding: const EdgeInsets.only(right: 14), child: trailing),
+        ],
+      ),
+    ],
   );
 }
 

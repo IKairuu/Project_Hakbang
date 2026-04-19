@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
@@ -128,20 +129,41 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   ],
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ValueListenableBuilder(
+                                      valueListenable: savedSchools,
+                                      builder: (context, saved, child) {
+                                        return Text(
+                                          "${saved.length}",
+                                          style: FontStyles.savedSchoolNumber,
+                                        );
+                                      },
+                                    ),
+                                    Text(
+                                      "Saved Schools",
+                                      style: FontStyles.labelMainPage,
+                                    ),
+                                  ],
+                                ),
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ValueListenableBuilder(
-                                    valueListenable: savedSchools,
-                                    builder: (context, saved, child) {
+                                    valueListenable: availableScholarships,
+                                    builder: (context, scholars, child) {
                                       return Text(
-                                        "${saved.length}",
-                                        style: FontStyles.savedSchoolNumber,
+                                        "${scholars.length}",
+                                        style: FontStyles.availScholars,
                                       );
                                     },
                                   ),
                                   Text(
-                                    "Saved Schools",
+                                    "Available Scholarships",
                                     style: FontStyles.labelMainPage,
                                   ),
                                 ],
@@ -156,6 +178,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   padding: const EdgeInsets.only(top: 10),
                                   child: SizedBox(
                                     child: PageView.builder(
+                                      itemCount: scholarship.length,
                                       controller: cardPage,
                                       itemBuilder: (context, index) {
                                         return Padding(
@@ -185,6 +208,73 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                           .scholarshipTitle,
                                                     ),
                                                   ],
+                                                ),
+                                                Text(
+                                                  scholarship[index].subtitle,
+                                                  style: FontStyles
+                                                      .scholarShipSubtitle,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        top: 10,
+                                                        bottom: 5,
+                                                      ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        "Application slots",
+                                                        style:
+                                                            GoogleFonts.inter(
+                                                              fontSize: 12,
+                                                              color: Colors
+                                                                  .white38,
+                                                            ),
+                                                      ),
+                                                      Text(
+                                                        "${scholarship[index].slots} / ${scholarship[index].limit}",
+                                                        style:
+                                                            GoogleFonts.inter(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color: Color(
+                                                                0xFFA855F7,
+                                                              ),
+                                                            ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        bottom: 10,
+                                                      ),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          100,
+                                                        ),
+                                                    child: LinearProgressIndicator(
+                                                      value:
+                                                          scholarship[index]
+                                                              .slots /
+                                                          scholarship[index]
+                                                              .limit,
+                                                      minHeight: 6,
+                                                      backgroundColor:
+                                                          Colors.white12,
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                            Color
+                                                          >(Color(0xFFA855F7)),
+                                                    ),
+                                                  ),
                                                 ),
                                               ],
                                             ),

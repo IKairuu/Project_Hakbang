@@ -101,7 +101,7 @@ class FontStyles {
     fontWeight: FontWeight.w500,
   );
   static final TextStyle labelMainPage = TextStyle(
-    color: Color(0xFF4e5565),
+    color: Colors.white,
     fontSize: 10,
   );
 
@@ -109,6 +109,12 @@ class FontStyles {
     color: Colors.black,
     fontSize: 15,
     fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle availScholars = TextStyle(
+    color: Color(0xFFA855F7),
+    fontSize: 35,
+    fontWeight: FontWeight.w500,
   );
 
   static final mainPageButtonLabels = TextStyle(
@@ -195,9 +201,7 @@ class FontStyles {
     fontSize: 10,
   );
 
-  static final TextStyle avatarText = GoogleFonts.dmSans(
-    fontSize: 24,
-  );
+  static final TextStyle avatarText = GoogleFonts.dmSans(fontSize: 24);
 
   static final TextStyle previewName = GoogleFonts.dmSans(
     color: Colors.white,
@@ -239,5 +243,16 @@ class FontStyles {
     color: Colors.white,
     fontSize: 16,
     fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle scholarshipTitle = GoogleFonts.inter(
+    fontSize: 22,
+    fontWeight: FontWeight.w800,
+    color: Colors.white,
+  );
+
+  static final TextStyle scholarShipSubtitle = GoogleFonts.inter(
+    fontSize: 13,
+    color: Colors.white54,
   );
 }

@@ -11,9 +11,13 @@ class AiGabay extends StatefulWidget {
   State<AiGabay> createState() => _AiGabayState();
 }
 
-class _AiGabayState extends State<AiGabay> {
+class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
   final TextEditingController _inputController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  bool chatLoading = false;
+
+  @override
+  bool get wantKeepAlive => true;
 
   final List<String> _suggestionChips = [
     'What is UPCAT?',
@@ -24,6 +28,7 @@ class _AiGabayState extends State<AiGabay> {
   ];
 
   void sendMessage(String text) async {
+    chatLoading = true;
     final trimmed = text.trim();
     if (trimmed.isEmpty) return;
 
@@ -38,6 +43,7 @@ class _AiGabayState extends State<AiGabay> {
       );
       _inputController.clear();
     });
+    _scrollToBottom();
 
     await AiChat.sendUsermessage(messageData)
         .then((value) {
@@ -64,6 +70,7 @@ class _AiGabayState extends State<AiGabay> {
           });
           _scrollToBottom();
         });
+    chatLoading = false;
   }
 
   void _scrollToBottom() {
@@ -136,6 +143,7 @@ class _AiGabayState extends State<AiGabay> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     const bgColor = Color(0xFF0C0D10);
     const surface2 = Color(0xFF1C1E27);
     const border2 = Color(0x1FFFFFFF);
@@ -311,7 +319,7 @@ class _AiGabayState extends State<AiGabay> {
               itemBuilder: (context, index) {
                 final chip = _suggestionChips[index];
                 return GestureDetector(
-                  onTap: () => sendMessage(chip),
+                  onTap: () => chatLoading ? null : sendMessage(chip),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 14,
@@ -365,7 +373,8 @@ class _AiGabayState extends State<AiGabay> {
                 ),
                 const SizedBox(width: 10),
                 GestureDetector(
-                  onTap: () => sendMessage(_inputController.text),
+                  onTap: () =>
+                      chatLoading ? null : sendMessage(_inputController.text),
                   child: Container(
                     width: 44,
                     height: 44,

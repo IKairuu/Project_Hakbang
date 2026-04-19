@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:intl/intl.dart';
 
 class Scholarship extends StatefulWidget {
   const Scholarship({super.key});
@@ -204,6 +206,11 @@ class _ScholarshipState extends State<Scholarship> {
                     SizedBox(width: 8),
                     ElevatedButton(
                       onPressed: () {
+                        ActivityFunctions.addUserActivity(
+                          DateFormat("MMM dd, yyyy").format(DateTime.now()),
+                          "Viewed website of $title",
+                          "assets/graduation-hat.svg",
+                        );
                         Launcher.launchBrowserView(Uri.parse(website));
                       },
                       style: ElevatedButton.styleFrom(

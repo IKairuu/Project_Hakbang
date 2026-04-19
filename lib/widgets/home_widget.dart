@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hakbang/design/button_design.dart';
@@ -18,6 +19,35 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  PageController cardPage = PageController();
+  int index = 0;
+  bool reverse = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(Duration(seconds: 2), (timer) {
+      switch (reverse) {
+        case true:
+          index--;
+          break;
+        case false:
+          index++;
+          break;
+      }
+
+      if (index == availableScholarships.value.length - 1) reverse = true;
+
+      if (index == 0) reverse = false;
+
+      cardPage.animateToPage(
+        index,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.linear,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,7 +73,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                               style: FontStyles.homeGreeting,
                             ),
                           ),
-
                           Text(
                             "Where would you like to go?",
                             style: FontStyles.obSlideDesc,
@@ -119,27 +148,53 @@ class _HomeWidgetState extends State<HomeWidget> {
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: SizedBox(
-                              child: ElevatedButton(
-                                style: ButtonDesign.mainButton,
-                                onPressed: () {},
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      "Review UPG",
-                                      style: FontStyles.reviewUpg,
+                          Expanded(
+                            child: ValueListenableBuilder(
+                              valueListenable: availableScholarships,
+                              builder: (context, scholarship, child) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: SizedBox(
+                                    child: PageView.builder(
+                                      controller: cardPage,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 5,
+                                          ),
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            decoration:
+                                                ContainerDesign.scholarCards,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                            right: 10,
+                                                          ),
+                                                      child: Text("⭐"),
+                                                    ),
+                                                    Text(
+                                                      scholarship[index].title,
+                                                      style: FontStyles
+                                                          .scholarshipTitle,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                    Icon(
-                                      Icons.arrow_right_alt_rounded,
-                                      color: Colors.black,
-                                      size: 20,
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ],

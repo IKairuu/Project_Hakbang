@@ -106,4 +106,10 @@ class ContainerDesign {
     color: Color.fromARGB(69, 0, 83, 151),
     borderRadius: BorderRadius.circular(20),
   );
+
+  static final BoxDecoration scholarCards = BoxDecoration(
+    color: Color(0xFF1a0f2e),
+    borderRadius: BorderRadius.circular(24),
+    border: Border.all(color: Color(0xFF7C3AED).withOpacity(0.35), width: 1.2),
+  );
 }

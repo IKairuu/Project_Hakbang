@@ -178,6 +178,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   padding: const EdgeInsets.only(top: 10),
                                   child: SizedBox(
                                     child: PageView.builder(
+                                      itemCount: scholarship.length,
                                       controller: cardPage,
                                       itemBuilder: (context, index) {
                                         return Padding(

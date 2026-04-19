@@ -83,9 +83,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("1.87", style: FontStyles.upgNumber),
+                                    ValueListenableBuilder(
+                                      valueListenable: activityList,
+                                      builder: (context, acts, child) {
+                                        return Text(
+                                          "${acts.length}",
+                                          style: FontStyles.upgNumber,
+                                        );
+                                      },
+                                    ),
                                     Text(
-                                      "Current UPG",
+                                      "Total of Activities",
                                       style: FontStyles.labelMainPage,
                                     ),
                                   ],
@@ -94,9 +102,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "3",
-                                    style: FontStyles.savedSchoolNumber,
+                                  ValueListenableBuilder(
+                                    valueListenable: savedSchools,
+                                    builder: (context, saved, child) {
+                                      return Text(
+                                        "${saved.length}",
+                                        style: FontStyles.savedSchoolNumber,
+                                      );
+                                    },
                                   ),
                                   Text(
                                     "Saved Schools",
@@ -282,16 +295,20 @@ class _HomeWidgetState extends State<HomeWidget> {
                             ),
                             TextButton(
                               onPressed: () {
-                                if (activityList.value.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      behavior: SnackBarBehavior.floating,
-                                      content: Text("There are no activities"),
-                                    ),
-                                  );
-                                } else {
-                                  ActivityFunctions.removeActivities();
-                                }
+                                setState(() {
+                                  if (activityList.value.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        content: Text(
+                                          "There are no activities",
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    ActivityFunctions.removeActivities();
+                                  }
+                                });
                               },
                               child: Text(
                                 "Clear",

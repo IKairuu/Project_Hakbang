@@ -150,16 +150,18 @@ class Database {
       headers: headers,
       body: jsonEncode({"email": email}),
     );
+    final List<College> collegeList = List.from(savedSchools.value);
     final data = jsonDecode(response.body);
     if (data["status"] == 200) {
       for (Map<String, dynamic> collegeNames in data["data"]) {
         for (College college in availableColleges.value) {
           if (college.collegeName == collegeNames["college_name"]) {
-            savedSchools.value.add(college);
+            collegeList.add(college);
           }
         }
       }
     }
+    savedSchools.value = collegeList;
   }
 
   static Future<void> saveSchool(String collegeName) async {

@@ -263,6 +263,7 @@ class _ScholarshipState extends State<Scholarship> {
                 ),
               ),
 
+              const SizedBox(height: 20),
               Stack(
                 children: [
                   Positioned(
@@ -426,6 +427,7 @@ class _ScholarshipState extends State<Scholarship> {
                   letterSpacing: -0.5,
                 ),
               ),
+              SizedBox(height: 5,),
               Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.zero,

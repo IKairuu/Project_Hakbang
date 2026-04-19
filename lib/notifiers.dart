@@ -8,12 +8,17 @@ import 'package:hakbang/models/user.dart';
 import 'package:latlong2/latlong.dart';
 
 ValueNotifier<int> welcomePageIndex = ValueNotifier(0);
-ValueNotifier<int> navigationBarIndex = ValueNotifier(0);
+ValueNotifier<int> navigationBarIndex = ValueNotifier(2);
 ValueNotifier<User?> userCredentials = ValueNotifier(null);
 ValueNotifier<String?> token = ValueNotifier(null);
 ValueNotifier<List<Activity>> activityList = ValueNotifier([]);
 ValueNotifier<bool> agreeToTerms = ValueNotifier(false);
-ValueNotifier<List<bool>> selectedFilter = ValueNotifier([true, false, false]);
+ValueNotifier<List<bool>> selectedFilter = ValueNotifier([
+  true,
+  false,
+  false,
+  false,
+]);
 ValueNotifier<Position?> userPosition = ValueNotifier(null);
 ValueNotifier<LatLng?> selectedSchoolPosition = ValueNotifier(null);
 ValueNotifier<String?> selectedSchool = ValueNotifier(null);
@@ -24,4 +29,5 @@ ValueNotifier<List<ScholarshipObject>> availableScholarships = ValueNotifier(
 );
 ValueNotifier<List<College>> collegeSection = ValueNotifier([]);
 ValueNotifier<List<AiMessage>> chatMessages = ValueNotifier([]);
+ValueNotifier<bool> chatLoading = ValueNotifier(false);
 ValueNotifier<List<College>> savedSchools = ValueNotifier([]);

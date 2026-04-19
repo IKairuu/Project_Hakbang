@@ -14,7 +14,6 @@ class AiGabay extends StatefulWidget {
 class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
   final TextEditingController _inputController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  bool chatLoading = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -28,9 +27,9 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
   ];
 
   void sendMessage(String text) async {
-    chatLoading = true;
     final trimmed = text.trim();
-    if (trimmed.isEmpty) return;
+    if (trimmed.isEmpty || text.isEmpty) return;
+    setState(() => chatLoading.value = true);
 
     var messageData = {"message": trimmed};
     setState(() {
@@ -56,6 +55,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
               ),
             );
           });
+
           _scrollToBottom();
         })
         .onError((error, stackTrace) {
@@ -68,9 +68,10 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
               ),
             );
           });
+
           _scrollToBottom();
         });
-    chatLoading = false;
+    setState(() => chatLoading.value = false);
   }
 
   void _scrollToBottom() {
@@ -157,6 +158,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          SizedBox(height: 25),
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 14),
             child: Row(
@@ -317,27 +319,32 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
               separatorBuilder: (_, __) => const SizedBox(width: 8),
               itemBuilder: (context, index) {
                 final chip = _suggestionChips[index];
-                return GestureDetector(
-                  onTap: () => chatLoading ? null : sendMessage(chip),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: surface2,
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(color: border2),
-                    ),
-                    child: Text(
-                      chip,
-                      style: const TextStyle(
-                        color: textPrimary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
+                return ValueListenableBuilder(
+                  valueListenable: chatLoading,
+                  builder: (context, loading, child) {
+                    return GestureDetector(
+                      onTap: () => loading ? null : sendMessage(chip),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: surface2,
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: border2),
+                        ),
+                        child: Text(
+                          chip,
+                          style: const TextStyle(
+                            color: textPrimary,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
               },
             ),
@@ -371,26 +378,31 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                   ),
                 ),
                 const SizedBox(width: 10),
-                GestureDetector(
-                  onTap: () =>
-                      chatLoading ? null : sendMessage(_inputController.text),
-                  child: Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: accent,
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        '➤',
-                        style: TextStyle(
-                          color: Color(0xFF0C0D10),
-                          fontSize: 18,
+                ValueListenableBuilder(
+                  valueListenable: chatLoading,
+                  builder: (context, loading, child) {
+                    return GestureDetector(
+                      onTap: () =>
+                          loading ? null : sendMessage(_inputController.text),
+                      child: Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: accent,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            '➤',
+                            style: TextStyle(
+                              color: Color(0xFF0C0D10),
+                              fontSize: 18,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ],
             ),

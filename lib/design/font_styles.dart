@@ -58,7 +58,7 @@ class FontStyles {
   static final TextStyle header = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.w800,
-    fontSize: 35,
+    fontSize: 30,
   );
 
   static final TextStyle scholarshipAiText = TextStyle(

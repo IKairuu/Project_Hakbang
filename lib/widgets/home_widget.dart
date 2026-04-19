@@ -71,7 +71,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             padding: const EdgeInsets.only(right: 10),
                             child: Text(
                               "Hello, ${userData!.name.split(" ")[0]}",
-                              style: FontStyles.homeGreeting,
+                              style: FontStyles.header,
                             ),
                           ),
                           Text(
@@ -344,7 +344,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 style: ButtonDesign.scholarhipContainer,
                                 onPressed: () {
                                   setState(() {
-                                    navigationBarIndex.value = 2;
+                                    navigationBarIndex.value = 1;
                                   });
                                 },
                                 child: SvgPicture.asset(
@@ -373,7 +373,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                               height: HeightsValues.mainPageButtonHeight,
                               child: ElevatedButton(
                                 style: ButtonDesign.examHubContainer,
-                                onPressed: () {},
+                                onPressed: () {
+                                  setState(() {
+                                    navigationBarIndex.value = 4;
+                                  });
+                                },
                                 child: SvgPicture.asset("assets/exam.svg"),
                               ),
                             ),

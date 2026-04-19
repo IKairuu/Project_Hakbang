@@ -6,6 +6,7 @@ import 'package:hakbang/widgets/ai_gabay.dart';
 import 'package:hakbang/widgets/discovery.dart';
 import 'package:hakbang/widgets/home_widget.dart';
 import 'package:hakbang/widgets/scholarship.dart';
+import 'package:hakbang/widgets/review_center.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -42,10 +43,6 @@ class _MainPageState extends State<MainPage> {
               },
               destinations: [
                 NavigationDestination(
-                  icon: SvgPicture.asset("assets/house.svg", height: 20),
-                  label: "Home",
-                ),
-                NavigationDestination(
                   icon: SvgPicture.asset("assets/map.svg", height: 20),
                   label: "Discover",
                 ),
@@ -57,12 +54,16 @@ class _MainPageState extends State<MainPage> {
                   label: "Scholars",
                 ),
                 NavigationDestination(
+                  icon: SvgPicture.asset("assets/house.svg", height: 20),
+                  label: "Home",
+                ),
+                NavigationDestination(
                   icon: SvgPicture.asset("assets/robot.svg", height: 20),
                   label: "Gabay",
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset("assets/user.svg", height: 20),
-                  label: "Profile",
+                  icon: SvgPicture.asset("assets/exam.svg", height: 20),
+                  label: "Hubs",
                 ),
               ],
             ),
@@ -71,7 +72,14 @@ class _MainPageState extends State<MainPage> {
             children: [
               IndexedStack(
                 index: index,
-                children: [HomeWidget(), Discovery(), Scholarship(), AiGabay(), ProfilePage()],
+                children: [
+                  Discovery(),
+                  Scholarship(),
+                  HomeWidget(),
+                  AiGabay(),
+                  ReviewCenter(),
+                  ProfilePage()
+                ],
               ),
             ],
           ),

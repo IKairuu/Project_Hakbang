@@ -7,6 +7,7 @@ import 'package:hakbang/widgets/ai_gabay.dart';
 import 'package:hakbang/widgets/discovery.dart';
 import 'package:hakbang/widgets/home_widget.dart';
 import 'package:hakbang/widgets/scholarship.dart';
+import 'package:hakbang/widgets/review_center.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -56,7 +57,13 @@ class _MainPageState extends State<MainPage> {
             children: [
               IndexedStack(
                 index: index,
-                children: [Discovery(), HomeWidget(), Scholarship(), AiGabay()],
+                children: [
+                  HomeWidget(),
+                  Discovery(),
+                  Scholarship(),
+                  AiGabay(),
+                  ReviewCenter(),
+                ],
               ),
             ],
           ),

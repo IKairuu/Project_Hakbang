@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakbang/design/app_colors.dart';
 
 class ButtonDesign {
   static final ButtonStyle mainButton = ElevatedButton.styleFrom(
@@ -59,7 +60,7 @@ class ButtonDesign {
   static final ButtonStyle filterUniversityUnselected =
       ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-        backgroundColor: Color(0xFF1c1e27),
+        backgroundColor: AppColors.bg,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: Color(0xFF2a2c35)),
           borderRadius: BorderRadiusGeometry.circular(20),

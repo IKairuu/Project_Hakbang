@@ -6,7 +6,9 @@ import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/heights_values.dart';
 import 'package:hakbang/design/padding_design.dart';
 import 'package:hakbang/design/width_values.dart';
+import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:marquee/marquee.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -81,9 +83,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("1.87", style: FontStyles.upgNumber),
+                                    ValueListenableBuilder(
+                                      valueListenable: activityList,
+                                      builder: (context, acts, child) {
+                                        return Text(
+                                          "${acts.length}",
+                                          style: FontStyles.upgNumber,
+                                        );
+                                      },
+                                    ),
                                     Text(
-                                      "Current UPG",
+                                      "Total of Activities",
                                       style: FontStyles.labelMainPage,
                                     ),
                                   ],
@@ -92,9 +102,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "3",
-                                    style: FontStyles.savedSchoolNumber,
+                                  ValueListenableBuilder(
+                                    valueListenable: savedSchools,
+                                    builder: (context, saved, child) {
+                                      return Text(
+                                        "${saved.length}",
+                                        style: FontStyles.savedSchoolNumber,
+                                      );
+                                    },
                                   ),
                                   Text(
                                     "Saved Schools",
@@ -238,7 +253,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                               height: HeightsValues.mainPageButtonHeight,
                               child: ElevatedButton(
                                 style: ButtonDesign.askgabayContainer,
-                                onPressed: () {},
+                                onPressed: () {
+                                  setState(() {
+                                    navigationBarIndex.value = 3;
+                                  });
+                                },
                                 child: SvgPicture.asset("assets/robot.svg"),
                               ),
                             ),
@@ -275,7 +294,22 @@ class _HomeWidgetState extends State<HomeWidget> {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  if (activityList.value.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        content: Text(
+                                          "There are no activities",
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    ActivityFunctions.removeActivities();
+                                  }
+                                });
+                              },
                               child: Text(
                                 "Clear",
                                 style: FontStyles.textButtonStyle,
@@ -291,59 +325,93 @@ class _HomeWidgetState extends State<HomeWidget> {
                           builder: (context, acts, child) {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 30),
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: acts.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: Container(
-                                      height: 70,
-                                      width: double.infinity,
-                                      padding: EdgeInsets.all(10),
-                                      decoration:
-                                          ContainerDesign.activityContainers,
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              right: 10,
-                                            ),
-                                            child: Container(
-                                              height: 50,
-                                              width: 50,
-                                              padding: EdgeInsets.all(15),
-                                              decoration: ContainerDesign
-                                                  .activityIconContainer,
-                                              child: SvgPicture.asset(
-                                                acts[index].iconName,
-                                              ),
-                                            ),
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                acts[index].description,
-                                                style: FontStyles
-                                                    .activityDescriptionStyle,
-                                              ),
-                                              Text(
-                                                acts[index].date,
-                                                style: FontStyles
-                                                    .activityDateStyle,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                              child: acts.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                        "There are no recent activities",
+                                        style: FontStyles.recentActivityLabel,
                                       ),
+                                    )
+                                  : ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      itemCount: acts.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 10,
+                                          ),
+                                          child: Container(
+                                            height: 70,
+                                            width: double.infinity,
+                                            padding: EdgeInsets.all(10),
+                                            decoration: ContainerDesign
+                                                .activityContainers,
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        right: 10,
+                                                      ),
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    padding: EdgeInsets.all(15),
+                                                    decoration: ContainerDesign
+                                                        .activityIconContainer,
+                                                    child: SvgPicture.asset(
+                                                      acts[index].iconName,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                              right: 50,
+                                                            ),
+                                                        child: SizedBox(
+                                                          height: 20,
+                                                          child: Marquee(
+                                                            key: ValueKey(
+                                                              index,
+                                                            ),
+                                                            scrollAxis:
+                                                                Axis.horizontal,
+                                                            text: acts[index]
+                                                                .description,
+                                                            style: FontStyles
+                                                                .activityDescriptionStyle,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            blankSpace: 60.0,
+                                                            velocity: 40.0,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        acts[index].date,
+                                                        style: FontStyles
+                                                            .activityDateStyle,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                  );
-                                },
-                              ),
                             );
                           },
                         ),

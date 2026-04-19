@@ -4,9 +4,11 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/school_save.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 class CollegeDescription extends StatefulWidget {
@@ -242,8 +244,22 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                             onPressed: () {
                               setState(() {
                                 if (saved.contains(widget.college)) {
+                                  ActivityFunctions.addUserActivity(
+                                    DateFormat(
+                                      "MMM dd, yyyy",
+                                    ).format(DateTime.now()),
+                                    "School Unsaved: ${widget.college.collegeName}",
+                                    "assets/university.svg",
+                                  );
                                   SchoolSave.removeSchool(widget.college);
                                 } else {
+                                  ActivityFunctions.addUserActivity(
+                                    DateFormat(
+                                      "MMM dd, yyyy",
+                                    ).format(DateTime.now()),
+                                    "School Saved: ${widget.college.collegeName}",
+                                    "assets/university.svg",
+                                  );
                                   SchoolSave.saveSchool(widget.college);
                                 }
                               });

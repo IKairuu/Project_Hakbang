@@ -150,16 +150,18 @@ class Database {
       headers: headers,
       body: jsonEncode({"email": email}),
     );
+    final List<College> collegeList = List.from(savedSchools.value);
     final data = jsonDecode(response.body);
     if (data["status"] == 200) {
       for (Map<String, dynamic> collegeNames in data["data"]) {
         for (College college in availableColleges.value) {
           if (college.collegeName == collegeNames["college_name"]) {
-            savedSchools.value.add(college);
+            collegeList.add(college);
           }
         }
       }
     }
+    savedSchools.value = collegeList;
   }
 
   static Future<void> saveSchool(String collegeName) async {
@@ -201,6 +203,47 @@ class Database {
       "email": userCredentials.value!.email,
     });
 
+    final response = await http.post(url, headers: headers, body: data);
+
+    return jsonDecode(response.body);
+  }
+
+  static Future<void> addActivity(Activity activity) async {
+    final url = Uri.https(
+      "project-hakbang-server.onrender.com",
+      "user/auth/post-activity",
+    );
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+    final data = jsonEncode({
+      "date": activity.date,
+      "description": activity.description,
+      "email": userCredentials.value!.email,
+      "iconName": activity.iconName,
+    });
+
+    final response = await http.post(url, headers: headers, body: data);
+
+    return jsonDecode(response.body);
+  }
+
+  static Future<void> removeActivities() async {
+    final url = Uri.https(
+      "project-hakbang-server.onrender.com",
+      "user/auth/remove-activities",
+    );
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+
+    final data = jsonEncode({"email": userCredentials.value!.email});
     final response = await http.post(url, headers: headers, body: data);
 
     return jsonDecode(response.body);

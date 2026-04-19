@@ -15,8 +15,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final List<Widget> navigationWidgets = [HomeWidget(), Discovery(), Scholarship(), AiGabay(), const ProfilePage(),];
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -69,7 +67,14 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
           ),
-          body: Stack(children: <Widget>[navigationWidgets[index]]),
+          body: Stack(
+            children: [
+              IndexedStack(
+                index: index,
+                children: [HomeWidget(), Discovery(), Scholarship(), AiGabay()],
+              ),
+            ],
+          ),
         );
       },
     );

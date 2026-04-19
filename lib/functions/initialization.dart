@@ -1,3 +1,4 @@
+import 'package:hakbang/functions/sorting_functions.dart';
 import 'package:hakbang/models/ai_message.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/database/database.dart';
@@ -9,6 +10,7 @@ class Initialization {
     await Database.getScholarships();
     await Database.getUserActivities(userCredentials.value!.email);
     await Database.getSavedSchools(userCredentials.value!.email);
+    await SortingFunctions.sortASctivities();
     await refreshChat();
 
     collegeSection.value = availableColleges.value;

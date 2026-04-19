@@ -5,7 +5,7 @@ import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';
 
 class Initialization {
-  static void mainInitialization() async {
+  static Future<void> mainInitialization() async {
     await Database.getCollege();
     await Database.getScholarships();
     await Database.getUserActivities(userCredentials.value!.email);

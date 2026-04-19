@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/pages/login_page.dart';
 
 class ProfilePage extends StatelessWidget {
 	const ProfilePage({super.key});
@@ -69,6 +71,23 @@ class ProfilePage extends StatelessWidget {
 															],
 														),
 													),
+													IconButton(
+														onPressed: () {
+															token.value = null;
+															userCredentials.value = null;
+															navigationBarIndex.value = 0;
+															Navigator.pushAndRemoveUntil(
+																context,
+																MaterialPageRoute(
+																	builder: (context) => LoginPage(),
+																),
+																(route) => false,
+															);
+														},
+														icon: const Icon(Icons.logout_rounded),
+														color: AppColors.textPrimary,
+														tooltip: 'Log out',
+													),
 												],
 											),
 											const SizedBox(height: 28),
@@ -94,8 +113,8 @@ class ProfilePage extends StatelessWidget {
 															crossAxisAlignment: CrossAxisAlignment.center,
 															children: [
 																Container(
-																	width: 50,
-																	height: 50,
+																	width:70,
+																	height: 70,
 																	decoration: BoxDecoration(
 																		color: AppColors.accent.withValues(alpha: 0.16),
 																		borderRadius: BorderRadius.circular(14),
@@ -104,7 +123,7 @@ class ProfilePage extends StatelessWidget {
 																	child: const Center(
 																		child: Text(
 																			'🙂',
-																			style: TextStyle(fontSize: 25),
+																			style: TextStyle(fontSize: 40),
 																		),
 																	),
 																),
@@ -114,7 +133,7 @@ class ProfilePage extends StatelessWidget {
 																		crossAxisAlignment: CrossAxisAlignment.start,
 																		children: [
 																			Text(
-																				'Your Name',
+																				'Joachim Nicholo Dela Cruz Rivera Martinez ',
 																				style: FontStyles.previewName,
 																				),
 																			Text(
@@ -177,7 +196,7 @@ class ProfilePage extends StatelessWidget {
 																crossAxisAlignment: CrossAxisAlignment.start,
 																children: [
 																	Text(
-																		'Placeholder base area',
+																		'About Me:',
 																		style: GoogleFonts.inter(
 																			color: Colors.white,
 																			fontSize: 14,
@@ -186,7 +205,7 @@ class ProfilePage extends StatelessWidget {
 																	),
 																	const SizedBox(height: 6),
 																	Text(
-																		'Profile information will be placed here later.',
+																		'In in ut cupidatat qui officia. Magna pariatur dolore laboris occaecat ad nulla excepteur pariatur sint. Id dolore quis pariatur irure. Amet culpa anim elit sunt. Dolore labore quis aute proident. Esse nostrud commodo ex consectetur ut.',
 																		style: GoogleFonts.inter(
 																			color: AppColors.textMuted,
 																			fontSize: 12,

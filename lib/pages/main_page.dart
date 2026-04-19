@@ -75,7 +75,7 @@ class _MainPageState extends State<MainPage> {
             children: [
               IndexedStack(
                 index: index,
-                children: [HomeWidget(), Discovery(), Scholarship(), AiGabay()],
+                children: [HomeWidget(), Discovery(), Scholarship(), AiGabay(), ReviewCenter()],
               ),
             ],
           ),

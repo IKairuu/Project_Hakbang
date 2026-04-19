@@ -11,10 +11,13 @@ class AiGabay extends StatefulWidget {
   State<AiGabay> createState() => _AiGabayState();
 }
 
-class _AiGabayState extends State<AiGabay> {
+class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
   final TextEditingController _inputController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   bool chatLoading = false;
+
+  @override
+  bool get wantKeepAlive => true;
 
   final List<String> _suggestionChips = [
     'What is UPCAT?',
@@ -140,6 +143,7 @@ class _AiGabayState extends State<AiGabay> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     const bgColor = Color(0xFF0C0D10);
     const surface2 = Color(0xFF1C1E27);
     const border2 = Color(0x1FFFFFFF);

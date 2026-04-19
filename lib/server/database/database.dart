@@ -5,7 +5,6 @@ import 'package:hakbang/models/college.dart';
 import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 class Database {
   static Future<void> getCollege() async {

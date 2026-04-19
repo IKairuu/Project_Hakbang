@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/font_styles.dart';
-import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/design/container_design.dart';
@@ -169,40 +168,19 @@ class ProfilePage extends StatelessWidget {
 																),
 															],
 														),
-														const SizedBox(height: 8),
-														ValueListenableBuilder<List<College>>(
-															valueListenable: savedSchools,
-															builder: (context, schools, child) {
-																if (schools.isEmpty) {
-																	return Container(
-																		padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-																		decoration: ContainerDesign.pillTagGrade,
-																		child: Text(
-																			'No saved schools yet',
-																			style: FontStyles.previewPillText,
-																		),
-																	);
-																}
-
-																return Wrap(
-																	spacing: 8,
-																	runSpacing: 8,
-																	children: schools
-																		.take(3)
-																		.map(
-																			(college) => Container(
-																				padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-																				decoration: ContainerDesign.pillTagGrade,
-																				child: Text(
-																					college.collegeName,
-																					style: FontStyles.previewPillText,
-																				),
-																			),
-																		)
-																		.toList(),
-																);
-															},
-														),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  decoration: ContainerDesign.pillTagGrade,
+                                  child: Text(
+                                    'De La Salle University',
+                                    style: FontStyles.previewPillText,
+                                  ),
+                                ),
+                              ],
+                            ),
 														const SizedBox(height: 20),
 														Container(
 															width: double.infinity,

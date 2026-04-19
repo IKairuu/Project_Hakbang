@@ -5,6 +5,7 @@ import 'package:hakbang/widgets/ai_gabay.dart';
 import 'package:hakbang/widgets/discovery.dart';
 import 'package:hakbang/widgets/home_widget.dart';
 import 'package:hakbang/widgets/scholarship.dart';
+import 'package:hakbang/widgets/review_center.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -14,7 +15,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<Widget> navigationWidgets = [HomeWidget(), Discovery(), Scholarship(), AiGabay()];
+  List<Widget> navigationWidgets = [
+    HomeWidget(),
+    Discovery(),
+    Scholarship(),
+    AiGabay(),
+    ReviewCenter(),
+  ];
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -61,6 +68,10 @@ class _MainPageState extends State<MainPage> {
                   label: "Gabay",
                 ),
                 NavigationDestination(
+                  icon: SvgPicture.asset("assets/exam.svg", height: 20),
+                  label: "Hubs",
+                ),
+                  NavigationDestination(
                   icon: SvgPicture.asset("assets/user.svg", height: 20),
                   label: "Profile",
                 ),

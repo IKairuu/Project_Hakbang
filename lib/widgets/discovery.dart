@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
@@ -28,20 +29,37 @@ class _DiscoveryState extends State<Discovery> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Discover Schools", style: FontStyles.discoveryHeader),
+              Text("Discover Schools", style: FontStyles.header),
+              const SizedBox(height: 3),
+              Text(
+                "Find the best university for you",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 20),
               TextField(
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontSize: 14),
                 onSubmitted: (value) {
                   Filter.searchCollege(searchInput.text);
                 },
                 controller: searchInput,
+                cursorColor: AppColors.accent,
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: AppColors.surface2,
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(color: Color(0xFFC8FF4D)),
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: AppColors.accent, width: 1.5),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFC8FF4D)),
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(
+                      color: AppColors.border2,
+                      width: 1.5,
+                    ),
                   ),
                   hintText: "Search school",
                   suffixIcon: IconButton(
@@ -139,9 +157,7 @@ class _DiscoveryState extends State<Discovery> {
                               valueListenable: selectedSchoolPosition,
                               builder: (context, school, child) {
                                 return ClipRRect(
-                                  borderRadius: BorderRadiusGeometry.circular(
-                                    20,
-                                  ),
+                                  borderRadius: BorderRadius.circular(20),
                                   child: FlutterMap(
                                     options: MapOptions(
                                       initialCenter: LatLng(

@@ -149,6 +149,7 @@ class _AiGabayState extends State<AiGabay> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          SizedBox(height: 25),
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 14),
             child: Row(

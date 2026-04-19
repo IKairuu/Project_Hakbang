@@ -3,8 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/login_page.dart';
+import 'package:hakbang/design/container_design.dart';
 
 class ProfilePage extends StatelessWidget {
 	const ProfilePage({super.key});
@@ -150,38 +152,56 @@ class ProfilePage extends StatelessWidget {
 															children: [
 																Container(
 																	padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-																	decoration: BoxDecoration(
-																		color: AppColors.accent.withValues(alpha: 0.18),
-																		borderRadius: BorderRadius.circular(999),
-																		border: Border.all(color: AppColors.accent.withValues(alpha: 0.45)),
-																	),
+																	decoration: ContainerDesign.pillTagIdentity,
 																	child: Text(
 																		'Identity',
-																		style: GoogleFonts.inter(
-																			color: AppColors.accent,
-																			fontSize: 12,
-																			fontWeight: FontWeight.w700,
-																		),
+																		style: FontStyles.previewPillText,
 																	),
 																),
 																const SizedBox(width: 8),
 																Container(
 																	padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-																	decoration: BoxDecoration(
-																		color: AppColors.blueDim,
-																		borderRadius: BorderRadius.circular(999),
-																		border: Border.all(color: AppColors.blue.withValues(alpha: 0.45)),
-																	),
+																	decoration: ContainerDesign.pillTagGrade,
 																	child: Text(
 																		'Grade Level',
-																		style: GoogleFonts.inter(
-																			color: AppColors.blue,
-																			fontSize: 12,
-																			fontWeight: FontWeight.w700,
-																		),
+																		style: FontStyles.previewPillText,
 																	),
 																),
 															],
+														),
+														const SizedBox(height: 8),
+														ValueListenableBuilder<List<College>>(
+															valueListenable: savedSchools,
+															builder: (context, schools, child) {
+																if (schools.isEmpty) {
+																	return Container(
+																		padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+																		decoration: ContainerDesign.pillTagGrade,
+																		child: Text(
+																			'No saved schools yet',
+																			style: FontStyles.previewPillText,
+																		),
+																	);
+																}
+
+																return Wrap(
+																	spacing: 8,
+																	runSpacing: 8,
+																	children: schools
+																		.take(3)
+																		.map(
+																			(college) => Container(
+																				padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+																				decoration: ContainerDesign.pillTagGrade,
+																				child: Text(
+																					college.collegeName,
+																					style: FontStyles.previewPillText,
+																				),
+																			),
+																		)
+																		.toList(),
+																);
+															},
 														),
 														const SizedBox(height: 20),
 														Container(
@@ -197,8 +217,8 @@ class ProfilePage extends StatelessWidget {
 																children: [
 																	Text(
 																		'About Me:',
-																		style: GoogleFonts.inter(
-																			color: Colors.white,
+																		style: GoogleFonts.dmSans(
+																			color: AppColors.textPrimary,
 																			fontSize: 14,
 																			fontWeight: FontWeight.w600,
 																		),

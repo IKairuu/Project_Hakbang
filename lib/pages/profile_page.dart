@@ -237,12 +237,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 _space8,
                                 Row(
                                 children: [
-                                  Expanded(
-                                    child: _buildProfileChip(
-                                      text: school,
-                                      decoration: ContainerDesign.pillTagGrade,
-                                      ellipsis: true,
-                                    ),
+                                  _buildProfileChip(
+                                    text: school,
+                                    decoration: ContainerDesign.pillTagGrade,
+                                    ellipsis: true,
                                   ),
                                 ],
                                 ),

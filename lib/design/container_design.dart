@@ -86,7 +86,7 @@ class ContainerDesign {
     ],
   );
 
-  static final BoxDecoration signupIdentityOptionUnselected = BoxDecoration(
+  static final BoxDecoration signupOccupationOptionUnselected = BoxDecoration(
     color: Color(0xFF2a2d38),
     borderRadius: BorderRadius.circular(18),
     border: Border.all(color: Color.fromARGB(255, 60, 61, 67), width: 1),
@@ -97,7 +97,7 @@ class ContainerDesign {
     color: Color(0xFF0c1621),
   );
 
-  static final BoxDecoration pillTagIdentity = BoxDecoration(
+  static final BoxDecoration pillTagOccupation = BoxDecoration(
     color: Color.fromARGB(69, 199, 255, 77),
     borderRadius: BorderRadius.circular(20),
   );

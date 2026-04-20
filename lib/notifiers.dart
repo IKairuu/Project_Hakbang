@@ -31,6 +31,7 @@ ValueNotifier<List<College>> collegeSection = ValueNotifier([]);
 ValueNotifier<List<AiMessage>> chatMessages = ValueNotifier([]);
 ValueNotifier<bool> chatLoading = ValueNotifier(false);
 ValueNotifier<List<College>> savedSchools = ValueNotifier([]);
+ValueNotifier<bool> hasInternetConnection = ValueNotifier(false);
 ValueNotifier<List<Map<String, String>>> availableReviewCenters = ValueNotifier(
   [
     {

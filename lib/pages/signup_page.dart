@@ -3,11 +3,14 @@ import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/functions/internet.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/verifications.dart';
-import 'package:hakbang/models/identity_option.dart';
+import 'package:hakbang/main.dart';
+import 'package:hakbang/models/occupation_option.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/login_page.dart';
+import 'package:hakbang/pages/no_internet_page.dart';
 import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
@@ -33,7 +36,7 @@ class _SignupPageState extends State<SignupPage> {
 
   // Step 2 state
   int? _selectedAvatarIndex;
-  int? _selectedIdentityIndex;
+  int? _selectedOccupationIndex;
   late TextEditingController schoolController;
   late TextEditingController gradeController;
 
@@ -41,14 +44,18 @@ class _SignupPageState extends State<SignupPage> {
   bool showConfirmPassword = false;
 
   final List<String> avatars = ['🦁', '🦊', '🐉', '🦅', '🐬'];
-  final List<IdentityOption> identities = [
-    IdentityOption(emoji: '🧑‍🎓', title: 'Student', subtitle: 'Grade 11 - 12'),
-    IdentityOption(
+  final List<occupationOption> occupations = [
+    occupationOption(
+      emoji: '🧑‍🎓',
+      title: 'Student',
+      subtitle: 'Grade 11 - 12',
+    ),
+    occupationOption(
       emoji: '👨‍👩‍👧',
       title: 'Parent',
       subtitle: 'Supporting a student',
     ),
-    IdentityOption(emoji: '🏫', title: 'Counselor', subtitle: 'School Staff'),
+    occupationOption(emoji: '🏫', title: 'Counselor', subtitle: 'School Staff'),
   ];
 
   @override
@@ -105,28 +112,75 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   void _onSubmit() async {
-    final data = {
-      "data": {
-        "name": fullNameController.text,
-        "email": emailController.text,
-        "password": passwordController.text,
-        "avatar": avatars[_selectedAvatarIndex!],
-        "occupation": identities[_selectedIdentityIndex!].title,
-        "institution": schoolController.text,
-        "grade": gradeController.text,
-      },
-    };
-    await Database.signupUser(data)
-        .then((value) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
+    if (!await Internet.checkInternetConnection()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text("There is no internet connection"),
+        ),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NoInternetPage(currentWidget: MyHomePage()),
+        ),
+      );
+    } else {
+      final data = {
+        "data": {
+          "name": fullNameController.text,
+          "email": emailController.text,
+          "password": passwordController.text,
+          "avatar": avatars[_selectedAvatarIndex!],
+          "occupation": occupations[_selectedOccupationIndex!].title,
+          "institution": schoolController.text,
+          "grade": gradeController.text,
+        },
+      };
+      await Database.signupUser(data)
+          .then((value) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  backgroundColor: Color(0xFF343943),
+                  title: Text(
+                    "Setup successfull",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  actions: [
+                    ElevatedButton(
+                      style: ButtonDesign.alertDialog,
+                      onPressed: () {
+                        fullNameController.clear();
+                        emailController.clear();
+                        passwordController.clear();
+                        confirmPasswordController.clear();
+                        _selectedAvatarIndex = null;
+                        _selectedOccupationIndex = null;
+                        schoolController.clear();
+                        gradeController.clear();
+                        agreeToTerms.value = false;
+                        Navigator.of(context).pop();
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          (route) => false,
+                        );
+                      },
+                      child: Text("Ok"),
+                    ),
+                  ],
+                );
+              },
+            );
+          })
+          .onError((error, stackTrace) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text("Server Error"),
                 backgroundColor: Color(0xFF343943),
-                title: Text(
-                  "Setup successfull",
-                  style: TextStyle(color: Colors.white),
-                ),
                 actions: [
                   ElevatedButton(
                     style: ButtonDesign.alertDialog,
@@ -136,7 +190,7 @@ class _SignupPageState extends State<SignupPage> {
                       passwordController.clear();
                       confirmPasswordController.clear();
                       _selectedAvatarIndex = null;
-                      _selectedIdentityIndex = null;
+                      _selectedOccupationIndex = null;
                       schoolController.clear();
                       gradeController.clear();
                       agreeToTerms.value = false;
@@ -150,42 +204,11 @@ class _SignupPageState extends State<SignupPage> {
                     child: Text("Ok"),
                   ),
                 ],
-              );
-            },
-          );
-        })
-        .onError((error, stackTrace) {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text("Server Error"),
-              backgroundColor: Color(0xFF343943),
-              actions: [
-                ElevatedButton(
-                  style: ButtonDesign.alertDialog,
-                  onPressed: () {
-                    fullNameController.clear();
-                    emailController.clear();
-                    passwordController.clear();
-                    confirmPasswordController.clear();
-                    _selectedAvatarIndex = null;
-                    _selectedIdentityIndex = null;
-                    schoolController.clear();
-                    gradeController.clear();
-                    agreeToTerms.value = false;
-                    Navigator.of(context).pop();
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                      (route) => false,
-                    );
-                  },
-                  child: Text("Ok"),
-                ),
-              ],
-            ),
-          );
-        });
+              ),
+            );
+          });
+    }
+
     // UI-only form; add submission behavior later.
   }
 
@@ -319,24 +342,24 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   SignupStep2(
                     selectedAvatarIndex: _selectedAvatarIndex,
-                    selectedIdentityIndex: _selectedIdentityIndex,
+                    selectedOccupationIndex: _selectedOccupationIndex,
                     schoolController: schoolController,
                     gradeController: gradeController,
                     avatars: avatars,
-                    identities: identities,
+                    occupations: occupations,
                     onAvatarSelected: (index) {
                       setState(() {
                         _selectedAvatarIndex = index;
                       });
                     },
-                    onIdentitySelected: (index) {
+                    onOccupationSelected: (index) {
                       setState(() {
-                        _selectedIdentityIndex = index;
+                        _selectedOccupationIndex = index;
                       });
                     },
                     onContinue: () {
                       if (_selectedAvatarIndex == null ||
-                          _selectedIdentityIndex == null ||
+                          _selectedOccupationIndex == null ||
                           schoolController.text.trim().isEmpty ||
                           gradeController.text.trim().isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -356,8 +379,8 @@ class _SignupPageState extends State<SignupPage> {
                     avatars: avatars,
                     fullName: fullNameController.text,
                     email: emailController.text,
-                    selectedIdentityIndex: _selectedIdentityIndex,
-                    identities: identities,
+                    selectedOccupationIndex: _selectedOccupationIndex,
+                    occupations: occupations,
                     grade: gradeController.text,
                     onCreate: () {
                       if (!Verifications.checkTerms()) {
@@ -402,7 +425,7 @@ class _SignupPageState extends State<SignupPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginPage(),
+                                builder: (context) => LoginPage(),
                               ),
                             );
                           } catch (e) {

@@ -68,6 +68,43 @@ class _ProfilePageState extends State<ProfilePage> {
 
 				return Scaffold(
 					backgroundColor: AppColors.bg,
+          appBar: AppBar(
+            backgroundColor: const Color(0xFFC8FF4D),
+            elevation: 10,
+            shadowColor: const Color(0xFFC8FF4D),
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                } else {
+                  navigationBarIndex.value = 2;
+                }
+              },
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  token.value = null;
+                  userCredentials.value = null;
+                  navigationBarIndex.value = 0;
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ),
+                    (route) => false,
+                  );
+                },
+                icon: const Icon(Icons.logout_rounded),
+                color: Colors.black,
+                tooltip: 'Log out',
+              ),
+            ],
+          ),
 					body: Container(
 						decoration: const BoxDecoration(
 							gradient: LinearGradient(
@@ -113,40 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Your Profile',
-                                      style: FontStyles.header,
-                                    ),
-
-                                  ],
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  token.value = null;
-                                  userCredentials.value = null;
-                                  navigationBarIndex.value = 0;
-                                  Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginPage(),
-                                    ),
-                                    (route) => false,
-                                  );
-                                },
-                                icon: const Icon(Icons.logout_rounded),
-                                color: AppColors.textPrimary,
-                                tooltip: 'Log out',
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 28),
+                          const SizedBox(height: 8),
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(20),

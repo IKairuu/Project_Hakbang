@@ -89,7 +89,7 @@ class _ScholarshipAiState extends State<ScholarshipAi>
                       ),
                     ),
                   ),
-                  // AI card — bottom right
+                  // Second scholarship card — bottom right
                   Positioned(
                     bottom: 28,
                     right: 20,
@@ -97,7 +97,7 @@ class _ScholarshipAiState extends State<ScholarshipAi>
                       animation: _float2,
                       builder: (context, _) => Transform.translate(
                         offset: Offset(0, _float2.value),
-                        child: _aiCard(),
+                        child: _matchCard(),
                       ),
                     ),
                   ),
@@ -123,10 +123,10 @@ class _ScholarshipAiState extends State<ScholarshipAi>
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Text('🎓', style: TextStyle(fontSize: 11)),
+                        const Text('🏆', style: TextStyle(fontSize: 11)),
                         const SizedBox(width: 5),
                         Text(
-                          'SCHOLARSHIP + AI',
+                          'SCHOLARSHIPS',
                           style: GoogleFonts.dmSans(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
@@ -139,7 +139,7 @@ class _ScholarshipAiState extends State<ScholarshipAi>
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Find Funding.\nGet AI guidance.',
+                    'Find Funding.\nGet Matched.',
                     style: GoogleFonts.dmSans(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
@@ -150,7 +150,7 @@ class _ScholarshipAiState extends State<ScholarshipAi>
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Discover scholarships matched to your profile and chat with Gabay AI — your 24/7 college advisor.',
+                    'Discover scholarships matched to your profile — government, private, and merit-based grants all in one feed.',
                     style: GoogleFonts.dmSans(
                       fontSize: 13,
                       color: AppColors.textSecondary,
@@ -267,7 +267,7 @@ class _ScholarshipAiState extends State<ScholarshipAi>
     );
   }
 
-  Widget _aiCard() {
+  Widget _matchCard() {
     return Container(
       width: 210,
       padding: const EdgeInsets.all(14),
@@ -287,44 +287,54 @@ class _ScholarshipAiState extends State<ScholarshipAi>
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 28,
-                height: 28,
-                decoration: BoxDecoration(
-                  color: AppColors.accentDim,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(
-                  Icons.auto_awesome_rounded,
-                  color: AppColors.accent,
-                  size: 16,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'Gabay AI',
-                style: GoogleFonts.dmSans(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
           Text(
-            '"Tell me which scholarships match\nmy course and target school."',
+            'Matched for you',
             style: GoogleFonts.dmSans(
-              fontSize: 11,
-              color: AppColors.textSecondary,
-              height: 1.5,
-              fontStyle: FontStyle.italic,
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: AppColors.textMuted,
+              letterSpacing: 0.3,
             ),
           ),
+          const SizedBox(height: 8),
+          _matchRow('CHED Scholarship', '₱60,000/yr', AppColors.purple),
+          const SizedBox(height: 6),
+          _matchRow('SM Foundation', '₱80,000/yr', AppColors.blue),
+          const SizedBox(height: 6),
+          _matchRow('DOST-SEI', '₱50,000/yr', AppColors.teal),
         ],
       ),
+    );
+  }
+
+  Widget _matchRow(String name, String amount, Color color) {
+    return Row(
+      children: [
+        Container(
+          width: 6,
+          height: 6,
+          decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            name,
+            style: GoogleFonts.dmSans(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+        ),
+        Text(
+          amount,
+          style: GoogleFonts.dmSans(
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+            color: color,
+          ),
+        ),
+      ],
     );
   }
 }

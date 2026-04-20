@@ -8,6 +8,7 @@ import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/pages/signup_page.dart';
 import 'package:hakbang/widgets/about_app.dart';
 import 'package:hakbang/widgets/explore_container.dart';
+import 'package:hakbang/widgets/gabay_ai_slide.dart';
 import 'package:hakbang/widgets/review_center_slide.dart';
 import 'package:hakbang/widgets/scholarship_ai.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -55,6 +56,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                 AboutApp(),
                 ExploreContainer(),
                 ScholarshipAi(),
+                GabayAiSlide(),
                 ReviewCenterSlide(),
               ],
             ),
@@ -77,7 +79,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   );
                 },
                 controller: scrollIndicator,
-                count: 4,
+                count: 5,
                 effect: SmoothPageIndicatorDesign.startPageIndicator,
                 axisDirection: Axis.horizontal,
               ),

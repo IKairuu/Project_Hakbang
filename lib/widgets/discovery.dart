@@ -8,8 +8,6 @@ import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/builds/college_section.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:hakbang/design/app_colors.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Discovery extends StatefulWidget {
   const Discovery({super.key});
@@ -214,7 +212,10 @@ class _DiscoveryState extends State<Discovery> {
                       : Center(
                           child: Text(
                             "There is no selected university",
-                            style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                            style: TextStyle(
+                              color: AppColors.textSecondary,
+                              fontSize: 14,
+                            ),
                           ),
                         ),
                 ),

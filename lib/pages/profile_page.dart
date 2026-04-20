@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/font_styles.dart';
@@ -139,14 +138,6 @@ class _ProfilePageState extends State<ProfilePage> {
 						child: SafeArea(
 							child: Stack(
 								children: [
-                  Positioned(
-                    top: -90,
-                    left: -90,
-                    child: _GlowOrb(
-                        color: AppColors.accent.withValues(alpha: 0.16),
-                      size: 400,
-                    ),
-                  ),
                   Positioned.fill(
                     child: Opacity(
                       opacity: 0.18,
@@ -272,11 +263,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         children: [
                                           Text(
                                             'About Me:',
-                                            style: GoogleFonts.dmSans(
-                                              color: AppColors.textPrimary,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                            style: FontStyles.profileAboutTitle,
                                           ),
                                           TextButton.icon(
                                             onPressed: _showEditAboutMeDialog,
@@ -294,11 +281,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       const SizedBox(height: 6),
                                       Text(
                                         _aboutMeText,
-                                        style: GoogleFonts.dmSans(
-                                          color: AppColors.textMuted,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                        style: FontStyles.profileAboutBody,
                                       ),
                                     ],
                                   ),
@@ -310,11 +293,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           _space20,
                           Text(
                                 'Saved Schools',
-                            style: GoogleFonts.dmSans(
-                              color: AppColors.textPrimary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: FontStyles.profileSectionTitle,
                           ),
                           _space10,
                           ValueListenableBuilder(
@@ -327,11 +306,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   decoration: ContainerDesign.universitySections,
                                   child: Text(
                                     'No saved school yet.',
-                                    style: GoogleFonts.dmSans(
-                                      color: AppColors.textMuted,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    style: FontStyles.profileEmptySavedSchools,
                                   ),
                                 );
                               }
@@ -363,33 +338,6 @@ class _ProfilePageState extends State<ProfilePage> {
 					),
 				);
 			},
-		);
-	}
-}
-
-class _GlowOrb extends StatelessWidget {
-	final Color color;
-	final double size;
-
-	const _GlowOrb({
-		required this.color,
-		required this.size,
-	});
-
-	@override
-	Widget build(BuildContext context) {
-		return Container(
-			width: size,
-			height: size,
-			decoration: BoxDecoration(
-				shape: BoxShape.circle,
-				gradient: RadialGradient(
-					colors: [
-						color,
-						color.withValues(alpha: 0.0),
-					],
-				),
-			),
 		);
 	}
 }

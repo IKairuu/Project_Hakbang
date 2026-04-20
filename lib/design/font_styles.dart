@@ -261,4 +261,28 @@ class FontStyles {
     color: Colors.white,
     fontWeight: FontWeight.w700,
   );
+
+  static final TextStyle profileAboutTitle = GoogleFonts.dmSans(
+    color: AppColors.textPrimary,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final TextStyle profileAboutBody = GoogleFonts.dmSans(
+    color: AppColors.textMuted,
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle profileSectionTitle = GoogleFonts.dmSans(
+    color: AppColors.textPrimary,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final TextStyle profileEmptySavedSchools = GoogleFonts.dmSans(
+    color: AppColors.textMuted,
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+  );
 }

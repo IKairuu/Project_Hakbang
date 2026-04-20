@@ -37,22 +37,50 @@ class _ProfilePageState extends State<ProfilePage> {
 
 	@override
 	Widget build(BuildContext context) {
-		return Scaffold(
-			backgroundColor: AppColors.bg,
-			body: Container(
-				decoration: const BoxDecoration(
-					gradient: LinearGradient(
-						begin: Alignment.topCenter,
-						end: Alignment.bottomCenter,
-						colors: [
-							AppColors.bodyBg,
-							AppColors.bg,
-						],
-					),
-				),
-				child: SafeArea(
-					child: Stack(
-						children: [
+		return ValueListenableBuilder(
+			valueListenable: userCredentials,
+			builder: (context, userData, child) {
+				final avatar =
+					(userData?.avatar.trim().isNotEmpty ?? false)
+					? userData!.avatar
+					: '🙂';
+				final name =
+					(userData?.name.trim().isNotEmpty ?? false)
+					? userData!.name
+					: 'Unknown User';
+				final email =
+					(userData?.email.trim().isNotEmpty ?? false)
+					? userData!.email
+					: 'No email available';
+				final occupation =
+					(userData?.occupation.trim().isNotEmpty ?? false)
+					? userData!.occupation
+					: 'Occupation';
+				final grade =
+					(userData?.grade.trim().isNotEmpty ?? false)
+					? userData!.grade
+					: 'Grade Level';
+				final school =
+					(userData?.institution.trim().isNotEmpty ?? false)
+					? userData!.institution
+					: 'School';
+
+				return Scaffold(
+					backgroundColor: AppColors.bg,
+					body: Container(
+						decoration: const BoxDecoration(
+							gradient: LinearGradient(
+								begin: Alignment.topCenter,
+								end: Alignment.bottomCenter,
+								colors: [
+									AppColors.bodyBg,
+									AppColors.bg,
+								],
+							),
+						),
+						child: SafeArea(
+							child: Stack(
+								children: [
 							Positioned(
 								top: -90,
 								left: -90,
@@ -147,9 +175,9 @@ class _ProfilePageState extends State<ProfilePage> {
 																		borderRadius: BorderRadius.circular(14),
 																		border: Border.all(color: AppColors.accent),
 																	),
-																	child: const Center(
+																	child: Center(
 																		child: Text(
-																			'🙂',
+																			avatar,
 																			style: TextStyle(fontSize: 40),
 																		),
 																	),
@@ -160,11 +188,15 @@ class _ProfilePageState extends State<ProfilePage> {
 																		crossAxisAlignment: CrossAxisAlignment.start,
 																		children: [
 																			Text(
-																				'Joachim Nicholo Dela Cruz Rivera Martinez ',
+																				name,
+																				maxLines: 2,
+																				overflow: TextOverflow.ellipsis,
 																				style: FontStyles.previewName,
 																				),
 																			Text(
-																				'you@example.com',
+																				email,
+																				maxLines: 1,
+																				overflow: TextOverflow.ellipsis,
 																				style: FontStyles.previewEmail,
 																			),
 																		],
@@ -179,7 +211,7 @@ class _ProfilePageState extends State<ProfilePage> {
 																	padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
 																	decoration: ContainerDesign.pillTagOccupation,
 																	child: Text(
-																		'Occupation',
+																		occupation,
 																		style: FontStyles.previewPillText,
 																	),
 																),
@@ -188,7 +220,7 @@ class _ProfilePageState extends State<ProfilePage> {
 																	padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
 																	decoration: ContainerDesign.pillTagGrade,
 																	child: Text(
-																		'Grade Level',
+																		grade,
 																		style: FontStyles.previewPillText,
 																	),
 																),
@@ -201,7 +233,9 @@ class _ProfilePageState extends State<ProfilePage> {
 															padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
 															decoration: ContainerDesign.pillTagGrade,
 															child: Text(
-																'De La Salle University',
+																school,
+																maxLines: 1,
+																overflow: TextOverflow.ellipsis,
 																style: FontStyles.previewPillText,
 															),
 															),
@@ -308,10 +342,12 @@ class _ProfilePageState extends State<ProfilePage> {
 									),
 								),
 							),
-						],
+								],
+							),
+						),
 					),
-				),
-			),
+				);
+			},
 		);
 	}
 }

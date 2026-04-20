@@ -299,7 +299,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'Saved Schools',
                             style: GoogleFonts.dmSans(
                               color: AppColors.textPrimary,
-                              fontSize: 14,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

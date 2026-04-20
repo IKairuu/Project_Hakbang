@@ -62,29 +62,43 @@ class _LoginPageState extends State<LoginPage> {
       );
     } else {
       var login = await Database.userLogin(email, password);
+      token.value = "Bearer ${login["token"]}";
+      print(login);
       switch (login["status"]) {
         case 200:
-          userCredentials.value = User(
-            name: login["data"]["name"],
-            email: login["data"]["email"],
-            avatar: login["data"]["avatar"],
-            grade: login["data"]["grade"],
-            institution: login["data"]["institution"],
-            occupation: login["data"]["occupation"],
-          );
-          token.value = "Bearer ${login["token"]}";
-          await Initialization.mainInitialization();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              behavior: SnackBarBehavior.floating,
-              content: Text(login["message"]),
-            ),
-          );
+          await Database.getUserData(login["data"])
+              .then((value) async {
+                userCredentials.value = User(
+                  name: value["data"]["name"],
+                  email: value["data"]["email"],
+                  avatar: value["data"]["avatar"],
+                  grade: value["data"]["grade"],
+                  institution: value["data"]["institution"],
+                  occupation: value["data"]["occupation"],
+                );
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MainPage()),
-          );
+                await Initialization.mainInitialization();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    content: Text(login["message"]),
+                  ),
+                );
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainPage()),
+                );
+              })
+              .onError((error, stackTrace) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    content: Text("Server Error"),
+                  ),
+                );
+              });
+
           break;
         case 401:
           ScaffoldMessenger.of(context).showSnackBar(

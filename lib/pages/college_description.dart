@@ -10,6 +10,7 @@ import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:hakbang/design/app_colors.dart';
 
 class CollegeDescription extends StatefulWidget {
   const CollegeDescription({super.key, required this.college});
@@ -31,7 +32,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
         elevation: 10,
         shadowColor: Color(0xFFC8FF4D),
       ),
-      backgroundColor: Color(0xFF121318),
+      backgroundColor: AppColors.bg,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: FadingEdgeScrollView.fromSingleChildScrollView(
@@ -80,7 +81,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                   widget.college.type == "private"
                                       ? "Private"
                                       : "Public",
-                                  style: GoogleFonts.dmSans(
+                                  style: GoogleFonts.inter(
                                     color: Color(0xFF718fd7),
                                     fontWeight: FontWeight.w800,
                                   ),
@@ -105,7 +106,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                     ),
                                     Text(
                                       widget.college.rating,
-                                      style: GoogleFonts.dmSans(
+                                      style: GoogleFonts.inter(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w800,
                                       ),
@@ -164,7 +165,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       height: 50,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Color(0xFF1d1d2a),
+                        color: AppColors.surface2,
                         borderRadius: BorderRadius.circular(15),
                         border: BoxBorder.all(color: Color(0xFF7d7e86)),
                       ),
@@ -178,7 +179,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                               children: [
                                 Text(
                                   widget.college.programNumbers,
-                                  style: GoogleFonts.dmSans(
+                                  style: GoogleFonts.inter(
                                     color: Color(0xFFd9fe84),
                                     fontWeight: FontWeight.w900,
                                     fontSize: 15,
@@ -186,9 +187,9 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                 ),
                                 Text(
                                   "PROGRAMS",
-                                  style: GoogleFonts.dmSans(
+                                  style: GoogleFonts.inter(
                                     color: Color(0xFF7d7e86),
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.w800,
                                     fontSize: 15,
                                   ),
                                 ),
@@ -198,8 +199,8 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: VerticalDivider(
-                              width: 5,
-                              color: Color(0xFF7d7e86),
+                              width: 1,
+                              color: Color.fromRGBO(255, 255, 255, 0.15),
                               thickness: 1,
                             ),
                           ),
@@ -210,7 +211,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                               children: [
                                 Text(
                                   "TOP #${widget.college.ranking}",
-                                  style: GoogleFonts.dmSans(
+                                  style: GoogleFonts.inter(
                                     color: Color(0xFFa755f6),
                                     fontWeight: FontWeight.w900,
                                     fontSize: 15,
@@ -218,9 +219,9 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                 ),
                                 Text(
                                   "RANKING",
-                                  style: GoogleFonts.dmSans(
+                                  style: GoogleFonts.inter(
                                     color: Color(0xFF7d7e86),
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.w800,
                                     fontSize: 15,
                                   ),
                                 ),
@@ -267,22 +268,22 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  saved.contains(widget.college)
-                                      ? "Saved"
-                                      : "Save",
-                                  style: GoogleFonts.dmSans(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 20,
-                                  ),
-                                ),
                                 Icon(
                                   saved.contains(widget.college)
                                       ? Icons.bookmark
                                       : Icons.bookmark_border,
                                   color: Colors.black,
                                   size: 20,
+                                ),
+                                Text(
+                                  saved.contains(widget.college)
+                                      ? "Saved"
+                                      : "Save School",
+                                  style: GoogleFonts.inter(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 15,
+                                  ),
                                 ),
                               ],
                             ),
@@ -291,12 +292,14 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       },
                     ),
                   ),
-                  Divider(color: Color(0xFF7d7e86), thickness: 0.5),
+                  SizedBox(height: 10),
+                  Divider(color: Color.fromRGBO(255, 255, 255, 0.15), thickness: 1, height: 1),
+                  SizedBox(height: 10),
                   Text(
                     "ABOUT",
-                    style: GoogleFonts.dmSans(
-                      letterSpacing: 3,
-                      fontSize: 20,
+                    style: GoogleFonts.inter(
+                      letterSpacing: 1,
+                      fontSize: 12,
                       color: Color(0xFF505157),
                       fontWeight: FontWeight.w800,
                     ),
@@ -308,11 +311,13 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       style: FontStyles.appDetails,
                     ),
                   ),
+                  Divider(color: Color.fromRGBO(255, 255, 255, 0.15), thickness: 1, height: 1),
+                  SizedBox(height: 10),
                   Text(
                     "TAGS",
-                    style: GoogleFonts.dmSans(
-                      letterSpacing: 3,
-                      fontSize: 20,
+                    style: GoogleFonts.inter(
+                      letterSpacing: 1,
+                      fontSize: 12,
                       color: Color(0xFF505157),
                       fontWeight: FontWeight.w800,
                     ),
@@ -325,7 +330,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       child: ListView.builder(
                         controller: tagScroll,
                         itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                           child: Container(
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
@@ -334,10 +339,10 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                             ),
                             child: Text(
                               "#${widget.college.tags[index]}",
-                              style: GoogleFonts.dmSans(
+                              style: GoogleFonts.inter(
                                 color: Colors.black,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15,
                               ),
                             ),
                           ),
@@ -347,16 +352,20 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       ),
                     ),
                   ),
-                  Divider(color: Color(0xFF7d7e86), thickness: 0.5),
+                  SizedBox(height: 10),
+                  Divider(color: Color.fromRGBO(255, 255, 255, 0.15), thickness: 1, height: 1),
+                  SizedBox(height: 10),
+
                   Text(
                     "PROGRAMS OFFERED",
-                    style: GoogleFonts.dmSans(
-                      letterSpacing: 3,
-                      fontSize: 20,
+                    style: GoogleFonts.inter(
+                      letterSpacing: 1,
+                      fontSize: 12,
                       color: Color(0xFF505157),
                       fontWeight: FontWeight.w800,
                     ),
                   ),
+                  SizedBox(height: 10),
                   SizedBox(
                     height: 150,
                     child: FadingEdgeScrollView.fromScrollView(
@@ -368,15 +377,18 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           child: Container(
+    
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Color(0xFF1d1d2a),
-                              borderRadius: BorderRadius.circular(15),
+                              color: AppColors.surface2,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: const Color(0xFF343A4B)),
+
                             ),
                             child: Text(
                               widget.college.programs[index],
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.dmSans(
+                              style: GoogleFonts.inter(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w800,
                               ),
@@ -386,12 +398,14 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       ),
                     ),
                   ),
-                  Divider(color: Color(0xFF7d7e86), thickness: 0.5),
+                  SizedBox(height: 10),
+                  Divider(color: Color.fromRGBO(255, 255, 255, 0.15), thickness: 1, height: 1),
+                  SizedBox(height: 10),
                   Text(
                     "CONTACT",
-                    style: GoogleFonts.dmSans(
-                      letterSpacing: 3,
-                      fontSize: 20,
+                    style: GoogleFonts.inter(
+                      letterSpacing: 1,
+                      fontSize: 12,
                       color: Color(0xFF505157),
                       fontWeight: FontWeight.w800,
                     ),
@@ -401,8 +415,9 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                     child: Container(
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Color(0xFF1d1d2a),
+                        color: AppColors.surface2,
                         borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: const Color(0xFF343A4B)),
                       ),
                       child: Row(
                         children: [
@@ -427,17 +442,17 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                             children: [
                               Text(
                                 "TELEPHONE",
-                                style: GoogleFonts.dmSans(
+                                style: GoogleFonts.inter(
                                   letterSpacing: 1,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   color: Color(0xFF505157),
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),
                               Text(
                                 widget.college.telephone,
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 15,
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w800,
                                   color: Colors.white,
                                 ),
@@ -453,8 +468,9 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                     child: Container(
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Color(0xFF1d1d2a),
+                        color: AppColors.surface2,
                         borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: const Color(0xFF343A4B)),
                       ),
                       child: Row(
                         children: [
@@ -467,6 +483,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                               decoration: BoxDecoration(
                                 color: Color(0xFF243335),
                                 borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: const Color(0xFF343A4B)),
                               ),
                               child: Image.network(
                                 "https://images.icon-icons.com/1826/PNG/512/4202011emailgmaillogomailsocialsocialmedia-115677_115624.png",
@@ -479,17 +496,17 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                             children: [
                               Text(
                                 "EMAIL",
-                                style: GoogleFonts.dmSans(
+                                style: GoogleFonts.inter(
                                   letterSpacing: 1,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   color: Color(0xFF505157),
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),
                               Text(
                                 widget.college.email,
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 15,
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w800,
                                   color: Colors.white,
                                 ),
@@ -505,8 +522,9 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                     child: Container(
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Color(0xFF1d1d2a),
+                        color: AppColors.surface2,
                         borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: const Color(0xFF343A4B)),
                       ),
                       child: Row(
                         children: [
@@ -519,6 +537,8 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                               decoration: BoxDecoration(
                                 color: Color(0xFF243335),
                                 borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: const Color(0xFF343A4B)),
+
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadiusGeometry.circular(10),
@@ -535,17 +555,17 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                               children: [
                                 Text(
                                   "FACEBOOK",
-                                  style: GoogleFonts.dmSans(
+                                  style: GoogleFonts.inter(
                                     letterSpacing: 1,
-                                    fontSize: 15,
+                                    fontSize: 12,
                                     color: Color(0xFF505157),
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
                                 Text(
                                   widget.college.fbPage,
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 15,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w800,
                                     color: Colors.blue,
                                     decoration: TextDecoration.underline,
@@ -558,12 +578,14 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       ),
                     ),
                   ),
-                  Divider(color: Color(0xFF7d7e86), thickness: 0.5),
+                  SizedBox(height: 10),
+                  Divider(color: Color.fromRGBO(255, 255, 255, 0.15), thickness: 1, height: 1),
+                  SizedBox(height: 10),
                   Text(
                     "LOCATION",
-                    style: GoogleFonts.dmSans(
-                      letterSpacing: 3,
-                      fontSize: 20,
+                    style: GoogleFonts.inter(
+                      letterSpacing: 1,
+                      fontSize: 12,
                       color: Color(0xFF505157),
                       fontWeight: FontWeight.w800,
                     ),

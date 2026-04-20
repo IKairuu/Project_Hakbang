@@ -468,6 +468,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         behavior: SnackBarBehavior.floating,
                                         content: Text(
                                           "There are no activities",
+                                          style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
                                         ),
                                       ),
                                     );
@@ -499,7 +500,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   ? Center(
                                       child: Text(
                                         "There are no recent activities",
-                                        style: FontStyles.recentActivityLabel,
+                                        style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
                                       ),
                                     )
                                   : ListView.builder(

@@ -16,6 +16,7 @@ import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
 import 'package:hakbang/widgets/signup_step3.dart';
 import 'package:hakbang/widgets/signup_progress_indicator.dart';
+import 'package:hakbang/widgets/auth_gradient_bg.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -216,8 +217,11 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundDesign.startPageColor,
-      body: SafeArea(
-        child: Column(
+      body: Stack(
+        children: [
+          const AuthGradientBg(),
+          SafeArea(
+            child: Column(
           children: [
             // Header with logo, HAKBANG text, and progress indicator
             Padding(
@@ -449,6 +453,8 @@ class _SignupPageState extends State<SignupPage> {
             ),
           ],
         ),
+          ),
+        ],
       ),
     );
   }

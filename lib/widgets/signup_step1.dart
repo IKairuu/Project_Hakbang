@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/input_design.dart';
 import 'package:hakbang/design/font_styles.dart';
@@ -42,7 +43,7 @@ class _SignupStep1State extends State<SignupStep1> {
 
   Widget _buildInputLabel(String text) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.only(bottom: 7),
       child: Text(text, style: FontStyles.inputLabel),
     );
   }
@@ -71,6 +72,7 @@ class _SignupStep1State extends State<SignupStep1> {
     return TextField(
       controller: controller,
       obscureText: obscureText,
+      cursorColor: AppColors.accent,
       decoration: _getInputDecoration(hintText).copyWith(
         prefixIcon: prefixIcon,
         prefixIconConstraints: prefixIcon != null
@@ -97,11 +99,7 @@ class _SignupStep1State extends State<SignupStep1> {
       padding: EdgeInsets.only(left: 12, right: 6),
       child: Opacity(
         opacity: 0.5,
-        child: Icon(
-          Icons.email_outlined,
-          size: 20,
-          color: _iconColor,
-        ),
+        child: Icon(Icons.email_outlined, size: 20, color: _iconColor),
       ),
     );
   }
@@ -116,7 +114,7 @@ class _SignupStep1State extends State<SignupStep1> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
-              child: Text("Create account ✨", style: FontStyles.header),
+              child: Text("Create account ✨", style: FontStyles.signupHeader),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
@@ -131,14 +129,14 @@ class _SignupStep1State extends State<SignupStep1> {
               hintText: 'Maria dela Cruz',
               prefixIcon: _buildEmojiPrefixContent('👤'),
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 14),
             _buildInputLabel("EMAIL ADDRESS"),
             _buildInputField(
               controller: widget.emailController,
               hintText: 'you@example.com',
               prefixIcon: _buildEmailPrefixIcon(),
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 14),
             _buildInputLabel("PASSWORD"),
             _buildInputField(
               controller: widget.passwordController,
@@ -150,7 +148,7 @@ class _SignupStep1State extends State<SignupStep1> {
                 onPressed: widget.onPasswordVisibilityToggle,
               ),
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 14),
             _buildInputLabel("CONFIRM PASSWORD"),
             _buildInputField(
               controller: widget.confirmPasswordController,
@@ -171,7 +169,7 @@ class _SignupStep1State extends State<SignupStep1> {
                 style: ButtonDesign.signUpButton,
                 child: Text(
                   'Continue →',
-                  style: FontStyles.continueButton,
+                  style: FontStyles.signupContinueButton,
                 ),
               ),
             ),

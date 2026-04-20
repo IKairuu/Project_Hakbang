@@ -63,7 +63,6 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       var login = await Database.userLogin(email, password);
       token.value = "Bearer ${login["token"]}";
-      print(login);
       switch (login["status"]) {
         case 200:
           await Database.getUserData(login["data"])

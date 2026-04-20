@@ -214,7 +214,7 @@ class _DiscoveryState extends State<Discovery> {
                       : Center(
                           child: Text(
                             "There is no selected university",
-                            style: FontStyles.mapLabel,
+                            style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
                           ),
                         ),
                 ),

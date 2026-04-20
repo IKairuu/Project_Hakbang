@@ -8,14 +8,6 @@ import 'package:hakbang/pages/college_description.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:hakbang/design/app_colors.dart';
 
-const accentGreen = Color(0xFFC8FF4D);
-const chipBlue = Color(0xFF4D8FFF);
-const chipPurple = Color(0xFFA855F7);
-const chipCoral = Color(0xFFFF6B4D);
-const chipTeal = Color(0xFF4DFFB8);
-const surface2 = Color(0xFF1c1e27);
-const textPrimary = Color(0xFFF0F1F5);
-const textSecondary = Color(0x8DF0F1F5);
 const borderGray = Color(0xFF3a3d47);
 
 class CollegeSection extends StatefulWidget {
@@ -39,7 +31,7 @@ class _CollegeSectionState extends State<CollegeSection> {
         valueListenable: selectedSchoolHover,
         builder: (context, selected, child) {
           final isSelected = selected[widget.sectionIndex];
-          final borderColor = isSelected ? accentGreen : borderGray;
+          final borderColor = isSelected ? AppColors.accent : borderGray;
           final displayTags = widget.college.tags
               .cast<String>()
               .take(3)
@@ -89,7 +81,7 @@ class _CollegeSectionState extends State<CollegeSection> {
                       width: 64,
                       height: 64,
                       decoration: BoxDecoration(
-                        color: surface2,
+                        color: AppColors.surface2,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: ClipRRect(
@@ -122,7 +114,7 @@ class _CollegeSectionState extends State<CollegeSection> {
                                 child: Text(
                                   widget.college.collegeName,
                                   style: GoogleFonts.dmSans(
-                                    color: textPrimary,
+                                    color: AppColors.textPrimary,
                                     fontSize: 16,
                                     letterSpacing: -0.3,
                                     fontWeight: FontWeight.w700,
@@ -145,7 +137,7 @@ class _CollegeSectionState extends State<CollegeSection> {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.dmSans(
-                                    color: textSecondary,
+                                    color: AppColors.textSecondary,
                                     fontSize: 12,
                                   ),
                                 ),
@@ -159,20 +151,20 @@ class _CollegeSectionState extends State<CollegeSection> {
                             children: [
                               _buildChip(
                                 displayTags[0],
-                                chipBlue,
-                                const Color(0x264D8FFF),
+                                AppColors.blue,
+                                AppColors.blueDim,
                                 const Color(0x4D4D8FFF),
                               ),
                               _buildChip(
                                 displayTags[1],
-                                accentGreen,
-                                const Color(0x1FC8FF4D),
+                                AppColors.accent,
+                                AppColors.accentDim,
                                 const Color(0x4DC8FF4D),
                               ),
                               _buildChip(
                                 displayTags[2],
-                                chipTeal,
-                                const Color(0x1A4DFFB8),
+                                AppColors.teal,
+                                AppColors.tealDim,
                                 const Color(0x334DFFB8),
                               ),
                             ],

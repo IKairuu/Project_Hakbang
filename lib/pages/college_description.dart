@@ -28,9 +28,9 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFC8FF4D),
+        backgroundColor: AppColors.accent,
         elevation: 10,
-        shadowColor: Color(0xFFC8FF4D),
+        shadowColor: AppColors.accent,
       ),
       backgroundColor: AppColors.bg,
       body: Padding(
@@ -180,7 +180,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                 Text(
                                   widget.college.programNumbers,
                                   style: GoogleFonts.inter(
-                                    color: Color(0xFFd9fe84),
+                                    color: AppColors.accentLight,
                                     fontWeight: FontWeight.w900,
                                     fontSize: 15,
                                   ),
@@ -293,7 +293,11 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Divider(color: Color.fromRGBO(255, 255, 255, 0.15), thickness: 1, height: 1),
+                  Divider(
+                    color: Color.fromRGBO(255, 255, 255, 0.15),
+                    thickness: 1,
+                    height: 1,
+                  ),
                   SizedBox(height: 10),
                   Text(
                     "ABOUT",
@@ -311,7 +315,11 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       style: FontStyles.appDetails,
                     ),
                   ),
-                  Divider(color: Color.fromRGBO(255, 255, 255, 0.15), thickness: 1, height: 1),
+                  Divider(
+                    color: Color.fromRGBO(255, 255, 255, 0.15),
+                    thickness: 1,
+                    height: 1,
+                  ),
                   SizedBox(height: 10),
                   Text(
                     "TAGS",
@@ -330,11 +338,14 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       child: ListView.builder(
                         controller: tagScroll,
                         itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 5,
+                            vertical: 5,
+                          ),
                           child: Container(
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Color(0xFFC8FF4D),
+                              color: AppColors.accent,
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Text(
@@ -353,7 +364,11 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Divider(color: Color.fromRGBO(255, 255, 255, 0.15), thickness: 1, height: 1),
+                  Divider(
+                    color: Color.fromRGBO(255, 255, 255, 0.15),
+                    thickness: 1,
+                    height: 1,
+                  ),
                   SizedBox(height: 10),
 
                   Text(
@@ -377,13 +392,13 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           child: Container(
-    
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: AppColors.surface2,
                               borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: const Color(0xFF343A4B)),
-
+                              border: Border.all(
+                                color: const Color(0xFF343A4B),
+                              ),
                             ),
                             child: Text(
                               widget.college.programs[index],
@@ -399,7 +414,11 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Divider(color: Color.fromRGBO(255, 255, 255, 0.15), thickness: 1, height: 1),
+                  Divider(
+                    color: Color.fromRGBO(255, 255, 255, 0.15),
+                    thickness: 1,
+                    height: 1,
+                  ),
                   SizedBox(height: 10),
                   Text(
                     "CONTACT",
@@ -483,7 +502,9 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                               decoration: BoxDecoration(
                                 color: Color(0xFF243335),
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: const Color(0xFF343A4B)),
+                                border: Border.all(
+                                  color: const Color(0xFF343A4B),
+                                ),
                               ),
                               child: Image.network(
                                 "https://images.icon-icons.com/1826/PNG/512/4202011emailgmaillogomailsocialsocialmedia-115677_115624.png",
@@ -537,8 +558,9 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                               decoration: BoxDecoration(
                                 color: Color(0xFF243335),
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: const Color(0xFF343A4B)),
-
+                                border: Border.all(
+                                  color: const Color(0xFF343A4B),
+                                ),
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadiusGeometry.circular(10),
@@ -579,7 +601,11 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Divider(color: Color.fromRGBO(255, 255, 255, 0.15), thickness: 1, height: 1),
+                  Divider(
+                    color: Color.fromRGBO(255, 255, 255, 0.15),
+                    thickness: 1,
+                    height: 1,
+                  ),
                   SizedBox(height: 10),
                   Text(
                     "LOCATION",

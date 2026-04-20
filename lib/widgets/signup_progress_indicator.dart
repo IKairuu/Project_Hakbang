@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakbang/design/app_colors.dart';
 
 class SignupProgressIndicator extends StatelessWidget {
   final int currentStep;
@@ -21,7 +22,8 @@ class SignupProgressIndicator extends StatelessWidget {
             height: 5,
             decoration: BoxDecoration(
               color: index <= currentStep
-                  ? const Color(0xFFC8FF4D) // Active step - lime green
+                  ? AppColors
+                        .accent // Active step - lime green
                   : const Color(0xFF2a2d38), // Inactive step - gray
               borderRadius: BorderRadius.circular(2),
             ),

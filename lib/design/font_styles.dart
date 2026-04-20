@@ -10,7 +10,7 @@ class FontStyles {
     fontWeight: FontWeight.w900,
   );
   static final TextStyle mainHeadingRight = GoogleFonts.unbounded(
-    color: Color(0xFFC8FF4D),
+    color: AppColors.accent,
     fontSize: 35,
     fontWeight: FontWeight.w900,
     letterSpacing: -1.5,
@@ -46,7 +46,7 @@ class FontStyles {
   );
 
   static final TextStyle textButtonStyle = GoogleFonts.dmSans(
-    color: Color(0xFFC8FF4D),
+    color: AppColors.accent,
     fontWeight: FontWeight.w700,
   );
 
@@ -96,7 +96,7 @@ class FontStyles {
   );
 
   static final TextStyle savedSchoolNumber = TextStyle(
-    color: Color(0xFFc8ff4d),
+    color: AppColors.accent,
     fontSize: 35,
     fontWeight: FontWeight.w500,
   );
@@ -141,7 +141,7 @@ class FontStyles {
     fontWeight: FontWeight.w400,
   );
   static final TextStyle highlightText = GoogleFonts.dmSans(
-    color: Color(0xFFC8FF4D),
+    color: AppColors.accent,
     fontWeight: FontWeight.w700,
   );
 
@@ -152,7 +152,7 @@ class FontStyles {
   );
 
   static final TextStyle filterLabelSelected = TextStyle(
-    color: Color(0xFFc6fd4c),
+    color: AppColors.accent,
     fontWeight: FontWeight.w700,
   );
 

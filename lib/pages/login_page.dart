@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
         child: isLoading
             ? Center(
                 child: CircularProgressIndicator.adaptive(
-                  backgroundColor: Color(0xFFC8FF4D),
+                  backgroundColor: AppColors.accent,
                   year2023: true,
                 ),
               )

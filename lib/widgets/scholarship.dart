@@ -34,7 +34,8 @@ class _ScholarshipState extends State<Scholarship> {
     List<Color>? tagColors,
     required VoidCallback onTap,
   }) {
-    final palette = tagColors ??
+    final palette =
+        tagColors ??
         [
           const Color(0xFFA855F7),
           const Color(0xFF4DFFB8),
@@ -419,10 +420,11 @@ class _ScholarshipState extends State<Scholarship> {
                                 website: featured.website,
                               ),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFC8FF4D),
+                                backgroundColor: AppColors.accent,
                                 foregroundColor: Colors.black,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 18),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 18,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                 ),

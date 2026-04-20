@@ -396,9 +396,9 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                           horizontal: 9,
                         ),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(200, 255, 77, 0.12),
+                          color: AppColors.accentDim,
                           border: Border.all(
-                            color: Color.fromRGBO(200, 255, 77, 0.3),
+                            color: AppColors.accent.withValues(alpha: 0.3),
                           ),
                           borderRadius: BorderRadius.circular(100),
                         ),
@@ -407,7 +407,7 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFFC8FF4D),
+                            color: AppColors.accent,
                             letterSpacing: 0.3,
                           ),
                         ),

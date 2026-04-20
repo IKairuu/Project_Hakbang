@@ -177,9 +177,9 @@ class _ProfilePageState extends State<ProfilePage> {
 															children: [
 																Container(
 																	padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-																	decoration: ContainerDesign.pillTagIdentity,
+																	decoration: ContainerDesign.pillTagOccupation,
 																	child: Text(
-																		'Identity',
+																		'Occupation',
 																		style: FontStyles.previewPillText,
 																	),
 																),

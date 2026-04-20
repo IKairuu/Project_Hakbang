@@ -190,13 +190,13 @@ class FontStyles {
     fontWeight: FontWeight.w500,
   );
 
-  static final TextStyle identityTitle = GoogleFonts.dmSans(
+  static final TextStyle occupationTitle = GoogleFonts.dmSans(
     color: Colors.white,
     fontSize: 14,
     fontWeight: FontWeight.w600,
   );
 
-  static final TextStyle identitySubtitle = GoogleFonts.dmSans(
+  static final TextStyle occupationSubtitle = GoogleFonts.dmSans(
     color: Color.fromARGB(255, 150, 150, 150),
     fontSize: 10,
   );

@@ -285,4 +285,10 @@ class FontStyles {
     fontSize: 12,
     fontWeight: FontWeight.w500,
   );
+
+  static final TextStyle logoutDialogTitle = GoogleFonts.dmSans(
+    color: AppColors.textPrimary,
+    fontSize: 20,
+    fontWeight: FontWeight.w800,
+  );
 }

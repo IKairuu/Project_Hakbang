@@ -58,6 +58,43 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  Future<void> _confirmLogout() async {
+    final shouldLogout = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          backgroundColor: AppColors.surface,
+          title: Text(
+            'Log out?',
+            style: FontStyles.logoutDialogTitle,
+          ),
+          content: Text(
+            'Are you sure you want to log out of your account?',
+            style: FontStyles.profileAboutBody,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(dialogContext, true),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.accent,
+                foregroundColor: Colors.black,
+              ),
+              child: const Text('Log out'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (shouldLogout == true) {
+      _logout();
+    }
+  }
+
   void _openCollegeDescription(College college) {
     Navigator.push(
       context,
@@ -117,7 +154,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             actions: [
               IconButton(
-                onPressed: _logout,
+                onPressed: _confirmLogout,
                 icon: const Icon(Icons.logout_rounded),
                 color: Colors.black,
                 tooltip: 'Log out',

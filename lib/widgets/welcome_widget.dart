@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hakbang/design/button_design.dart';
+import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/smooth_page_indicator_design.dart';
 import 'package:hakbang/functions/locations.dart';
@@ -40,112 +40,99 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 8,
-            child: Container(
-              width: double.infinity,
-              alignment: Alignment.center,
-              child: PageView(
-                controller: scrollIndicator,
-                children: [AboutApp(), ExploreContainer(), ScholarshipAi()],
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
+          flex: 8,
+          child: Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: PageView(
+              controller: scrollIndicator,
+              children: [AboutApp(), ExploreContainer(), ScholarshipAi()],
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: Container(
+        ),
+        // Bottom controls — solid bg matching HTML .ob-controls
+        Container(
+          color: AppColors.bg,
+          padding: const EdgeInsets.fromLTRB(28, 14, 28, 36),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Dots
+              SmoothPageIndicator(
+                onDotClicked: (index) {
+                  scrollIndicator.animateToPage(
+                    index,
+                    duration: Duration(milliseconds: 450),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                controller: scrollIndicator,
+                count: 3,
+                effect: SmoothPageIndicatorDesign.startPageIndicator,
+                axisDirection: Axis.horizontal,
+              ),
+              const SizedBox(height: 14),
+              // Get Started button
+              SizedBox(
+                height: 52,
                 width: double.infinity,
-                alignment: Alignment.center,
-                child: SmoothPageIndicator(
-                  onDotClicked: (index) {
-                    scrollIndicator.animateToPage(
-                      index,
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.linear,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignupPage()),
                     );
                   },
-                  controller: scrollIndicator,
-                  count: 3,
-                  effect: SmoothPageIndicatorDesign.startPageIndicator,
-                  axisDirection: Axis.horizontal,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.accent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: Text("Get Started →", style: FontStyles.getStarted),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-                  child: SizedBox(
-                    height: 65,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
+              const SizedBox(height: 4),
+              // Already a member row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Already a member?", style: FontStyles.memberSignIn),
+                  TextButton(
+                    onPressed: () async {
+                      try {
+                        await Locations.initializeLocationServices();
+                        userPosition.value = await Locations.getUserLocation();
+                        if (!mounted) return;
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SignupPage()),
+                          MaterialPageRoute(builder: (context) => LoginPage()),
                         );
-                      },
-                      style: ButtonDesign.mainButton,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Get Started", style: FontStyles.getStarted),
-                          Icon(
-                            Icons.arrow_right_alt_rounded,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Already a member?", style: FontStyles.memberSignIn),
-                    TextButton(
-                      onPressed: () async {
-                        try {
-                          await Locations.initializeLocationServices();
-                          userPosition.value =
-                              await Locations.getUserLocation();
-                          if (!mounted) return;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginPage()),
-                          );
-                        } catch (e) {
-                          if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              behavior: SnackBarBehavior.floating,
-                              content: Text(
-                                'Location permission required to sign in',
-                              ),
+                      } catch (e) {
+                        if (!mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              'Location permission required to sign in',
                             ),
-                          );
-                        }
-                      },
-                      child: Text("Sign In", style: FontStyles.textButtonStyle),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text("Sign In", style: FontStyles.textButtonStyle),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

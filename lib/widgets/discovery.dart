@@ -180,8 +180,8 @@ class _DiscoveryState extends State<Discovery> {
                                         user!.latitude,
                                         user.longitude,
                                       ), // Center the map over London, UK
-                                      initialZoom: 7,
-                                      maxZoom: 7,
+                                      initialZoom: 6,
+                                      maxZoom: 100,
                                       minZoom: 6,
                                     ),
                                     children: [
@@ -247,14 +247,15 @@ class _DiscoveryState extends State<Discovery> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                          SizedBox(height: 10,),
-                            Text( "${univ.isEmpty ? "No" : univ.length} Available ${univ.length <= 1 ? "School" : "Schools"}",
+                            SizedBox(height: 10),
+                            Text(
+                              "${univ.isEmpty ? "No" : univ.length} Available ${univ.length <= 1 ? "School" : "Schools"}",
                               style: GoogleFonts.inter(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 20,
                                 letterSpacing: -0.5,
-                              )
+                              ),
                             ),
                             SizedBox(height: 5),
                             Expanded(

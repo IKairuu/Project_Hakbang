@@ -4,6 +4,7 @@ import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/pages/college_description.dart';
 import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/widgets/edit_about_me_dialog.dart';
@@ -331,7 +332,20 @@ class _ProfilePageState extends State<ProfilePage> {
 																		padding: EdgeInsets.only(
 																			bottom: entry.key == saved.length - 1 ? 0 : 12,
 																		),
-																		child: SavedSchoolCard(college: entry.value),
+																				child: GestureDetector(
+																					onTap: () {
+																						Navigator.push(
+																							context,
+																							MaterialPageRoute(
+																								builder: (context) =>
+																									CollegeDescription(
+																										college: entry.value,
+																									),
+																							),
+																						);
+																					},
+																					child: SavedSchoolCard(college: entry.value),
+																				),
 																	),
 																)
 																.toList(),

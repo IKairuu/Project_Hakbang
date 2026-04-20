@@ -5,6 +5,8 @@ import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/models/review_center.dart' as rc_model;
+import 'package:hakbang/pages/review_center_description.dart';
 
 class ReviewCenter extends StatefulWidget {
   const ReviewCenter({super.key});
@@ -45,7 +47,7 @@ class _ReviewCenterState extends State<ReviewCenter> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  ValueListenableBuilder<List<Map<String, String>>>(
+                  ValueListenableBuilder<List<Map<String, dynamic>>>(
                     valueListenable: availableReviewCenters,
                     builder: (context, centers, child) {
                       return buildTopDetails(centers.length);
@@ -53,7 +55,7 @@ class _ReviewCenterState extends State<ReviewCenter> {
                   ),
                   const SizedBox(height: 6),
                   Expanded(
-                    child: ValueListenableBuilder<List<Map<String, String>>>(
+                    child: ValueListenableBuilder<List<Map<String, dynamic>>>(
                       valueListenable: availableReviewCenters,
                       builder: (context, centers, child) {
                         return buildHubs(centers);
@@ -217,7 +219,7 @@ Widget buildTopDetails(int count) {
   );
 }
 
-Widget buildHubs(List<Map<String, String>> centers) {
+Widget buildHubs(List<Map<String, dynamic>> centers) {
   if (centers.isEmpty) {
     return Center(
       child: Text(
@@ -242,7 +244,44 @@ Widget buildHubs(List<Map<String, String>> centers) {
 
       return InkWell(
         onTap: () {
-          
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ReviewCenterDescription(
+                reviewCenter: rc_model.ReviewCenter(
+                  title: center['title'] ?? '',
+                  instructor: center['instructor'] ?? '',
+                  ratingNum: center['ratingNum'] ?? '',
+                  stars: center['stars'] ?? '',
+                  ratingCount: center['ratingCount'] ?? '',
+                  price: center['price'] ?? '',
+                  originalPrice: center['originalPrice'] ?? '',
+                  isBestSeller: center['isBestseller'] ?? 'false',
+                  emoji: center['emoji'] ?? '🎓',
+                  subtitle: center['subtitle'] ?? '',
+                  description: center['description'] ?? '',
+                  managedBy: center['managedBy'] ?? '',
+                  modalities: center['modalities'] ?? '',
+                  location: center['location'] ?? '',
+                  website: center['website'] ?? '',
+                  phone: center['phone'] ?? '',
+                  email: center['email'] ?? '',
+                  exams: center['exams'] ?? '',
+                  whatYouWillCover: List<String>.from(
+                    center['whatYouWillCover'] ?? [],
+                  ),
+                  programOverview: Map<String, dynamic>.from(
+                    center['programOverview'] ?? {},
+                  ),
+                  centerOffers: List<String>.from(center['centerOffers'] ?? []),
+                  whoThisIsFor: List<String>.from(center['whoThisIsFor'] ?? []),
+                  aboutThisCenter: Map<String, String>.from(
+                    center['aboutThisCenter'] ?? {},
+                  ),
+                ),
+              ),
+            ),
+          );
         },
         borderRadius: BorderRadius.circular(8),
         splashColor: Colors.white.withOpacity(0.05),

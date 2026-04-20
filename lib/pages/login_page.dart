@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/functions/initialization.dart';
+import 'package:hakbang/functions/internet.dart';
 import 'package:hakbang/models/user.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/main_page.dart';
+import 'package:hakbang/pages/no_internet_page.dart';
 import 'package:hakbang/pages/signup_page.dart';
 import 'package:hakbang/server/database/database.dart';
 
@@ -32,7 +34,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handleLogin() async {
-    setState(() => isLoading = true);
     final email = _emailController.text.trim();
     final password = _passwordController.text;
     FocusScope.of(context).unfocus();
@@ -43,50 +44,66 @@ class _LoginPageState extends State<LoginPage> {
       });
       return;
     }
-
+    setState(() => isLoading = true);
     setState(() => _showError = false);
+    if (!await Internet.checkInternetConnection()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text("There is no internet connection"),
+        ),
+      );
+      setState(() => isLoading = false);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NoInternetPage(currentWidget: LoginPage()),
+        ),
+      );
+    } else {
+      var login = await Database.userLogin(email, password);
+      switch (login["status"]) {
+        case 200:
+          userCredentials.value = User(
+            name: login["data"]["name"],
+            email: login["data"]["email"],
+            avatar: login["data"]["avatar"],
+            grade: login["data"]["grade"],
+            institution: login["data"]["institution"],
+            occupation: login["data"]["occupation"],
+          );
+          token.value = "Bearer ${login["token"]}";
+          await Initialization.mainInitialization();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text(login["message"]),
+            ),
+          );
 
-    var login = await Database.userLogin(email, password);
-    switch (login["status"]) {
-      case 200:
-        userCredentials.value = User(
-          name: login["data"]["name"],
-          email: login["data"]["email"],
-          avatar: login["data"]["avatar"],
-          grade: login["data"]["grade"],
-          institution: login["data"]["institution"],
-          occupation: login["data"]["occupation"],
-        );
-        token.value = "Bearer ${login["token"]}";
-        await Initialization.mainInitialization();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Text(login["message"]),
-          ),
-        );
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MainPage()),
-        );
-        break;
-      case 401:
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Text(login["message"]),
-          ),
-        );
-        break;
-      default:
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Text("Server Error"),
-          ),
-        );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MainPage()),
+          );
+          break;
+        case 401:
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text(login["message"]),
+            ),
+          );
+          break;
+        default:
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text("Server Error"),
+            ),
+          );
+      }
     }
+
     setState(() => isLoading = false);
   }
 
@@ -142,26 +159,6 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(
                                   color: AppColors.textMuted,
                                   fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.zero,
-                                minimumSize: const Size(1, 1),
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                              onPressed: () {},
-                              child: Text(
-                                'Forgot password?',
-                                style: GoogleFonts.dmSans(
-                                  color: AppColors.accent,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),

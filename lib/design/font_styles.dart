@@ -255,4 +255,10 @@ class FontStyles {
     fontSize: 13,
     color: Colors.white54,
   );
+
+  static final TextStyle noInternetConnection = GoogleFonts.inter(
+    fontSize: 18,
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+  );
 }

@@ -82,7 +82,12 @@ class _DiscoveryState extends State<Discovery> {
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                selectedFilter.value = [true, false, false];
+                                selectedFilter.value = [
+                                  true,
+                                  false,
+                                  false,
+                                  false,
+                                ];
                               });
                               searchInput.clear();
                               Filter.filterCollegeSection(
@@ -102,7 +107,12 @@ class _DiscoveryState extends State<Discovery> {
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                selectedFilter.value = [false, true, false];
+                                selectedFilter.value = [
+                                  false,
+                                  true,
+                                  false,
+                                  false,
+                                ];
                               });
                               searchInput.clear();
                               Filter.filterCollegeSection(
@@ -122,7 +132,12 @@ class _DiscoveryState extends State<Discovery> {
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                selectedFilter.value = [false, false, true];
+                                selectedFilter.value = [
+                                  false,
+                                  false,
+                                  true,
+                                  false,
+                                ];
                               });
                               searchInput.clear();
                               Filter.filterCollegeSection(

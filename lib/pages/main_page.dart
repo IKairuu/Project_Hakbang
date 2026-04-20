@@ -34,27 +34,22 @@ class _MainPageState extends State<MainPage> {
               iconTheme: MaterialStateProperty.resolveWith<IconThemeData>(
                 (Set<MaterialState> states) =>
                     states.contains(MaterialState.selected)
-                        ? const IconThemeData(
-                            color: Color(0xFFc8f032), 
-                          )
-                        : const IconThemeData(
-                            color: Color(0xFF5a6068), 
-                            size: 24,
-                          ),
+                    ? const IconThemeData(color: Color(0xFFc8f032))
+                    : const IconThemeData(color: Color(0xFF5a6068), size: 24),
               ),
               labelTextStyle: MaterialStateProperty.resolveWith<TextStyle>(
                 (Set<MaterialState> states) =>
                     states.contains(MaterialState.selected)
-                        ? const TextStyle(
-                            color: Color(0xFFc8f032), 
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                          )
-                        : const TextStyle(
-                            color: Color(0xFF5a6068), 
-                            fontSize: 11,
-                            fontWeight: FontWeight.w400,
-                          ),
+                    ? const TextStyle(
+                        color: Color(0xFFc8f032),
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      )
+                    : const TextStyle(
+                        color: Color(0xFF5a6068),
+                        fontSize: 11,
+                        fontWeight: FontWeight.w400,
+                      ),
               ),
             ),
             child: NavigationBar(
@@ -95,7 +90,7 @@ class _MainPageState extends State<MainPage> {
           ),
           body: IndexedStack(
             index: index,
-            children: const [
+            children: [
               Discovery(),
               Scholarship(),
               HomeWidget(),

@@ -7,12 +7,11 @@ import 'package:hakbang/functions/internet.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/verifications.dart';
 import 'package:hakbang/main.dart';
-import 'package:hakbang/models/identity_option.dart';
+import 'package:hakbang/models/occupation_option.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/pages/no_internet_page.dart';
 import 'package:hakbang/server/database/database.dart';
-import 'package:hakbang/widgets/home_widget.dart';
 import 'package:hakbang/widgets/signup_step1.dart';
 import 'package:hakbang/widgets/signup_step2.dart';
 import 'package:hakbang/widgets/signup_step3.dart';
@@ -133,7 +132,7 @@ class _SignupPageState extends State<SignupPage> {
           "email": emailController.text,
           "password": passwordController.text,
           "avatar": avatars[_selectedAvatarIndex!],
-          "occupation": identities[_selectedIdentityIndex!].title,
+          "occupation": occupations[_selectedOccupationIndex!].title,
           "institution": schoolController.text,
           "grade": gradeController.text,
         },
@@ -158,7 +157,7 @@ class _SignupPageState extends State<SignupPage> {
                         passwordController.clear();
                         confirmPasswordController.clear();
                         _selectedAvatarIndex = null;
-                        _selectedIdentityIndex = null;
+                        _selectedOccupationIndex = null;
                         schoolController.clear();
                         gradeController.clear();
                         agreeToTerms.value = false;
@@ -191,7 +190,7 @@ class _SignupPageState extends State<SignupPage> {
                       passwordController.clear();
                       confirmPasswordController.clear();
                       _selectedAvatarIndex = null;
-                      _selectedIdentityIndex = null;
+                      _selectedOccupationIndex = null;
                       schoolController.clear();
                       gradeController.clear();
                       agreeToTerms.value = false;

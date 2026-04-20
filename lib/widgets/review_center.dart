@@ -241,7 +241,9 @@ Widget buildHubs(List<Map<String, String>> centers) {
       final isBestseller = center['isBestseller'] == 'true';
 
       return InkWell(
-        onTap: () {},
+        onTap: () {
+          
+        },
         borderRadius: BorderRadius.circular(8),
         splashColor: Colors.white.withOpacity(0.05),
         highlightColor: Colors.white.withOpacity(0.03),

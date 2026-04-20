@@ -106,6 +106,20 @@ class Database {
     return jsonDecode(response.body);
   }
 
+  static Future<Map<String, dynamic>> getUserData(String email) async {
+    final url = Uri.https(
+      "project-hakbang-server.onrender.com",
+      "user/auth/$email/get-user-data",
+    );
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+    final response = await http.get(url, headers: headers);
+    return jsonDecode(response.body);
+  }
+
   static Future<void> getUserActivities(String email) async {
     final url = Uri.https(
       "project-hakbang-server.onrender.com",

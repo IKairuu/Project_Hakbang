@@ -2,15 +2,14 @@ import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/button_design.dart';
-import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/school_save.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:hakbang/design/app_colors.dart';
 
 class CollegeDescription extends StatefulWidget {
   const CollegeDescription({super.key, required this.college});
@@ -21,651 +20,629 @@ class CollegeDescription extends StatefulWidget {
 }
 
 class _CollegeDescriptionState extends State<CollegeDescription> {
-  final ScrollController tagScroll = ScrollController();
-  final ScrollController programScroll = ScrollController();
-  final ScrollController fullScroll = ScrollController();
+  final ScrollController _tagScroll = ScrollController();
+  bool _aboutExpanded = false;
+
   @override
   Widget build(BuildContext context) {
+    final college = widget.college;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.accent,
-        elevation: 10,
-        shadowColor: AppColors.accent,
-      ),
       backgroundColor: AppColors.bg,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: FadingEdgeScrollView.fromSingleChildScrollView(
-          gradientFractionOnEnd: 0.2,
-          gradientFractionOnStart: 0.2,
-          child: SingleChildScrollView(
-            controller: fullScroll,
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Container(
-                      width: double.infinity,
-                      height: 200,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(widget.college.collegeImage),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            backgroundColor: AppColors.bg,
+            surfaceTintColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(
+                Icons.chevron_left,
+                color: AppColors.textPrimary,
+                size: 28,
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(
+                  Icons.ios_share,
+                  color: AppColors.textPrimary,
+                  size: 22,
+                ),
+                onPressed: () {},
+              ),
+            ],
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ── Cover image — full width, no border radius, badges overlaid
+                SizedBox(
+                  width: double.infinity,
+                  height: 220,
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: Image.network(
+                          college.collegeImage,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 50,
-                                  vertical: 5,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF17325a),
-                                  borderRadius: BorderRadius.circular(30),
-                                  border: BoxBorder.all(
-                                    color: Color(0xFF577eda),
-                                  ),
-                                ),
-                                child: Text(
-                                  widget.college.type == "private"
-                                      ? "Private"
-                                      : "Public",
-                                  style: GoogleFonts.inter(
-                                    color: Color(0xFF718fd7),
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ),
-                              Expanded(child: SizedBox()),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 5,
-                                  horizontal: 10,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: Text("⭐"),
-                                    ),
-                                    Text(
-                                      widget.college.rating,
-                                      style: GoogleFonts.inter(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                      Positioned(
+                        top: 12,
+                        left: 16,
+                        child: _cdTypeBadge(college.type),
                       ),
-                    ),
+                      Positioned(
+                        top: 12,
+                        right: 16,
+                        child: _cdRatingBadge(college.rating),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Container(
-                            padding: EdgeInsets.all(10),
+                ),
+
+                // ── Header info
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Logo + Name + Address
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(16),
                             ),
                             child: Image.network(
-                              widget.college.logoLink,
-                              height: 60,
-                              width: 60,
+                              college.logoLink,
+                              height: 52,
+                              width: 52,
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.college.collegeName,
-                                style: FontStyles.collegeLabel,
-                              ),
-                              Text(
-                                "📍 ${widget.college.address}",
-                                style: FontStyles.addressLabel,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Container(
-                      height: 50,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: AppColors.surface2,
-                        borderRadius: BorderRadius.circular(15),
-                        border: BoxBorder.all(color: Color(0xFF7d7e86)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  widget.college.programNumbers,
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.accentLight,
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                Text(
-                                  "PROGRAMS",
-                                  style: GoogleFonts.inter(
-                                    color: Color(0xFF7d7e86),
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: VerticalDivider(
-                              width: 1,
-                              color: Color.fromRGBO(255, 255, 255, 0.15),
-                              thickness: 1,
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "TOP #${widget.college.ranking}",
-                                  style: GoogleFonts.inter(
-                                    color: Color(0xFFa755f6),
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                Text(
-                                  "RANKING",
-                                  style: GoogleFonts.inter(
-                                    color: Color(0xFF7d7e86),
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 10),
-                    child: ValueListenableBuilder(
-                      valueListenable: savedSchools,
-                      builder: (context, saved, child) {
-                        return SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ButtonDesign.mainButton,
-                            onPressed: () {
-                              setState(() {
-                                if (saved.contains(widget.college)) {
-                                  ActivityFunctions.addUserActivity(
-                                    DateFormat(
-                                      "MMM dd, yyyy",
-                                    ).format(DateTime.now()),
-                                    "School Unsaved: ${widget.college.collegeName}",
-                                    "assets/university.svg",
-                                  );
-                                  SchoolSave.removeSchool(widget.college);
-                                } else {
-                                  ActivityFunctions.addUserActivity(
-                                    DateFormat(
-                                      "MMM dd, yyyy",
-                                    ).format(DateTime.now()),
-                                    "School Saved: ${widget.college.collegeName}",
-                                    "assets/university.svg",
-                                  );
-                                  SchoolSave.saveSchool(widget.college);
-                                }
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  saved.contains(widget.college)
-                                      ? Icons.bookmark
-                                      : Icons.bookmark_border,
-                                  color: Colors.black,
-                                  size: 20,
-                                ),
-                                Text(
-                                  saved.contains(widget.college)
-                                      ? "Saved"
-                                      : "Save School",
-                                  style: GoogleFonts.inter(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Divider(
-                    color: Color.fromRGBO(255, 255, 255, 0.15),
-                    thickness: 1,
-                    height: 1,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "ABOUT",
-                    style: GoogleFonts.inter(
-                      letterSpacing: 1,
-                      fontSize: 12,
-                      color: Color(0xFF505157),
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: Text(
-                      widget.college.about,
-                      style: FontStyles.appDetails,
-                    ),
-                  ),
-                  Divider(
-                    color: Color.fromRGBO(255, 255, 255, 0.15),
-                    thickness: 1,
-                    height: 1,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "TAGS",
-                    style: GoogleFonts.inter(
-                      letterSpacing: 1,
-                      fontSize: 12,
-                      color: Color(0xFF505157),
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                    child: FadingEdgeScrollView.fromScrollView(
-                      gradientFractionOnEnd: 0.2,
-                      gradientFractionOnStart: 0.2,
-                      child: ListView.builder(
-                        controller: tagScroll,
-                        itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 5,
-                            vertical: 5,
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: AppColors.accent,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text(
-                              "#${widget.college.tags[index]}",
-                              style: GoogleFonts.inter(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: widget.college.tags.length,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Divider(
-                    color: Color.fromRGBO(255, 255, 255, 0.15),
-                    thickness: 1,
-                    height: 1,
-                  ),
-                  SizedBox(height: 10),
-
-                  Text(
-                    "PROGRAMS OFFERED",
-                    style: GoogleFonts.inter(
-                      letterSpacing: 1,
-                      fontSize: 12,
-                      color: Color(0xFF505157),
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  SizedBox(
-                    height: 150,
-                    child: FadingEdgeScrollView.fromScrollView(
-                      gradientFractionOnEnd: 0.2,
-                      gradientFractionOnStart: 0.2,
-                      child: ListView.builder(
-                        controller: programScroll,
-                        itemCount: widget.college.programs.length,
-                        itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: AppColors.surface2,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                color: const Color(0xFF343A4B),
-                              ),
-                            ),
-                            child: Text(
-                              widget.college.programs[index],
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Divider(
-                    color: Color.fromRGBO(255, 255, 255, 0.15),
-                    thickness: 1,
-                    height: 1,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "CONTACT",
-                    style: GoogleFonts.inter(
-                      letterSpacing: 1,
-                      fontSize: 12,
-                      color: Color(0xFF505157),
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: AppColors.surface2,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: const Color(0xFF343A4B)),
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Color(0xFF243335),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Icon(
-                                Icons.phone_enabled_rounded,
-                                color: Color(0xFF85f5c7),
-                              ),
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "TELEPHONE",
-                                style: GoogleFonts.inter(
-                                  letterSpacing: 1,
-                                  fontSize: 12,
-                                  color: Color(0xFF505157),
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                              Text(
-                                widget.college.telephone,
-                                style: GoogleFonts.inter(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: AppColors.surface2,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: const Color(0xFF343A4B)),
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Color(0xFF243335),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: const Color(0xFF343A4B),
-                                ),
-                              ),
-                              child: Image.network(
-                                "https://images.icon-icons.com/1826/PNG/512/4202011emailgmaillogomailsocialsocialmedia-115677_115624.png",
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "EMAIL",
-                                style: GoogleFonts.inter(
-                                  letterSpacing: 1,
-                                  fontSize: 12,
-                                  color: Color(0xFF505157),
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                              Text(
-                                widget.college.email,
-                                style: GoogleFonts.inter(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: AppColors.surface2,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: const Color(0xFF343A4B)),
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Color(0xFF243335),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: const Color(0xFF343A4B),
-                                ),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadiusGeometry.circular(10),
-                                child: Image.network(
-                                  "https://img.freepik.com/premium-vector/blue-social-media-logo_197792-1759.jpg?semt=ais_hybrid&w=740&q=80",
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "FACEBOOK",
-                                  style: GoogleFonts.inter(
-                                    letterSpacing: 1,
-                                    fontSize: 12,
-                                    color: Color(0xFF505157),
-                                    fontWeight: FontWeight.w800,
+                                  college.collegeName,
+                                  style: _cdDm(
+                                    20,
+                                    weight: FontWeight.w700,
+                                    color: AppColors.textPrimary,
+                                    spacing: -0.4,
                                   ),
                                 ),
-                                Text(
-                                  widget.college.fbPage,
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w800,
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.underline,
-                                  ),
+                                const SizedBox(height: 4),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Icon(
+                                      Icons.location_on_outlined,
+                                      size: 14,
+                                      color: AppColors.textSecondary,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Expanded(
+                                      child: Text(
+                                        college.address,
+                                        style: _cdDm(
+                                          13,
+                                          color: AppColors.textSecondary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Divider(
-                    color: Color.fromRGBO(255, 255, 255, 0.15),
-                    thickness: 1,
-                    height: 1,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "LOCATION",
-                    style: GoogleFonts.inter(
-                      letterSpacing: 1,
-                      fontSize: 12,
-                      color: Color(0xFF505157),
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 20),
-                    child: SizedBox(
-                      height: 200,
-                      width: double.infinity,
-                      child: ClipRRect(
-                        borderRadius: BorderRadiusGeometry.circular(20),
-                        child: FlutterMap(
-                          options: MapOptions(
-                            initialCenter: LatLng(
-                              widget.college.latitude,
-                              widget.college.longitude,
-                            ), // Center the map over London, UK
-                            initialZoom: 7,
-                            maxZoom: 7,
-                            minZoom: 6,
-                          ),
+                      const SizedBox(height: 16),
+
+                      // Stats row
+                      Container(
+                        height: 72,
+                        decoration: BoxDecoration(
+                          color: AppColors.surface2,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppColors.border),
+                        ),
+                        child: Row(
                           children: [
-                            TileLayer(
-                              // Bring your own tiles
-                              urlTemplate:
-                                  'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                              userAgentPackageName: "com.example.hakbang",
+                            _cdStatItem(
+                              college.programNumbers,
+                              "PROGRAMS",
+                              AppColors.accentLight,
                             ),
-                            MarkerLayer(
-                              markers: [
-                                Marker(
-                                  rotate: true,
-                                  point: LatLng(
-                                    widget.college.latitude,
-                                    widget.college.longitude,
-                                  ),
-                                  child: Icon(
-                                    Icons.location_on_rounded,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ],
+                            Container(
+                              width: 1,
+                              height: 36,
+                              color: AppColors.border,
+                            ),
+                            _cdStatItem(
+                              "TOP #${college.ranking}",
+                              "RANKING",
+                              AppColors.purple,
                             ),
                           ],
                         ),
                       ),
-                    ),
+                      const SizedBox(height: 14),
+
+                      // Save button
+                      ValueListenableBuilder(
+                        valueListenable: savedSchools,
+                        builder: (context, saved, child) {
+                          final isSaved = saved.contains(college);
+                          return SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: ElevatedButton(
+                              style: ButtonDesign.mainButton,
+                              onPressed: () {
+                                setState(() {
+                                  if (isSaved) {
+                                    ActivityFunctions.addUserActivity(
+                                      DateFormat(
+                                        "MMM dd, yyyy",
+                                      ).format(DateTime.now()),
+                                      "School Unsaved: ${college.collegeName}",
+                                      "assets/university.svg",
+                                    );
+                                    SchoolSave.removeSchool(college);
+                                  } else {
+                                    ActivityFunctions.addUserActivity(
+                                      DateFormat(
+                                        "MMM dd, yyyy",
+                                      ).format(DateTime.now()),
+                                      "School Saved: ${college.collegeName}",
+                                      "assets/university.svg",
+                                    );
+                                    SchoolSave.saveSchool(college);
+                                  }
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    isSaved
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                    color: AppColors.onAccent,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    isSaved ? "Saved" : "Save School",
+                                    style: _cdDm(
+                                      15,
+                                      weight: FontWeight.w700,
+                                      color: AppColors.onAccent,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+
+                _cdSectionDivider(),
+
+                // ── About
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _cdSectionLabel("ABOUT"),
+                      const SizedBox(height: 10),
+                      Text(
+                        college.about,
+                        style: _cdDm(13, color: AppColors.textSecondary),
+                        maxLines: _aboutExpanded ? null : 4,
+                        overflow: _aboutExpanded ? null : TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 8),
+                      GestureDetector(
+                        onTap: () =>
+                            setState(() => _aboutExpanded = !_aboutExpanded),
+                        child: Text(
+                          _aboutExpanded ? "Show less" : "Show more",
+                          style: _cdDm(
+                            13,
+                            weight: FontWeight.w600,
+                            color: AppColors.accent,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                _cdSectionDivider(),
+
+                // ── Tags
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _cdSectionLabel("TAGS"),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        height: 38,
+                        child: FadingEdgeScrollView.fromScrollView(
+                          gradientFractionOnEnd: 0.15,
+                          gradientFractionOnStart: 0.0,
+                          child: ListView.builder(
+                            controller: _tagScroll,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: college.tags.length,
+                            itemBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                  vertical: 7,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.accentDim,
+                                  borderRadius: BorderRadius.circular(100),
+                                  border: Border.all(
+                                    color: AppColors.accent.withValues(
+                                      alpha: 0.35,
+                                    ),
+                                  ),
+                                ),
+                                child: Text(
+                                  "#${college.tags[index]}",
+                                  style: _cdDm(
+                                    13,
+                                    weight: FontWeight.w700,
+                                    color: AppColors.accent,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                _cdSectionDivider(),
+
+                // ── Programs Offered
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _cdSectionLabel("PROGRAMS OFFERED"),
+                      const SizedBox(height: 10),
+                      ...college.programs.map(
+                        (program) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 14,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.surface2,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: AppColors.border),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.accent,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    program.toString(),
+                                    style: _cdDm(
+                                      14,
+                                      weight: FontWeight.w600,
+                                      color: AppColors.textPrimary,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                _cdSectionDivider(),
+
+                // ── Contact
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _cdSectionLabel("CONTACT"),
+                      const SizedBox(height: 10),
+                      _cdContactRow(
+                        iconWidget: const Icon(
+                          Icons.phone_enabled_rounded,
+                          color: AppColors.teal,
+                          size: 22,
+                        ),
+                        iconBg: const Color(0xFF0D2420),
+                        label: "TELEPHONE",
+                        value: college.telephone,
+                        valueColor: AppColors.textPrimary,
+                      ),
+                      const SizedBox(height: 8),
+                      _cdContactRow(
+                        iconWidget: const Icon(
+                          Icons.email_outlined,
+                          color: AppColors.blue,
+                          size: 22,
+                        ),
+                        iconBg: const Color(0xFF0D1A2A),
+                        label: "EMAIL",
+                        value: college.email,
+                        valueColor: AppColors.textPrimary,
+                      ),
+                      const SizedBox(height: 8),
+                      _cdContactRow(
+                        iconWidget: const Icon(
+                          Icons.public,
+                          color: Color(0xFF1877F2),
+                          size: 22,
+                        ),
+                        iconBg: const Color(0xFF0A1520),
+                        label: "FACEBOOK",
+                        value: college.fbPage,
+                        valueColor: AppColors.blue,
+                        isLink: true,
+                      ),
+                    ],
+                  ),
+                ),
+
+                _cdSectionDivider(),
+
+                // ── Location
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _cdSectionLabel("LOCATION"),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        height: 200,
+                        width: double.infinity,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: FlutterMap(
+                            options: MapOptions(
+                              initialCenter: LatLng(
+                                college.latitude,
+                                college.longitude,
+                              ),
+                              initialZoom: 7,
+                              maxZoom: 7,
+                              minZoom: 6,
+                            ),
+                            children: [
+                              TileLayer(
+                                urlTemplate:
+                                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                userAgentPackageName: "com.example.hakbang",
+                              ),
+                              MarkerLayer(
+                                markers: [
+                                  Marker(
+                                    rotate: true,
+                                    point: LatLng(
+                                      college.latitude,
+                                      college.longitude,
+                                    ),
+                                    child: const Icon(
+                                      Icons.location_on_rounded,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
+
+// ════════════════════════════════════════════
+// ── Helpers
+// ════════════════════════════════════════════
+
+TextStyle _cdDm(
+  double size, {
+  FontWeight weight = FontWeight.w500,
+  Color color = AppColors.textSecondary,
+  double spacing = 0,
+  TextDecoration? decoration,
+}) => GoogleFonts.dmSans(
+  fontSize: size,
+  fontWeight: weight,
+  color: color,
+  letterSpacing: spacing,
+  decoration: decoration,
+);
+
+Widget _cdSectionDivider() => Container(
+  height: 1,
+  color: const Color.fromRGBO(255, 255, 255, 0.07),
+  margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+);
+
+Widget _cdSectionLabel(String label) => Text(
+  label,
+  style: _cdDm(
+    11,
+    weight: FontWeight.w700,
+    color: AppColors.textMuted,
+    spacing: 0.8,
+  ),
+);
+
+Widget _cdTypeBadge(String type) {
+  final label = type == "private" ? "PRIVATE UNIVERSITY" : "PUBLIC UNIVERSITY";
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+    decoration: BoxDecoration(
+      color: Colors.black.withValues(alpha: 0.72),
+      borderRadius: BorderRadius.circular(100),
+      border: Border.all(color: AppColors.accent.withValues(alpha: 0.7)),
+    ),
+    child: Text(
+      label,
+      style: _cdDm(
+        11,
+        weight: FontWeight.w800,
+        color: AppColors.accent,
+        spacing: 0.4,
+      ),
+    ),
+  );
+}
+
+Widget _cdRatingBadge(String rating) => Container(
+  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+  decoration: BoxDecoration(
+    color: const Color(0xFF1A1500),
+    borderRadius: BorderRadius.circular(100),
+    border: Border.all(color: const Color(0xFFF0A500).withValues(alpha: 0.3)),
+  ),
+  child: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      const Text("⭐", style: TextStyle(fontSize: 13)),
+      const SizedBox(width: 5),
+      Text(
+        rating,
+        style: _cdDm(
+          13,
+          weight: FontWeight.w700,
+          color: const Color(0xFFF0A500),
+        ),
+      ),
+    ],
+  ),
+);
+
+Widget _cdStatItem(String value, String label, Color valueColor) => Expanded(
+  child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Text(
+        value,
+        style: _cdDm(16, weight: FontWeight.w800, color: valueColor),
+      ),
+      const SizedBox(height: 2),
+      Text(
+        label,
+        style: _cdDm(
+          11,
+          weight: FontWeight.w700,
+          color: AppColors.textMuted,
+          spacing: 0.5,
+        ),
+      ),
+    ],
+  ),
+);
+
+Widget _cdContactRow({
+  required Widget iconWidget,
+  required Color iconBg,
+  required String label,
+  required String value,
+  required Color valueColor,
+  bool isLink = false,
+}) => Container(
+  padding: const EdgeInsets.all(12),
+  decoration: BoxDecoration(
+    color: AppColors.surface2,
+    borderRadius: BorderRadius.circular(12),
+    border: Border.all(color: AppColors.border),
+  ),
+  child: Row(
+    children: [
+      Container(
+        height: 44,
+        width: 44,
+        decoration: BoxDecoration(
+          color: iconBg,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(child: iconWidget),
+      ),
+      const SizedBox(width: 12),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: _cdDm(
+                11,
+                weight: FontWeight.w700,
+                color: AppColors.textMuted,
+                spacing: 0.6,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              value,
+              style: _cdDm(
+                14,
+                weight: FontWeight.w600,
+                color: valueColor,
+                decoration: isLink ? TextDecoration.underline : null,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  ),
+);

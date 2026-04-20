@@ -37,7 +37,7 @@ class _ScholarshipState extends State<Scholarship> {
         child: Container(
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Color(0xFF1C1E26),
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(24),
             border: Border.all(color: Color(0xFF343A4B)),
           ),
@@ -123,7 +123,7 @@ class _ScholarshipState extends State<Scholarship> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Color(0xFF111827),
+          backgroundColor: AppColors.surface2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),
@@ -427,7 +427,7 @@ class _ScholarshipState extends State<Scholarship> {
                   letterSpacing: -0.5,
                 ),
               ),
-              SizedBox(height: 5,),
+              SizedBox(height: 5),
               Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.zero,

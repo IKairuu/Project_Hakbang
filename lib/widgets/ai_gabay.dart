@@ -311,7 +311,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            height: 60,
+            height: 50,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),

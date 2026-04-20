@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/college_description.dart';
 import 'package:hakbang/pages/login_page.dart';
@@ -21,6 +22,10 @@ class _ProfilePageState extends State<ProfilePage> {
 	String _aboutMeText =
 		'In in ut cupidatat qui officia. Magna pariatur dolore laboris occaecat ad nulla excepteur pariatur sint. Id dolore quis pariatur irure. Amet culpa anim elit sunt. Dolore labore quis aute proident. Esse nostrud commodo ex consectetur ut.';
 
+  static const SizedBox _space8 = SizedBox(height: 8);
+  static const SizedBox _space10 = SizedBox(height: 10);
+  static const SizedBox _space20 = SizedBox(height: 20);
+
 	Future<void> _showEditAboutMeDialog() async {
 		final editedText = await showEditAboutMeDialog(
 			context,
@@ -36,35 +41,61 @@ class _ProfilePageState extends State<ProfilePage> {
 		});
 	}
 
+  String _withFallback(String? value, String fallback) {
+    final trimmed = value?.trim() ?? '';
+    return trimmed.isNotEmpty ? trimmed : fallback;
+  }
+
+  void _logout() {
+    token.value = null;
+    userCredentials.value = null;
+    navigationBarIndex.value = 0;
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(),
+      ),
+      (route) => false,
+    );
+  }
+
+  void _openCollegeDescription(College college) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CollegeDescription(college: college),
+      ),
+    );
+  }
+
+  Widget _buildProfileChip({
+    required String text,
+    required BoxDecoration decoration,
+    bool ellipsis = false,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: decoration,
+      child: Text(
+        text,
+        maxLines: ellipsis ? 1 : null,
+        overflow: ellipsis ? TextOverflow.ellipsis : null,
+        style: FontStyles.previewPillText,
+      ),
+    );
+  }
+
 	@override
 	Widget build(BuildContext context) {
 		return ValueListenableBuilder(
 			valueListenable: userCredentials,
 			builder: (context, userData, child) {
-				final avatar =
-					(userData?.avatar.trim().isNotEmpty ?? false)
-					? userData!.avatar
-					: '🙂';
-				final name =
-					(userData?.name.trim().isNotEmpty ?? false)
-					? userData!.name
-					: 'Unknown User';
-				final email =
-					(userData?.email.trim().isNotEmpty ?? false)
-					? userData!.email
-					: 'No email available';
-				final occupation =
-					(userData?.occupation.trim().isNotEmpty ?? false)
-					? userData!.occupation
-					: 'Occupation';
-				final grade =
-					(userData?.grade.trim().isNotEmpty ?? false)
-					? userData!.grade
-					: 'Grade Level';
-				final school =
-					(userData?.institution.trim().isNotEmpty ?? false)
-					? userData!.institution
-					: 'School';
+        final avatar = _withFallback(userData?.avatar, '🙂');
+        final name = _withFallback(userData?.name, 'Unknown User');
+        final email = _withFallback(userData?.email, 'No email available');
+        final occupation = _withFallback(userData?.occupation, 'Occupation');
+        final grade = _withFallback(userData?.grade, 'Grade Level');
+        final school = _withFallback(userData?.institution, 'School');
 
 				return Scaffold(
 					backgroundColor: AppColors.bg,
@@ -87,18 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             actions: [
               IconButton(
-                onPressed: () {
-                  token.value = null;
-                  userCredentials.value = null;
-                  navigationBarIndex.value = 0;
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginPage(),
-                    ),
-                    (route) => false,
-                  );
-                },
+                onPressed: _logout,
                 icon: const Icon(Icons.logout_rounded),
                 color: Colors.black,
                 tooltip: 'Log out',
@@ -150,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 8),
+                          _space8,
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(20),
@@ -183,7 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       child: Center(
                                         child: Text(
                                           avatar,
-                                          style: TextStyle(fontSize: 40),
+                                          style: const TextStyle(fontSize: 40),
                                         ),
                                       ),
                                     ),
@@ -209,44 +229,33 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 10),
+                                _space10,
                                 Row(
                                   children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                    _buildProfileChip(
+                                      text: occupation,
                                       decoration: ContainerDesign.pillTagOccupation,
-                                      child: Text(
-                                        occupation,
-                                        style: FontStyles.previewPillText,
-                                      ),
                                     ),
                                     const SizedBox(width: 8),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                    _buildProfileChip(
+                                      text: grade,
                                       decoration: ContainerDesign.pillTagGrade,
-                                      child: Text(
-                                        grade,
-                                        style: FontStyles.previewPillText,
-                                      ),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 8),
+                                _space8,
                                 Row(
                                 children: [
-                                  Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                  decoration: ContainerDesign.pillTagGrade,
-                                  child: Text(
-                                    school,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontStyles.previewPillText,
-                                  ),
+                                  Expanded(
+                                    child: _buildProfileChip(
+                                      text: school,
+                                      decoration: ContainerDesign.pillTagGrade,
+                                      ellipsis: true,
+                                    ),
                                   ),
                                 ],
                                 ),
-                                const SizedBox(height: 20),
+                                _space20,
                                 Container(
                                   width: double.infinity,
                                   padding: const EdgeInsets.all(16),
@@ -298,7 +307,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          _space20,
                           Text(
                                 'Saved Schools',
                             style: GoogleFonts.dmSans(
@@ -307,7 +316,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          _space10,
                           ValueListenableBuilder(
                             valueListenable: savedSchools,
                             builder: (context, saved, child) {
@@ -326,30 +335,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 );
                               }
-                            return Column(
-                              children: saved
-                                .asMap()
-                                .entries
-                                .map(
-                                  (entry) => Padding(
-                                    padding: EdgeInsets.only(
-                                      bottom: entry.key == saved.length - 1 ? 0 : 12,),
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                  CollegeDescription(
-                                                    college: entry.value,
-                                                  ),
-                                              ),
-                                            );
-                                          }, 
-                                        child: SavedSchoolCard(college: entry.value),
-                                      ),
-                                  ),
-                                ).toList(),
+                              return Column(
+                                children: saved
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (entry) => Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: entry.key == saved.length - 1 ? 0 : 12,),
+                                        child: GestureDetector(
+                                            onTap: () =>
+                                              _openCollegeDescription(entry.value),
+                                          child: SavedSchoolCard(college: entry.value),
+                                        ),
+                                    ),
+                                  ).toList(),
                               );
                             },
                           ),

@@ -37,7 +37,7 @@ class _SignupPageState extends State<SignupPage> {
 
   // Step 2 state
   int? _selectedAvatarIndex;
-  int? _selectedIdentityIndex;
+  int? _selectedOccupationIndex;
   late TextEditingController schoolController;
   late TextEditingController gradeController;
 
@@ -45,14 +45,18 @@ class _SignupPageState extends State<SignupPage> {
   bool showConfirmPassword = false;
 
   final List<String> avatars = ['🦁', '🦊', '🐉', '🦅', '🐬'];
-  final List<IdentityOption> identities = [
-    IdentityOption(emoji: '🧑‍🎓', title: 'Student', subtitle: 'Grade 11 - 12'),
-    IdentityOption(
+  final List<occupationOption> occupations = [
+    occupationOption(
+      emoji: '🧑‍🎓',
+      title: 'Student',
+      subtitle: 'Grade 11 - 12',
+    ),
+    occupationOption(
       emoji: '👨‍👩‍👧',
       title: 'Parent',
       subtitle: 'Supporting a student',
     ),
-    IdentityOption(emoji: '🏫', title: 'Counselor', subtitle: 'School Staff'),
+    occupationOption(emoji: '🏫', title: 'Counselor', subtitle: 'School Staff'),
   ];
 
   @override
@@ -339,24 +343,24 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   SignupStep2(
                     selectedAvatarIndex: _selectedAvatarIndex,
-                    selectedIdentityIndex: _selectedIdentityIndex,
+                    selectedOccupationIndex: _selectedOccupationIndex,
                     schoolController: schoolController,
                     gradeController: gradeController,
                     avatars: avatars,
-                    identities: identities,
+                    occupations: occupations,
                     onAvatarSelected: (index) {
                       setState(() {
                         _selectedAvatarIndex = index;
                       });
                     },
-                    onIdentitySelected: (index) {
+                    onOccupationSelected: (index) {
                       setState(() {
-                        _selectedIdentityIndex = index;
+                        _selectedOccupationIndex = index;
                       });
                     },
                     onContinue: () {
                       if (_selectedAvatarIndex == null ||
-                          _selectedIdentityIndex == null ||
+                          _selectedOccupationIndex == null ||
                           schoolController.text.trim().isEmpty ||
                           gradeController.text.trim().isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -376,8 +380,8 @@ class _SignupPageState extends State<SignupPage> {
                     avatars: avatars,
                     fullName: fullNameController.text,
                     email: emailController.text,
-                    selectedIdentityIndex: _selectedIdentityIndex,
-                    identities: identities,
+                    selectedOccupationIndex: _selectedOccupationIndex,
+                    occupations: occupations,
                     grade: gradeController.text,
                     onCreate: () {
                       if (!Verifications.checkTerms()) {

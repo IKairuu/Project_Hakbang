@@ -249,9 +249,7 @@ class Database {
 
     final response = await http.get(url, headers: headers);
     List<ReviewCenter> hubList = [];
-    int num = 0;
     for (dynamic data in jsonDecode(response.body)["data"]) {
-      print(data);
       hubList.add(
         ReviewCenter(
           title: data["title"],
@@ -281,6 +279,5 @@ class Database {
       );
     }
     availableReviewCenters.value = hubList;
-    print(hubList[0]);
   }
 }

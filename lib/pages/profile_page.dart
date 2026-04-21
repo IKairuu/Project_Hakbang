@@ -346,20 +346,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                 );
                               }
                               return Column(
-                                children: saved
-                                  .asMap()
-                                  .entries
-                                  .map(
-                                    (entry) => Padding(
-                                      padding: EdgeInsets.only(
-                                        bottom: entry.key == saved.length - 1 ? 0 : 12,),
-                                        child: GestureDetector(
-                                            onTap: () =>
-                                              _openCollegeDescription(entry.value),
-                                          child: SavedSchoolCard(college: entry.value),
-                                        ),
-                                    ),
-                                  ).toList(),
+                                children: saved.asMap().entries.map(
+                                  (entry) => Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: entry.key == saved.length - 1 ? 0 : 12,),
+                                      child: GestureDetector(
+                                        onTap: () => _openCollegeDescription(entry.value),
+                                        child: SavedSchoolCard(college: entry.value),
+                                      ),
+                                  ),
+                                ).toList(),
                               );
                             },
                           ),

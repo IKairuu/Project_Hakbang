@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/widgets/ai_gabay.dart';
 import 'package:hakbang/widgets/discovery.dart';
@@ -23,7 +24,7 @@ class _MainPageState extends State<MainPage> {
           backgroundColor: const Color(0xFF0c0d10),
           bottomNavigationBar: NavigationBarTheme(
             data: NavigationBarThemeData(
-              indicatorColor: const Color(0xFF1f2b14),
+              indicatorColor: AppColors.accentSurface,
               indicatorShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
@@ -34,14 +35,14 @@ class _MainPageState extends State<MainPage> {
               iconTheme: MaterialStateProperty.resolveWith<IconThemeData>(
                 (Set<MaterialState> states) =>
                     states.contains(MaterialState.selected)
-                    ? const IconThemeData(color: Color(0xFFc8f032))
+                    ? const IconThemeData(color: AppColors.accent)
                     : const IconThemeData(color: Color(0xFF5a6068), size: 24),
               ),
               labelTextStyle: MaterialStateProperty.resolveWith<TextStyle>(
                 (Set<MaterialState> states) =>
                     states.contains(MaterialState.selected)
                     ? const TextStyle(
-                        color: Color(0xFFc8f032),
+                        color: AppColors.accent,
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
                       )

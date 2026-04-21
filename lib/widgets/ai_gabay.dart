@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/models/ai_message.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/services/ai_chat.dart';
@@ -88,11 +89,11 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
 
   Widget _buildBubble(AiMessage message) {
     final bubbleColor = message.role == "user"
-        ? const Color(0xFFC8FF4D)
-        : const Color(0xFF1C1E27);
+        ? AppColors.accent
+        : AppColors.surface2;
     final textColor = message.role == "user"
-        ? const Color(0xFF0C0D10)
-        : const Color(0xFFF0F1F5);
+        ? AppColors.onAccent
+        : AppColors.textPrimary;
     final borderRadius = message.role == "user"
         ? const BorderRadius.only(
             topLeft: Radius.circular(18),
@@ -145,16 +146,9 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    const bgColor = Color(0xFF0C0D10);
-    const surface2 = Color(0xFF1C1E27);
-    const border2 = Color(0x1FFFFFFF);
-    const accent = Color(0xFFC8FF4D);
-    const accentDim = Color(0x1CC8FF4D);
-    const textPrimary = Color(0xFFF0F1F5);
-    const textMuted = Color(0x4DF0F1F5);
 
     return Container(
-      color: bgColor,
+      color: AppColors.bg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -168,9 +162,9 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: accentDim,
+                    color: AppColors.accentDim,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: accent, width: 1.5),
+                    border: Border.all(color: AppColors.accent, width: 1.5),
                   ),
                   child: const Center(
                     child: Text('🤖', style: TextStyle(fontSize: 22)),
@@ -184,7 +178,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                       Text(
                         'Gabay AI',
                         style: TextStyle(
-                          color: textPrimary,
+                          color: AppColors.textPrimary,
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                           letterSpacing: -0.3,
@@ -196,7 +190,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                           Text(
                             '●',
                             style: TextStyle(
-                              color: accent,
+                              color: AppColors.accent,
                               fontSize: 11,
                               fontWeight: FontWeight.w500,
                             ),
@@ -205,7 +199,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                           Text(
                             'Online · Ready to help',
                             style: TextStyle(
-                              color: accent,
+                              color: AppColors.accent,
                               fontSize: 11,
                               fontWeight: FontWeight.w500,
                             ),
@@ -233,7 +227,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                           child: Text(
                             'Today · ${messages[0].chatTime} ',
                             style: const TextStyle(
-                              color: textMuted,
+                              color: AppColors.textMuted,
                               fontSize: 11,
                             ),
                           ),
@@ -258,10 +252,10 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                                       width: 28,
                                       height: 28,
                                       decoration: BoxDecoration(
-                                        color: accentDim,
+                                        color: AppColors.accentDim,
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
-                                          color: accent,
+                                          color: AppColors.accent,
                                           width: 1,
                                         ),
                                       ),
@@ -291,7 +285,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                                       child: Text(
                                         messages[index].chatTime,
                                         style: const TextStyle(
-                                          color: textMuted,
+                                          color: AppColors.textMuted,
                                           fontSize: 10,
                                         ),
                                       ),
@@ -330,14 +324,14 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: surface2,
+                          color: AppColors.surface2,
                           borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: border2),
+                          border: Border.all(color: AppColors.border2),
                         ),
                         child: Text(
                           chip,
                           style: const TextStyle(
-                            color: textPrimary,
+                            color: AppColors.textPrimary,
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
                           ),
@@ -356,17 +350,20 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: surface2,
+                      color: AppColors.surface2,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: border2),
+                      border: Border.all(color: AppColors.border2),
                     ),
                     child: TextField(
                       controller: _inputController,
-                      style: const TextStyle(color: textPrimary, fontSize: 14),
-                      cursorColor: accent,
+                      style: const TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 14,
+                      ),
+                      cursorColor: AppColors.accent,
                       decoration: const InputDecoration(
                         hintText: 'Ask Gabay anything...',
-                        hintStyle: TextStyle(color: textMuted),
+                        hintStyle: TextStyle(color: AppColors.textMuted),
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: 16,
@@ -388,14 +385,14 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
                         width: 44,
                         height: 44,
                         decoration: BoxDecoration(
-                          color: accent,
+                          color: AppColors.accent,
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: const Center(
                           child: Text(
                             '➤',
                             style: TextStyle(
-                              color: Color(0xFF0C0D10),
+                              color: AppColors.onAccent,
                               fontSize: 18,
                             ),
                           ),

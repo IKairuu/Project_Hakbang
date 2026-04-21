@@ -11,11 +11,6 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 80, left: 20, right: 20),
-        child: WelcomeWidget(),
-      ),
-    );
+    return WelcomeWidget();
   }
 }

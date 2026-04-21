@@ -7,11 +7,9 @@ import 'package:hakbang/notifiers.dart';
 import 'package:http/http.dart' as http;
 
 class Database {
+  static String mainUrl = "project-hakbang-server.onrender.com";
   static Future<void> getCollege() async {
-    final url = Uri.https(
-      "project-hakbang-server.onrender.com",
-      "college/auth/available-colleges",
-    );
+    final url = Uri.https(mainUrl, "college/auth/available-colleges");
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -48,10 +46,7 @@ class Database {
   }
 
   static Future<void> getScholarships() async {
-    final url = Uri.https(
-      "project-hakbang-server.onrender.com",
-      "scholarship/auth/active-scholarships",
-    );
+    final url = Uri.https(mainUrl, "scholarship/auth/active-scholarships");
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -80,7 +75,7 @@ class Database {
   }
 
   static Future<void> signupUser(Map<String, dynamic> userData) async {
-    final url = Uri.https("project-hakbang-server.onrender.com", "user/signup");
+    final url = Uri.https(mainUrl, "user/signup");
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -95,7 +90,7 @@ class Database {
     String email,
     String password,
   ) async {
-    final url = Uri.https("project-hakbang-server.onrender.com", "user/login");
+    final url = Uri.https(mainUrl, "user/login");
     final userMessage = jsonEncode({"email": email, "password": password});
     final headers = {
       "Content-Type": "application/json",
@@ -107,10 +102,7 @@ class Database {
   }
 
   static Future<Map<String, dynamic>> getUserData(String email) async {
-    final url = Uri.https(
-      "project-hakbang-server.onrender.com",
-      "user/auth/$email/get-user-data",
-    );
+    final url = Uri.https(mainUrl, "user/auth/$email/get-user-data");
     final headers = {
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -121,10 +113,7 @@ class Database {
   }
 
   static Future<void> getUserActivities(String email) async {
-    final url = Uri.https(
-      "project-hakbang-server.onrender.com",
-      "user/auth/get-activities",
-    );
+    final url = Uri.https(mainUrl, "user/auth/get-activities");
     final headers = {
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -148,10 +137,7 @@ class Database {
   }
 
   static Future<void> getSavedSchools(String email) async {
-    final url = Uri.https(
-      "project-hakbang-server.onrender.com",
-      "user/auth/get-saved-schools",
-    );
+    final url = Uri.https(mainUrl, "user/auth/get-saved-schools");
 
     final headers = {
       "Content-Type": "application/json",
@@ -179,10 +165,7 @@ class Database {
   }
 
   static Future<void> saveSchool(String collegeName) async {
-    final url = Uri.https(
-      "project-hakbang-server.onrender.com",
-      "user/auth/post-saved-schools",
-    );
+    final url = Uri.https(mainUrl, "user/auth/post-saved-schools");
 
     final headers = {
       "Content-Type": "application/json",
@@ -201,10 +184,7 @@ class Database {
   }
 
   static Future<void> removeSavedSchool(String collegeName) async {
-    final url = Uri.https(
-      "project-hakbang-server.onrender.com",
-      "user/auth/remove-saved-school",
-    );
+    final url = Uri.https(mainUrl, "user/auth/remove-saved-school");
 
     final headers = {
       "Content-Type": "application/json",
@@ -223,10 +203,7 @@ class Database {
   }
 
   static Future<void> addActivity(Activity activity) async {
-    final url = Uri.https(
-      "project-hakbang-server.onrender.com",
-      "user/auth/post-activity",
-    );
+    final url = Uri.https(mainUrl, "user/auth/post-activity");
 
     final headers = {
       "Content-Type": "application/json",
@@ -246,10 +223,7 @@ class Database {
   }
 
   static Future<void> removeActivities() async {
-    final url = Uri.https(
-      "project-hakbang-server.onrender.com",
-      "user/auth/remove-activities",
-    );
+    final url = Uri.https(mainUrl, "user/auth/remove-activities");
 
     final headers = {
       "Content-Type": "application/json",

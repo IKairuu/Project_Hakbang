@@ -3,12 +3,12 @@ import 'package:hakbang/design/app_colors.dart';
 
 class ButtonDesign {
   static final ButtonStyle mainButton = ElevatedButton.styleFrom(
-    backgroundColor: Color(0xFFC8FF4D),
+    backgroundColor: AppColors.accent,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
   );
 
   static final ButtonStyle signUpButton = ElevatedButton.styleFrom(
-    backgroundColor: const Color(0xFFC8FF4D),
+    backgroundColor: AppColors.accent,
     padding: const EdgeInsets.symmetric(vertical: 14),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     elevation: 0,
@@ -52,7 +52,7 @@ class ButtonDesign {
     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
     backgroundColor: Color(0xFF232a17),
     shape: RoundedRectangleBorder(
-      side: BorderSide(color: Color(0xFFc6fd4c)),
+      side: BorderSide(color: AppColors.accent),
       borderRadius: BorderRadiusGeometry.circular(20),
     ),
   );
@@ -75,7 +75,7 @@ class ButtonDesign {
       Set<WidgetState> states,
     ) {
       if (states.contains(WidgetState.selected)) {
-        return const Color(0xFFC8FF4D); // Lime green when checked
+        return AppColors.accent; // Lime green when checked
       }
       return const Color(0xFF343943); // Dark gray when unchecked
     }),
@@ -85,7 +85,7 @@ class ButtonDesign {
   );
 
   static final ButtonStyle alertDialog = ElevatedButton.styleFrom(
-    backgroundColor: Color(0xFFC8FF4D),
+    backgroundColor: AppColors.accent,
     padding: EdgeInsets.all(5),
   );
 }

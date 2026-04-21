@@ -10,7 +10,7 @@ class FontStyles {
     fontWeight: FontWeight.w900,
   );
   static final TextStyle mainHeadingRight = GoogleFonts.unbounded(
-    color: Color(0xFFC8FF4D),
+    color: AppColors.accent,
     fontSize: 35,
     fontWeight: FontWeight.w900,
     letterSpacing: -1.5,
@@ -46,7 +46,7 @@ class FontStyles {
   );
 
   static final TextStyle textButtonStyle = GoogleFonts.dmSans(
-    color: Color(0xFFC8FF4D),
+    color: AppColors.accent,
     fontWeight: FontWeight.w700,
   );
 
@@ -59,6 +59,14 @@ class FontStyles {
     color: Colors.white,
     fontWeight: FontWeight.w800,
     fontSize: 30,
+  );
+
+  static final TextStyle signupHeader = GoogleFonts.inter(
+    color: AppColors.textPrimary,
+    fontWeight: FontWeight.w900,
+    fontSize: 30,
+    letterSpacing: -0.6,
+    height: 1.2,
   );
 
   static final TextStyle scholarshipAiText = TextStyle(
@@ -96,7 +104,7 @@ class FontStyles {
   );
 
   static final TextStyle savedSchoolNumber = TextStyle(
-    color: Color(0xFFc8ff4d),
+    color: AppColors.accent,
     fontSize: 35,
     fontWeight: FontWeight.w500,
   );
@@ -141,7 +149,7 @@ class FontStyles {
     fontWeight: FontWeight.w400,
   );
   static final TextStyle highlightText = GoogleFonts.dmSans(
-    color: Color(0xFFC8FF4D),
+    color: AppColors.accent,
     fontWeight: FontWeight.w700,
   );
 
@@ -152,7 +160,7 @@ class FontStyles {
   );
 
   static final TextStyle filterLabelSelected = TextStyle(
-    color: Color(0xFFc6fd4c),
+    color: AppColors.accent,
     fontWeight: FontWeight.w700,
   );
 
@@ -173,21 +181,21 @@ class FontStyles {
   );
 
   static final TextStyle inputLabel = GoogleFonts.dmSans(
-    color: Color.fromARGB(255, 97, 105, 109),
-    fontSize: 10,
-    fontWeight: FontWeight.w800,
+    color: AppColors.textSecondary,
+    fontSize: 11,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.6,
   );
 
   static final TextStyle stepSubtitle = GoogleFonts.dmSans(
-    color: Color.fromARGB(255, 97, 105, 109),
-    fontSize: 14,
-    fontWeight: FontWeight.w700,
+    color: AppColors.textSecondary,
+    fontSize: 13,
+    height: 1.6,
   );
 
   static final TextStyle inputText = GoogleFonts.dmSans(
-    color: Colors.white,
+    color: AppColors.textPrimary,
     fontSize: 14,
-    fontWeight: FontWeight.w500,
   );
 
   static final TextStyle occupationTitle = GoogleFonts.dmSans(
@@ -236,6 +244,12 @@ class FontStyles {
   static final TextStyle continueButton = GoogleFonts.dmSans(
     color: Colors.black,
     fontSize: 16,
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle signupContinueButton = GoogleFonts.dmSans(
+    color: AppColors.onAccent,
+    fontSize: 15,
     fontWeight: FontWeight.w700,
   );
 

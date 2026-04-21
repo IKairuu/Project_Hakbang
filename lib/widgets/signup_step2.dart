@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/input_design.dart';
@@ -42,7 +43,7 @@ class _SignupStep2State extends State<SignupStep2> {
 
   Widget _buildInputLabel(String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: 7),
       child: Text(text, style: FontStyles.inputLabel),
     );
   }
@@ -64,6 +65,7 @@ class _SignupStep2State extends State<SignupStep2> {
   }) {
     return TextField(
       controller: controller,
+      cursorColor: AppColors.accent,
       style: FontStyles.inputText,
       decoration: _getInputDecoration(hintText).copyWith(
         prefixIcon: prefixIcon,
@@ -84,10 +86,7 @@ class _SignupStep2State extends State<SignupStep2> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
-              child: Text(
-                "Your profile 🎓",
-                style: FontStyles.header,
-              ),
+              child: Text("Your profile 🎓", style: FontStyles.signupHeader),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
@@ -207,7 +206,7 @@ class _SignupStep2State extends State<SignupStep2> {
                     style: ButtonDesign.signUpButton,
                     child: Text(
                       'Continue →',
-                      style: FontStyles.continueButton,
+                      style: FontStyles.signupContinueButton,
                     ),
                   ),
                 ),
@@ -219,10 +218,7 @@ class _SignupStep2State extends State<SignupStep2> {
                   child: ElevatedButton(
                     onPressed: widget.onBack,
                     style: ButtonDesign.backButton,
-                    child: Text(
-                      '← Back',
-                      style: FontStyles.backButton,
-                    ),
+                    child: Text('← Back', style: FontStyles.backButton),
                   ),
                 ),
               ],

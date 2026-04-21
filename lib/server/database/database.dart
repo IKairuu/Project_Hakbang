@@ -7,7 +7,7 @@ import 'package:hakbang/notifiers.dart';
 import 'package:http/http.dart' as http;
 
 class Database {
-  static String mainUrl = "project-hakbang-server-vif8.onrender.com";
+  static String mainUrl = "project-hakbang-server.onrender.com";
   static Future<void> getCollege() async {
     final url = Uri.https(mainUrl, "college/auth/available-colleges");
     final headers = {

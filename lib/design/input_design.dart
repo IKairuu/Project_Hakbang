@@ -3,20 +3,15 @@ import 'package:hakbang/design/app_colors.dart';
 
 class InputDesign {
   static const _hintColor = AppColors.textMuted;
-  static const _baseFillColor = AppColors.surface2;
-  static const _focusedFillColor = AppColors.accentDim;
-  static const _defaultBorderColor = AppColors.surface3;
+  static const _fillColor = AppColors.surface2;
+  static const _enabledBorderColor = AppColors.border2;
   static const _focusedBorderColor = AppColors.accent;
 
-  static const _hintStyle = TextStyle(
-    color: _hintColor,
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-  );
+  static const _hintStyle = TextStyle(color: _hintColor, fontSize: 14);
 
   static const _contentPadding = EdgeInsets.symmetric(
     horizontal: 16,
-    vertical: 14,
+    vertical: 13,
   );
 
   static OutlineInputBorder _border({
@@ -36,21 +31,14 @@ class InputDesign {
     return InputDecoration(
       hintText: hintText,
       prefixIcon: prefixIcon,
-      prefixIconConstraints: const BoxConstraints(
-        minWidth: 40,
-      ),
+      prefixIconConstraints: const BoxConstraints(minWidth: 40),
       hintStyle: _hintStyle,
       filled: true,
-      fillColor: WidgetStateColor.resolveWith((states) {
-        if (states.contains(WidgetState.focused)) {
-          return _focusedFillColor;
-        }
-        return _baseFillColor;
-      }),
+      fillColor: _fillColor,
       contentPadding: _contentPadding,
-      border: _border(color: _defaultBorderColor, width: 1.5),
-      enabledBorder: _border(color: _defaultBorderColor, width: 1.5),
-      focusedBorder: _border(color: _focusedBorderColor, width: 1),
+      border: _border(color: _enabledBorderColor, width: 1.5),
+      enabledBorder: _border(color: _enabledBorderColor, width: 1.5),
+      focusedBorder: _border(color: _focusedBorderColor, width: 1.5),
     );
   }
 }

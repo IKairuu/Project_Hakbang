@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/widgets/ai_gabay.dart';
 import 'package:hakbang/widgets/discovery.dart';
@@ -21,16 +21,36 @@ class _MainPageState extends State<MainPage> {
       valueListenable: navigationBarIndex,
       builder: (context, index, child) {
         return Scaffold(
-          backgroundColor: Color(0xFF0c0d10),
+          backgroundColor: const Color(0xFF0c0d10),
           bottomNavigationBar: NavigationBarTheme(
             data: NavigationBarThemeData(
-              indicatorColor: Color(0xFF272f1e),
-              backgroundColor: Color(0xFF13141a),
+              indicatorColor: AppColors.accentSurface,
+              indicatorShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              backgroundColor: const Color(0xFF0f1013),
+              elevation: 0,
+              height: 72,
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+              iconTheme: MaterialStateProperty.resolveWith<IconThemeData>(
+                (Set<MaterialState> states) =>
+                    states.contains(MaterialState.selected)
+                    ? const IconThemeData(color: AppColors.accent)
+                    : const IconThemeData(color: Color(0xFF5a6068), size: 24),
+              ),
               labelTextStyle: MaterialStateProperty.resolveWith<TextStyle>(
                 (Set<MaterialState> states) =>
                     states.contains(MaterialState.selected)
-                    ? const TextStyle(color: Color(0xFFc8f032))
-                    : const TextStyle(color: Color(0xFF4a5751)),
+                    ? const TextStyle(
+                        color: AppColors.accent,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      )
+                    : const TextStyle(
+                        color: Color(0xFF5a6068),
+                        fontSize: 11,
+                        fontWeight: FontWeight.w400,
+                      ),
               ),
             ),
             child: NavigationBar(
@@ -40,45 +60,43 @@ class _MainPageState extends State<MainPage> {
                   navigationBarIndex.value = value;
                 });
               },
-              destinations: [
+              destinations: const [
                 NavigationDestination(
-                  icon: SvgPicture.asset("assets/map.svg", height: 20),
-                  label: "Discover",
+                  icon: Icon(Icons.explore_outlined),
+                  selectedIcon: Icon(Icons.explore),
+                  label: 'Discover',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset(
-                    "assets/graduation-hat.svg",
-                    height: 20,
-                  ),
-                  label: "Scholars",
+                  icon: Icon(Icons.workspace_premium_outlined),
+                  selectedIcon: Icon(Icons.workspace_premium),
+                  label: 'Scholars',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset("assets/house.svg", height: 20),
-                  label: "Home",
+                  icon: Icon(Icons.home_outlined),
+                  selectedIcon: Icon(Icons.home),
+                  label: 'Home',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset("assets/robot.svg", height: 20),
-                  label: "Gabay",
+                  icon: Icon(Icons.smart_toy_outlined),
+                  selectedIcon: Icon(Icons.smart_toy),
+                  label: 'Gabay',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset("assets/exam.svg", height: 20),
-                  label: "Hubs",
+                  icon: Icon(Icons.quiz_outlined),
+                  selectedIcon: Icon(Icons.quiz),
+                  label: 'Hubs',
                 ),
               ],
             ),
           ),
-          body: Stack(
+          body: IndexedStack(
+            index: index,
             children: [
-              IndexedStack(
-                index: index,
-                children: [
-                  Discovery(),
-                  Scholarship(),
-                  HomeWidget(),
-                  AiGabay(),
-                  ReviewCenter(),
-                ],
-              ),
+              Discovery(),
+              Scholarship(),
+              HomeWidget(),
+              AiGabay(),
+              ReviewCenter(),
             ],
           ),
         );

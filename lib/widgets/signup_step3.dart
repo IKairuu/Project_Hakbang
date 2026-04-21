@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
-import 'package:hakbang/models/identity_option.dart';
+import 'package:hakbang/models/occupation_option.dart';
 import 'package:hakbang/notifiers.dart';
 
 class SignupStep3 extends StatefulWidget {
@@ -13,8 +13,8 @@ class SignupStep3 extends StatefulWidget {
   final List<String> avatars;
   final String fullName;
   final String email;
-  final int? selectedIdentityIndex;
-  final List<IdentityOption> identities;
+  final int? selectedOccupationIndex;
+  final List<occupationOption> occupations;
   final String grade;
 
   const SignupStep3({
@@ -25,8 +25,8 @@ class SignupStep3 extends StatefulWidget {
     required this.avatars,
     required this.fullName,
     required this.email,
-    required this.selectedIdentityIndex,
-    required this.identities,
+    required this.selectedOccupationIndex,
+    required this.occupations,
     required this.grade,
   });
 
@@ -47,7 +47,7 @@ class _SignupStep3State extends State<SignupStep3> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
-              child: Text("Almost done! 🚀", style: FontStyles.header),
+              child: Text("Almost done! 🚀", style: FontStyles.signupHeader),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
@@ -114,13 +114,14 @@ class _SignupStep3State extends State<SignupStep3> {
                           horizontal: 12,
                           vertical: 6,
                         ),
-                        decoration: ContainerDesign.pillTagIdentity,
+                        decoration: ContainerDesign.pillTagOccupation,
                         child: Text(
-                          widget.selectedIdentityIndex != null
+                          widget.selectedOccupationIndex != null
                               ? widget
-                                    .identities[widget.selectedIdentityIndex!]
+                                    .occupations[widget
+                                        .selectedOccupationIndex!]
                                     .title
-                              : 'Identity',
+                              : 'Occupation',
                           style: FontStyles.previewPillText,
                         ),
                       ),
@@ -256,7 +257,7 @@ class _SignupStep3State extends State<SignupStep3> {
                     style: ButtonDesign.signUpButton,
                     child: Text(
                       'Create My Account 🎉',
-                      style: FontStyles.continueButton,
+                      style: FontStyles.signupContinueButton,
                     ),
                   ),
                 ),
@@ -266,10 +267,7 @@ class _SignupStep3State extends State<SignupStep3> {
                   child: ElevatedButton(
                     onPressed: widget.onBack,
                     style: ButtonDesign.backButton,
-                    child: Text(
-                      '← Back',
-                      style: FontStyles.backButton,
-                    ),
+                    child: Text('← Back', style: FontStyles.backButton),
                   ),
                 ),
               ],

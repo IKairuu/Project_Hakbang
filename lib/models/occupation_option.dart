@@ -1,9 +1,9 @@
-class IdentityOption {
+class occupationOption {
   final String emoji;
   final String title;
   final String subtitle;
 
-  const IdentityOption({
+  const occupationOption({
     required this.emoji,
     required this.title,
     required this.subtitle,

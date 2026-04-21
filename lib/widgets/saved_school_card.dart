@@ -14,9 +14,31 @@ class SavedSchoolCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tags = college.tags.take(2).toList();
-    const tagBackgroundColors = [Color(0xFF213536), Color(0xFF312746)];
-    const tagTextColors = [Color(0xFF4CF9B4), Color(0xFFA253EE)];
+    final tags = college.tags.cast<String>().take(3).toList();
+    while (tags.length < 3) {
+      if (tags.isEmpty) {
+        tags.add('State U');
+      } else if (tags.length == 1) {
+        tags.add('UPCAT');
+      } else {
+        tags.add(
+          college.programNumbers.isNotEmpty
+              ? '${college.programNumbers}+ Programs'
+              : '195+ Programs',
+        );
+      }
+    }
+
+    const tagBackgroundColors = [
+      Color(0xFF213536),
+      Color(0xFF2B3619),
+      Color(0xFF312746),
+    ];
+    const tagTextColors = [
+      Color(0xFF4CF9B4),
+      Color(0xFFC8FF4D),
+      Color(0xFFA253EE),
+    ];
 
     return Container(
       width: double.infinity,

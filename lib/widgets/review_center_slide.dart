@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 
-class ScholarshipAi extends StatefulWidget {
-  const ScholarshipAi({super.key});
+class ReviewCenterSlide extends StatefulWidget {
+  const ReviewCenterSlide({super.key});
 
   @override
-  State<ScholarshipAi> createState() => _ScholarshipAiState();
+  State<ReviewCenterSlide> createState() => _ReviewCenterSlideState();
 }
 
-class _ScholarshipAiState extends State<ScholarshipAi>
+class _ReviewCenterSlideState extends State<ReviewCenterSlide>
     with TickerProviderStateMixin {
   late final AnimationController _floatCtrl1;
   late final AnimationController _floatCtrl2;
@@ -30,7 +30,7 @@ class _ScholarshipAiState extends State<ScholarshipAi>
       vsync: this,
       duration: const Duration(seconds: 5),
     );
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(milliseconds: 1800), () {
       if (mounted) _floatCtrl2.repeat(reverse: true);
     });
 
@@ -56,48 +56,48 @@ class _ScholarshipAiState extends State<ScholarshipAi>
     return Stack(
       fit: StackFit.expand,
       children: [
-        // Purple radial gradient — top right
+        // Coral radial gradient — top center
         IgnorePointer(
           child: DecoratedBox(
             decoration: const BoxDecoration(
               gradient: RadialGradient(
-                center: Alignment(0.8, -1.0),
+                center: Alignment(0.0, -1.0),
                 radius: 1.4,
-                colors: [Color(0x24A855F7), Colors.transparent],
+                colors: [Color(0x28FF6B4D), Colors.transparent],
               ),
             ),
           ),
         ),
         // Content
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Illustration
             Expanded(
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  // Scholarship card — top left
+                  // Review hub card — top right float
                   Positioned(
-                    top: 40,
-                    left: 20,
+                    top: 60,
+                    right: 20,
                     child: AnimatedBuilder(
                       animation: _float1,
                       builder: (context, _) => Transform.translate(
                         offset: Offset(0, _float1.value),
-                        child: _scholarshipCard(),
+                        child: _hubCard(),
                       ),
                     ),
                   ),
-                  // Second scholarship card — bottom right
+                  // Nearby centers card — bottom left float
                   Positioned(
                     bottom: 28,
-                    right: 20,
+                    left: 20,
                     child: AnimatedBuilder(
                       animation: _float2,
                       builder: (context, _) => Transform.translate(
                         offset: Offset(0, _float2.value),
-                        child: _matchCard(),
+                        child: _scoreCard(),
                       ),
                     ),
                   ),
@@ -117,20 +117,20 @@ class _ScholarshipAiState extends State<ScholarshipAi>
                       vertical: 5,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.purpleDim,
+                      color: AppColors.coralDim,
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Text('🏆', style: TextStyle(fontSize: 11)),
+                        const Text('📚', style: TextStyle(fontSize: 11)),
                         const SizedBox(width: 5),
                         Text(
-                          'SCHOLARSHIPS',
+                          'REVIEW CENTERS',
                           style: GoogleFonts.dmSans(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.purple,
+                            color: AppColors.coral,
                             letterSpacing: 0.3,
                           ),
                         ),
@@ -139,7 +139,7 @@ class _ScholarshipAiState extends State<ScholarshipAi>
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Find Funding.\nGet Matched.',
+                    'Ace your exams.\nFind the right hub.',
                     style: GoogleFonts.dmSans(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
@@ -150,7 +150,7 @@ class _ScholarshipAiState extends State<ScholarshipAi>
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Discover scholarships matched to your profile — government, private, and merit-based grants all in one feed.',
+                    'Browse on-site, online, and hybrid review centers for UPCAT, ACET, DCAT, and more — all in one place.',
                     style: GoogleFonts.dmSans(
                       fontSize: 13,
                       color: AppColors.textSecondary,
@@ -166,18 +166,18 @@ class _ScholarshipAiState extends State<ScholarshipAi>
     );
   }
 
-  Widget _scholarshipCard() {
+  Widget _hubCard() {
     return Container(
-      width: 195,
-      padding: const EdgeInsets.all(14),
+      width: 240,
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF1A0F2E), Color(0xFF0F0D20)],
+          colors: [Color(0xFF2A1209), Color(0xFF1A0C06)],
         ),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Color(0x40A855F7)),
+        border: Border.all(color: Color(0x40FF6B4D)),
         boxShadow: const [
           BoxShadow(
             color: Colors.black45,
@@ -193,24 +193,24 @@ class _ScholarshipAiState extends State<ScholarshipAi>
           Row(
             children: [
               Container(
-                width: 28,
-                height: 28,
+                width: 36,
+                height: 36,
                 decoration: BoxDecoration(
-                  color: AppColors.purpleDim,
-                  borderRadius: BorderRadius.circular(8),
+                  color: AppColors.coralDim,
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
-                  Icons.emoji_events_rounded,
-                  color: AppColors.purple,
-                  size: 16,
+                  Icons.menu_book_rounded,
+                  color: AppColors.coral,
+                  size: 20,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  'Merit Scholarship',
+                  'MSA Review Center',
                   style: GoogleFonts.dmSans(
-                    fontSize: 11,
+                    fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -218,27 +218,26 @@ class _ScholarshipAiState extends State<ScholarshipAi>
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Full Tuition Coverage',
-            style: GoogleFonts.dmSans(
-              fontSize: 11,
-              color: AppColors.textSecondary,
-            ),
-          ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Row(
             children: [
+              const Icon(
+                Icons.star_rounded,
+                color: Color(0xFFF5A623),
+                size: 14,
+              ),
+              const SizedBox(width: 3),
               Text(
-                '₱120,000',
+                '4.9',
                 style: GoogleFonts.dmSans(
-                  fontSize: 13,
+                  fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.purple,
+                  color: AppColors.textPrimary,
                 ),
               ),
+              const SizedBox(width: 4),
               Text(
-                '/yr',
+                '(1.2k reviews)',
                 style: GoogleFonts.dmSans(
                   fontSize: 11,
                   color: AppColors.textMuted,
@@ -247,27 +246,56 @@ class _ScholarshipAiState extends State<ScholarshipAi>
             ],
           ),
           const SizedBox(height: 6),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-            decoration: BoxDecoration(
-              color: AppColors.coralDim,
-              borderRadius: BorderRadius.circular(100),
+          Text(
+            'UPCAT · ACET · USTET',
+            style: GoogleFonts.dmSans(
+              fontSize: 11,
+              color: AppColors.textSecondary,
             ),
-            child: Text(
-              'Deadline: Jun 30',
-              style: GoogleFonts.dmSans(
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-                color: AppColors.coral,
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: AppColors.coralDim,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Text(
+                  'On-site',
+                  style: GoogleFonts.dmSans(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.coral,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: 6),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: AppColors.surface2,
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(color: AppColors.border2),
+                ),
+                child: Text(
+                  'Online',
+                  style: GoogleFonts.dmSans(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _matchCard() {
+  Widget _scoreCard() {
     return Container(
       width: 210,
       padding: const EdgeInsets.all(14),
@@ -288,50 +316,72 @@ class _ScholarshipAiState extends State<ScholarshipAi>
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Matched for you',
+            'Nearby Centers',
             style: GoogleFonts.dmSans(
-              fontSize: 10,
+              fontSize: 11,
               fontWeight: FontWeight.w700,
               color: AppColors.textMuted,
               letterSpacing: 0.3,
             ),
           ),
+          const SizedBox(height: 10),
+          _centerRow('Review Masters', 4.8, 'Hybrid'),
           const SizedBox(height: 8),
-          _matchRow('CHED Scholarship', '₱60,000/yr', AppColors.purple),
-          const SizedBox(height: 6),
-          _matchRow('SM Foundation', '₱80,000/yr', AppColors.blue),
-          const SizedBox(height: 6),
-          _matchRow('DOST-SEI', '₱50,000/yr', AppColors.teal),
+          _centerRow('AMA Review', 4.7, 'Online'),
+          const SizedBox(height: 8),
+          _centerRow('Ahead Tutorial', 4.9, 'On-site'),
         ],
       ),
     );
   }
 
-  Widget _matchRow(String name, String amount, Color color) {
+  Widget _centerRow(String name, double rating, String mode) {
     return Row(
       children: [
         Container(
-          width: 6,
-          height: 6,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+          width: 28,
+          height: 28,
+          decoration: BoxDecoration(
+            color: AppColors.coralDim,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Icon(
+            Icons.school_rounded,
+            color: AppColors.coral,
+            size: 14,
+          ),
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: Text(
-            name,
-            style: GoogleFonts.dmSans(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-        ),
-        Text(
-          amount,
-          style: GoogleFonts.dmSans(
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
-            color: color,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: GoogleFonts.dmSans(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.star_rounded,
+                    color: Color(0xFFF5A623),
+                    size: 10,
+                  ),
+                  const SizedBox(width: 2),
+                  Text(
+                    '$rating  ·  $mode',
+                    style: GoogleFonts.dmSans(
+                      fontSize: 10,
+                      color: AppColors.textMuted,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ],

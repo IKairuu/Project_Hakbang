@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:hakbang/design/app_colors.dart';
 
 class ContainerDesign {
   static final BoxDecoration startImage = BoxDecoration(
-    color: Color(0xFFC8FF4D),
+    color: AppColors.accent,
     borderRadius: BorderRadius.circular(35),
     boxShadow: [
       BoxShadow(
-        color: Color(0xFFC8FF4D).withValues(alpha: 153),
+        color: AppColors.accent.withValues(alpha: 153),
         blurRadius: 25,
         spreadRadius: 2,
       ),
@@ -32,7 +33,7 @@ class ContainerDesign {
   static final BoxDecoration homeAvatar = BoxDecoration(
     color: Color(0xFF232a17),
     borderRadius: BorderRadius.circular(20),
-    border: BoxBorder.all(color: Color(0xFFc8ff4d)),
+    border: BoxBorder.all(color: AppColors.accent),
   );
 
   static final BoxDecoration reviewUpg = BoxDecoration(
@@ -66,7 +67,7 @@ class ContainerDesign {
     border: Border.all(color: Color.fromARGB(255, 60, 61, 67), width: 1),
     boxShadow: [
       BoxShadow(
-        color: Color(0xFFC8FF4D).withValues(alpha: 0.15),
+        color: AppColors.accent.withValues(alpha: 0.15),
         blurRadius: 15,
         spreadRadius: 3,
       ),
@@ -74,19 +75,19 @@ class ContainerDesign {
   );
 
   static final BoxDecoration signupSelectionOptionSelected = BoxDecoration(
-    color: Color.fromARGB(105, 198, 255, 75),
+    color: AppColors.accent.withAlpha(105),
     borderRadius: BorderRadius.circular(18),
-    border: Border.all(color: Color(0xFFC8FF4D), width: 2),
+    border: Border.all(color: AppColors.accent, width: 2),
     boxShadow: [
       BoxShadow(
-        color: Color(0xFFC8FF4D).withValues(alpha: 0.15),
+        color: AppColors.accent.withValues(alpha: 0.15),
         blurRadius: 15,
         spreadRadius: 3,
       ),
     ],
   );
 
-  static final BoxDecoration signupIdentityOptionUnselected = BoxDecoration(
+  static final BoxDecoration signupOccupationOptionUnselected = BoxDecoration(
     color: Color(0xFF2a2d38),
     borderRadius: BorderRadius.circular(18),
     border: Border.all(color: Color.fromARGB(255, 60, 61, 67), width: 1),
@@ -97,8 +98,8 @@ class ContainerDesign {
     color: Color(0xFF0c1621),
   );
 
-  static final BoxDecoration pillTagIdentity = BoxDecoration(
-    color: Color.fromARGB(69, 199, 255, 77),
+  static final BoxDecoration pillTagOccupation = BoxDecoration(
+    color: AppColors.accent.withAlpha(69),
     borderRadius: BorderRadius.circular(20),
   );
 

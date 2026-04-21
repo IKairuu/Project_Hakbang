@@ -8,6 +8,7 @@ import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/builds/college_section.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Discovery extends StatefulWidget {
   const Discovery({super.key});
@@ -82,7 +83,12 @@ class _DiscoveryState extends State<Discovery> {
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                selectedFilter.value = [true, false, false];
+                                selectedFilter.value = [
+                                  true,
+                                  false,
+                                  false,
+                                  false,
+                                ];
                               });
                               searchInput.clear();
                               Filter.filterCollegeSection(
@@ -102,7 +108,12 @@ class _DiscoveryState extends State<Discovery> {
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                selectedFilter.value = [false, true, false];
+                                selectedFilter.value = [
+                                  false,
+                                  true,
+                                  false,
+                                  false,
+                                ];
                               });
                               searchInput.clear();
                               Filter.filterCollegeSection(
@@ -122,7 +133,12 @@ class _DiscoveryState extends State<Discovery> {
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                selectedFilter.value = [false, false, true];
+                                selectedFilter.value = [
+                                  false,
+                                  false,
+                                  true,
+                                  false,
+                                ];
                               });
                               searchInput.clear();
                               Filter.filterCollegeSection(
@@ -164,8 +180,8 @@ class _DiscoveryState extends State<Discovery> {
                                         user!.latitude,
                                         user.longitude,
                                       ), // Center the map over London, UK
-                                      initialZoom: 7,
-                                      maxZoom: 7,
+                                      initialZoom: 6,
+                                      maxZoom: 100,
                                       minZoom: 6,
                                     ),
                                     children: [
@@ -212,7 +228,10 @@ class _DiscoveryState extends State<Discovery> {
                       : Center(
                           child: Text(
                             "There is no selected university",
-                            style: FontStyles.mapLabel,
+                            style: TextStyle(
+                              color: AppColors.textSecondary,
+                              fontSize: 14,
+                            ),
                           ),
                         ),
                 ),
@@ -228,10 +247,17 @@ class _DiscoveryState extends State<Discovery> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(height: 10),
                             Text(
-                              "${univ.isEmpty ? "No" : univ.length} available ${univ.length <= 1 ? "school" : "schools"}",
-                              style: FontStyles.availSchoolsLabel,
+                              "${univ.isEmpty ? "No" : univ.length} Available ${univ.length <= 1 ? "School" : "Schools"}",
+                              style: GoogleFonts.inter(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                letterSpacing: -0.5,
+                              ),
                             ),
+                            SizedBox(height: 5),
                             Expanded(
                               flex: 2,
                               child: ValueListenableBuilder(

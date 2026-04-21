@@ -10,7 +10,7 @@ class FontStyles {
     fontWeight: FontWeight.w900,
   );
   static final TextStyle mainHeadingRight = GoogleFonts.unbounded(
-    color: Color(0xFFC8FF4D),
+    color: AppColors.accent,
     fontSize: 35,
     fontWeight: FontWeight.w900,
     letterSpacing: -1.5,
@@ -46,7 +46,7 @@ class FontStyles {
   );
 
   static final TextStyle textButtonStyle = GoogleFonts.dmSans(
-    color: Color(0xFFC8FF4D),
+    color: AppColors.accent,
     fontWeight: FontWeight.w700,
   );
 
@@ -59,6 +59,14 @@ class FontStyles {
     color: Colors.white,
     fontWeight: FontWeight.w800,
     fontSize: 30,
+  );
+
+  static final TextStyle signupHeader = GoogleFonts.inter(
+    color: AppColors.textPrimary,
+    fontWeight: FontWeight.w900,
+    fontSize: 30,
+    letterSpacing: -0.6,
+    height: 1.2,
   );
 
   static final TextStyle scholarshipAiText = TextStyle(
@@ -96,7 +104,7 @@ class FontStyles {
   );
 
   static final TextStyle savedSchoolNumber = TextStyle(
-    color: Color(0xFFc8ff4d),
+    color: AppColors.accent,
     fontSize: 35,
     fontWeight: FontWeight.w500,
   );
@@ -141,7 +149,7 @@ class FontStyles {
     fontWeight: FontWeight.w400,
   );
   static final TextStyle highlightText = GoogleFonts.dmSans(
-    color: Color(0xFFC8FF4D),
+    color: AppColors.accent,
     fontWeight: FontWeight.w700,
   );
 
@@ -152,7 +160,7 @@ class FontStyles {
   );
 
   static final TextStyle filterLabelSelected = TextStyle(
-    color: Color(0xFFc6fd4c),
+    color: AppColors.accent,
     fontWeight: FontWeight.w700,
   );
 
@@ -161,7 +169,7 @@ class FontStyles {
     fontWeight: FontWeight.w700,
   );
 
-  static final TextStyle availSchoolsLabel = GoogleFonts.dmSans(
+  static final TextStyle availSchoolsLabel = GoogleFonts.inter(
     fontSize: 15,
     color: Color(0xFF7d7e81),
     fontWeight: FontWeight.w700,
@@ -173,30 +181,30 @@ class FontStyles {
   );
 
   static final TextStyle inputLabel = GoogleFonts.dmSans(
-    color: Color.fromARGB(255, 97, 105, 109),
-    fontSize: 10,
-    fontWeight: FontWeight.w800,
+    color: AppColors.textSecondary,
+    fontSize: 11,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.6,
   );
 
   static final TextStyle stepSubtitle = GoogleFonts.dmSans(
-    color: Color.fromARGB(255, 97, 105, 109),
-    fontSize: 14,
-    fontWeight: FontWeight.w700,
+    color: AppColors.textSecondary,
+    fontSize: 13,
+    height: 1.6,
   );
 
   static final TextStyle inputText = GoogleFonts.dmSans(
-    color: Colors.white,
+    color: AppColors.textPrimary,
     fontSize: 14,
-    fontWeight: FontWeight.w500,
   );
 
-  static final TextStyle identityTitle = GoogleFonts.dmSans(
+  static final TextStyle occupationTitle = GoogleFonts.dmSans(
     color: Colors.white,
     fontSize: 14,
     fontWeight: FontWeight.w600,
   );
 
-  static final TextStyle identitySubtitle = GoogleFonts.dmSans(
+  static final TextStyle occupationSubtitle = GoogleFonts.dmSans(
     color: Color.fromARGB(255, 150, 150, 150),
     fontSize: 10,
   );
@@ -239,6 +247,12 @@ class FontStyles {
     fontWeight: FontWeight.w700,
   );
 
+  static final TextStyle signupContinueButton = GoogleFonts.dmSans(
+    color: AppColors.onAccent,
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
+  );
+
   static final TextStyle backButton = GoogleFonts.dmSans(
     color: Colors.white,
     fontSize: 16,
@@ -254,5 +268,41 @@ class FontStyles {
   static final TextStyle scholarShipSubtitle = GoogleFonts.inter(
     fontSize: 13,
     color: Colors.white54,
+  );
+
+  static final TextStyle noInternetConnection = GoogleFonts.inter(
+    fontSize: 18,
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle profileAboutTitle = GoogleFonts.dmSans(
+    color: AppColors.textPrimary,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final TextStyle profileAboutBody = GoogleFonts.dmSans(
+    color: AppColors.textMuted,
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle profileSectionTitle = GoogleFonts.dmSans(
+    color: AppColors.textPrimary,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final TextStyle profileEmptySavedSchools = GoogleFonts.dmSans(
+    color: AppColors.textMuted,
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle logoutDialogTitle = GoogleFonts.dmSans(
+    color: AppColors.textPrimary,
+    fontSize: 20,
+    fontWeight: FontWeight.w800,
   );
 }

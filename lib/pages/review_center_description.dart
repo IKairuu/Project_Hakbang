@@ -58,7 +58,7 @@ class _ReviewCenterDescriptionState extends State<ReviewCenterDescription> {
                       buildDetailContent(rc),
                       buildPremiumBlock(),
                       buildSectionDivider(),
-                      buildWhatYoullCover(rc.whatYouWillCover),
+                      buildWhatYoullCover(rc.coverage),
                       buildProgramOverview(rc.programOverview),
                       buildSectionDivider(),
                       buildCenterOffers(rc.centerOffers),
@@ -267,7 +267,7 @@ Widget buildDetailContent(ReviewCenter rc) {
         if (rc.subtitle.isNotEmpty)
           Text(rc.subtitle, style: _dm(14, color: AppColors.textSecondary)),
         const SizedBox(height: 10),
-        if (rc.isBestSeller == "true") ...[
+        if (rc.isBestSeller == true) ...[
           buildBestsellerBadge(),
           const SizedBox(height: 10),
         ],
@@ -449,7 +449,7 @@ Widget buildPremiumBlock() {
   );
 }
 
-Widget buildWhatYoullCover(List<String> items) {
+Widget buildWhatYoullCover(List<dynamic> items) {
   if (items.isEmpty) return const SizedBox.shrink();
   return Container(
     margin: const EdgeInsets.all(16),
@@ -525,7 +525,7 @@ Widget buildProgramOverview(Map<String, dynamic> overview) {
   );
 }
 
-Widget buildCenterOffers(List<String> offerItems) {
+Widget buildCenterOffers(List<dynamic> offerItems) {
   if (offerItems.isEmpty) return const SizedBox.shrink();
   final icons = [
     Icons.videocam_outlined,
@@ -577,7 +577,7 @@ Widget buildCenterOffers(List<String> offerItems) {
   );
 }
 
-Widget buildWhoIsFor(List<String> items) {
+Widget buildWhoIsFor(List<dynamic> items) {
   if (items.isEmpty) return const SizedBox.shrink();
   return Padding(
     padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
@@ -626,7 +626,7 @@ Widget buildWhoIsFor(List<String> items) {
 }
 
 Widget buildAboutSection({
-  required Map<String, String> aboutData,
+  required Map<String, dynamic> aboutData,
   required bool expanded,
   required VoidCallback onToggle,
 }) {

@@ -47,7 +47,7 @@ class _ReviewCenterState extends State<ReviewCenter> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  ValueListenableBuilder<List<Map<String, dynamic>>>(
+                  ValueListenableBuilder(
                     valueListenable: availableReviewCenters,
                     builder: (context, centers, child) {
                       return buildTopDetails(centers.length);
@@ -55,7 +55,7 @@ class _ReviewCenterState extends State<ReviewCenter> {
                   ),
                   const SizedBox(height: 6),
                   Expanded(
-                    child: ValueListenableBuilder<List<Map<String, dynamic>>>(
+                    child: ValueListenableBuilder(
                       valueListenable: availableReviewCenters,
                       builder: (context, centers, child) {
                         return buildHubs(centers);
@@ -219,7 +219,7 @@ Widget buildTopDetails(int count) {
   );
 }
 
-Widget buildHubs(List<Map<String, dynamic>> centers) {
+Widget buildHubs(dynamic centers) {
   if (centers.isEmpty) {
     return Center(
       child: Text(
@@ -239,8 +239,7 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
     ),
     itemBuilder: (context, index) {
       final center = centers[index];
-      final gradientColors = _centerGradientColors(center['title'] ?? '');
-      final isBestseller = center['isBestseller'] == 'true';
+      final gradientColors = _centerGradientColors(center.title ?? '');
 
       return InkWell(
         onTap: () {
@@ -249,34 +248,32 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
             MaterialPageRoute(
               builder: (_) => ReviewCenterDescription(
                 reviewCenter: rc_model.ReviewCenter(
-                  title: center['title'] ?? '',
-                  instructor: center['instructor'] ?? '',
-                  ratingNum: center['ratingNum'] ?? '',
-                  stars: center['stars'] ?? '',
-                  ratingCount: center['ratingCount'] ?? '',
-                  price: center['price'] ?? '',
-                  originalPrice: center['originalPrice'] ?? '',
-                  isBestSeller: center['isBestseller'] ?? 'false',
-                  emoji: center['emoji'] ?? '🎓',
-                  subtitle: center['subtitle'] ?? '',
-                  description: center['description'] ?? '',
-                  managedBy: center['managedBy'] ?? '',
-                  modalities: center['modalities'] ?? '',
-                  location: center['location'] ?? '',
-                  website: center['website'] ?? '',
-                  phone: center['phone'] ?? '',
-                  email: center['email'] ?? '',
-                  exams: center['exams'] ?? '',
-                  whatYouWillCover: List<String>.from(
-                    center['whatYouWillCover'] ?? [],
-                  ),
+                  title: center.title ?? '',
+                  instructor: center.instructor ?? '',
+                  ratingNum: center.ratingNum ?? '',
+                  stars: center.stars ?? '',
+                  ratingCount: center.ratingCount ?? '',
+                  price: center.price ?? '',
+                  originalPrice: center.originalPrice ?? '',
+                  isBestSeller: center.isBestSeller ?? false,
+                  emoji: center.emoji ?? '🎓',
+                  subtitle: center.subtitle ?? '',
+                  description: center.description ?? '',
+                  managedBy: center.managedBy ?? '',
+                  modalities: center.modalities ?? '',
+                  location: center.location ?? '',
+                  website: center.website ?? '',
+                  phone: center.phone ?? '',
+                  email: center.email ?? '',
+                  exams: center.exams ?? '',
+                  coverage: List<dynamic>.from(center.coverage ?? []),
                   programOverview: Map<String, dynamic>.from(
-                    center['programOverview'] ?? {},
+                    center.programOverview ?? {},
                   ),
-                  centerOffers: List<String>.from(center['centerOffers'] ?? []),
-                  whoThisIsFor: List<String>.from(center['whoThisIsFor'] ?? []),
-                  aboutThisCenter: Map<String, String>.from(
-                    center['aboutThisCenter'] ?? {},
+                  centerOffers: List<dynamic>.from(center.centerOffers ?? []),
+                  whoThisIsFor: List<dynamic>.from(center.whoThisIsFor ?? []),
+                  aboutThisCenter: Map<String, dynamic>.from(
+                    center.aboutThisCenter ?? {},
                   ),
                 ),
               ),
@@ -305,7 +302,7 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                 ),
                 child: Center(
                   child: Text(
-                    center['emoji'] ?? '🎓',
+                    center.emoji ?? '🎓',
                     style: TextStyle(fontSize: 32),
                   ),
                 ),
@@ -316,7 +313,7 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      center['title'] ?? '',
+                      center.title ?? '',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
@@ -327,7 +324,7 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      center['instructor'] ?? '',
+                      center.instructor ?? '',
                       style: TextStyle(
                         fontSize: 11.5,
                         color: Color.fromRGBO(240, 241, 245, 0.55),
@@ -337,7 +334,7 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                     Row(
                       children: [
                         Text(
-                          center['ratingNum'] ?? '',
+                          center.ratingNum ?? '',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -346,7 +343,7 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          center['stars'] ?? '',
+                          center.stars ?? '',
                           style: TextStyle(
                             fontSize: 11,
                             color: Color(0xFFF0A500),
@@ -355,7 +352,7 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          center['ratingCount'] ?? '',
+                          center.ratingCount ?? '',
                           style: TextStyle(
                             fontSize: 11,
                             color: Color.fromRGBO(240, 241, 245, 0.3),
@@ -363,12 +360,12 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                         ),
                       ],
                     ),
-                    if ((center['price'] ?? '').isNotEmpty) ...[
+                    if ((center.price ?? '').isNotEmpty) ...[
                       const SizedBox(height: 5),
                       Row(
                         children: [
                           Text(
-                            center['price'] ?? '',
+                            center.price ?? '',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w700,
@@ -376,9 +373,9 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          if ((center['originalPrice'] ?? '').isNotEmpty)
+                          if ((center.originalPrice ?? '').isNotEmpty)
                             Text(
-                              center['originalPrice'] ?? '',
+                              center.originalPrice ?? '',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Color.fromRGBO(240, 241, 245, 0.3),
@@ -389,7 +386,7 @@ Widget buildHubs(List<Map<String, dynamic>> centers) {
                       ),
                     ],
                     const SizedBox(height: 5),
-                    if (isBestseller)
+                    if (center.isBestSeller)
                       Container(
                         padding: const EdgeInsets.symmetric(
                           vertical: 3,

@@ -6,7 +6,7 @@ class ReviewCenter {
   String ratingCount;
   String price;
   String originalPrice;
-  String isBestSeller;
+  bool isBestSeller;
   String emoji;
   String subtitle;
   String description;
@@ -17,11 +17,11 @@ class ReviewCenter {
   String phone;
   String email;
   String exams;
-  List<String> whatYouWillCover;
+  List<dynamic> coverage;
   Map<String, dynamic> programOverview;
-  List<String> centerOffers;
-  List<String> whoThisIsFor;
-  Map<String, String> aboutThisCenter;
+  List<dynamic> centerOffers;
+  List<dynamic> whoThisIsFor;
+  Map<String, dynamic> aboutThisCenter;
 
   ReviewCenter({
     required this.title,
@@ -33,19 +33,19 @@ class ReviewCenter {
     required this.originalPrice,
     required this.isBestSeller,
     required this.emoji,
-    this.subtitle = '',
-    this.description = '',
-    this.managedBy = '',
-    this.modalities = '',
-    this.location = '',
-    this.website = '',
-    this.phone = '',
-    this.email = '',
-    this.exams = '',
-    this.whatYouWillCover = const [],
-    this.programOverview = const {},
-    this.centerOffers = const [],
-    this.whoThisIsFor = const [],
-    this.aboutThisCenter = const {},
+    required this.subtitle,
+    required this.description,
+    required this.managedBy,
+    required this.modalities,
+    required this.location,
+    required this.website,
+    required this.phone,
+    required this.email,
+    required this.exams,
+    required this.coverage,
+    required this.programOverview,
+    required this.centerOffers,
+    required this.whoThisIsFor,
+    required this.aboutThisCenter,
   });
 }

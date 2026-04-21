@@ -241,7 +241,7 @@ Widget buildPriceRow(ReviewCenter rc) {
       ),
       const SizedBox(width: 10),
       Text(
-        "50% off",
+        "Get now!",
         style: _dm(12, weight: FontWeight.w700, color: AppColors.accent),
       ),
     ],

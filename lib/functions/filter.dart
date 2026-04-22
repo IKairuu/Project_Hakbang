@@ -68,4 +68,18 @@ class Filter {
       }
     }
   }
+
+  static void searchReviewHubs(String input) {
+    List<ReviewCenter> searchedList = [];
+    for (ReviewCenter center in reviewCenterSection.value) {
+      for (String word in input.toLowerCase().split(" ")) {
+        if (center.title.toLowerCase().split(" ").contains(word)) {
+          searchedList.add(center);
+          break;
+        }
+      }
+    }
+    Initialization.refreshReviewCenters();
+    reviewCenterSection.value = searchedList;
+  }
 }

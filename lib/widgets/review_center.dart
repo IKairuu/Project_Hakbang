@@ -105,7 +105,7 @@ Widget buildTextField(
             controller: controller,
             cursorColor: AppColors.accent,
             style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
-            onSubmitted: (value) {},
+            onSubmitted: (value) => Filter.searchReviewHubs(controller.text),
             decoration: InputDecoration(
               hintText: label,
               hintStyle: TextStyle(color: AppColors.textMuted, fontSize: 14),
@@ -120,9 +120,7 @@ Widget buildTextField(
                 ),
               ),
               suffixIcon: IconButton(
-                onPressed: () {
-                  // to be updated
-                },
+                onPressed: () => Filter.searchReviewHubs(controller.text),
                 icon: Icon(Icons.search_outlined),
               ),
               contentPadding: EdgeInsets.only(

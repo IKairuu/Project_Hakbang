@@ -255,11 +255,11 @@ class _DiscoveryState extends State<Discovery> {
                                   style: GoogleFonts.inter(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 20,
-                                    letterSpacing: -0.5,
+                                    fontSize: 15,
+                                    letterSpacing: -0.3,
                                   ),
                                 ),
-                                SizedBox(height: 5),
+                                SizedBox(height: 3),
                                 Expanded(
                                   flex: 2,
                                   child: ValueListenableBuilder(

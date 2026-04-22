@@ -151,12 +151,14 @@ class Database {
       headers: headers,
       body: jsonEncode({"email": email}),
     );
-    final List<College> collegeList = List.from(savedSchools.value);
+    final List<College> collegeList = [];
+    final Set<String> seenCollegeNames = <String>{};
     final data = jsonDecode(response.body);
     if (data["status"] == 200) {
       for (Map<String, dynamic> collegeNames in data["data"]) {
         for (College college in availableColleges.value) {
-          if (college.collegeName == collegeNames["college_name"]) {
+          if (college.collegeName == collegeNames["college_name"] &&
+              seenCollegeNames.add(college.collegeName)) {
             collegeList.add(college);
           }
         }

@@ -721,7 +721,7 @@ Widget buildStickyBottom(ReviewCenter rc) {
             }
           },
           child: Text(
-            "Visit Website",
+            "Enroll Now",
             style: _dm(
               15,
               weight: FontWeight.w700,

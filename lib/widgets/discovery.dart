@@ -251,13 +251,13 @@ class _DiscoveryState extends State<Discovery> {
                             Text(
                               "${univ.isEmpty ? "No" : univ.length} Available ${univ.length <= 1 ? "School" : "Schools"}",
                               style: GoogleFonts.inter(
-                                color: Colors.white,
+                                color: AppColors.textMuted,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 20,
+                                fontSize: 15,
                                 letterSpacing: -0.5,
                               ),
                             ),
-                            SizedBox(height: 5),
+                            SizedBox(height: 3),
                             Expanded(
                               flex: 2,
                               child: ValueListenableBuilder(

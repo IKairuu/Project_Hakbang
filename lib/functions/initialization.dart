@@ -9,6 +9,7 @@ class Initialization {
     await Database.getCollege();
     await Database.getScholarships();
     await Database.getUserActivities(userCredentials.value!.email);
+    await Database.getHubs();
     await Database.getSavedSchools(userCredentials.value!.email);
     await SortingFunctions.sortASctivities();
     await refreshChat();

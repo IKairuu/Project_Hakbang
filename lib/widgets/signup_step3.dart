@@ -47,7 +47,7 @@ class _SignupStep3State extends State<SignupStep3> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
-              child: Text("Almost done! 🚀", style: FontStyles.header),
+              child: Text("Almost done! 🚀", style: FontStyles.signupHeader),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 25),
@@ -118,7 +118,8 @@ class _SignupStep3State extends State<SignupStep3> {
                         child: Text(
                           widget.selectedOccupationIndex != null
                               ? widget
-                                    .occupations[widget.selectedOccupationIndex!]
+                                    .occupations[widget
+                                        .selectedOccupationIndex!]
                                     .title
                               : 'Occupation',
                           style: FontStyles.previewPillText,
@@ -256,7 +257,7 @@ class _SignupStep3State extends State<SignupStep3> {
                     style: ButtonDesign.signUpButton,
                     child: Text(
                       'Create My Account 🎉',
-                      style: FontStyles.continueButton,
+                      style: FontStyles.signupContinueButton,
                     ),
                   ),
                 ),
@@ -266,10 +267,7 @@ class _SignupStep3State extends State<SignupStep3> {
                   child: ElevatedButton(
                     onPressed: widget.onBack,
                     style: ButtonDesign.backButton,
-                    child: Text(
-                      '← Back',
-                      style: FontStyles.backButton,
-                    ),
+                    child: Text('← Back', style: FontStyles.backButton),
                   ),
                 ),
               ],

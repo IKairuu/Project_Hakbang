@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:hakbang/models/activity.dart';
 import 'package:hakbang/models/college.dart';
+import 'package:hakbang/models/review_center.dart';
 import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:http/http.dart' as http;
 
 class Database {
-  static String mainUrl = "project-hakbang-server-vif8.onrender.com";
+  static String mainUrl = "project-hakbang-server.onrender.com";
   static Future<void> getCollege() async {
     final url = Uri.https(mainUrl, "college/auth/available-colleges");
     final headers = {
@@ -235,5 +236,48 @@ class Database {
     final response = await http.post(url, headers: headers, body: data);
 
     return jsonDecode(response.body);
+  }
+
+  static Future<void> getHubs() async {
+    final url = Uri.https(mainUrl, "review-hub/auth/get-review-centers");
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+
+    final response = await http.get(url, headers: headers);
+    List<ReviewCenter> hubList = [];
+    for (dynamic data in jsonDecode(response.body)["data"]) {
+      hubList.add(
+        ReviewCenter(
+          title: data["title"],
+          instructor: data["instructor"],
+          ratingNum: data["rating_num"],
+          stars: data["stars"],
+          ratingCount: data["rating_count"],
+          price: data["price"],
+          originalPrice: data["original_price"],
+          isBestSeller: data["is_best_seller"],
+          emoji: data["emoji"],
+          coverage: data["coverage"],
+          programOverview: data["program_overview"],
+          centerOffers: data["center_offers"],
+          whoThisIsFor: data["who_this_is_for"],
+          aboutThisCenter: data["about_center"],
+          description: data["description"],
+          email: data["email"],
+          exams: data["exams"],
+          location: data["location"],
+          managedBy: data["managed_by"],
+          modalities: data["modalities"],
+          phone: data["phone"],
+          subtitle: data["subtitle"],
+          website: data["website"],
+        ),
+      );
+    }
+    availableReviewCenters.value = hubList;
   }
 }

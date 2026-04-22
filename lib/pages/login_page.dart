@@ -9,6 +9,7 @@ import 'package:hakbang/pages/main_page.dart';
 import 'package:hakbang/pages/no_internet_page.dart';
 import 'package:hakbang/pages/signup_page.dart';
 import 'package:hakbang/server/database/database.dart';
+import 'package:hakbang/widgets/auth_gradient_bg.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -108,10 +109,11 @@ class _LoginPageState extends State<LoginPage> {
           );
           break;
         default:
+          print(login);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
-              content: Text("Server Error"),
+              content: Text("${login['message']}"),
             ),
           );
       }
@@ -124,18 +126,20 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bg,
-      body: SafeArea(
-        child: isLoading
-            ? Center(
-                child: CircularProgressIndicator.adaptive(
-                  backgroundColor: Color(0xFFC8FF4D),
-                  year2023: true,
-                ),
-              )
-            : Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(28, 0, 28, 36),
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator.adaptive(
+                backgroundColor: AppColors.accent,
+                year2023: true,
+              ),
+            )
+          : Stack(
+              children: [
+                const AuthGradientBg(),
+                SafeArea(
+                  bottom: false,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(28, 0, 28, 0),
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       child: Column(
@@ -238,9 +242,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                ],
-              ),
-      ),
+                ),
+              ],
+            ),
     );
   }
 }

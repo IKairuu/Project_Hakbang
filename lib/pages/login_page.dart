@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
-              content: Text("Server Error"),
+              content: Text("${login['message']}"),
             ),
           );
       }

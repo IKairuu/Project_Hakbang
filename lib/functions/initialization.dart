@@ -18,6 +18,7 @@ class Initialization {
     await refreshChat();
 
     collegeSection.value = availableColleges.value;
+    reviewCenterSection.value = availableReviewCenters.value;
     refreshCollegeSelection();
   }
 
@@ -26,6 +27,10 @@ class Initialization {
     for (var element in collegeSection.value) {
       selectedSchoolHover.value.add(false);
     }
+  }
+
+  static void refreshReviewCenters() {
+    reviewCenterSection.value = [];
   }
 
   static Future<void> refreshChat() async {

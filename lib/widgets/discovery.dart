@@ -95,6 +95,7 @@ class _DiscoveryState extends State<Discovery> {
                                       false,
                                       false,
                                     ];
+                                    onSelect.value = "";
                                   });
                                   searchInput.clear();
                                   Filter.filterCollegeSection(
@@ -120,6 +121,7 @@ class _DiscoveryState extends State<Discovery> {
                                       false,
                                       false,
                                     ];
+                                    onSelect.value = "";
                                   });
                                   searchInput.clear();
                                   Filter.filterCollegeSection(
@@ -145,6 +147,7 @@ class _DiscoveryState extends State<Discovery> {
                                       true,
                                       false,
                                     ];
+                                    onSelect.value = "";
                                   });
                                   searchInput.clear();
                                   Filter.filterCollegeSection(

@@ -35,7 +35,6 @@ class _ReviewCenterState extends State<ReviewCenter> {
                   const SizedBox(height: 20),
                   buildTextField(
                     'Search review centers...',
-                    "📚",
                     _reviewCenterController,
                   ),
                   const SizedBox(height: 12),
@@ -92,7 +91,6 @@ Widget buildHeader() {
 
 Widget buildTextField(
   String label,
-  String iconEmoji,
   TextEditingController controller, {
   Widget? trailing,
 }) {
@@ -113,12 +111,10 @@ Widget buildTextField(
               fillColor: AppColors.surface2,
               prefixIcon: Padding(
                 padding: const EdgeInsetsGeometry.only(left: 14, right: 8),
-                child: Text(
-                  iconEmoji,
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 30,
-                  ),
+                child: Icon(
+                  Icons.search_outlined,
+                  color: AppColors.textSecondary,
+                  size: 20,
                 ),
               ),
               suffixIcon: IconButton(

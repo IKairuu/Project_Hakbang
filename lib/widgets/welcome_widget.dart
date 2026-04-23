@@ -3,7 +3,6 @@ import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/smooth_page_indicator_design.dart';
 import 'package:hakbang/functions/locations.dart';
-import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/pages/signup_page.dart';
 import 'package:hakbang/widgets/about_app.dart';
@@ -23,22 +22,6 @@ class WelcomeWidget extends StatefulWidget {
 class _WelcomeWidgetState extends State<WelcomeWidget> {
   final scrollIndicator = PageController();
   final List<Widget> indicatorPages = [AboutApp(), ExploreContainer()];
-
-  @override
-  void initState() {
-    super.initState();
-    _initLocation();
-  }
-
-  Future<void> _initLocation() async {
-    try {
-      await Locations.initializeLocationServices();
-      final position = await Locations.getUserLocation();
-      debugPrint('Location: $position');
-    } catch (e) {
-      debugPrint('Location error: $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,8 +97,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   TextButton(
                     onPressed: () async {
                       try {
-                        await Locations.initializeLocationServices();
-                        userPosition.value = await Locations.getUserLocation();
                         if (!mounted) return;
                         Navigator.push(
                           context,

@@ -1,3 +1,4 @@
+import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/sorting_functions.dart';
 import 'package:hakbang/models/ai_message.dart';
 import 'package:hakbang/notifiers.dart';
@@ -6,6 +7,8 @@ import 'package:intl/intl.dart';
 
 class Initialization {
   static Future<void> mainInitialization() async {
+    await Locations.initializeLocationServices();
+    userPosition.value = await Locations.getUserLocation();
     await Database.getCollege();
     await Database.getScholarships();
     await Database.getUserActivities(userCredentials.value!.email);

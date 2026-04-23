@@ -169,7 +169,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                               color: AppColors.border,
                             ),
                             _cdStatItem(
-                              "TOP #${college.ranking}",
+                              "#${college.ranking}",
                               "RANKING",
                               AppColors.purple,
                             ),
@@ -575,7 +575,7 @@ Widget _cdStatItem(String value, String label, Color valueColor) => Expanded(
     children: [
       Text(
         value,
-        style: _cdDm(16, weight: FontWeight.w800, color: valueColor),
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: valueColor),
       ),
       const SizedBox(height: 2),
       Text(

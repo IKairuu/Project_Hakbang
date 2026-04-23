@@ -31,18 +31,22 @@ class Filter {
     for (var colleges in availableColleges.value) {
       for (String key in input.toLowerCase().split(" ")) {
         if (selectedFilter.value[0]) {
-          if (colleges.collegeName.toLowerCase().split(" ").contains(key)) {
+          if (colleges.collegeName.toLowerCase().split(" ").contains(key) &&
+              !collegeSection.value.contains(colleges)) {
             collegeSection.value.add(colleges);
+            break;
           }
         } else if (selectedFilter.value[1]) {
           if (colleges.collegeName.toLowerCase().split(" ").contains(key) &&
               colleges.type == "state university") {
             collegeSection.value.add(colleges);
+            break;
           }
         } else {
           if (colleges.collegeName.toLowerCase().split(" ").contains(key) &&
               colleges.type == "private") {
             collegeSection.value.add(colleges);
+            break;
           }
         }
       }

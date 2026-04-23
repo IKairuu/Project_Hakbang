@@ -29,7 +29,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 2), (timer) {
+    Timer.periodic(Duration(seconds: 3), (timer) {
       switch (reverse) {
         case true:
           index--;
@@ -107,7 +107,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
               ),
               Expanded(
-                flex: 4,
+                flex: 2,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Container(
@@ -182,127 +182,110 @@ class _HomeWidgetState extends State<HomeWidget> {
                               ),
                             ],
                           ),
-                          Expanded(
-                            child: ValueListenableBuilder(
-                              valueListenable: availableScholarships,
-                              builder: (context, scholarship, child) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: SizedBox(
-                                    child: PageView.builder(
-                                      itemCount: scholarship.length,
-                                      controller: cardPage,
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 5,
-                                          ),
-                                          child: Container(
-                                            padding: EdgeInsets.all(10),
-                                            decoration:
-                                                ContainerDesign.scholarCards,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                            right: 10,
-                                                          ),
-                                                      child: Text("⭐"),
-                                                    ),
-                                                    Text(
-                                                      scholarship[index].title,
-                                                      style: FontStyles
-                                                          .scholarshipTitle,
-                                                    ),
-                                                  ],
-                                                ),
-                                                Text(
-                                                  scholarship[index].subtitle,
-                                                  style: FontStyles
-                                                      .scholarShipSubtitle,
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                        top: 10,
-                                                        bottom: 5,
-                                                      ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        "Application slots",
-                                                        style:
-                                                            GoogleFonts.inter(
-                                                              fontSize: 12,
-                                                              color: Colors
-                                                                  .white38,
-                                                            ),
-                                                      ),
-                                                      Text(
-                                                        "${scholarship[index].slots} / ${scholarship[index].limit}",
-                                                        style:
-                                                            GoogleFonts.inter(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                              color: Color(
-                                                                0xFFA855F7,
-                                                              ),
-                                                            ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                        bottom: 10,
-                                                      ),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          100,
-                                                        ),
-                                                    child: LinearProgressIndicator(
-                                                      value:
-                                                          scholarship[index]
-                                                              .slots /
-                                                          scholarship[index]
-                                                              .limit,
-                                                      minHeight: 6,
-                                                      backgroundColor:
-                                                          Colors.white12,
-                                                      valueColor:
-                                                          AlwaysStoppedAnimation<
-                                                            Color
-                                                          >(Color(0xFFA855F7)),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
                         ],
                       ),
                     ),
                   ),
+                ),
+              ),
+              SizedBox(height: 5,),
+              Expanded(
+                flex: 2,
+                child: ValueListenableBuilder(
+                  valueListenable: availableScholarships,
+                  builder: (context, scholarship, child) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: SizedBox(
+                        child: PageView.builder(
+                          itemCount: scholarship.length,
+                          controller: cardPage,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 5,
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: ContainerDesign.scholarCards,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            right: 10,
+                                          ),
+                                          child: Text("⭐"),
+                                        ),
+                                        Text(
+                                          scholarship[index].title,
+                                          style: FontStyles.scholarshipTitle,
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      scholarship[index].subtitle,
+                                      style: FontStyles.scholarShipSubtitle,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 10,
+                                        bottom: 5,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Application slots",
+                                            style: GoogleFonts.inter(
+                                              fontSize: 12,
+                                              color: Colors.white38,
+                                            ),
+                                          ),
+                                          Text(
+                                            "${scholarship[index].slots} / ${scholarship[index].limit}",
+                                            style: GoogleFonts.inter(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              color: Color(0xFFA855F7),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 10,
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                          100,
+                                        ),
+                                        child: LinearProgressIndicator(
+                                          value:
+                                              scholarship[index].slots /
+                                              scholarship[index].limit,
+                                          minHeight: 6,
+                                          backgroundColor: Colors.white12,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                Color(0xFFA855F7),
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
               Expanded(
@@ -325,7 +308,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 style: ButtonDesign.findSchoolsContainer,
                                 onPressed: () {
                                   setState(() {
-                                    navigationBarIndex.value = 1;
+                                    navigationBarIndex.value = 0;
                                   });
                                 },
                                 child: SvgPicture.asset(
@@ -468,7 +451,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         behavior: SnackBarBehavior.floating,
                                         content: Text(
                                           "There are no activities",
-                                          style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                                          style: TextStyle(
+                                            color: AppColors.textSecondary,
+                                            fontSize: 14,
+                                          ),
                                         ),
                                       ),
                                     );
@@ -483,7 +469,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   color: AppColors.accent,
                                   fontWeight: FontWeight.w800,
                                   fontSize: 15,
-                                  letterSpacing: -0.5),
+                                  letterSpacing: -0.5,
+                                ),
                               ),
                             ),
                           ],
@@ -500,7 +487,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   ? Center(
                                       child: Text(
                                         "There are no recent activities",
-                                        style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                                        style: TextStyle(
+                                          color: AppColors.textSecondary,
+                                          fontSize: 14,
+                                        ),
                                       ),
                                     )
                                   : ListView.builder(

@@ -22,9 +22,9 @@ ValueNotifier<List<bool>> selectedFilter = ValueNotifier([
 ]);
 ValueNotifier<Position?> userPosition = ValueNotifier(null);
 ValueNotifier<LatLng?> selectedSchoolPosition = ValueNotifier(null);
-ValueNotifier<String?> selectedSchool = ValueNotifier(null);
 ValueNotifier<List<bool>> selectedSchoolHover = ValueNotifier([]);
 ValueNotifier<List<College>> availableColleges = ValueNotifier([]);
+ValueNotifier<String> onSelect = ValueNotifier("");
 ValueNotifier<List<ScholarshipObject>> availableScholarships = ValueNotifier(
   [],
 );

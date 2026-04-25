@@ -19,7 +19,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 	String _aboutMeText =
-		'In in ut cupidatat qui officia. Magna pariatur dolore laboris occaecat ad nulla excepteur pariatur sint. Id dolore quis pariatur irure. Amet culpa anim elit sunt. Dolore labore quis aute proident. Esse nostrud commodo ex consectetur ut.';
+		'In in ut cupidatat qui officia. Magna pariatur dolore laboris occaecat ad nulla excepteur pariatur sint.';
 
   static const SizedBox _space8 = SizedBox(height: 8);
   static const SizedBox _space10 = SizedBox(height: 10);
@@ -136,13 +136,14 @@ class _ProfilePageState extends State<ProfilePage> {
 				return Scaffold(
 					backgroundColor: AppColors.bg,
           appBar: AppBar(
-            backgroundColor: const Color(0xFFC8FF4D),
-            elevation: 10,
-            shadowColor: const Color(0xFFC8FF4D),
+              backgroundColor: AppColors.bg,
+              surfaceTintColor: Colors.transparent,
+              elevation: 0,
             leading: IconButton(
               icon: const Icon(
-                Icons.arrow_back_rounded,
+                  Icons.chevron_left,
                 color: Colors.black,
+                  size: 28,
               ),
               onPressed: () {
                 if (Navigator.canPop(context)) {

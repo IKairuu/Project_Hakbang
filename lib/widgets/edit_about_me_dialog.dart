@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 
@@ -27,6 +28,8 @@ class EditAboutMeDialog extends StatefulWidget {
 }
 
 class _EditAboutMeDialogState extends State<EditAboutMeDialog> {
+  static const int _maxAboutMeLength = 200;
+
 	late final TextEditingController _controller;
 
 	@override
@@ -59,6 +62,10 @@ class _EditAboutMeDialogState extends State<EditAboutMeDialog> {
 				content: TextField(
 					controller: _controller,
 					maxLines: 6,
+					maxLength: _maxAboutMeLength,
+					inputFormatters: [
+						LengthLimitingTextInputFormatter(_maxAboutMeLength),
+					],
 					style: GoogleFonts.inter(
 						color: AppColors.textPrimary,
 						fontSize: 13,
@@ -91,8 +98,15 @@ class _EditAboutMeDialogState extends State<EditAboutMeDialog> {
 						child: const Text('Cancel'),
 					),
 					ElevatedButton(
-						onPressed: () =>
-							Navigator.pop(context, _controller.text.trim()),
+							onPressed: () {
+								final trimmedText = _controller.text.trim();
+								Navigator.pop(
+									context,
+									trimmedText.length > _maxAboutMeLength
+										? trimmedText.substring(0, _maxAboutMeLength)
+										: trimmedText,
+								);
+							},
 						style: ElevatedButton.styleFrom(
 							backgroundColor: AppColors.accent,
 							foregroundColor: Colors.black,

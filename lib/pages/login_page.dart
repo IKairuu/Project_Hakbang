@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool isLoading = false;
 
-  bool _showPassword = false;
+  bool _isPassword = true;
   bool _showError = false;
   String _errorText = '';
 
@@ -166,13 +166,12 @@ class _LoginPageState extends State<LoginPage> {
                             'Enter your password',
                             '🔒',
                             _passwordController,
-                            isPassword: true,
+                            isPassword: _isPassword,
                             trailing: GestureDetector(
-                              onTap: () => setState(
-                                () => _showPassword = !_showPassword,
-                              ),
+                              onTap: () =>
+                                  setState(() => _isPassword = !_isPassword),
                               child: Text(
-                                _showPassword ? '🙈' : '👁',
+                                _isPassword ? '🙈' : '👁',
                                 style: TextStyle(
                                   color: AppColors.textMuted,
                                   fontSize: 16,

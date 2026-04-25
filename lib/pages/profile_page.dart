@@ -142,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
             leading: IconButton(
               icon: const Icon(
                   Icons.chevron_left,
-                color: Colors.black,
+                color: Colors.white,
                   size: 28,
               ),
               onPressed: () {
@@ -157,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
               IconButton(
                 onPressed: _confirmLogout,
                 icon: const Icon(Icons.logout_rounded),
-                color: Colors.black,
+                color: Colors.white,
                 tooltip: 'Log out',
               ),
             ],

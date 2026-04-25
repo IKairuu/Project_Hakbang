@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hakbang/design/app_colors.dart';
+import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/button_design.dart';
@@ -47,7 +48,7 @@ class _ReviewCenterState extends State<ReviewCenter> {
                   ),
                   const SizedBox(height: 12),
                   ValueListenableBuilder(
-                    valueListenable: availableReviewCenters,
+                    valueListenable: reviewCenterSection,
                     builder: (context, centers, child) {
                       return buildTopDetails(centers.length);
                     },
@@ -55,7 +56,7 @@ class _ReviewCenterState extends State<ReviewCenter> {
                   const SizedBox(height: 6),
                   Expanded(
                     child: ValueListenableBuilder(
-                      valueListenable: availableReviewCenters,
+                      valueListenable: reviewCenterSection,
                       builder: (context, centers, child) {
                         return buildHubs(centers);
                       },
@@ -104,6 +105,7 @@ Widget buildTextField(
             controller: controller,
             cursorColor: AppColors.accent,
             style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
+            onSubmitted: (value) => Filter.searchReviewHubs(controller.text),
             decoration: InputDecoration(
               hintText: label,
               hintStyle: TextStyle(color: AppColors.textMuted, fontSize: 14),
@@ -118,9 +120,7 @@ Widget buildTextField(
                 ),
               ),
               suffixIcon: IconButton(
-                onPressed: () {
-                  // to be updated
-                },
+                onPressed: () => Filter.searchReviewHubs(controller.text),
                 icon: Icon(Icons.search_outlined),
               ),
               contentPadding: EdgeInsets.only(
@@ -165,6 +165,7 @@ Widget buildTags({
             itemBuilder: (context, index) {
               return ElevatedButton(
                 onPressed: () {
+                  Filter.filterReviewHubs(labels[index]);
                   notifier.value = List.generate(
                     labels.length,
                     (i) => i == index,

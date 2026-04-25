@@ -78,7 +78,7 @@ class _DiscoveryState extends State<Discovery> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 10),
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
                     child: ValueListenableBuilder(
                       valueListenable: selectedFilter,
                       builder: (context, selected, child) {
@@ -174,67 +174,70 @@ class _DiscoveryState extends State<Discovery> {
                       ? SizedBox()
                       : Expanded(
                           flex: 4,
-                          child: Container(
-                            decoration: ContainerDesign.universityLocation,
-                            child: ValueListenableBuilder(
-                              valueListenable: userPosition,
-                              builder: (context, user, child) {
-                                return ValueListenableBuilder(
-                                  valueListenable: selectedSchoolPosition,
-                                  builder: (context, school, child) {
-                                    return ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: FlutterMap(
-                                        options: MapOptions(
-                                          initialCenter: LatLng(
-                                            user!.latitude,
-                                            user.longitude,
-                                          ), // Center the map over London, UK
-                                          initialZoom: 6,
-                                          maxZoom: 100,
-                                          minZoom: 6,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Container(
+                              decoration: ContainerDesign.universityLocation,
+                              child: ValueListenableBuilder(
+                                valueListenable: userPosition,
+                                builder: (context, user, child) {
+                                  return ValueListenableBuilder(
+                                    valueListenable: selectedSchoolPosition,
+                                    builder: (context, school, child) {
+                                      return ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: FlutterMap(
+                                          options: MapOptions(
+                                            initialCenter: LatLng(
+                                              user!.latitude,
+                                              user.longitude,
+                                            ), // Center the map over London, UK
+                                            initialZoom: 6,
+                                            maxZoom: 100,
+                                            minZoom: 6,
+                                          ),
+                                          children: [
+                                            TileLayer(
+                                              // Bring your own tiles
+                                              urlTemplate:
+                                                  'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                              userAgentPackageName:
+                                                  "com.example.hakbang",
+                                            ),
+                                            MarkerLayer(
+                                              markers: [
+                                                Marker(
+                                                  rotate: true,
+                                                  point: LatLng(
+                                                    school!.latitude,
+                                                    school.longitude,
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.location_on_rounded,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                                Marker(
+                                                  rotate: true,
+                                                  point: LatLng(
+                                                    user.latitude,
+                                                    user.longitude,
+                                                  ),
+                                                  child: Icon(
+                                                    Icons
+                                                        .location_history_rounded,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                        children: [
-                                          TileLayer(
-                                            // Bring your own tiles
-                                            urlTemplate:
-                                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                            userAgentPackageName:
-                                                "com.example.hakbang",
-                                          ),
-                                          MarkerLayer(
-                                            markers: [
-                                              Marker(
-                                                rotate: true,
-                                                point: LatLng(
-                                                  school!.latitude,
-                                                  school.longitude,
-                                                ),
-                                                child: Icon(
-                                                  Icons.location_on_rounded,
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                              Marker(
-                                                rotate: true,
-                                                point: LatLng(
-                                                  user.latitude,
-                                                  user.longitude,
-                                                ),
-                                                child: Icon(
-                                                  Icons
-                                                      .location_history_rounded,
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),
@@ -249,7 +252,6 @@ class _DiscoveryState extends State<Discovery> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: 10),
                                 Text(
                                   "${univ.isEmpty ? "No" : univ.length} Available ${univ.length <= 1 ? "School" : "Schools"}",
                                   style: GoogleFonts.inter(

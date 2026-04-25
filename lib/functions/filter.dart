@@ -1,5 +1,6 @@
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/college.dart';
+import 'package:hakbang/models/review_center.dart';
 import 'package:hakbang/notifiers.dart';
 
 class Filter {
@@ -51,5 +52,34 @@ class Filter {
         }
       }
     }
+  }
+
+  static void filterReviewHubs(String title) {
+    Initialization.refreshReviewCenters();
+    for (ReviewCenter center in availableReviewCenters.value) {
+      if (title.toLowerCase() == "all") {
+        reviewCenterSection.value = availableReviewCenters.value;
+        break;
+      } else if (center.modalities
+          .toLowerCase()
+          .split(" ")
+          .contains(title.toLowerCase())) {
+        reviewCenterSection.value.add(center);
+      }
+    }
+  }
+
+  static void searchReviewHubs(String input) {
+    List<ReviewCenter> searchedList = [];
+    for (ReviewCenter center in reviewCenterSection.value) {
+      for (String word in input.toLowerCase().split(" ")) {
+        if (center.title.toLowerCase().split(" ").contains(word)) {
+          searchedList.add(center);
+          break;
+        }
+      }
+    }
+    Initialization.refreshReviewCenters();
+    reviewCenterSection.value = searchedList;
   }
 }

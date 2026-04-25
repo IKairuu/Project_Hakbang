@@ -160,7 +160,8 @@ class _SignupStep2State extends State<SignupStep2> {
 
                           Text(
                             occupation.subtitle,
-                            maxLines: 1,
+                            maxLines: 2,
+                            softWrap: true,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
                             style: FontStyles.occupationSubtitle,

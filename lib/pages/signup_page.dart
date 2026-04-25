@@ -49,14 +49,18 @@ class _SignupPageState extends State<SignupPage> {
     occupationOption(
       emoji: '🧑‍🎓',
       title: 'Student',
-      subtitle: 'Grade 11 - 12',
+      subtitle: 'Grade 11 - 12\n ',
     ),
     occupationOption(
       emoji: '👨‍👩‍👧',
       title: 'Parent',
-      subtitle: 'Supporting a student',
+      subtitle: 'Supporting a\nstudent',
     ),
-    occupationOption(emoji: '🏫', title: 'Counselor', subtitle: 'School Staff'),
+    occupationOption(
+      emoji: '🏫', 
+      title: 'Counselor', 
+      subtitle: 'School Staff\n '
+      ),
   ];
 
   @override

@@ -77,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                   occupation: value["data"]["occupation"],
                 );
 
+                navigationBarIndex.value = 2;
                 await Initialization.mainInitialization();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

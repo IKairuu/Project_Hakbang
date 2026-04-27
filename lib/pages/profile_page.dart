@@ -46,9 +46,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _logout() {
-    token.value = null;
-    userCredentials.value = null;
-    navigationBarIndex.value = 0;
+    clearSessionState();
+    
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(

@@ -58,6 +58,9 @@ class _HomeWidgetState extends State<HomeWidget> {
       child: ValueListenableBuilder(
         valueListenable: userCredentials,
         builder: (context, userData, child) {
+          final firstName = userData?.name.split(" ").first ?? "Guest";
+          final avatar = userData?.avatar ?? "🙂";
+
           return Column(
             children: [
               Expanded(
@@ -72,7 +75,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: Text(
-                              "Hello, ${userData!.name.split(" ")[0]}!",
+                              "Hello, $firstName!",
                               style: FontStyles.header,
                             ),
                           ),
@@ -98,7 +101,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         width: 60,
                         decoration: ContainerDesign.homeAvatar,
                         child: Text(
-                          "${userData.avatar}",
+                          avatar,
                           style: TextStyle(fontSize: 40),
                         ),
                       ),

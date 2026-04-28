@@ -29,25 +29,28 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 3), (timer) {
-      switch (reverse) {
-        case true:
-          index--;
-          break;
-        case false:
-          index++;
-          break;
-      }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Timer.periodic(Duration(seconds: 3), (timer) {
+        if (!cardPage.hasClients) return;
+        switch (reverse) {
+          case true:
+            index--;
+            break;
+          case false:
+            index++;
+            break;
+        }
 
-      if (index == availableScholarships.value.length - 1) reverse = true;
+        if (index == availableScholarships.value.length - 1) reverse = true;
 
-      if (index == 0) reverse = false;
+        if (index == 0) reverse = false;
 
-      cardPage.animateToPage(
-        index,
-        duration: Duration(milliseconds: 500),
-        curve: Curves.linear,
-      );
+        cardPage.animateToPage(
+          index,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.linear,
+        );
+      });
     });
   }
 
@@ -100,10 +103,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         height: 60,
                         width: 60,
                         decoration: ContainerDesign.homeAvatar,
-                        child: Text(
-                          avatar,
-                          style: TextStyle(fontSize: 40),
-                        ),
+                        child: Text(avatar, style: TextStyle(fontSize: 40)),
                       ),
                     ),
                   ],
@@ -191,7 +191,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
                 ),
               ),
-              SizedBox(height: 5,),
+              SizedBox(height: 5),
               Expanded(
                 flex: 2,
                 child: ValueListenableBuilder(

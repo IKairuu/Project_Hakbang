@@ -57,10 +57,10 @@ class _SignupPageState extends State<SignupPage> {
       subtitle: 'Supporting a\nstudent',
     ),
     occupationOption(
-      emoji: '🏫', 
-      title: 'Counselor', 
-      subtitle: 'School Staff\n '
-      ),
+      emoji: '🏫',
+      title: 'Counselor',
+      subtitle: 'School Staff\n ',
+    ),
   ];
 
   @override
@@ -150,7 +150,7 @@ class _SignupPageState extends State<SignupPage> {
                 return AlertDialog(
                   backgroundColor: Color(0xFF343943),
                   title: Text(
-                    "Setup successfull",
+                    value["message"],
                     style: TextStyle(color: Colors.white),
                   ),
                   actions: [

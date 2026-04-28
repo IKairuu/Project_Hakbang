@@ -75,7 +75,9 @@ class Database {
     availableScholarships.value = scholarships;
   }
 
-  static Future<void> signupUser(Map<String, dynamic> userData) async {
+  static Future<Map<String, dynamic>> signupUser(
+    Map<String, dynamic> userData,
+  ) async {
     final url = Uri.https(mainUrl, "user/signup");
     final headers = {
       'Content-Type': 'application/json',
@@ -84,7 +86,7 @@ class Database {
     final data = jsonEncode(userData["data"]);
     var response = await http.post(url, headers: headers, body: data);
     final message = jsonDecode(response.body);
-    return message["message"];
+    return message;
   }
 
   static Future<Map<String, dynamic>> userLogin(

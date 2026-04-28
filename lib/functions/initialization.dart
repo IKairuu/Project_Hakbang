@@ -44,4 +44,30 @@ class Initialization {
       ),
     );
   }
+
+  static void clearSessionState() {
+    token.value = null;
+    userCredentials.value = null;
+    agreeToTerms.value = false;
+
+    activityList.value = [];
+    savedSchools.value = [];
+    availableScholarships.value = [];
+    availableReviewCenters.value = [];
+    reviewCenterSection.value = [];
+    availableColleges.value = [];
+    collegeSection.value = [];
+    selectedSchoolHover.value = [];
+
+    userPosition.value = null;
+    selectedSchoolPosition.value = null;
+    hasInternetConnection.value = false;
+
+    chatMessages.value = [];
+    chatLoading.value = false;
+
+    selectedFilter.value = [true, false, false, false];
+    onSelect.value = "";
+    navigationBarIndex.value = 0;
+  }
 }

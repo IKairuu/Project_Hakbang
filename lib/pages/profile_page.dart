@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/college_description.dart';
@@ -11,34 +12,34 @@ import 'package:hakbang/widgets/edit_about_me_dialog.dart';
 import 'package:hakbang/widgets/saved_school_card.dart';
 
 class ProfilePage extends StatefulWidget {
-	const ProfilePage({super.key});
+  const ProfilePage({super.key});
 
-	@override
-	State<ProfilePage> createState() => _ProfilePageState();
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-	String _aboutMeText =
-		'In in ut cupidatat qui officia. Magna pariatur dolore laboris occaecat ad nulla excepteur pariatur sint.';
+  String _aboutMeText =
+      'In in ut cupidatat qui officia. Magna pariatur dolore laboris occaecat ad nulla excepteur pariatur sint.';
 
   static const SizedBox _space8 = SizedBox(height: 8);
   static const SizedBox _space10 = SizedBox(height: 10);
   static const SizedBox _space20 = SizedBox(height: 20);
 
-	Future<void> _showEditAboutMeDialog() async {
-		final editedText = await showEditAboutMeDialog(
-			context,
-			initialText: _aboutMeText,
-		);
+  Future<void> _showEditAboutMeDialog() async {
+    final editedText = await showEditAboutMeDialog(
+      context,
+      initialText: _aboutMeText,
+    );
 
-		if (editedText == null) {
-			return;
-		}
+    if (editedText == null) {
+      return;
+    }
 
-		setState(() {
-			_aboutMeText = editedText;
-		});
-	}
+    setState(() {
+      _aboutMeText = editedText;
+    });
+  }
 
   String _withFallback(String? value, String fallback) {
     final trimmed = value?.trim() ?? '';
@@ -46,13 +47,13 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _logout() {
-    clearSessionState();
-    
+    setState(() {
+      Initialization.clearSessionState();
+    });
+
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(
-        builder: (context) => LoginPage(),
-      ),
+      MaterialPageRoute(builder: (context) => LoginPage()),
       (route) => false,
     );
   }
@@ -63,10 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (dialogContext) {
         return AlertDialog(
           backgroundColor: AppColors.surface,
-          title: Text(
-            'Log out?',
-            style: FontStyles.logoutDialogTitle,
-          ),
+          title: Text('Log out?', style: FontStyles.logoutDialogTitle),
           content: Text(
             'Are you sure you want to log out of your account?',
             style: FontStyles.profileAboutBody,
@@ -120,11 +118,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-	@override
-	Widget build(BuildContext context) {
-		return ValueListenableBuilder(
-			valueListenable: userCredentials,
-			builder: (context, userData, child) {
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder(
+      valueListenable: userCredentials,
+      builder: (context, userData, child) {
         final avatar = _withFallback(userData?.avatar, '🙂');
         final name = _withFallback(userData?.name, 'Unknown User');
         final email = _withFallback(userData?.email, 'No email available');
@@ -132,17 +130,17 @@ class _ProfilePageState extends State<ProfilePage> {
         final grade = _withFallback(userData?.grade, 'Grade Level');
         final school = _withFallback(userData?.institution, 'School');
 
-				return Scaffold(
-					backgroundColor: AppColors.bg,
+        return Scaffold(
+          backgroundColor: AppColors.bg,
           appBar: AppBar(
-              backgroundColor: AppColors.bg,
-              surfaceTintColor: Colors.transparent,
-              elevation: 0,
+            backgroundColor: AppColors.bg,
+            surfaceTintColor: Colors.transparent,
+            elevation: 0,
             leading: IconButton(
               icon: const Icon(
-                  Icons.chevron_left,
+                Icons.chevron_left,
                 color: Colors.white,
-                  size: 28,
+                size: 28,
               ),
               onPressed: () {
                 if (Navigator.canPop(context)) {
@@ -161,20 +159,17 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
           ),
-					body: Container(
-						decoration: const BoxDecoration(
-							gradient: LinearGradient(
-								begin: Alignment.topCenter,
-								end: Alignment.bottomCenter,
-								colors: [
-									AppColors.bodyBg,
-									AppColors.bg,
-								],
-							),
-						),
-						child: SafeArea(
-							child: Stack(
-								children: [
+          body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [AppColors.bodyBg, AppColors.bg],
+              ),
+            ),
+            child: SafeArea(
+              child: Stack(
+                children: [
                   Positioned.fill(
                     child: Opacity(
                       opacity: 0.18,
@@ -184,7 +179,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             center: Alignment.topCenter,
                             radius: 1.3,
                             colors: [
-                                BackgroundDesign.startPageColor.withValues(alpha: 0.0),
+                              BackgroundDesign.startPageColor.withValues(
+                                alpha: 0.0,
+                              ),
                               BackgroundDesign.startPageColor,
                             ],
                           ),
@@ -193,7 +190,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 16,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -223,9 +223,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                     width: 70,
                                     height: 70,
                                     decoration: BoxDecoration(
-                                      color: AppColors.accent.withValues(alpha: 0.16),
+                                      color: AppColors.accent.withValues(
+                                        alpha: 0.16,
+                                      ),
                                       borderRadius: BorderRadius.circular(14),
-                                      border: Border.all(color: AppColors.accent),
+                                      border: Border.all(
+                                        color: AppColors.accent,
+                                      ),
                                     ),
                                     child: Center(
                                       child: Text(
@@ -237,7 +241,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   const SizedBox(width: 16),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           name,
@@ -261,7 +266,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 children: [
                                   _buildProfileChip(
                                     text: occupation,
-                                    decoration: ContainerDesign.pillTagOccupation,
+                                    decoration:
+                                        ContainerDesign.pillTagOccupation,
                                   ),
                                   const SizedBox(width: 8),
                                   _buildProfileChip(
@@ -285,7 +291,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 width: double.infinity,
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  color: AppColors.surface2.withValues(alpha: 0.9),
+                                  color: AppColors.surface2.withValues(
+                                    alpha: 0.9,
+                                  ),
                                   borderRadius: BorderRadius.circular(18),
                                   border: Border.all(color: AppColors.border),
                                 ),
@@ -293,7 +301,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'About Me:',
@@ -301,13 +310,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                         TextButton.icon(
                                           onPressed: _showEditAboutMeDialog,
-                                          icon: const Icon(Icons.edit_rounded, size: 16),
+                                          icon: const Icon(
+                                            Icons.edit_rounded,
+                                            size: 16,
+                                          ),
                                           label: const Text('Edit'),
                                           style: TextButton.styleFrom(
                                             foregroundColor: AppColors.accent,
-                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 4,
+                                            ),
                                             minimumSize: Size.zero,
-                                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap,
                                           ),
                                         ),
                                       ],
@@ -337,7 +353,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 return Container(
                                   width: double.infinity,
                                   padding: const EdgeInsets.all(16),
-                                  decoration: ContainerDesign.universitySections,
+                                  decoration:
+                                      ContainerDesign.universitySections,
                                   child: Text(
                                     'No saved school yet.',
                                     style: FontStyles.profileEmptySavedSchools,
@@ -348,11 +365,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               return ListView.separated(
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: saved.length,
-                                separatorBuilder: (_, __) => const SizedBox(height: 12),
+                                separatorBuilder: (_, __) =>
+                                    const SizedBox(height: 12),
                                 itemBuilder: (context, index) {
                                   final college = saved[index];
                                   return GestureDetector(
-                                    onTap: () => _openCollegeDescription(college),
+                                    onTap: () =>
+                                        _openCollegeDescription(college),
                                     child: SavedSchoolCard(college: college),
                                   );
                                 },
@@ -363,12 +382,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
-								],
-							),
-						),
-					),
-				);
-			},
-		);
-	}
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

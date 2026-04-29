@@ -35,3 +35,4 @@ ValueNotifier<List<College>> savedSchools = ValueNotifier([]);
 ValueNotifier<bool> hasInternetConnection = ValueNotifier(false);
 ValueNotifier<List<ReviewCenter>> availableReviewCenters = ValueNotifier([]);
 ValueNotifier<List<ReviewCenter>> reviewCenterSection = ValueNotifier([]);
+ValueNotifier<ScholarshipObject?> featuredScholarship = ValueNotifier(null);

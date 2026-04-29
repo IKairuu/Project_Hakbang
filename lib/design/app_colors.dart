@@ -9,6 +9,7 @@ class AppColors {
   static const surface3 = Color(
     0xFF23263A,
   ); // --surface3 (inactive dots, avatar bg)
+  static const surface4 = Color(0x4D23263A);
 
   // ── Borders
   static const border = Color(0x12FFFFFF); // rgba(255,255,255,0.07)
@@ -33,6 +34,7 @@ class AppColors {
   static const blueDim = Color(0x264D8FFF); // rgba(77,143,255,0.15)
   static const oceanBlue = Color(0xFF1E3A8A);
   static const darkBlue = Color(0xFF0B1A2B);
+  static const scholarIcon = Color(0xFF344f58);
 
   // ── Purple — scholarships
   static const purple = Color(0xFFA855F7);

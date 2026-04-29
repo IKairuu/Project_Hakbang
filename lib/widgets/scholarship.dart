@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/functions/filter.dart';
+import 'package:hakbang/notifiers.dart';
 
 class Scholarship extends StatefulWidget {
   const Scholarship({super.key});
@@ -112,57 +115,96 @@ class _ScholarshipState extends State<Scholarship> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: SizedBox(
-                  height: 300,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(20),
-                            ),
-                            gradient: LinearGradient(
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
-                              colors: [AppColors.oceanBlue, AppColors.darkBlue],
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
+                child: ValueListenableBuilder(
+                  valueListenable: featuredScholarship,
+                  builder: (context, featured, child) {
+                    return SizedBox(
+                      height: 300,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 5,
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20),
+                                ),
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  colors: [
+                                    AppColors.oceanBlue,
+                                    AppColors.darkBlue,
+                                  ],
+                                ),
+                              ),
+                              child: Column(
                                 children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(7),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.accent,
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        height: 30,
+                                        child: Text(
+                                          "⭐ TOP  PICK",
+                                          style: GoogleFonts.dmSans(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(child: SizedBox()),
+                                      ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: AppColors.surface3,
+                                          shape: CircleBorder(
+                                            side: BorderSide(
+                                              color: AppColors.frameBorder,
+                                            ),
+                                          ),
+                                        ),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.heart,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Expanded(child: SizedBox()),
                                   Container(
-                                    padding: EdgeInsets.all(5),
                                     decoration: BoxDecoration(
-                                      color: AppColors.accent,
-                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.darkBlue,
                                     ),
-                                    height: 30,
-                                    child: Text("⭐ TOP  PICK"),
+                                    child: Text(featured!.scholarshipIcon),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: BoxBorder.all(color: AppColors.border2),
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(20),
                             ),
-                            color: AppColors.surface,
                           ),
-                        ),
+                          Expanded(
+                            flex: 4,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: BoxBorder.all(color: AppColors.border2),
+                                borderRadius: BorderRadius.vertical(
+                                  bottom: Radius.circular(20),
+                                ),
+                                color: AppColors.surface,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
             ],

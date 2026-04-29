@@ -1,6 +1,7 @@
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/models/review_center.dart';
+import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
 
 class Filter {
@@ -81,5 +82,11 @@ class Filter {
     }
     Initialization.refreshReviewCenters();
     reviewCenterSection.value = searchedList;
+  }
+
+  static void getTopPick() {
+    featuredScholarship.value = availableScholarships.value.reduce(
+      (a, b) => a.topPick > b.topPick ? a : b,
+    );
   }
 }

@@ -5,6 +5,7 @@ import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:linear_progress_bar/linear_progress_bar.dart';
 
 class Scholarship extends StatefulWidget {
   const Scholarship({super.key});
@@ -119,13 +120,17 @@ class _ScholarshipState extends State<Scholarship> {
                   valueListenable: featuredScholarship,
                   builder: (context, featured, child) {
                     return SizedBox(
-                      height: 300,
+                      height: 320,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             flex: 5,
                             child: Container(
-                              padding: EdgeInsets.all(10),
+                              padding: EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 10,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(20),
@@ -140,11 +145,14 @@ class _ScholarshipState extends State<Scholarship> {
                                 ),
                               ),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
                                     children: [
                                       Container(
-                                        padding: EdgeInsets.all(7),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 15,
+                                        ),
                                         decoration: BoxDecoration(
                                           color: AppColors.accent,
                                           borderRadius: BorderRadius.circular(
@@ -152,11 +160,13 @@ class _ScholarshipState extends State<Scholarship> {
                                           ),
                                         ),
                                         height: 30,
-                                        child: Text(
-                                          "⭐ TOP  PICK",
-                                          style: GoogleFonts.dmSans(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 12,
+                                        child: Center(
+                                          child: Text(
+                                            "⭐ TOP  PICK",
+                                            style: GoogleFonts.dmSans(
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -180,10 +190,18 @@ class _ScholarshipState extends State<Scholarship> {
                                   ),
                                   Expanded(child: SizedBox()),
                                   Container(
+                                    height: 60,
+                                    width: 60,
                                     decoration: BoxDecoration(
-                                      color: AppColors.darkBlue,
+                                      color: AppColors.scholarIcon,
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
-                                    child: Text(featured!.scholarshipIcon),
+                                    child: Center(
+                                      child: Text(
+                                        featured!.scholarshipIcon,
+                                        style: TextStyle(fontSize: 30),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -192,12 +210,120 @@ class _ScholarshipState extends State<Scholarship> {
                           Expanded(
                             flex: 4,
                             child: Container(
+                              padding: EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 border: BoxBorder.all(color: AppColors.border2),
                                 borderRadius: BorderRadius.vertical(
                                   bottom: Radius.circular(20),
                                 ),
                                 color: AppColors.surface,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    featured.organizationName["long"],
+                                    style: GoogleFonts.dmSans(
+                                      color: AppColors.textMuted,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(
+                                    featured.scholarshipName,
+                                    style: GoogleFonts.dmSans(
+                                      color: AppColors.textPrimary,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          featured.allowance.split("/")[0],
+                                          style: GoogleFonts.unbounded(
+                                            color: AppColors.accent,
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        Text(
+                                          "/",
+                                          style: GoogleFonts.dmSans(
+                                            color: AppColors.textMuted,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        Text(
+                                          featured.allowance.split("/")[1],
+                                          style: GoogleFonts.dmSans(
+                                            color: AppColors.textMuted,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Application Period",
+                                          style: GoogleFonts.dmSans(
+                                            fontSize: 12,
+                                            color: AppColors.textMuted,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        Expanded(child: SizedBox()),
+                                        Text(
+                                          "${featured.deadline} days left",
+                                          style: GoogleFonts.dmSans(
+                                            color: AppColors.accentLight,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 4,
+                                            color: AppColors.border2,
+                                          ),
+                                          FractionallySizedBox(
+                                            widthFactor:
+                                                (featured.limit -
+                                                    featured.deadline) /
+                                                featured.limit,
+                                            child: Container(
+                                              height: 4,
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    AppColors.blue,
+                                                    AppColors.accent,
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

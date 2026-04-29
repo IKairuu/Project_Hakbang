@@ -67,6 +67,7 @@ class Database {
           applicationTimeline: scholars["application_timeline"],
           benefits: scholars["benefits"],
           deadline: scholars["deadline"],
+          limit: scholars["limit"],
           duration: scholars["duration"],
           eligibility: scholars["eligibility"],
           government: scholars["government"],

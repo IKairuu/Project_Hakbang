@@ -6,6 +6,7 @@ class ScholarshipObject {
   List<dynamic> applicationTimeline;
   List<dynamic> benefits;
   int deadline;
+  int limit;
   int duration;
   List<dynamic> eligibility;
   bool government;
@@ -28,6 +29,7 @@ class ScholarshipObject {
     required this.applicationTimeline,
     required this.benefits,
     required this.deadline,
+    required this.limit,
     required this.duration,
     required this.eligibility,
     required this.government,

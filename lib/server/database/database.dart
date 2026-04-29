@@ -60,15 +60,26 @@ class Database {
     for (Map<String, dynamic> scholars in data["data"]) {
       scholarships.add(
         ScholarshipObject(
-          title: scholars["title"],
-          subtitle: scholars["subtitle"],
+          allowance: scholars["Allowance"],
+          id: scholars["ID"],
+          about: scholars["about"],
+          applicationSteps: scholars["application_steps"],
+          applicationTimeline: scholars["application_timeline"],
+          benefits: scholars["benefits"],
+          deadline: scholars["deadline"],
+          duration: scholars["duration"],
+          eligibility: scholars["eligibility"],
+          government: scholars["government"],
+          grantTitle: scholars["grant_title"],
+          minGwa: scholars["min_gwa"],
+          organizationName: scholars["organization_name"],
+          requiredDocuments: scholars["required_documents"],
+          scholarshipName: scholars["scholarship_name"],
+          scholarshipIcon: scholars["scholarship_icon"],
+          serviceObligation: scholars["service_obligation"],
           tags: scholars["tags"],
-          scholarIcon: scholars["icon"],
-          description: scholars["description"],
-          details: scholars["details"],
+          topPick: scholars["top_pick"],
           website: scholars["website"],
-          limit: scholars["limit"],
-          slots: scholars["slots"],
         ),
       );
     }

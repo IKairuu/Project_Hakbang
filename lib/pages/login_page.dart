@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
       token.value = "Bearer ${login["token"]}";
       switch (login["status"]) {
         case 200:
-          await Database.getUserData(login["data"])
+          await Database.getUserData(login["data"]["email"])
               .then((value) async {
                 userCredentials.value = User(
                   name: value["data"]["name"],
@@ -75,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                   grade: value["data"]["grade"],
                   institution: value["data"]["institution"],
                   occupation: value["data"]["occupation"],
+                  role: value["data"]["role"],
                 );
 
                 navigationBarIndex.value = 2;
@@ -110,7 +111,6 @@ class _LoginPageState extends State<LoginPage> {
           );
           break;
         default:
-          print(login);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,

@@ -5,6 +5,7 @@ class User {
   String grade;
   String institution;
   String occupation;
+  String role;
 
   User({
     required this.name,
@@ -13,5 +14,6 @@ class User {
     required this.grade,
     required this.institution,
     required this.occupation,
+    required this.role,
   });
 }

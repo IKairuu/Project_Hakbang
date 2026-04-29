@@ -3,20 +3,20 @@ class ScholarshipObject {
   int id;
   String about;
   List<dynamic> applicationSteps;
-  List<Map<String, dynamic>> applicationTimeline;
-  List<Map<String, dynamic>> benefits;
+  List<dynamic> applicationTimeline;
+  List<dynamic> benefits;
   int deadline;
   int duration;
-  List<String> eligibility;
+  List<dynamic> eligibility;
   bool government;
   Map<String, dynamic> grantTitle;
   double minGwa;
-  List<Map<String, dynamic>> organizationName;
-  List<String> requiredDocuments;
+  Map<String, dynamic> organizationName;
+  List<dynamic> requiredDocuments;
   String scholarshipName;
   String scholarshipIcon;
   Map<String, dynamic> serviceObligation;
-  List<String> tags;
+  List<dynamic> tags;
   int topPick;
   String website;
 

@@ -305,4 +305,10 @@ class FontStyles {
     fontSize: 20,
     fontWeight: FontWeight.w800,
   );
+
+  static final TextStyle scholarshipHeaderSecondary = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 15,
+    color: AppColors.textSecondary,
+  );
 }

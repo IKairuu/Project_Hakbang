@@ -28,6 +28,7 @@ ValueNotifier<String> onSelect = ValueNotifier("");
 ValueNotifier<List<ScholarshipObject>> availableScholarships = ValueNotifier(
   [],
 );
+ValueNotifier<bool> governmentSelected = ValueNotifier(true);
 ValueNotifier<List<ScholarshipObject>> governmentSection = ValueNotifier([]);
 ValueNotifier<List<ScholarshipObject>> nonGovernmentSection = ValueNotifier([]);
 ValueNotifier<List<College>> collegeSection = ValueNotifier([]);

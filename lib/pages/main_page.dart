@@ -21,7 +21,7 @@ class _MainPageState extends State<MainPage> {
       valueListenable: navigationBarIndex,
       builder: (context, index, child) {
         return Scaffold(
-          backgroundColor: const Color(0xFF0c0d10),
+          backgroundColor: AppColors.bg,
           bottomNavigationBar: NavigationBarTheme(
             data: NavigationBarThemeData(
               indicatorColor: AppColors.accentSurface,

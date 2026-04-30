@@ -8,6 +8,7 @@ import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/pages/view_all_scholarships.dart';
 
 class Scholarship extends StatefulWidget {
   const Scholarship({super.key});
@@ -47,7 +48,7 @@ class _ScholarshipState extends State<Scholarship> {
                   buildScholarGrids(),
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
-                    child: viewAll(selectedIndex),
+                    child: viewAll(context, selectedIndex),
                   ),
                 ],
               ),
@@ -620,11 +621,20 @@ class _ScholarshipState extends State<Scholarship> {
   }
 }
 
-Widget viewAll(int index) {
+Widget viewAll(BuildContext context, int index) {
   return InkWell(
     splashColor: AppColors.accent.withOpacity(0.2),
     borderRadius: BorderRadius.circular(10),
-    onTap: () {},
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ViewAllScholarships(government: index == 0 ? true : false);
+          },
+        ),
+      );
+    },
     child: DottedBorder(
       options: RoundedRectDottedBorderOptions(
         dashPattern: [10, 3],

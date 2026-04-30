@@ -54,36 +54,44 @@ class Database {
       "Authorization": token.value!,
     };
 
-    List<ScholarshipObject> scholarships = [];
-    final response = await http.get(url, headers: headers);
-    Map<String, dynamic> data = jsonDecode(response.body);
-    for (Map<String, dynamic> scholars in data["data"]) {
-      scholarships.add(
-        ScholarshipObject(
-          allowance: scholars["Allowance"],
-          id: scholars["ID"],
-          about: scholars["about"],
-          applicationSteps: scholars["application_steps"],
-          applicationTimeline: scholars["application_timeline"],
-          benefits: scholars["benefits"],
-          deadline: scholars["deadline"],
-          duration: scholars["duration"],
-          eligibility: scholars["eligibility"],
-          government: scholars["government"],
-          grantTitle: scholars["grant_title"],
-          minGwa: scholars["min_gwa"],
-          organizationName: scholars["organizationName"],
-          requiredDocuments: scholars["required_documents"],
-          scholarshipName: scholars["scholarshipName"],
-          scholarshipIcon: scholars["scholarship_icon"],
-          serviceObligation: scholars["serviceObligation"],
-          tags: scholars["tags"],
-          topPick: scholars["top_pick"],
-          website: scholars["website"],
-        ),
-      );
+    try {
+      List<ScholarshipObject> scholarships = [];
+      final response = await http.get(url, headers: headers);
+      final Map<String, dynamic> data = jsonDecode(response.body);
+
+      if (response.statusCode != 200 || data["data"] == null) return;
+
+      for (Map<String, dynamic> scholars in data["data"]) {
+        scholarships.add(
+          ScholarshipObject(
+            allowance: scholars["Allowance"] ?? '',
+            id: scholars["ID"] ?? 0,
+            about: scholars["about"] ?? '',
+            applicationSteps: scholars["application_steps"] ?? [],
+            applicationTimeline: scholars["application_timeline"] ?? [],
+            benefits: scholars["benefits"] ?? [],
+            deadline: scholars["deadline"] ?? 0,
+            duration: scholars["duration"] ?? 0,
+            eligibility: scholars["eligibility"] ?? [],
+            government: scholars["government"] ?? false,
+            grantTitle: scholars["grant_title"] ?? {},
+            minGwa: (scholars["min_gwa"] ?? 0).toDouble(),
+            organizationName: scholars["organizationName"] ?? {},
+            requiredDocuments: scholars["required_documents"] ?? [],
+            scholarshipName: scholars["scholarshipName"] ?? '',
+            scholarshipIcon: scholars["scholarship_icon"] ?? '🎓',
+            color: scholars["color"] ?? 'blue',
+            serviceObligation: scholars["serviceObligation"] ?? {},
+            tags: scholars["tags"] ?? [],
+            topPick: scholars["top_pick"] ?? 0,
+            website: scholars["website"] ?? '',
+          ),
+        );
+      }
+      availableScholarships.value = scholarships;
+    } catch (_) {
+      // Server unreachable or returned malformed data — leave list empty.
     }
-    availableScholarships.value = scholarships;
   }
 
   static Future<Map<String, dynamic>> signupUser(

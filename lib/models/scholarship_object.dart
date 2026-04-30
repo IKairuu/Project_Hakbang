@@ -2,6 +2,7 @@ class ScholarshipObject {
   String allowance;
   int id;
   String about;
+  String color;
   List<dynamic> applicationSteps;
   List<dynamic> applicationTimeline;
   List<dynamic> benefits;
@@ -24,6 +25,7 @@ class ScholarshipObject {
     required this.allowance,
     required this.id,
     required this.about,
+    this.color = 'blue',
     required this.applicationSteps,
     required this.applicationTimeline,
     required this.benefits,

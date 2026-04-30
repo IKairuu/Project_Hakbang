@@ -54,6 +54,7 @@ dependencies:
   circle_nav_bar: ^2.2.0
   font_awesome_flutter: ^11.0.0
   linear_progress_bar: ^3.0.0
+  dotted_border: ^3.1.0
 
 dev_dependencies:
   flutter_test:

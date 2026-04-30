@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,6 +45,10 @@ class _ScholarshipState extends State<Scholarship> {
                     ),
                   ),
                   buildScholarGrids(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: viewAll(selectedIndex),
+                  ),
                 ],
               ),
             ),
@@ -146,6 +151,7 @@ class _ScholarshipState extends State<Scholarship> {
                 builder: (context, featured, child) {
                   return GestureDetector(
                     onTap: () {
+                      print('TAPPED Featured');
                       /* INSERT SCHOLARSHIP DESCRIPTION PAGE HERE*/
                     },
                     child: SizedBox(
@@ -424,180 +430,186 @@ class _ScholarshipState extends State<Scholarship> {
             ),
             itemBuilder: (context, index) {
               var containerTheme = _centerGradientColors();
-              return SizedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.frameBorder),
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(20),
+              return GestureDetector(
+                onTap: () {
+                  print('TAPPED $index');
+                  /* INSERT SCHOLARSHIP DESCRIPTION PAGE HERE*/
+                },
+                child: SizedBox(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.frameBorder),
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: containerTheme,
+                            ),
                           ),
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: containerTheme,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            section[index].scholarshipIcon,
-                            style: TextStyle(fontSize: 30),
+                          child: Center(
+                            child: Text(
+                              section[index].scholarshipIcon,
+                              style: TextStyle(fontSize: 30),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 6,
-                      child: Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.frameBorder),
-                          color: AppColors.surface,
-                          borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(20),
+                      Expanded(
+                        flex: 6,
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.frameBorder),
+                            color: AppColors.surface,
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(20),
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              section[index].organizationName["short"],
-                              style: GoogleFonts.dmSans(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textMuted,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                section[index].organizationName["short"],
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textMuted,
+                                ),
                               ),
-                            ),
-                            Text(
-                              section[index].scholarshipName,
-                              style: GoogleFonts.dmSans(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w900,
-                                color: AppColors.textPrimary,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Text(
-                                section[index].allowance.split("/")[0],
-                                style: GoogleFonts.unbounded(
-                                  color: AppColors.accent,
+                              Text(
+                                section[index].scholarshipName,
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w900,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Text(
+                                  section[index].allowance.split("/")[0],
+                                  style: GoogleFonts.unbounded(
+                                    color: AppColors.accent,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                "per ${section[index].allowance.split("/")[1]}",
+                                style: GoogleFonts.dmSans(
+                                  color: AppColors.textMuted,
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 12,
                                 ),
                               ),
-                            ),
-                            Text(
-                              "per ${section[index].allowance.split("/")[1]}",
-                              style: GoogleFonts.dmSans(
-                                color: AppColors.textMuted,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Row(
-                                spacing: 5,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.tealDim,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Text(
-                                      section[index].tags[0],
-                                      style: GoogleFonts.dmSans(
-                                        color: AppColors.teal,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.purpleDim,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Text(
-                                      section[index].tags[1],
-                                      style: GoogleFonts.dmSans(
-                                        color: AppColors.purple,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Deadline",
-                                    style: GoogleFonts.dmSans(
-                                      fontSize: 10,
-                                      color: AppColors.textMuted,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  Expanded(child: SizedBox()),
-                                  Text(
-                                    "${section[index].deadline} days left",
-                                    style: GoogleFonts.dmSans(
-                                      color: AppColors.accentLight,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 10,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4),
-                                child: Stack(
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Row(
+                                  spacing: 5,
                                   children: [
                                     Container(
-                                      height: 4,
-                                      color: AppColors.border2,
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.tealDim,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Text(
+                                        section[index].tags[0],
+                                        style: GoogleFonts.dmSans(
+                                          color: AppColors.teal,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 10,
+                                        ),
+                                      ),
                                     ),
-                                    FractionallySizedBox(
-                                      widthFactor:
-                                          (section[index].limit -
-                                              section[index].deadline) /
-                                          section[index].limit,
-                                      child: Container(
-                                        height: 4,
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            stops: [0.0, 0.8],
-                                            colors: [
-                                              containerTheme[0],
-                                              AppColors.accent,
-                                            ],
-                                          ),
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.purpleDim,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Text(
+                                        section[index].tags[1],
+                                        style: GoogleFonts.dmSans(
+                                          color: AppColors.purple,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 10,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Deadline",
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 10,
+                                        color: AppColors.textMuted,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    Expanded(child: SizedBox()),
+                                    Text(
+                                      "${section[index].deadline} days left",
+                                      style: GoogleFonts.dmSans(
+                                        color: AppColors.accentLight,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        height: 4,
+                                        color: AppColors.border2,
+                                      ),
+                                      FractionallySizedBox(
+                                        widthFactor:
+                                            (section[index].limit -
+                                                section[index].deadline) /
+                                            section[index].limit,
+                                        child: Container(
+                                          height: 4,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              stops: [0.0, 0.8],
+                                              colors: [
+                                                containerTheme[0],
+                                                AppColors.accent,
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
@@ -606,6 +618,39 @@ class _ScholarshipState extends State<Scholarship> {
       },
     );
   }
+}
+
+Widget viewAll(int index) {
+  return InkWell(
+    splashColor: AppColors.accent.withOpacity(0.2),
+    borderRadius: BorderRadius.circular(10),
+    onTap: () {},
+    child: DottedBorder(
+      options: RoundedRectDottedBorderOptions(
+        dashPattern: [10, 3],
+        strokeWidth: 2,
+        radius: Radius.circular(10),
+        color: AppColors.textMuted,
+        padding: EdgeInsets.all(10),
+      ),
+      child: SizedBox(
+        width: double.infinity,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.add_circle_outline, color: AppColors.textMuted),
+            Text(
+              "View all ${index == 0 ? "Governmental" : "Non-Governmental"} Scholarships",
+              style: GoogleFonts.dmSans(
+                color: AppColors.textMuted,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 final _randomGradient = Random();

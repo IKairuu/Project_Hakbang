@@ -6,18 +6,16 @@ class AuthGradientBg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: IgnorePointer(
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              center: const Alignment(0.0, -1.2),
-              radius: 1.2,
-              colors: [
-                AppColors.accent.withValues(alpha: 0.15),
-                Colors.transparent,
-              ],
-            ),
+    return IgnorePointer(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+            center: const Alignment(0.0, -1.2),
+            radius: 1.2,
+            colors: [
+              AppColors.accent.withValues(alpha: 0.15),
+              Colors.transparent,
+            ],
           ),
         ),
       ),

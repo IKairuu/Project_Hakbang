@@ -127,6 +127,20 @@ class Database {
     return jsonDecode(response.body);
   }
 
+  static Future<void> updateUserAboutMe(Map<String, dynamic> data) async {
+    final url = Uri.https(mainUrl, "user/auth/change-about-me");
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+    final message = jsonEncode(data);
+
+    final response = await http.put(url, body: message, headers: headers);
+    print(jsonDecode(response.body)["message"]);
+    return jsonDecode(response.body);
+  }
+
   static Future<void> getUserActivities(String email) async {
     final url = Uri.https(mainUrl, "user/auth/get-activities");
     final headers = {

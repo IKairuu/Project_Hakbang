@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
       token.value = "Bearer ${login["token"]}";
       switch (login["status"]) {
         case 200:
-          await Database.getUserData(login["data"]["email"])
+          await Database.getUserData(login["data"])
               .then((value) async {
                 userCredentials.value = User(
                   name: value["data"]["name"],
@@ -76,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                   institution: value["data"]["institution"],
                   occupation: value["data"]["occupation"],
                   role: value["data"]["role"],
+                  aboutMe: value["data"]["about_me"],
                 );
 
                 navigationBarIndex.value = 2;
@@ -136,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
             )
           : Stack(
               children: [
-                const AuthGradientBg(),
+                Positioned.fill(child: AuthGradientBg()),
                 SafeArea(
                   bottom: false,
                   child: Padding(
@@ -144,6 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 20),

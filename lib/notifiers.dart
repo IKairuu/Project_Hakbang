@@ -28,6 +28,8 @@ ValueNotifier<String> onSelect = ValueNotifier("");
 ValueNotifier<List<ScholarshipObject>> availableScholarships = ValueNotifier(
   [],
 );
+ValueNotifier<List<ScholarshipObject>> governmentSection = ValueNotifier([]);
+ValueNotifier<List<ScholarshipObject>> nonGovernmentSection = ValueNotifier([]);
 ValueNotifier<List<College>> collegeSection = ValueNotifier([]);
 ValueNotifier<List<AiMessage>> chatMessages = ValueNotifier([]);
 ValueNotifier<bool> chatLoading = ValueNotifier(false);

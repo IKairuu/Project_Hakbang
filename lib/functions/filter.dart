@@ -89,4 +89,14 @@ class Filter {
       (a, b) => a.topPick > b.topPick ? a : b,
     );
   }
+
+  static void filterScholarships() {
+    for (ScholarshipObject scholar in availableScholarships.value) {
+      if (scholar.government) {
+        governmentSection.value.add(scholar);
+      } else {
+        nonGovernmentSection.value.add(scholar);
+      }
+    }
+  }
 }

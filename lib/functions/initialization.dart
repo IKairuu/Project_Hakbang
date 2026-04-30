@@ -18,6 +18,7 @@ class Initialization {
     await SortingFunctions.sortASctivities();
     await refreshChat();
     Filter.getTopPick();
+    Filter.filterScholarships();
 
     collegeSection.value = availableColleges.value;
     reviewCenterSection.value = availableReviewCenters.value;

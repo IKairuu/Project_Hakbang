@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,6 +38,7 @@ class _ScholarshipState extends State<Scholarship> {
               ],
             ),
           ),
+          buildScholarGrids(),
         ],
       ),
     );
@@ -395,4 +398,81 @@ class _ScholarshipState extends State<Scholarship> {
       ),
     );
   }
+
+  Widget buildScholarGrids() {
+    return ValueListenableBuilder(
+      valueListenable: selectedIndex == 0
+          ? governmentSection
+          : nonGovernmentSection,
+      builder: (context, section, child) {
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: GridView.builder(
+              itemCount: section.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: SizedBox(
+                  height: 200,
+                  width: 150,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: _centerGradientColors(),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.surface,
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+final _randomGradient = Random();
+
+List<Color> _centerGradientColors() {
+  const gradients = [
+    [Color(0xFF1E3A5F), Color(0xFF0D2040)],
+    [Color(0xFF1A3320), Color(0xFF0D2014)],
+    [Color(0xFF2D1B69), Color(0xFF1A0D40)],
+    [Color(0xFF3D2010), Color(0xFF251008)],
+    [Color(0xFF0D2A40), Color(0xFF061520)],
+    [Color(0xFF1A1A40), Color(0xFF0D0D28)],
+    [Color(0xFF2D2D2D), Color(0xFF1A1A1A)],
+    [Color(0xFF2A1A00), Color(0xFF1A1000)],
+    [Color(0xFF0D2D2D), Color(0xFF061A1A)],
+    [Color(0xFF2D0D1A), Color(0xFF1A0810)],
+  ];
+
+  return gradients[_randomGradient.nextInt(gradients.length)];
 }

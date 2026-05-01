@@ -9,7 +9,6 @@ import 'package:hakbang/design/padding_design.dart';
 import 'package:hakbang/design/width_values.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/pages/profile_page.dart';
 import 'package:marquee/marquee.dart';
 import 'package:hakbang/design/app_colors.dart';

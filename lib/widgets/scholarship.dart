@@ -483,6 +483,7 @@ class _ScholarshipState extends State<Scholarship> {
                                             height: 3,
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(
+                                                stops: const [0.4, 1.0],
                                                 colors: [
                                                   featuredTheme.accent,
                                                   AppColors.accent,
@@ -533,7 +534,7 @@ class _ScholarshipState extends State<Scholarship> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 250),
             height: 2,
-            width: isSelected ? 110 : 0,
+            width: isSelected ? 80 : 0,
             decoration: BoxDecoration(
               color: AppColors.accent,
               borderRadius: BorderRadius.circular(2),
@@ -796,7 +797,7 @@ class _ScholarshipState extends State<Scholarship> {
                                           height: 2,
                                           decoration: BoxDecoration(
                                             gradient: LinearGradient(
-                                              stops: const [0.0, 0.8],
+                                              stops: const [0.4, 1.0],
                                               colors: [
                                                 theme.accent,
                                                 AppColors.accent,

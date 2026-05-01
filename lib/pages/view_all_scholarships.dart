@@ -270,7 +270,7 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
                                                 height: 2,
                                                 decoration: BoxDecoration(
                                                   gradient: LinearGradient(
-                                                    stops: const [0.0, 0.8],
+                                                    stops: const [0.4, 1.0],
                                                     colors: [
                                                       theme.accent,
                                                       AppColors.accent,

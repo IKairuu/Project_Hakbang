@@ -75,7 +75,7 @@ class Database {
             eligibility: scholars["eligibility"] ?? [],
             government: scholars["government"] ?? false,
             grantTitle: scholars["grant_title"] ?? {},
-            limit: scholars["limit"],
+            limit: scholars["limit"] ?? 0,
             minGwa: (scholars["min_gwa"] ?? 0).toDouble(),
             organizationName: scholars["organizationName"] ?? {},
             requiredDocuments: scholars["required_documents"] ?? [],

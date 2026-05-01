@@ -38,7 +38,7 @@ class _ScholarshipState extends State<Scholarship> {
         spacing: 10,
         children: [
           searchHeader(),
-          SizedBox(height: 2,),
+          SizedBox(height: 2),
           buildTextField("Search scholarships...", searchField, 0),
           Expanded(
             child: SingleChildScrollView(
@@ -553,7 +553,10 @@ class _ScholarshipState extends State<Scholarship> {
                 child: Center(
                   child: Text(
                     "There are no available scholarships available",
-                     style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                    style: TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               )
@@ -567,7 +570,7 @@ class _ScholarshipState extends State<Scholarship> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: 0.63,
+                  childAspectRatio: 0.61,
                 ),
                 itemBuilder: (context, index) {
                   final theme = _cardTheme(section[index].color);
@@ -749,7 +752,7 @@ class _ScholarshipState extends State<Scholarship> {
                                       );
                                     }).toList(),
                                   ),
-                                const SizedBox(height: 8),
+                                const SizedBox(height: 10),
                                 Row(
                                   children: [
                                     Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/font_styles.dart';
@@ -8,6 +9,7 @@ import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/college_description.dart';
 import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/design/container_design.dart';
+import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/widgets/edit_about_me_dialog.dart';
 import 'package:hakbang/widgets/saved_school_card.dart';
 
@@ -19,9 +21,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String _aboutMeText =
-      'In in ut cupidatat qui officia. Magna pariatur dolore laboris occaecat ad nulla excepteur pariatur sint.';
-
   static const SizedBox _space8 = SizedBox(height: 8);
   static const SizedBox _space10 = SizedBox(height: 10);
   static const SizedBox _space20 = SizedBox(height: 20);
@@ -29,15 +28,27 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _showEditAboutMeDialog() async {
     final editedText = await showEditAboutMeDialog(
       context,
-      initialText: _aboutMeText,
+      initialText: userCredentials.value!.aboutMe,
     );
 
     if (editedText == null) {
       return;
     }
 
+    final data = {
+      "email": userCredentials.value!.email,
+      "about_me": editedText,
+    };
     setState(() {
-      _aboutMeText = editedText;
+      userCredentials.value!.aboutMe = editedText;
+    });
+    await Database.updateUserAboutMe(data).then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text("Successfully changed"),
+        ),
+      );
     });
   }
 
@@ -287,54 +298,81 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ],
                               ),
                               _space20,
-                              Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: AppColors.surface2.withValues(
-                                    alpha: 0.9,
-                                  ),
-                                  borderRadius: BorderRadius.circular(18),
-                                  border: Border.all(color: AppColors.border),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'About Me:',
-                                          style: FontStyles.profileAboutTitle,
-                                        ),
-                                        TextButton.icon(
-                                          onPressed: _showEditAboutMeDialog,
-                                          icon: const Icon(
-                                            Icons.edit_rounded,
-                                            size: 16,
-                                          ),
-                                          label: const Text('Edit'),
-                                          style: TextButton.styleFrom(
-                                            foregroundColor: AppColors.accent,
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 8,
-                                              vertical: 4,
+                              ValueListenableBuilder(
+                                valueListenable: userCredentials,
+                                builder: (context, userData, child) {
+                                  return userData == null
+                                      ? Center(
+                                          child: Text(
+                                            "Not Logged In",
+                                            style: GoogleFonts.dmSans(
+                                              color: AppColors.textMuted,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w800,
                                             ),
-                                            minimumSize: Size.zero,
-                                            tapTargetSize: MaterialTapTargetSize
-                                                .shrinkWrap,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Text(
-                                      _aboutMeText,
-                                      style: FontStyles.profileAboutBody,
-                                    ),
-                                  ],
-                                ),
+                                        )
+                                      : Container(
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.all(16),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.surface2
+                                                .withValues(alpha: 0.9),
+                                            borderRadius: BorderRadius.circular(
+                                              18,
+                                            ),
+                                            border: Border.all(
+                                              color: AppColors.border,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'About Me:',
+                                                    style: FontStyles
+                                                        .profileAboutTitle,
+                                                  ),
+                                                  TextButton.icon(
+                                                    onPressed:
+                                                        _showEditAboutMeDialog,
+                                                    icon: const Icon(
+                                                      Icons.edit_rounded,
+                                                      size: 16,
+                                                    ),
+                                                    label: const Text('Edit'),
+                                                    style: TextButton.styleFrom(
+                                                      foregroundColor:
+                                                          AppColors.accent,
+                                                      padding:
+                                                          const EdgeInsets.symmetric(
+                                                            horizontal: 8,
+                                                            vertical: 4,
+                                                          ),
+                                                      minimumSize: Size.zero,
+                                                      tapTargetSize:
+                                                          MaterialTapTargetSize
+                                                              .shrinkWrap,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 6),
+                                              Text(
+                                                userData.aboutMe,
+                                                style:
+                                                    FontStyles.profileAboutBody,
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                },
                               ),
                             ],
                           ),

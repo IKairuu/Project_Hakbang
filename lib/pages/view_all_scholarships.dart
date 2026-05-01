@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
-import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/pages/scholarship_description.dart';
 
 class ViewAllScholarships extends StatefulWidget {
   const ViewAllScholarships({super.key, required this.government});
@@ -22,16 +21,22 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
       appBar: AppBar(
         toolbarHeight: 60,
         backgroundColor: AppColors.bg,
-        leading: Padding(
-          padding: const EdgeInsets.all(5),
-          child: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimary,
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.surface2,
+                border: Border.all(color: AppColors.border2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: AppColors.textPrimary,
+                size: 16,
+              ),
             ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
           ),
         ),
         title: titleBuilder(),
@@ -49,14 +54,19 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
       children: [
         Text(
           widget.government ? "Governmental" : "Non-Governmental",
-          style: FontStyles.header,
+          style: GoogleFonts.dmSans(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary,
+            letterSpacing: -0.4,
+          ),
         ),
         Text(
           "Available Scholarships",
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 15,
-            color: AppColors.textSecondary,
+          style: GoogleFonts.dmSans(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+            color: AppColors.textMuted,
           ),
         ),
       ],
@@ -70,187 +80,211 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
           : nonGovernmentSection,
       builder: (context, section, child) {
         return GestureDetector(
-          onTap: () {
-            print("TAPPED");
-            /*INSERT SCHOLARSHIP DDESCRIPTION PAGE HERE*/
-          },
+          onTap: () {},
           child: SizedBox(
             child: ListView.builder(
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: section.length,
               itemBuilder: (context, index) {
-                var containerTheme = _centerGradientColors();
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.surface,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.frameBorder),
+                final s = section[index];
+                final theme = _valCardTheme(s.color);
+                return GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ScholarshipDescription(scholarship: s),
                     ),
-                    child: IntrinsicHeight(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 10,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.surface,
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: AppColors.border2),
+                      ),
+                      child: IntrinsicHeight(
+                        child: Row(
+                          children: [
+                            // left accent stripe
+                            Container(
+                              width: 5,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.horizontal(
+                                  left: Radius.circular(50),
+                                ),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    theme.accent,
+                                    theme.accent.withOpacity(0.3),
+                                  ],
+                                ),
                               ),
-                              gradient: LinearGradient(colors: containerTheme),
                             ),
-                          ),
-
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    section[index].organizationName["short"],
-                                    style: GoogleFonts.dmSans(
-                                      color: AppColors.textMuted,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  Text(
-                                    section[index].scholarshipName,
-                                    style: GoogleFonts.dmSans(
-                                      color: AppColors.textPrimary,
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: Row(
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                  vertical: 13,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
                                       children: [
                                         Text(
-                                          section[index].allowance.split(
-                                            "/",
-                                          )[0],
-                                          style: GoogleFonts.unbounded(
-                                            color: AppColors.accent,
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: 17,
-                                          ),
-                                        ),
-                                        Text(
-                                          "/ ${section[index].allowance.split("/")[1]}",
+                                          s.organizationName["short"],
                                           style: GoogleFonts.dmSans(
                                             color: AppColors.textMuted,
-                                            fontWeight: FontWeight.w200,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 5),
-                                    child: Row(
-                                      spacing: 5,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.tealDim,
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            section[index].tags[0],
-                                            style: GoogleFonts.dmSans(
-                                              color: AppColors.teal,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 10,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.purpleDim,
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            section[index].tags[1],
-                                            style: GoogleFonts.dmSans(
-                                              color: AppColors.purple,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 10,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Deadline",
-                                          style: GoogleFonts.dmSans(
-                                            fontSize: 10,
-                                            color: AppColors.textMuted,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                        Expanded(child: SizedBox()),
-                                        Text(
-                                          "${section[index].deadline} days left",
-                                          style: GoogleFonts.dmSans(
-                                            color: AppColors.accentLight,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 10,
                                           ),
                                         ),
+                                        const Spacer(),
+                                        // status dot
+                                        Container(
+                                          width: 8,
+                                          height: 8,
+                                          decoration: BoxDecoration(
+                                            color: _valStatusColor(s),
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
                                       ],
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: Stack(
+                                    Text(
+                                      s.scholarshipName,
+                                      style: GoogleFonts.dmSans(
+                                        color: AppColors.textPrimary,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 13,
+                                        letterSpacing: -0.2,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 6),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.baseline,
+                                        textBaseline: TextBaseline.alphabetic,
                                         children: [
-                                          Container(
-                                            height: 4,
-                                            color: AppColors.border2,
+                                          Text(
+                                            s.allowance.split("/")[0],
+                                            style: GoogleFonts.unbounded(
+                                              color: theme.accent,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                              letterSpacing: -0.3,
+                                            ),
                                           ),
-                                          FractionallySizedBox(
-                                            widthFactor:
-                                                (section[index].limit -
-                                                    section[index].deadline) /
-                                                section[index].limit,
-                                            child: Container(
-                                              height: 4,
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  stops: [0.0, 0.8],
-                                                  colors: [
-                                                    containerTheme[0],
-                                                    AppColors.accent,
-                                                  ],
-                                                ),
-                                              ),
+                                          Text(
+                                            " per ${s.allowance.split("/")[1]}",
+                                            style: GoogleFonts.dmSans(
+                                              color: AppColors.textMuted,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 10,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    if (s.tags.isNotEmpty)
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 6),
+                                        child: Row(
+                                          spacing: 5,
+                                          children: s.tags.take(2).map((tag) {
+                                            final tc = _valTagColor(
+                                              tag.toString(),
+                                            );
+                                            return Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 7,
+                                                    vertical: 2,
+                                                  ),
+                                              decoration: BoxDecoration(
+                                                color: tc.withOpacity(0.15),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              child: Text(
+                                                tag.toString(),
+                                                style: GoogleFonts.dmSans(
+                                                  color: tc,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 8.5,
+                                                  letterSpacing: 0.4,
+                                                ),
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 7),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Deadline",
+                                            style: GoogleFonts.dmSans(
+                                              fontSize: 8.5,
+                                              color: AppColors.textMuted,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          const Expanded(child: SizedBox()),
+                                          Text(
+                                            "${s.deadline} days left",
+                                            style: GoogleFonts.dmSans(
+                                              color: AppColors.accentLight,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 8.5,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 3),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(2),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              height: 2,
+                                              color: AppColors.border2,
+                                            ),
+                                            FractionallySizedBox(
+                                              widthFactor:
+                                                  (s.limit - s.deadline) /
+                                                  s.limit,
+                                              child: Container(
+                                                height: 2,
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    stops: const [0.0, 0.8],
+                                                    colors: [
+                                                      theme.accent,
+                                                      AppColors.accent,
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -264,21 +298,47 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
   }
 }
 
-final _randomGradient = Random();
+({Color accent}) _valCardTheme(String colorKey) => switch (colorKey) {
+  'purple' => (accent: AppColors.purple),
+  'teal' => (accent: AppColors.teal),
+  'coral' => (accent: AppColors.coral),
+  'lime' => (accent: AppColors.accent),
+  'green' => (accent: AppColors.teal),
+  'darkblue' => (accent: const Color(0xFF1A6BCC)),
+  'darkcoral' => (accent: const Color(0xFFCC3D1E)),
+  _ => (accent: AppColors.blue),
+};
 
-List<Color> _centerGradientColors() {
-  const gradients = [
-    [Color(0xFF1E3A5F), Color(0xFF0D2040)],
-    [Color(0xFF1A3320), Color(0xFF0D2014)],
-    [Color(0xFF2D1B69), Color(0xFF1A0D40)],
-    [Color(0xFF3D2010), Color(0xFF251008)],
-    [Color(0xFF0D2A40), Color(0xFF061520)],
-    [Color(0xFF1A1A40), Color(0xFF0D0D28)],
-    [Color(0xFF2D2D2D), Color(0xFF1A1A1A)],
-    [Color(0xFF2A1A00), Color(0xFF1A1000)],
-    [Color(0xFF0D2D2D), Color(0xFF061A1A)],
-    [Color(0xFF2D0D1A), Color(0xFF1A0810)],
+Color _valTagColor(String tag) {
+  final t = tag.toLowerCase();
+  if (t == 'open') return const Color(0xFF4ade80);
+  if (t == 'closing' || t == 'closing soon') return AppColors.coral;
+  if (t == 'closed') return const Color(0xFF888888);
+  if (t.contains('gov') || t.contains('government')) return AppColors.blue;
+  if (t.contains('ngo')) return AppColors.purple;
+  if (t.contains('stem')) return AppColors.blue;
+  if (t.contains('merit') || t.contains('academic')) return AppColors.accent;
+  if (t.contains('undergrad') || t.contains('college')) return AppColors.teal;
+  if (t.contains('tvet') || t.contains('vocational')) return AppColors.coral;
+  if (t.contains('shs') || t.contains('senior')) return AppColors.teal;
+  const colors = [
+    AppColors.blue,
+    AppColors.purple,
+    AppColors.teal,
+    AppColors.coral,
+    AppColors.accent,
   ];
+  return colors[tag.hashCode.abs() % colors.length];
+}
 
-  return gradients[_randomGradient.nextInt(gradients.length)];
+Color _valStatusColor(ScholarshipObject s) {
+  for (final t in s.tags) {
+    final tl = t.toString().toLowerCase();
+    if (tl == 'open') return const Color(0xFF4ade80);
+    if (tl.contains('closing')) return AppColors.coral;
+    if (tl == 'closed') return const Color(0xFF888888);
+  }
+  if (s.deadline > 30) return const Color(0xFF4ade80);
+  if (s.deadline > 0) return AppColors.coral;
+  return const Color(0xFF888888);
 }

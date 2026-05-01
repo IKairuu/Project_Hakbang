@@ -8,7 +8,7 @@ import 'package:hakbang/notifiers.dart';
 import 'package:http/http.dart' as http;
 
 class Database {
-  static String mainUrl = "project-hakbang-server.onrender.com";
+  static String mainUrl = "project-hakbang-server-vif8.onrender.com";
   static Future<void> getCollege() async {
     final url = Uri.https(mainUrl, "college/auth/available-colleges");
     final headers = {
@@ -54,37 +54,45 @@ class Database {
       "Authorization": token.value!,
     };
 
-    List<ScholarshipObject> scholarships = [];
-    final response = await http.get(url, headers: headers);
-    Map<String, dynamic> data = jsonDecode(response.body);
-    for (Map<String, dynamic> scholars in data["data"]) {
-      scholarships.add(
-        ScholarshipObject(
-          allowance: scholars["Allowance"],
-          id: scholars["ID"],
-          about: scholars["about"],
-          applicationSteps: scholars["application_steps"],
-          applicationTimeline: scholars["application_timeline"],
-          benefits: scholars["benefits"],
-          deadline: scholars["deadline"],
-          limit: scholars["limit"],
-          duration: scholars["duration"],
-          eligibility: scholars["eligibility"],
-          government: scholars["government"],
-          grantTitle: scholars["grant_title"],
-          minGwa: scholars["min_gwa"],
-          organizationName: scholars["organizationName"],
-          requiredDocuments: scholars["required_documents"],
-          scholarshipName: scholars["scholarshipName"],
-          scholarshipIcon: scholars["scholarship_icon"],
-          serviceObligation: scholars["serviceObligation"],
-          tags: scholars["tags"],
-          topPick: scholars["top_pick"],
-          website: scholars["website"],
-        ),
-      );
+    try {
+      List<ScholarshipObject> scholarships = [];
+      final response = await http.get(url, headers: headers);
+      final Map<String, dynamic> data = jsonDecode(response.body);
+
+      if (response.statusCode != 200 || data["data"] == null) return;
+
+      for (Map<String, dynamic> scholars in data["data"]) {
+        scholarships.add(
+          ScholarshipObject(
+            allowance: scholars["Allowance"] ?? '',
+            id: scholars["ID"] ?? 0,
+            about: scholars["about"] ?? '',
+            applicationSteps: scholars["application_steps"] ?? [],
+            applicationTimeline: scholars["application_timeline"] ?? [],
+            benefits: scholars["benefits"] ?? [],
+            deadline: scholars["deadline"] ?? 0,
+            duration: scholars["duration"] ?? 0,
+            eligibility: scholars["eligibility"] ?? [],
+            government: scholars["government"] ?? false,
+            grantTitle: scholars["grant_title"] ?? {},
+            limit: scholars["limit"],
+            minGwa: (scholars["min_gwa"] ?? 0).toDouble(),
+            organizationName: scholars["organizationName"] ?? {},
+            requiredDocuments: scholars["required_documents"] ?? [],
+            scholarshipName: scholars["scholarshipName"] ?? '',
+            scholarshipIcon: scholars["scholarship_icon"] ?? '🎓',
+            color: scholars["color"] ?? 'blue',
+            serviceObligation: scholars["serviceObligation"] ?? {},
+            tags: scholars["tags"] ?? [],
+            topPick: scholars["top_pick"] ?? 0,
+            website: scholars["website"] ?? '',
+          ),
+        );
+      }
+      availableScholarships.value = scholarships;
+    } catch (_) {
+      // Server unreachable or returned malformed data — leave list empty.
     }
-    availableScholarships.value = scholarships;
   }
 
   static Future<Map<String, dynamic>> signupUser(
@@ -112,8 +120,18 @@ class Database {
       "Accept": "application/json",
     };
 
-    final response = await http.post(url, headers: headers, body: userMessage);
-    return jsonDecode(response.body);
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: userMessage,
+      );
+      if (response.body.isEmpty)
+        return {"error": "Server returned empty response"};
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {"error": e.toString()};
+    }
   }
 
   static Future<Map<String, dynamic>> getUserData(String email) async {
@@ -124,6 +142,20 @@ class Database {
       "Authorization": token.value!,
     };
     final response = await http.get(url, headers: headers);
+    return jsonDecode(response.body);
+  }
+
+  static Future<void> updateUserAboutMe(Map<String, dynamic> data) async {
+    final url = Uri.https(mainUrl, "user/auth/change-about-me");
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+    final message = jsonEncode(data);
+
+    final response = await http.put(url, body: message, headers: headers);
+    print(jsonDecode(response.body)["message"]);
     return jsonDecode(response.body);
   }
 

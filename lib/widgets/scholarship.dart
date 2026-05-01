@@ -20,8 +20,6 @@ class Scholarship extends StatefulWidget {
 class _ScholarshipState extends State<Scholarship> {
   TextEditingController searchField = TextEditingController();
   final _tabIndex = ValueNotifier<int>(0);
-  final ScrollController _scrollController = ScrollController();
-  final PageController _pageController = PageController();
 
   @override
   void dispose() {
@@ -895,6 +893,22 @@ Widget viewAll(BuildContext context, int index) {
       'darkcoral' => (
         gradient: const [Color(0xFF280808), Color(0xFF120404)],
         accent: Color(0xFFCC3D1E),
+      ),
+      'darkpurple' => (
+        gradient: const [Color(0xFF1A0830), Color(0xFF0A0418)],
+        accent: Color(0xFF7C3AC7),
+      ),
+      'darkteal' => (
+        gradient: const [Color(0xFF032018), Color(0xFF010D0A)],
+        accent: Color(0xFF1AB87A),
+      ),
+      'darkgreen' => (
+        gradient: const [Color(0xFF041A0A), Color(0xFF020C05)],
+        accent: Color(0xFF2A8C4A),
+      ),
+      'darklime' => (
+        gradient: const [Color(0xFF0F1A04), Color(0xFF060D02)],
+        accent: Color(0xFF8FB82A),
       ),
       _ => (
         gradient: const [Color(0xFF0D2040), Color(0xFF060D20)],

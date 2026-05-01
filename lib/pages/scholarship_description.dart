@@ -341,6 +341,22 @@ Color _sdTagColor(String tag) {
         accent: const Color(0xFFCC3D1E),
         accentDim: const Color(0x26CC3D1E),
       ),
+      'darkpurple' => (
+        accent: const Color(0xFF7C3AC7),
+        accentDim: const Color(0x267C3AC7),
+      ),
+      'darkteal' => (
+        accent: const Color(0xFF1AB87A),
+        accentDim: const Color(0x261AB87A),
+      ),
+      'darkgreen' => (
+        accent: const Color(0xFF2A8C4A),
+        accentDim: const Color(0x262A8C4A),
+      ),
+      'darklime' => (
+        accent: const Color(0xFF8FB82A),
+        accentDim: const Color(0x268FB82A),
+      ),
       _ => (accent: AppColors.blue, accentDim: AppColors.blueDim),
     };
 

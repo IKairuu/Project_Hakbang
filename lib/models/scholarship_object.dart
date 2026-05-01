@@ -26,7 +26,7 @@ class ScholarshipObject {
     required this.allowance,
     required this.id,
     required this.about,
-    this.color = 'blue',
+    required this.color,
     required this.applicationSteps,
     required this.applicationTimeline,
     required this.benefits,

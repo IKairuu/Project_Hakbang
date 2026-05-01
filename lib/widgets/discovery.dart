@@ -45,7 +45,10 @@ class _DiscoveryState extends State<Discovery> {
                   ),
                   const SizedBox(height: 20),
                   TextField(
-                    style: TextStyle(color: Colors.white, fontSize: 14),
+                    style: const TextStyle(
+                      color: AppColors.textPrimary,
+                      fontSize: 14,
+                    ),
                     onSubmitted: (value) {
                       Filter.searchCollege(searchInput.text);
                     },
@@ -68,12 +71,30 @@ class _DiscoveryState extends State<Discovery> {
                           width: 1.5,
                         ),
                       ),
-                      hintText: "Search school",
+                      hintText: "Search schools...",
+                      hintStyle: const TextStyle(
+                        color: AppColors.textMuted,
+                        fontSize: 14,
+                      ),
+                      prefixIcon: const Padding(
+                        padding: EdgeInsetsGeometry.only(left: 14, right: 8),
+                        child: Icon(
+                          Icons.search_outlined,
+                          color: AppColors.textSecondary,
+                          size: 20,
+                        ),
+                      ),
+                      prefixIconConstraints: const BoxConstraints(),
                       suffixIcon: IconButton(
                         onPressed: () {
                           Filter.searchCollege(searchInput.text);
                         },
-                        icon: Icon(Icons.search_outlined),
+                        icon: const Icon(Icons.search_outlined),
+                      ),
+                      contentPadding: const EdgeInsets.only(
+                        right: 14,
+                        top: 13,
+                        bottom: 13,
                       ),
                     ),
                   ),

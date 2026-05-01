@@ -13,7 +13,6 @@ import 'package:hakbang/pages/profile_page.dart';
 import 'package:marquee/marquee.dart';
 import 'package:hakbang/design/app_colors.dart';
 
-// hm
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
 

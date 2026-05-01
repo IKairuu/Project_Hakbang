@@ -304,6 +304,29 @@ Widget buildSdDivider() => Container(
   margin: const EdgeInsets.symmetric(horizontal: 18),
 );
 
+Color _sdTagColor(String tag) {
+  final t = tag.toLowerCase();
+  if (t == 'open') return const Color(0xFF4ade80);
+  if (t == 'closing' || t == 'closing soon') return AppColors.coral;
+  if (t == 'closed') return const Color(0xFF888888);
+  if (t.contains('gov') || t.contains('government')) return AppColors.blue;
+  if (t.contains('ngo')) return AppColors.purple;
+  if (t.contains('stem')) return AppColors.blue;
+  if (t.contains('merit') || t.contains('academic')) return AppColors.accent;
+  if (t.contains('undergrad') || t.contains('college')) return AppColors.teal;
+  if (t.contains('tvet') || t.contains('vocational')) return AppColors.coral;
+  if (t.contains('shs') || t.contains('senior')) return AppColors.teal;
+  // fallback: cycle through palette by hash
+  final colors = [
+    AppColors.blue,
+    AppColors.purple,
+    AppColors.teal,
+    AppColors.coral,
+    AppColors.accent,
+  ];
+  return colors[tag.hashCode.abs() % colors.length];
+}
+
 ({Color accent, Color accentDim}) _sdColorOf(String colorKey) =>
     switch (colorKey) {
       'lime' => (accent: AppColors.accent, accentDim: AppColors.accentDim),
@@ -392,31 +415,62 @@ Widget buildScholarHero(ScholarshipObject s, Color accent, Color accentDim) {
           child: Center(
             child: Text(
               s.scholarshipIcon,
-              style: const TextStyle(fontSize: 26),
+              style: const TextStyle(
+                fontSize: 26,
+                height: 1.2,
+                leadingDistribution: TextLeadingDistribution.even,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
         ),
       ),
       Positioned(
-        bottom: 26,
+        bottom: 20,
         right: 18,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.4),
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(color: accent.withOpacity(0.3)),
-          ),
-          child: Text(
-            s.government ? "GOV'T" : 'NGO',
-            style: _sdDm(
-              9,
-              weight: FontWeight.w800,
-              color: accent,
-              spacing: 0.08,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          spacing: 5,
+          children: [
+            ...s.tags.map((tag) {
+              final tagColor = _sdTagColor(tag.toString());
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: tagColor.withOpacity(0.18),
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(color: tagColor.withOpacity(0.35)),
+                ),
+                child: Text(
+                  tag.toString().toUpperCase(),
+                  style: _sdDm(
+                    8,
+                    weight: FontWeight.w700,
+                    color: tagColor,
+                    spacing: 0.5,
+                  ),
+                ),
+              );
+            }),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(color: accent.withOpacity(0.3)),
+              ),
+              child: Text(
+                s.government ? "GOV'T" : 'NGO',
+                style: _sdDm(
+                  9,
+                  weight: FontWeight.w800,
+                  color: accent,
+                  spacing: 0.08,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     ],
@@ -449,36 +503,6 @@ Widget buildScholarHeader(
             height: 1.2,
           ),
         ),
-        if (s.tags.isNotEmpty) ...[
-          const SizedBox(height: 10),
-          Wrap(
-            spacing: 6,
-            runSpacing: 6,
-            children: s.tags
-                .map(
-                  (tag) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 9,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.surface2,
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(color: AppColors.border2),
-                    ),
-                    child: Text(
-                      tag.toString(),
-                      style: _sdDm(
-                        10,
-                        weight: FontWeight.w600,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-        ],
         const SizedBox(height: 14),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),

@@ -112,7 +112,7 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
                               width: 5,
                               decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.horizontal(
-                                  left: Radius.circular(18),
+                                  left: Radius.circular(50),
                                 ),
                                 gradient: LinearGradient(
                                   begin: Alignment.topCenter,

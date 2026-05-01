@@ -312,24 +312,6 @@ class _ScholarshipState extends State<Scholarship> {
                                                 const Expanded(
                                                   child: SizedBox(),
                                                 ),
-                                                Container(
-                                                  width: 34,
-                                                  height: 34,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.black
-                                                        .withOpacity(0.5),
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.white
-                                                          .withOpacity(0.1),
-                                                    ),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.favorite_border,
-                                                    color: Colors.white,
-                                                    size: 16,
-                                                  ),
-                                                ),
                                               ],
                                             ),
                                             const Expanded(child: SizedBox()),

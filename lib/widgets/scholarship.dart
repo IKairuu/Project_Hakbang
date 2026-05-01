@@ -550,10 +550,7 @@ class _ScholarshipState extends State<Scholarship> {
                 child: Center(
                   child: Text(
                     "There are no available scholarships available",
-                    style: GoogleFonts.dmSans(
-                      color: AppColors.textMuted,
-                      fontWeight: FontWeight.w800,
-                    ),
+                     style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
                   ),
                 ),
               )

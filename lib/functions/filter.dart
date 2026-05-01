@@ -1,6 +1,7 @@
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/models/review_center.dart';
+import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
 
 class Filter {
@@ -81,5 +82,48 @@ class Filter {
     }
     Initialization.refreshReviewCenters();
     reviewCenterSection.value = searchedList;
+  }
+
+  static void getTopPick() {
+    featuredScholarship.value = availableScholarships.value.reduce(
+      (a, b) => a.topPick > b.topPick ? a : b,
+    );
+  }
+
+  static void filterScholarships() {
+    governmentSection.value = [];
+    nonGovernmentSection.value = [];
+    for (ScholarshipObject scholar in availableScholarships.value) {
+      if (scholar.government) {
+        governmentSection.value.add(scholar);
+      } else {
+        nonGovernmentSection.value.add(scholar);
+      }
+    }
+  }
+
+  static void searchScholarship(String input, bool government) {
+    List<ScholarshipObject> searchedList = [];
+    for (ScholarshipObject objs in availableScholarships.value) {
+      for (String word in input.split(" ")) {
+        if (objs.scholarshipName
+                .toLowerCase()
+                .split(" ")
+                .contains(word.toLowerCase()) &&
+            government == objs.government) {
+          searchedList.add(objs);
+          break;
+        }
+      }
+    }
+
+    switch (government) {
+      case true:
+        governmentSection.value = searchedList;
+        break;
+      case false:
+        nonGovernmentSection.value = searchedList;
+        break;
+    }
   }
 }

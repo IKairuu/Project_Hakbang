@@ -1,145 +1,410 @@
+import 'dart:math';
+
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
-import 'package:hakbang/models/scholarship_object.dart';
+import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/scholarship_description.dart';
+import 'package:hakbang/pages/view_all_scholarships.dart';
 
 // ════════════════════════════════════════════════════════════════════════════
-class Scholarship extends StatelessWidget {
+class Scholarship extends StatefulWidget {
   const Scholarship({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<ScholarshipObject>>(
-      valueListenable: availableScholarships,
-      builder: (context, scholarships, _) {
-        if (scholarships.isEmpty) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.accent, strokeWidth: 2),
-          );
-        }
+  State<Scholarship> createState() => _ScholarshipState();
+}
 
-        return ListView.separated(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-          itemCount: scholarships.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
-          itemBuilder: (context, i) => _ScholarshipCard(scholarship: scholarships[i]),
+class _ScholarshipState extends State<Scholarship> {
+  TextEditingController searchField = TextEditingController();
+  int selectedIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 10,
+        children: [
+          searchHeader(selectedIndex),
+          Expanded(
+            child: SingleChildScrollView(
+              child: ValueListenableBuilder(
+                valueListenable: selectedIndex == 0
+                    ? governmentSection
+                    : nonGovernmentSection,
+                builder: (context, section, child) {
+                  return Column(
+                    children: [
+                      scholarshipFeatured(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 70,
+                          children: [
+                            _buildTab("Government", 0),
+                            _buildTab("Non-Governmental", 1),
+                          ],
+                        ),
+                      ),
+                      buildScholarGrids(),
+                      section.isEmpty
+                          ? SizedBox()
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: viewAll(context, selectedIndex),
+                            ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget searchHeader(int index) {
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Scholarship", style: FontStyles.header),
+          Text(
+            "Explore grants & programs for you",
+            style: FontStyles.scholarshipHeaderSecondary,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: buildTextField("Search scholarships...", searchField, index),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildTextField(
+    String label,
+    TextEditingController controller,
+    int index, {
+    Widget? trailing,
+  }) {
+    return ValueListenableBuilder(
+      valueListenable: governmentSelected,
+      builder: (context, gov, child) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              alignment: Alignment.centerRight,
+              children: [
+                TextField(
+                  controller: controller,
+                  cursorColor: AppColors.accent,
+                  style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
+                  onSubmitted: (value) {
+                    Filter.searchScholarship(value, gov);
+                    controller.clear();
+                  },
+                  decoration: InputDecoration(
+                    hintText: label,
+                    hintStyle: TextStyle(
+                      color: AppColors.textMuted,
+                      fontSize: 14,
+                    ),
+                    filled: true,
+                    fillColor: AppColors.surface2,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        Filter.searchScholarship(controller.text, gov);
+                        controller.clear();
+                      },
+                      icon: Icon(Icons.search_outlined),
+                    ),
+                    contentPadding: EdgeInsets.only(
+                      right: trailing != null ? 44 : 14,
+                      top: 13,
+                      bottom: 13,
+                      left: 13,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide(
+                        color: AppColors.border2,
+                        width: 1.5,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide(
+                        color: AppColors.accent,
+                        width: 1.5,
+                      ),
+                    ),
+                  ),
+                ),
+                if (trailing != null)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 14),
+                    child: trailing,
+                  ),
+              ],
+            ),
+          ],
         );
       },
     );
   }
-}
 
-// ─────────────────────────────────────────────────────────────────────────────
-class _ScholarshipCard extends StatelessWidget {
-  const _ScholarshipCard({required this.scholarship});
-  final ScholarshipObject scholarship;
-
-  @override
-  Widget build(BuildContext context) {
-    final s = scholarship;
-    final (:accent, :accentDim) = _scColorOf(s.color);
-    final orgName = (s.organizationName['en'] ?? s.organizationName.values.firstOrNull ?? '').toString();
-
-    return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => ScholarshipDescription(scholarship: s)),
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.border2),
-        ),
-        clipBehavior: Clip.hardEdge,
+  Widget scholarshipFeatured() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15, right: 5, left: 5),
+      child: SizedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Mini hero
-            Container(
-              height: 90,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color.alphaBlend(accent.withOpacity(0.10), AppColors.bg),
-                    Color.alphaBlend(accent.withOpacity(0.22), AppColors.bg),
-                    Color.alphaBlend(accent.withOpacity(0.08), AppColors.bg),
-                  ],
-                ),
-              ),
-              child: Stack(
-                children: [
-                  // Glow
-                  Positioned(
-                    top: -30, right: -30,
-                    child: Container(
-                      width: 140, height: 140,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(colors: [accent.withOpacity(0.4), Colors.transparent]),
-                      ),
-                    ),
-                  ),
-                  // Gov / NGO badge
-                  Positioned(
-                    top: 10, left: 12,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: accentDim,
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: accent.withOpacity(0.3)),
-                      ),
-                      child: Text(
-                        s.government ? "GOV'T" : 'NGO',
-                        style: GoogleFonts.dmSans(fontSize: 9, fontWeight: FontWeight.w800, color: accent, letterSpacing: 0.08),
-                      ),
-                    ),
-                  ),
-                  // Icon
-                  Positioned(
-                    bottom: 10, right: 12,
-                    child: Text(s.scholarshipIcon, style: const TextStyle(fontSize: 28)),
-                  ),
-                ],
+            Text(
+              "· FEATURED",
+              style: TextStyle(
+                color: AppColors.textMuted,
+                letterSpacing: 2,
+                fontWeight: FontWeight.w800,
               ),
             ),
-
-            // Card body
             Padding(
-              padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(orgName, style: GoogleFonts.dmSans(fontSize: 10, color: AppColors.textMuted, fontWeight: FontWeight.w500)),
-                  const SizedBox(height: 3),
-                  Text(
-                    s.scholarshipName,
-                    style: GoogleFonts.dmSans(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary, letterSpacing: -0.3),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        s.allowance,
-                        style: GoogleFonts.unbounded(fontSize: 16, color: accent, fontWeight: FontWeight.w700, letterSpacing: -0.4),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(color: AppColors.accentDim, borderRadius: BorderRadius.circular(8)),
-                        child: Text(
-                          'View Details →',
-                          style: GoogleFonts.dmSans(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.accent),
+              padding: const EdgeInsets.only(top: 10),
+              child: ValueListenableBuilder(
+                valueListenable: featuredScholarship,
+                builder: (context, featured, child) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              ScholarshipDescription(scholarship: featured),
                         ),
+                      );
+                    },
+                    child: SizedBox(
+                      height: 320,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 5,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20),
+                                ),
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  colors: [
+                                    AppColors.oceanBlue,
+                                    AppColors.darkBlue,
+                                  ],
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 15,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.accent,
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        height: 30,
+                                        child: Center(
+                                          child: Text(
+                                            "⭐ TOP  PICK",
+                                            style: GoogleFonts.dmSans(
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(child: SizedBox()),
+                                      ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: AppColors.surface3,
+                                          shape: CircleBorder(
+                                            side: BorderSide(
+                                              color: AppColors.frameBorder,
+                                            ),
+                                          ),
+                                        ),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.heart,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Expanded(child: SizedBox()),
+                                  Container(
+                                    height: 60,
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.scholarIcon,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        featured!.scholarshipIcon,
+                                        style: TextStyle(fontSize: 30),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 4,
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: BoxBorder.all(color: AppColors.border2),
+                                borderRadius: BorderRadius.vertical(
+                                  bottom: Radius.circular(20),
+                                ),
+                                color: AppColors.surface,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    featured.organizationName["long"],
+                                    style: GoogleFonts.dmSans(
+                                      color: AppColors.textMuted,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(
+                                    featured.scholarshipName,
+                                    style: GoogleFonts.dmSans(
+                                      color: AppColors.textPrimary,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          featured.allowance.split("/")[0],
+                                          style: GoogleFonts.unbounded(
+                                            color: AppColors.accent,
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        Text(
+                                          "/",
+                                          style: GoogleFonts.dmSans(
+                                            color: AppColors.textMuted,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        Text(
+                                          featured.allowance.split("/")[1],
+                                          style: GoogleFonts.dmSans(
+                                            color: AppColors.textMuted,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Application Period",
+                                          style: GoogleFonts.dmSans(
+                                            fontSize: 12,
+                                            color: AppColors.textMuted,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        Expanded(child: SizedBox()),
+                                        Text(
+                                          "${featured.deadline} days left",
+                                          style: GoogleFonts.dmSans(
+                                            color: AppColors.accentLight,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 4,
+                                            color: AppColors.border2,
+                                          ),
+                                          FractionallySizedBox(
+                                            widthFactor:
+                                                (featured.limit -
+                                                    featured.deadline) /
+                                                featured.limit,
+                                            child: Container(
+                                              height: 4,
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    AppColors.blue,
+                                                    AppColors.accent,
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  );
+                },
               ),
             ),
           ],
@@ -147,17 +412,335 @@ class _ScholarshipCard extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildTab(String text, int index) {
+    final isSelected = selectedIndex == index;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          Filter.filterScholarships();
+          selectedIndex = index;
+        });
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+              color: isSelected
+                  ? Color(0xFFB6FF3B) // neon green
+                  : Colors.white.withOpacity(0.5),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SizedBox(height: 8),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 250),
+            height: 2,
+            width: isSelected ? 110 : 0,
+            decoration: BoxDecoration(
+              color: Color(0xFFB6FF3B),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildScholarGrids() {
+    return ValueListenableBuilder(
+      valueListenable: selectedIndex == 0
+          ? governmentSection
+          : nonGovernmentSection,
+      builder: (context, section, child) {
+        return section.isEmpty
+            ? Padding(
+                padding: const EdgeInsets.only(top: 50, bottom: 20),
+                child: Center(
+                  child: Text(
+                    "There are no available scholarships available",
+                    style: GoogleFonts.dmSans(
+                      color: AppColors.textMuted,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: GridView.builder(
+                  itemCount: section.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.5,
+                  ),
+                  itemBuilder: (context, index) {
+                    var containerTheme = _centerGradientColors();
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ScholarshipDescription(
+                              scholarship: section[index],
+                            ),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColors.frameBorder,
+                                  ),
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: containerTheme,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    section[index].scholarshipIcon,
+                                    style: TextStyle(fontSize: 30),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 6,
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColors.frameBorder,
+                                  ),
+                                  color: AppColors.surface,
+                                  borderRadius: BorderRadius.vertical(
+                                    bottom: Radius.circular(20),
+                                  ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      section[index].organizationName["short"],
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.textMuted,
+                                      ),
+                                    ),
+                                    Text(
+                                      section[index].scholarshipName,
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w900,
+                                        color: AppColors.textPrimary,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Text(
+                                        section[index].allowance.split("/")[0],
+                                        style: GoogleFonts.unbounded(
+                                          color: AppColors.accent,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      "per ${section[index].allowance.split("/")[1]}",
+                                      style: GoogleFonts.dmSans(
+                                        color: AppColors.textMuted,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 5),
+                                      child: Row(
+                                        spacing: 5,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.tealDim,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Text(
+                                              section[index].tags[0],
+                                              style: GoogleFonts.dmSans(
+                                                color: AppColors.teal,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 10,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.purpleDim,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Text(
+                                              section[index].tags[1],
+                                              style: GoogleFonts.dmSans(
+                                                color: AppColors.purple,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 10,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Deadline",
+                                            style: GoogleFonts.dmSans(
+                                              fontSize: 10,
+                                              color: AppColors.textMuted,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          Expanded(child: SizedBox()),
+                                          Text(
+                                            "${section[index].deadline} days left",
+                                            style: GoogleFonts.dmSans(
+                                              color: AppColors.accentLight,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(4),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              height: 4,
+                                              color: AppColors.border2,
+                                            ),
+                                            FractionallySizedBox(
+                                              widthFactor:
+                                                  (section[index].limit -
+                                                      section[index].deadline) /
+                                                  section[index].limit,
+                                              child: Container(
+                                                height: 4,
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    stops: [0.0, 0.8],
+                                                    colors: [
+                                                      containerTheme[0],
+                                                      AppColors.accent,
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+      },
+    );
+  }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-({Color accent, Color accentDim}) _scColorOf(String colorKey) {
-  switch (colorKey) {
-    case 'lime':      return (accent: AppColors.accent,         accentDim: AppColors.accentDim);
-    case 'purple':    return (accent: AppColors.purple,         accentDim: AppColors.purpleDim);
-    case 'teal':      return (accent: AppColors.teal,           accentDim: AppColors.tealDim);
-    case 'coral':     return (accent: AppColors.coral,          accentDim: AppColors.coralDim);
-    case 'darkblue':  return (accent: const Color(0xFF1A6BCC),  accentDim: const Color(0x261A6BCC));
-    case 'darkcoral': return (accent: const Color(0xFFCC3D1E),  accentDim: const Color(0x26CC3D1E));
-    case 'blue': default: return (accent: AppColors.blue,       accentDim: AppColors.blueDim);
-  }
+Widget viewAll(BuildContext context, int index) {
+  return InkWell(
+    splashColor: AppColors.accent.withOpacity(0.2),
+    borderRadius: BorderRadius.circular(10),
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ViewAllScholarships(government: index == 0 ? true : false);
+          },
+        ),
+      );
+    },
+    child: DottedBorder(
+      options: RoundedRectDottedBorderOptions(
+        dashPattern: [10, 3],
+        strokeWidth: 2,
+        radius: Radius.circular(10),
+        color: AppColors.textMuted,
+        padding: EdgeInsets.all(10),
+      ),
+      child: SizedBox(
+        width: double.infinity,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.add_circle_outline, color: AppColors.textMuted),
+            Text(
+              "View all ${index == 0 ? "Governmental" : "Non-Governmental"} Scholarships",
+              style: GoogleFonts.dmSans(
+                color: AppColors.textMuted,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+final _randomGradient = Random();
+
+List<Color> _centerGradientColors() {
+  const gradients = [
+    [Color(0xFF1E3A5F), Color(0xFF0D2040)],
+    [Color(0xFF1A3320), Color(0xFF0D2014)],
+    [Color(0xFF2D1B69), Color(0xFF1A0D40)],
+    [Color(0xFF3D2010), Color(0xFF251008)],
+    [Color(0xFF0D2A40), Color(0xFF061520)],
+    [Color(0xFF1A1A40), Color(0xFF0D0D28)],
+    [Color(0xFF2D2D2D), Color(0xFF1A1A1A)],
+    [Color(0xFF2A1A00), Color(0xFF1A1000)],
+    [Color(0xFF0D2D2D), Color(0xFF061A1A)],
+    [Color(0xFF2D0D1A), Color(0xFF1A0810)],
+  ];
+
+  return gradients[_randomGradient.nextInt(gradients.length)];
 }

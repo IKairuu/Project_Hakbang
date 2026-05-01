@@ -63,6 +63,16 @@ class _LoginPageState extends State<LoginPage> {
       );
     } else {
       var login = await Database.userLogin(email, password);
+      if (login.containsKey("error")) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text("Cannot reach server. Please try again."),
+          ),
+        );
+        setState(() => isLoading = false);
+        return;
+      }
       token.value = "Bearer ${login["token"]}";
       switch (login["status"]) {
         case 200:

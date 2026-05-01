@@ -8,7 +8,7 @@ import 'package:hakbang/notifiers.dart';
 import 'package:http/http.dart' as http;
 
 class Database {
-  static String mainUrl = "project-hakbang-server.onrender.com";
+  static String mainUrl = "project-hakbang-server-vif8.onrender.com";
   static Future<void> getCollege() async {
     final url = Uri.https(mainUrl, "college/auth/available-colleges");
     final headers = {
@@ -75,6 +75,7 @@ class Database {
             eligibility: scholars["eligibility"] ?? [],
             government: scholars["government"] ?? false,
             grantTitle: scholars["grant_title"] ?? {},
+            limit: scholars["limit"],
             minGwa: (scholars["min_gwa"] ?? 0).toDouble(),
             organizationName: scholars["organizationName"] ?? {},
             requiredDocuments: scholars["required_documents"] ?? [],
@@ -119,8 +120,18 @@ class Database {
       "Accept": "application/json",
     };
 
-    final response = await http.post(url, headers: headers, body: userMessage);
-    return jsonDecode(response.body);
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: userMessage,
+      );
+      if (response.body.isEmpty)
+        return {"error": "Server returned empty response"};
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {"error": e.toString()};
+    }
   }
 
   static Future<Map<String, dynamic>> getUserData(String email) async {

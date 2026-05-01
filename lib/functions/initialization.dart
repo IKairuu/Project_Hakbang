@@ -1,3 +1,4 @@
+import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/sorting_functions.dart';
 import 'package:hakbang/models/ai_message.dart';
@@ -16,6 +17,8 @@ class Initialization {
     await Database.getSavedSchools(userCredentials.value!.email);
     await SortingFunctions.sortASctivities();
     await refreshChat();
+    Filter.getTopPick();
+    Filter.filterScholarships();
 
     collegeSection.value = availableColleges.value;
     reviewCenterSection.value = availableReviewCenters.value;

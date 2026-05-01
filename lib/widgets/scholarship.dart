@@ -570,7 +570,7 @@ class _ScholarshipState extends State<Scholarship> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: 0.61,
+                  childAspectRatio: 0.60,
                 ),
                 itemBuilder: (context, index) {
                   final theme = _cardTheme(section[index].color);

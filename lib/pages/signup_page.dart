@@ -141,6 +141,7 @@ class _SignupPageState extends State<SignupPage> {
           "institution": schoolController.text,
           "grade": gradeController.text,
           "role": "user",
+          "about_me": "",
         },
       };
       await Database.signupUser(data)

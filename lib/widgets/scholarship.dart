@@ -516,6 +516,7 @@ class _ScholarshipState extends State<Scholarship> {
     final isSelected = currentIndex == index;
     return GestureDetector(
       onTap: () {
+        Filter.filterScholarships();
         _tabIndex.value = index;
       },
       child: Column(

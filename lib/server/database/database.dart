@@ -64,34 +64,34 @@ class Database {
       for (Map<String, dynamic> scholars in data["data"]) {
         scholarships.add(
           ScholarshipObject(
-            allowance: scholars["Allowance"] ?? '',
-            id: scholars["ID"] ?? 0,
-            about: scholars["about"] ?? '',
-            applicationSteps: scholars["application_steps"] ?? [],
-            applicationTimeline: scholars["application_timeline"] ?? [],
-            benefits: scholars["benefits"] ?? [],
-            deadline: scholars["deadline"] ?? 0,
-            duration: scholars["duration"] ?? 0,
-            eligibility: scholars["eligibility"] ?? [],
-            government: scholars["government"] ?? false,
-            grantTitle: scholars["grant_title"] ?? {},
+            allowance: scholars["Allowance"],
+            id: scholars["ID"],
+            about: scholars["about"],
+            applicationSteps: scholars["application_steps"],
+            applicationTimeline: scholars["application_timeline"],
+            benefits: scholars["benefits"],
+            deadline: scholars["deadline"],
+            duration: scholars["duration"],
+            eligibility: scholars["eligibility"],
+            government: scholars["government"],
+            grantTitle: scholars["grant_title"],
             limit: scholars["limit"],
-            minGwa: (scholars["min_gwa"] ?? 0).toDouble(),
-            organizationName: scholars["organizationName"] ?? {},
-            requiredDocuments: scholars["required_documents"] ?? [],
-            scholarshipName: scholars["scholarshipName"] ?? '',
-            scholarshipIcon: scholars["scholarship_icon"] ?? '🎓',
-            color: scholars["color"] ?? 'blue',
-            serviceObligation: scholars["serviceObligation"] ?? {},
-            tags: scholars["tags"] ?? [],
-            topPick: scholars["top_pick"] ?? 0,
-            website: scholars["website"] ?? '',
+            minGwa: scholars["min_gwa"],
+            organizationName: scholars["organizationName"],
+            requiredDocuments: scholars["required_documents"],
+            scholarshipName: scholars["scholarshipName"],
+            scholarshipIcon: scholars["scholarship_icon"],
+            color: scholars["color"],
+            serviceObligation: scholars["serviceObligation"],
+            tags: scholars["tags"],
+            topPick: scholars["top_pick"],
+            website: scholars["website"],
           ),
         );
       }
       availableScholarships.value = scholarships;
-    } catch (_) {
-      // Server unreachable or returned malformed data — leave list empty.
+    } catch (error) {
+      print(error);
     }
   }
 
@@ -130,7 +130,7 @@ class Database {
         return {"error": "Server returned empty response"};
       return jsonDecode(response.body);
     } catch (e) {
-      return {"error": e.toString()};
+      return {"message": e.toString()};
     }
   }
 
@@ -155,7 +155,6 @@ class Database {
     final message = jsonEncode(data);
 
     final response = await http.put(url, body: message, headers: headers);
-    print(jsonDecode(response.body)["message"]);
     return jsonDecode(response.body);
   }
 

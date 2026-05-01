@@ -20,6 +20,8 @@ class Scholarship extends StatefulWidget {
 class _ScholarshipState extends State<Scholarship> {
   TextEditingController searchField = TextEditingController();
   final _tabIndex = ValueNotifier<int>(0);
+  final ScrollController _scrollController = ScrollController();
+  final PageController _pageController = PageController();
 
   @override
   void dispose() {
@@ -36,6 +38,7 @@ class _ScholarshipState extends State<Scholarship> {
         spacing: 10,
         children: [
           searchHeader(),
+          SizedBox(height: 2,),
           buildTextField("Search scholarships...", searchField, 0),
           Expanded(
             child: SingleChildScrollView(
@@ -185,7 +188,7 @@ class _ScholarshipState extends State<Scholarship> {
 
   Widget scholarshipFeatured() {
     return Padding(
-      padding: const EdgeInsets.only(top: 15, right: 5, left: 5),
+      padding: const EdgeInsets.only(top: 8, right: 5, left: 5),
       child: SizedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

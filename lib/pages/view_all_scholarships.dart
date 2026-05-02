@@ -84,7 +84,6 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
           child: SizedBox(
             child: ListView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
               itemCount: section.length,
               itemBuilder: (context, index) {
                 final s = section[index];
@@ -99,6 +98,7 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: Container(
+                      clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(
                         color: AppColors.surface,
                         borderRadius: BorderRadius.circular(18),
@@ -111,8 +111,9 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
                             Container(
                               width: 5,
                               decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.horizontal(
-                                  left: Radius.circular(50),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(18),
+                                  bottomLeft: Radius.circular(18),
                                 ),
                                 gradient: LinearGradient(
                                   begin: Alignment.topCenter,
@@ -259,14 +260,16 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
                                               color: AppColors.border2,
                                             ),
                                             FractionallySizedBox(
-                                              widthFactor:
-                                                  (s.limit - s.deadline) /
-                                                  s.limit,
+                                              widthFactor: s.limit == 0
+                                                  ? 0.0
+                                                  : ((s.limit - s.deadline) /
+                                                            s.limit)
+                                                        .clamp(0.0, 1.0),
                                               child: Container(
                                                 height: 2,
                                                 decoration: BoxDecoration(
                                                   gradient: LinearGradient(
-                                                    stops: const [0.0, 0.8],
+                                                    stops: const [0.4, 1.0],
                                                     colors: [
                                                       theme.accent,
                                                       AppColors.accent,

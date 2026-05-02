@@ -60,7 +60,6 @@ class _ScholarshipState extends State<Scholarship> {
                               ],
                             ),
                           ),
-                          buildScholarGrids(tabIdx),
                           ValueListenableBuilder(
                             valueListenable: tabIdx == 0
                                 ? governmentSection
@@ -72,6 +71,7 @@ class _ScholarshipState extends State<Scholarship> {
                                     child: viewAll(context, tabIdx),
                                   ),
                           ),
+                          buildScholarGrids(tabIdx),
                         ],
                       );
                     },
@@ -512,6 +512,10 @@ class _ScholarshipState extends State<Scholarship> {
     final isSelected = currentIndex == index;
     return GestureDetector(
       onTap: () {
+        setState(() {
+          governmentSelected.value = index == 0 ? true : false;
+        });
+        Filter.filterScholarships();
         _tabIndex.value = index;
       },
       child: Column(

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
-import 'package:hakbang/design/heights_values.dart';
-import 'package:hakbang/design/padding_design.dart';
-import 'package:hakbang/design/width_values.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/profile_page.dart';
@@ -44,154 +41,337 @@ class _HomeWidgetState extends State<HomeWidget> {
                 )
               : Column(
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Text(
-                                    "Hello, ${userData.name.split(" ")[0]}!",
-                                    style: FontStyles.header,
-                                  ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Text(
+                                  "Hello, ${userData.name.split(" ")[0]}!",
+                                  style: FontStyles.header,
                                 ),
-                                Text(
-                                  "Where would you like to go?",
-                                  style: FontStyles.obSlideDesc,
-                                ),
-                              ],
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ProfilePage(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 60,
-                              width: 60,
-                              decoration: ContainerDesign.homeAvatar,
-                              child: Text(
-                                userData.avatar,
-                                style: TextStyle(fontSize: 40),
                               ),
+                              Text(
+                                "Where would you like to go?",
+                                style: FontStyles.obSlideDesc,
+                              ),
+                            ],
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProfilePage(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 60,
+                            width: 60,
+                            decoration: ContainerDesign.homeAvatar,
+                            child: Text(
+                              userData.avatar,
+                              style: TextStyle(fontSize: 40),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Container(
-                          decoration: ContainerDesign.reviewUpg,
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 20),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          ValueListenableBuilder(
-                                            valueListenable: activityList,
-                                            builder: (context, acts, child) {
-                                              return Text(
-                                                "${acts.length}",
-                                                style: FontStyles.upgNumber,
-                                              );
-                                            },
-                                          ),
-                                          Text(
-                                            "Total of Activities",
-                                            style: FontStyles.labelMainPage,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 20),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          ValueListenableBuilder(
-                                            valueListenable: savedSchools,
-                                            builder: (context, saved, child) {
-                                              return Text(
-                                                "${saved.length}",
-                                                style: FontStyles
-                                                    .savedSchoolNumber,
-                                              );
-                                            },
-                                          ),
-                                          Text(
-                                            "Saved Schools",
-                                            style: FontStyles.labelMainPage,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Container(
+                        decoration: ContainerDesign.reviewUpg,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 20),
+                                    child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
                                         ValueListenableBuilder(
-                                          valueListenable: savedScholarships,
-                                          builder: (context, scholars, child) {
+                                          valueListenable: activityList,
+                                          builder: (context, acts, child) {
                                             return Text(
-                                              "${scholars.length}",
-                                              style: FontStyles.availScholars,
+                                              "${acts.length}",
+                                              style: FontStyles.upgNumber,
                                             );
                                           },
                                         ),
                                         Text(
-                                          "Liked Scholarships",
+                                          "Total of Activities",
                                           style: FontStyles.labelMainPage,
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        ValueListenableBuilder(
+                                          valueListenable: savedSchools,
+                                          builder: (context, saved, child) {
+                                            return Text(
+                                              "${saved.length}",
+                                              style:
+                                                  FontStyles.savedSchoolNumber,
+                                            );
+                                          },
+                                        ),
+                                        Text(
+                                          "Saved Schools",
+                                          style: FontStyles.labelMainPage,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      ValueListenableBuilder(
+                                        valueListenable: savedScholarships,
+                                        builder: (context, scholars, child) {
+                                          return Text(
+                                            "${scholars.length}",
+                                            style: FontStyles.availScholars,
+                                          );
+                                        },
+                                      ),
+                                      Text(
+                                        "Liked Scholarships",
+                                        style: FontStyles.labelMainPage,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
                     SizedBox(height: 5),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Padding(
                         padding: const EdgeInsets.only(
                           top: 20,
                           right: 10,
                           left: 10,
                         ),
-                        child: SizedBox(),
+                        child: SizedBox(
+                          child: Column(
+                            spacing: 10,
+                            children: [
+                              Row(
+                                spacing: 10,
+                                children: [
+                                  Expanded(
+                                    child: InkWell(
+                                      splashColor: AppColors.accent.withOpacity(
+                                        0.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                      onTap: () => navigationBarIndex.value = 0,
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: ContainerDesign.homeButton,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.accent,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Icon(
+                                                Icons.school_outlined,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 10,
+                                              ),
+                                              child: Text(
+                                                "Discover Schools",
+                                                style: FontStyles.homeButton,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Find programs, exams, and campus fit",
+                                              style: FontStyles.homeSubtitle,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: InkWell(
+                                      splashColor: AppColors.accent.withOpacity(
+                                        0.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                      onTap: () => navigationBarIndex.value = 1,
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: ContainerDesign.homeButton,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.accent,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Icon(
+                                                Icons
+                                                    .workspace_premium_outlined,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 10,
+                                              ),
+                                              child: Text(
+                                                "Scholarships",
+                                                style: FontStyles.homeButton,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Matches, deadlines, and requirements",
+                                              style: FontStyles.homeSubtitle,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                spacing: 10,
+                                children: [
+                                  Expanded(
+                                    child: InkWell(
+                                      splashColor: AppColors.accent.withOpacity(
+                                        0.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                      onTap: () => navigationBarIndex.value = 4,
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: ContainerDesign.homeButton,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.accent,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Icon(
+                                                Icons.menu_book_outlined,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 10,
+                                              ),
+                                              child: Text(
+                                                "Review Centers",
+                                                style: FontStyles.homeButton,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Choose modality + compare ratings",
+                                              style: FontStyles.homeSubtitle,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: InkWell(
+                                      splashColor: AppColors.accent.withOpacity(
+                                        0.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                      onTap: () => navigationBarIndex.value = 3,
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: ContainerDesign.homeButton,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.accent,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Icon(
+                                                Icons.smart_toy_outlined,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 10,
+                                              ),
+                                              child: Text(
+                                                "AI Companion",
+                                                style: FontStyles.homeButton,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Converse with Gabay AI.",
+                                              style: FontStyles.homeSubtitle,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     Expanded(
-                      flex: 4,
+                      flex: 2,
                       child: SizedBox(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,7 +435,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 valueListenable: activityList,
                                 builder: (context, acts, child) {
                                   return Padding(
-                                    padding: const EdgeInsets.only(bottom: 30),
+                                    padding: const EdgeInsets.only(bottom: 10),
                                     child: acts.isEmpty
                                         ? Center(
                                             child: Text(

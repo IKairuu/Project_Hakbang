@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
+import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/scholarship_save.dart';
 import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ScholarshipDescription extends StatefulWidget {
@@ -116,8 +118,22 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                           ),
                           onTap: () {
                             if (isSaved) {
+                              ActivityFunctions.addUserActivity(
+                                DateFormat(
+                                  "MMM dd, yyyy",
+                                ).format(DateTime.now()),
+                                "Like removed: ${s.scholarshipName}",
+                                "assets/graduation-hat.svg",
+                              );
                               ScholarshipSave.removeScholarship(s);
                             } else {
+                              ActivityFunctions.addUserActivity(
+                                DateFormat(
+                                  "MMM dd, yyyy",
+                                ).format(DateTime.now()),
+                                "Scholarship Liked : ${s.scholarshipName}",
+                                "assets/graduation-hat.svg",
+                              );
                               ScholarshipSave.saveScholarship(s);
                             }
                           },
@@ -1107,8 +1123,18 @@ Widget buildScholarCta(
         GestureDetector(
           onTap: () {
             if (isSaved) {
+              ActivityFunctions.addUserActivity(
+                DateFormat("MMM dd, yyyy").format(DateTime.now()),
+                "Like removed: ${s.scholarshipName}",
+                "assets/graduation-hat.svg",
+              );
               ScholarshipSave.removeScholarship(s);
             } else {
+              ActivityFunctions.addUserActivity(
+                DateFormat("MMM dd, yyyy").format(DateTime.now()),
+                "Scholarship Liked : ${s.scholarshipName}",
+                "assets/graduation-hat.svg",
+              );
               ScholarshipSave.saveScholarship(s);
             }
           },

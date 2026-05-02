@@ -84,7 +84,6 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
           child: SizedBox(
             child: ListView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
               itemCount: section.length,
               itemBuilder: (context, index) {
                 final s = section[index];

@@ -296,7 +296,7 @@ class FontStyles {
 
   static final TextStyle profileEmptySavedSchools = GoogleFonts.dmSans(
     color: AppColors.textMuted,
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: FontWeight.w500,
   );
 

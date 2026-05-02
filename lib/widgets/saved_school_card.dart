@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/models/college.dart';
@@ -7,10 +6,7 @@ import 'package:hakbang/models/college.dart';
 class SavedSchoolCard extends StatelessWidget {
   final College college;
 
-  const SavedSchoolCard({
-    super.key,
-    required this.college,
-  });
+  const SavedSchoolCard({super.key, required this.college});
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +24,6 @@ class SavedSchoolCard extends StatelessWidget {
         );
       }
     }
-
-    const tagBackgroundColors = [
-      Color(0xFF213536),
-      Color(0xFF2B3619),
-      Color(0xFF312746),
-    ];
-    const tagTextColors = [
-      Color(0xFF4CF9B4),
-      Color(0xFFC8FF4D),
-      Color(0xFFA253EE),
-    ];
 
     return Container(
       width: double.infinity,
@@ -67,44 +52,13 @@ class SavedSchoolCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  college.collegeName,
-                  style: FontStyles.schoolNames,
-                ),
+                Text(college.collegeName, style: FontStyles.schoolNames),
                 const SizedBox(height: 4),
                 Text(
                   '📍 ${college.address}',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: FontStyles.schoolLocation,
-                ),
-                const SizedBox(height: 10),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: tags.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final tag = entry.value;
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: tagBackgroundColors[index %
-                            tagBackgroundColors.length],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        '$tag',
-                        style: GoogleFonts.dmSans(
-                          color: tagTextColors[index % tagTextColors.length],
-                          fontWeight: FontWeight.w700,
-                          fontSize: 10,
-                        ),
-                      ),
-                    );
-                  }).toList(),
                 ),
               ],
             ),

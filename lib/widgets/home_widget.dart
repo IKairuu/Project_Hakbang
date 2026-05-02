@@ -23,7 +23,6 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   PageController cardPage = PageController();
   int index = 0;
-  bool reverse = false;
 
   @override
   Widget build(BuildContext context) {
@@ -101,15 +100,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                             padding: const EdgeInsets.all(20),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(right: 20),
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           ValueListenableBuilder(
                                             valueListenable: activityList,
@@ -131,7 +132,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       padding: const EdgeInsets.only(right: 20),
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           ValueListenableBuilder(
                                             valueListenable: savedSchools,
@@ -152,11 +153,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ),
                                     Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         ValueListenableBuilder(
-                                          valueListenable:
-                                              availableScholarships,
+                                          valueListenable: savedScholarships,
                                           builder: (context, scholars, child) {
                                             return Text(
                                               "${scholars.length}",
@@ -165,7 +165,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           },
                                         ),
                                         Text(
-                                          "Available Scholarships",
+                                          "Liked Scholarships",
                                           style: FontStyles.labelMainPage,
                                         ),
                                       ],
@@ -187,137 +187,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           right: 10,
                           left: 10,
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          spacing: 10,
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    width: WidthValues.mainPageButtonWidth,
-                                    height: HeightsValues.mainPageButtonHeight,
-                                    child: ElevatedButton(
-                                      style: ButtonDesign.findSchoolsContainer,
-                                      onPressed: () {
-                                        setState(() {
-                                          navigationBarIndex.value = 0;
-                                        });
-                                      },
-                                      child: SvgPicture.asset(
-                                        "assets/university.svg",
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: PaddingDesign.mainPageButtonLabel,
-                                    ),
-                                    child: Text(
-                                      "Find Schools",
-                                      style: FontStyles.mainPageButtonLabels,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    width: WidthValues.mainPageButtonWidth,
-                                    height: HeightsValues.mainPageButtonHeight,
-                                    child: ElevatedButton(
-                                      style: ButtonDesign.scholarhipContainer,
-                                      onPressed: () {
-                                        setState(() {
-                                          navigationBarIndex.value = 1;
-                                        });
-                                      },
-                                      child: SvgPicture.asset(
-                                        "assets/graduation-hat.svg",
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: PaddingDesign.mainPageButtonLabel,
-                                    ),
-                                    child: Text(
-                                      "Scholarships",
-                                      style: FontStyles.mainPageButtonLabels,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    width: WidthValues.mainPageButtonWidth,
-                                    height: HeightsValues.mainPageButtonHeight,
-                                    child: ElevatedButton(
-                                      style: ButtonDesign.examHubContainer,
-                                      onPressed: () {
-                                        setState(() {
-                                          navigationBarIndex.value = 4;
-                                        });
-                                      },
-                                      child: SvgPicture.asset(
-                                        "assets/exam.svg",
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: PaddingDesign.mainPageButtonLabel,
-                                    ),
-                                    child: Text(
-                                      "Exam Hub",
-                                      style: FontStyles.mainPageButtonLabels,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    width: WidthValues.mainPageButtonWidth,
-                                    height: HeightsValues.mainPageButtonHeight,
-                                    child: ElevatedButton(
-                                      style: ButtonDesign.askgabayContainer,
-                                      onPressed: () {
-                                        setState(() {
-                                          navigationBarIndex.value = 3;
-                                        });
-                                      },
-                                      child: SvgPicture.asset(
-                                        "assets/robot.svg",
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: PaddingDesign.mainPageButtonLabel,
-                                    ),
-                                    child: Text(
-                                      "Ask Gabay",
-                                      style: FontStyles.mainPageButtonLabels,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        child: SizedBox(),
                       ),
                     ),
                     Expanded(

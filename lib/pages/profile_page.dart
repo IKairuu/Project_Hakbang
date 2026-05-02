@@ -9,7 +9,6 @@ import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/college_description.dart';
 import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/design/container_design.dart';
-import 'package:hakbang/pages/scholarship_description.dart';
 import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/widgets/edit_about_me_dialog.dart';
 import 'package:hakbang/widgets/saved_scholar_card.dart';

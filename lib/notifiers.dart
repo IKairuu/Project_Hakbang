@@ -35,6 +35,7 @@ ValueNotifier<List<College>> collegeSection = ValueNotifier([]);
 ValueNotifier<List<AiMessage>> chatMessages = ValueNotifier([]);
 ValueNotifier<bool> chatLoading = ValueNotifier(false);
 ValueNotifier<List<College>> savedSchools = ValueNotifier([]);
+ValueNotifier<List<ScholarshipObject>> savedScholarships = ValueNotifier([]);
 ValueNotifier<bool> hasInternetConnection = ValueNotifier(false);
 ValueNotifier<List<ReviewCenter>> availableReviewCenters = ValueNotifier([]);
 ValueNotifier<List<ReviewCenter>> reviewCenterSection = ValueNotifier([]);

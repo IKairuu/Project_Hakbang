@@ -8,7 +8,7 @@ import 'package:hakbang/notifiers.dart';
 import 'package:http/http.dart' as http;
 
 class Database {
-  static String mainUrl = "project-hakbang-server-vif8.onrender.com";
+  static String mainUrl = "project-hakbang-server.onrender.com";
   static Future<void> getCollege() async {
     final url = Uri.https(mainUrl, "college/auth/available-colleges");
     final headers = {
@@ -180,6 +180,75 @@ class Database {
       );
     }
     activityList.value = activities;
+  }
+
+  static Future<void> getSavedScholarships(String email) async {
+    final url = Uri.https(mainUrl, "user/auth/get-saved-scholarship");
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: jsonEncode({"email": email}),
+      );
+
+      final List<ScholarshipObject> scholarList = [];
+      final data = jsonDecode(response.body);
+      for (Map<String, dynamic> dataObjs in data["data"]) {
+        for (ScholarshipObject scholars in availableScholarships.value) {
+          if (dataObjs["scholarship_name"] == scholars.scholarshipName) {
+            scholarList.add(scholars);
+          }
+        }
+      }
+      savedScholarships.value = scholarList;
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  static Future<void> saveScholarship(String scholarName) async {
+    final url = Uri.https(mainUrl, "user/auth/post-saved-scholarship");
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+
+    final data = jsonEncode({
+      "scholarship_name": scholarName,
+      "email": userCredentials.value!.email,
+    });
+
+    final response = await http.post(url, headers: headers, body: data);
+
+    return jsonDecode(response.body);
+  }
+
+  static Future<void> removeSavedScholarship(String scholarName) async {
+    final url = Uri.https(mainUrl, "user/auth/remove-saved-scholarship");
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": token.value!,
+    };
+
+    final data = jsonEncode({
+      "scholarship_name": scholarName,
+      "email": userCredentials.value!.email,
+    });
+
+    final response = await http.post(url, headers: headers, body: data);
+
+    return jsonDecode(response.body);
   }
 
   static Future<void> getSavedSchools(String email) async {

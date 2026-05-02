@@ -15,6 +15,7 @@ class Initialization {
     await Database.getUserActivities(userCredentials.value!.email);
     await Database.getHubs();
     await Database.getSavedSchools(userCredentials.value!.email);
+    await Database.getSavedScholarships(userCredentials.value!.email);
     await SortingFunctions.sortASctivities();
     await refreshChat();
     Filter.getTopPick();
@@ -55,6 +56,7 @@ class Initialization {
 
     activityList.value = [];
     savedSchools.value = [];
+    savedScholarships.value = [];
     availableScholarships.value = [];
     availableReviewCenters.value = [];
     reviewCenterSection.value = [];

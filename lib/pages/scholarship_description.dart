@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
+import 'package:hakbang/functions/scholarship_save.dart';
 import 'package:hakbang/models/scholarship_object.dart';
+import 'package:hakbang/notifiers.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ScholarshipDescription extends StatefulWidget {
@@ -13,7 +15,6 @@ class ScholarshipDescription extends StatefulWidget {
 }
 
 class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
-  bool _isSaved = false;
   bool _showTitle = false;
   late List<bool> _checkedDocs;
   late ScrollController _scrollController;
@@ -48,158 +49,177 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
 
     return Scaffold(
       backgroundColor: AppColors.bg,
-      body: Column(
-        children: [
-          Expanded(
-            child: CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                SliverAppBar(
-                  expandedHeight: 260,
-                  pinned: true,
-                  backgroundColor: AppColors.bg,
-                  surfaceTintColor: Colors.transparent,
-                  elevation: 0,
-                  centerTitle: false,
-                  titleSpacing: 0,
-                  title: AnimatedOpacity(
-                    opacity: _showTitle ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 200),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 4),
+      body: ValueListenableBuilder(
+        valueListenable: savedScholarships,
+        builder: (context, save, child) {
+          bool isSaved = save.contains(widget.scholarship);
+          return Column(
+            children: [
+              Expanded(
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    SliverAppBar(
+                      expandedHeight: 260,
+                      pinned: true,
+                      backgroundColor: AppColors.bg,
+                      surfaceTintColor: Colors.transparent,
+                      elevation: 0,
+                      centerTitle: false,
+                      titleSpacing: 0,
+                      title: AnimatedOpacity(
+                        opacity: _showTitle ? 1.0 : 0.0,
+                        duration: const Duration(milliseconds: 200),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                orgName,
+                                style: _sdDm(
+                                  9.5,
+                                  weight: FontWeight.w500,
+                                  color: AppColors.textMuted,
+                                ),
+                              ),
+                              Text(
+                                s.scholarshipName,
+                                style: _sdDm(
+                                  14,
+                                  weight: FontWeight.w700,
+                                  color: AppColors.textPrimary,
+                                  spacing: -0.3,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      leading: _sdCircleBtn(
+                        child: const Icon(
+                          Icons.chevron_left,
+                          color: Colors.white,
+                          size: 22,
+                        ),
+                        onTap: () => Navigator.pop(context),
+                      ),
+                      actions: [
+                        _sdCircleBtn(
+                          child: Icon(
+                            isSaved ? Icons.favorite : Icons.favorite_border,
+                            color: isSaved ? accent : Colors.white,
+                            size: 18,
+                          ),
+                          onTap: () {
+                            if (isSaved) {
+                              ScholarshipSave.removeScholarship(s);
+                            } else {
+                              ScholarshipSave.saveScholarship(s);
+                            }
+                          },
+                          bgColor: isSaved ? accentDim : null,
+                          borderColor: isSaved ? accent.withOpacity(0.3) : null,
+                        ),
+                        const SizedBox(width: 6),
+                      ],
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: buildScholarHero(s, accent, accentDim),
+                        collapseMode: CollapseMode.pin,
+                      ),
+                    ),
+                    SliverToBoxAdapter(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            orgName,
-                            style: _sdDm(
-                              9.5,
-                              weight: FontWeight.w500,
-                              color: AppColors.textMuted,
+                          buildScholarHeader(s, orgName, accent, accentDim),
+                          buildScholarDeadlineBar(s),
+                          buildSdDivider(),
+                          buildScholarSection(
+                            'About',
+                            Container(
+                              padding: const EdgeInsets.all(14),
+                              decoration: BoxDecoration(
+                                color: AppColors.surface,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(color: AppColors.border2),
+                              ),
+                              child: Text(
+                                s.about,
+                                style: _sdDm(
+                                  13,
+                                  color: AppColors.textSecondary,
+                                  height: 1.65,
+                                ),
+                              ),
                             ),
                           ),
-                          Text(
-                            s.scholarshipName,
-                            style: _sdDm(
-                              14,
-                              weight: FontWeight.w700,
-                              color: AppColors.textPrimary,
-                              spacing: -0.3,
+                          if (s.benefits.isNotEmpty) ...[
+                            buildSdDivider(),
+                            buildScholarSection(
+                              'Benefits',
+                              buildScholarBenefits(
+                                s.benefits,
+                                accent,
+                                accentDim,
+                              ),
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          ],
+                          if (s.eligibility.isNotEmpty) ...[
+                            buildSdDivider(),
+                            buildScholarSection(
+                              'Eligibility',
+                              buildScholarEligibility(s.eligibility),
+                            ),
+                          ],
+                          if (s.requiredDocuments.isNotEmpty) ...[
+                            buildSdDivider(),
+                            buildScholarSection(
+                              'Required Documents',
+                              _buildDocs(s.requiredDocuments),
+                            ),
+                          ],
+                          if (s.applicationTimeline.isNotEmpty) ...[
+                            buildSdDivider(),
+                            buildScholarSection(
+                              'Timeline',
+                              buildScholarTimeline(
+                                s.applicationTimeline,
+                                accent,
+                              ),
+                            ),
+                          ],
+                          buildSdDivider(),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(18, 16, 18, 4),
+                            child: buildScholarObligation(s.serviceObligation),
                           ),
+                          if (s.applicationSteps.isNotEmpty) ...[
+                            buildSdDivider(),
+                            buildScholarSection(
+                              'How to Apply',
+                              buildScholarApplySteps(s.applicationSteps),
+                            ),
+                          ],
+                          const SizedBox(height: 32),
                         ],
                       ),
                     ),
-                  ),
-                  leading: _sdCircleBtn(
-                    child: const Icon(
-                      Icons.chevron_left,
-                      color: Colors.white,
-                      size: 22,
-                    ),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  actions: [
-                    _sdCircleBtn(
-                      child: Icon(
-                        _isSaved ? Icons.favorite : Icons.favorite_border,
-                        color: _isSaved ? accent : Colors.white,
-                        size: 18,
-                      ),
-                      onTap: () => setState(() => _isSaved = !_isSaved),
-                      bgColor: _isSaved ? accentDim : null,
-                      borderColor: _isSaved ? accent.withOpacity(0.3) : null,
-                    ),
-                    const SizedBox(width: 6),
                   ],
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: buildScholarHero(s, accent, accentDim),
-                    collapseMode: CollapseMode.pin,
-                  ),
                 ),
-                SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildScholarHeader(s, orgName, accent, accentDim),
-                      buildScholarDeadlineBar(s),
-                      buildSdDivider(),
-                      buildScholarSection(
-                        'About',
-                        Container(
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: AppColors.surface,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: AppColors.border2),
-                          ),
-                          child: Text(
-                            s.about,
-                            style: _sdDm(
-                              13,
-                              color: AppColors.textSecondary,
-                              height: 1.65,
-                            ),
-                          ),
-                        ),
-                      ),
-                      if (s.benefits.isNotEmpty) ...[
-                        buildSdDivider(),
-                        buildScholarSection(
-                          'Benefits',
-                          buildScholarBenefits(s.benefits, accent, accentDim),
-                        ),
-                      ],
-                      if (s.eligibility.isNotEmpty) ...[
-                        buildSdDivider(),
-                        buildScholarSection(
-                          'Eligibility',
-                          buildScholarEligibility(s.eligibility),
-                        ),
-                      ],
-                      if (s.requiredDocuments.isNotEmpty) ...[
-                        buildSdDivider(),
-                        buildScholarSection(
-                          'Required Documents',
-                          _buildDocs(s.requiredDocuments),
-                        ),
-                      ],
-                      if (s.applicationTimeline.isNotEmpty) ...[
-                        buildSdDivider(),
-                        buildScholarSection(
-                          'Timeline',
-                          buildScholarTimeline(s.applicationTimeline, accent),
-                        ),
-                      ],
-                      buildSdDivider(),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(18, 16, 18, 4),
-                        child: buildScholarObligation(s.serviceObligation),
-                      ),
-                      if (s.applicationSteps.isNotEmpty) ...[
-                        buildSdDivider(),
-                        buildScholarSection(
-                          'How to Apply',
-                          buildScholarApplySteps(s.applicationSteps),
-                        ),
-                      ],
-                      const SizedBox(height: 32),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          buildScholarCta(
-            s,
-            accent,
-            _isSaved,
-            () => setState(() => _isSaved = !_isSaved),
-          ),
-        ],
+              ),
+              buildScholarCta(
+                s,
+                accent,
+                isSaved,
+                () => setState(() => isSaved = !isSaved),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -1085,7 +1105,13 @@ Widget buildScholarCta(
         ),
         const SizedBox(width: 10),
         GestureDetector(
-          onTap: onSaveToggle,
+          onTap: () {
+            if (isSaved) {
+              ScholarshipSave.removeScholarship(s);
+            } else {
+              ScholarshipSave.saveScholarship(s);
+            }
+          },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             width: 50,

@@ -205,7 +205,6 @@ class _ScholarshipState extends State<Scholarship> {
               child: ValueListenableBuilder(
                 valueListenable: featuredScholarship,
                 builder: (context, featured, child) {
-                  final featuredTheme = _cardTheme(featured!.color);
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -238,36 +237,36 @@ class _ScholarshipState extends State<Scholarship> {
                                     // gradient bg
                                     Positioned.fill(
                                       child: Container(
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           gradient: LinearGradient(
                                             begin: Alignment.bottomLeft,
                                             end: Alignment.topRight,
-                                            colors: featuredTheme.gradient,
+                                            colors: [
+                                              AppColors.oceanBlue,
+                                              AppColors.darkBlue,
+                                            ],
                                           ),
                                         ),
                                       ),
                                     ),
                                     // radial glow
                                     Positioned(
-                                      top: -110,
-                                      right: -100,
+                                      top: -40,
+                                      right: -30,
                                       child: Container(
-                                        width: 300,
-                                        height: 300,
+                                        width: 220,
+                                        height: 220,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           gradient: RadialGradient(
                                             colors: [
-                                              featuredTheme.accent.withOpacity(
-                                                0.35,
-                                              ),
+                                              AppColors.blue.withOpacity(0.25),
                                               Colors.transparent,
                                             ],
                                           ),
                                         ),
                                       ),
                                     ),
-
                                     // grid overlay
                                     Positioned.fill(
                                       child: CustomPaint(
@@ -333,7 +332,7 @@ class _ScholarshipState extends State<Scholarship> {
                                               ),
                                               child: Center(
                                                 child: Text(
-                                                  featured.scholarshipIcon,
+                                                  featured!.scholarshipIcon,
                                                   style: const TextStyle(
                                                     fontSize: 24,
                                                     height: 1.2,
@@ -473,19 +472,16 @@ class _ScholarshipState extends State<Scholarship> {
                                           color: AppColors.border2,
                                         ),
                                         FractionallySizedBox(
-                                          widthFactor: featured.limit == 0
-                                              ? 0.0
-                                              : ((featured.limit -
-                                                            featured.deadline) /
-                                                        featured.limit)
-                                                    .clamp(0.0, 1.0),
+                                          widthFactor:
+                                              (featured.limit -
+                                                  featured.deadline) /
+                                              featured.limit,
                                           child: Container(
                                             height: 3,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               gradient: LinearGradient(
-                                                stops: const [0.4, 1.0],
                                                 colors: [
-                                                  featuredTheme.accent,
+                                                  AppColors.blue,
                                                   AppColors.accent,
                                                 ],
                                               ),
@@ -516,6 +512,9 @@ class _ScholarshipState extends State<Scholarship> {
     final isSelected = currentIndex == index;
     return GestureDetector(
       onTap: () {
+        setState(() {
+          governmentSelected.value = index == 0 ? true : false;
+        });
         Filter.filterScholarships();
         _tabIndex.value = index;
       },
@@ -535,7 +534,7 @@ class _ScholarshipState extends State<Scholarship> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 250),
             height: 2,
-            width: isSelected ? 80 : 0,
+            width: isSelected ? 110 : 0,
             decoration: BoxDecoration(
               color: AppColors.accent,
               borderRadius: BorderRadius.circular(2),
@@ -787,18 +786,15 @@ class _ScholarshipState extends State<Scholarship> {
                                         color: AppColors.border2,
                                       ),
                                       FractionallySizedBox(
-                                        widthFactor: section[index].limit == 0
-                                            ? 0.0
-                                            : ((section[index].limit -
-                                                          section[index]
-                                                              .deadline) /
-                                                      section[index].limit)
-                                                  .clamp(0.0, 1.0),
+                                        widthFactor:
+                                            (section[index].limit -
+                                                section[index].deadline) /
+                                            section[index].limit,
                                         child: Container(
                                           height: 2,
                                           decoration: BoxDecoration(
                                             gradient: LinearGradient(
-                                              stops: const [0.4, 1.0],
+                                              stops: const [0.0, 0.8],
                                               colors: [
                                                 theme.accent,
                                                 AppColors.accent,

@@ -592,9 +592,7 @@ Widget buildScholarHeader(
             const SizedBox(width: 8),
             Expanded(
               child: _sdStatPill(
-                s.deadline > 0
-                    ? '${DateTime.fromMillisecondsSinceEpoch(s.deadline).difference(DateTime.now()).inDays}d'
-                    : 'N/A',
+                s.deadline > 0 ? '${s.deadline}d' : 'N/A',
                 'Days Left',
                 AppColors.coral,
               ),
@@ -642,10 +640,9 @@ Widget _sdStatPill(String val, String label, Color valColor) {
 Widget buildScholarDeadlineBar(ScholarshipObject s) {
   if (s.deadline <= 0) return const SizedBox.shrink();
 
-  final deadline = DateTime.fromMillisecondsSinceEpoch(s.deadline);
-  final daysLeft = deadline.difference(DateTime.now()).inDays;
-  const windowDays = 180;
-  final pct = ((windowDays - daysLeft) / windowDays).clamp(0.0, 1.0);
+  final deadline = s.deadline;
+  final windowDays = s.limit;
+  final pct = ((windowDays - deadline) / windowDays);
   final accent = _sdColorOf(s.color).accent;
   final barGradient = LinearGradient(colors: [accent, AppColors.accent]);
 
@@ -666,7 +663,7 @@ Widget buildScholarDeadlineBar(ScholarshipObject s) {
               ),
             ),
             Text(
-              daysLeft > 0 ? '$daysLeft days left' : 'Closed',
+              s.deadline > 0 ? '${s.deadline} days left' : 'Closed',
               style: _sdDm(
                 11,
                 weight: FontWeight.w700,

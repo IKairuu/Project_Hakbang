@@ -220,6 +220,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             ),
                                             Text(
                                               "Find programs, exams, and campus fit",
+                                              maxLines: 2,
                                               style: FontStyles.homeSubtitle,
                                             ),
                                           ],
@@ -264,6 +265,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             ),
                                             Text(
                                               "Matches, deadlines, and requirements",
+                                              maxLines: 2,
                                               style: FontStyles.homeSubtitle,
                                             ),
                                           ],
@@ -312,6 +314,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             ),
                                             Text(
                                               "Choose modality + compare ratings",
+                                              maxLines: 2,
                                               style: FontStyles.homeSubtitle,
                                             ),
                                           ],
@@ -355,6 +358,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             ),
                                             Text(
                                               "Converse with Gabay AI.",
+                                              maxLines: 2,
                                               style: FontStyles.homeSubtitle,
                                             ),
                                           ],

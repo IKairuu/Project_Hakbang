@@ -46,11 +46,7 @@ class _SignupPageState extends State<SignupPage> {
 
   final List<String> avatars = ['🦁', '🦊', '🐉', '🦅', '🐬'];
   final List<occupationOption> occupations = [
-    occupationOption(
-      emoji: '🧑‍🎓',
-      title: 'Student',
-      subtitle: 'Grade 11 - 12\n ',
-    ),
+    occupationOption(emoji: '🧑‍🎓', title: 'Student', subtitle: 'Students\n '),
     occupationOption(
       emoji: '👨‍👩‍👧',
       title: 'Parent',

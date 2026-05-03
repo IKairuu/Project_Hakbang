@@ -110,6 +110,10 @@ class _AboutAppState extends State<AboutApp> with TickerProviderStateMixin {
                         height: 96,
                         decoration: BoxDecoration(
                           color: AppColors.accent,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/hakbang_logo2.png"),
+                          ),
                           borderRadius: BorderRadius.circular(32),
                           boxShadow: [
                             BoxShadow(
@@ -120,11 +124,6 @@ class _AboutAppState extends State<AboutApp> with TickerProviderStateMixin {
                               spreadRadius: 2,
                             ),
                           ],
-                        ),
-                        child: const Icon(
-                          Icons.school_rounded,
-                          color: Color(0xFF0C0D10),
-                          size: 44,
                         ),
                       ),
                     ),

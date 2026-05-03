@@ -243,7 +243,10 @@ class _SignupPageState extends State<SignupPage> {
                             height: 50,
                             width: 50,
                             decoration: ContainerDesign.startImage,
-                            child: const Icon(Icons.image, size: 30),
+                            child: Image.asset(
+                              "assets/hakbang_logo2.png",
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           const SizedBox(width: 12),
                           Row(

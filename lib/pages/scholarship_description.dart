@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/filter.dart';
+import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/functions/scholarship_save.dart';
 import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
@@ -1117,8 +1118,13 @@ Widget buildScholarCta(
             ),
             onPressed: () async {
               final uri = Uri.tryParse(s.website);
-              if (uri != null)
-                await launchUrl(uri, mode: LaunchMode.externalApplication);
+              if (uri != null) {
+                Launcher.launchBrowserView(
+                  uri,
+                  s.scholarshipName,
+                  "assets/graduation-hat.svg",
+                );
+              }
             },
             child: Text(
               'Apply Now',

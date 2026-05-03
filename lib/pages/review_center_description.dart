@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
+import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/models/review_center.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -336,12 +337,10 @@ Widget buildDetailContent(ReviewCenter rc) {
                 color: AppColors.onAccent,
               ),
             ),
-            onPressed: () {
+            onPressed: () async {
               if (rc.website.isNotEmpty) {
-                launchUrl(
-                  Uri.parse(rc.website),
-                  mode: LaunchMode.externalApplication,
-                );
+                final uri = Uri.tryParse(rc.website);
+                Launcher.launchBrowserView(uri!, rc.title, "assets/exams.svg");
               }
             },
           ),
@@ -714,10 +713,8 @@ Widget buildStickyBottom(ReviewCenter rc) {
           ),
           onPressed: () {
             if (rc.website.isNotEmpty) {
-              launchUrl(
-                Uri.parse(rc.website),
-                mode: LaunchMode.externalApplication,
-              );
+              final uri = Uri.tryParse(rc.website);
+              Launcher.launchBrowserView(uri!, rc.title, "assets/exams.svg");
             }
           },
           child: Text(

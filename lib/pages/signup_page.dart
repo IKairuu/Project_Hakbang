@@ -244,7 +244,7 @@ class _SignupPageState extends State<SignupPage> {
                             width: 50,
                             decoration: ContainerDesign.startImage,
                             child: Image.asset(
-                              "assets/hakbang_logo2.png",
+                              "assets/hakbang_logo.png",
                               fit: BoxFit.cover,
                             ),
                           ),

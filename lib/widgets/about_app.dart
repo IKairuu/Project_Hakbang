@@ -112,7 +112,7 @@ class _AboutAppState extends State<AboutApp> with TickerProviderStateMixin {
                           color: AppColors.accent,
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage("assets/hakbang_logo2.png"),
+                            image: AssetImage("assets/hakbang_logo.png"),
                           ),
                           borderRadius: BorderRadius.circular(32),
                           boxShadow: [

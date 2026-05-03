@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/models/review_center.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ReviewCenterDescription extends StatefulWidget {
   const ReviewCenterDescription({super.key, required this.reviewCenter});

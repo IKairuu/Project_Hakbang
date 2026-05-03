@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/activity.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/models/review_center.dart';
@@ -44,6 +45,8 @@ class Database {
       );
     }
     availableColleges.value = colleges;
+    collegeSection.value = availableColleges.value;
+    Initialization.refreshCollegeSelection();
   }
 
   static Future<void> getScholarships() async {

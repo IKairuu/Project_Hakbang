@@ -10,7 +10,6 @@ class Initialization {
   static Future<void> mainInitialization() async {
     await Locations.initializeLocationServices();
     userPosition.value = await Locations.getUserLocation();
-    await Database.getCollege();
     await Database.getScholarships();
     await Database.getUserActivities(userCredentials.value!.email);
     await Database.getHubs();
@@ -21,9 +20,7 @@ class Initialization {
     Filter.getTopPick();
     Filter.filterScholarships();
 
-    collegeSection.value = availableColleges.value;
     reviewCenterSection.value = availableReviewCenters.value;
-    refreshCollegeSelection();
   }
 
   static void refreshCollegeSelection() {

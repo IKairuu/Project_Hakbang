@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
@@ -132,6 +133,26 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    retrieveSavedObjects();
+  }
+
+  Future<void> retrieveSavedObjects() async {
+    if (availableColleges.value.isEmpty) {
+      await Database.getCollege();
+    }
+
+    if (availableScholarships.value.isEmpty) {
+      await Database.getScholarships();
+      Filter.getTopPick();
+      Filter.filterScholarships();
+    }
+    await Database.getSavedSchools(userCredentials.value!.email);
+    await Database.getSavedScholarships(userCredentials.value!.email);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: userCredentials,
@@ -143,379 +164,461 @@ class _ProfilePageState extends State<ProfilePage> {
         final grade = _withFallback(userData?.grade, 'Grade Level');
         final school = _withFallback(userData?.institution, 'School');
 
-        return Scaffold(
-          backgroundColor: AppColors.bg,
-          appBar: AppBar(
-            backgroundColor: AppColors.bg,
-            surfaceTintColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: const Icon(
-                Icons.chevron_left,
-                color: Colors.white,
-                size: 28,
-              ),
-              onPressed: () {
-                if (Navigator.canPop(context)) {
-                  Navigator.pop(context);
-                } else {
-                  navigationBarIndex.value = 2;
-                }
-              },
-            ),
-            actions: [
-              IconButton(
-                onPressed: _confirmLogout,
-                icon: const Icon(Icons.logout_rounded),
-                color: Colors.white,
-                tooltip: 'Log out',
-              ),
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [AppColors.bodyBg, AppColors.bg],
-                ),
-              ),
-              child: SafeArea(
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: Opacity(
-                        opacity: 0.18,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            gradient: RadialGradient(
-                              center: Alignment.topCenter,
-                              radius: 1.3,
-                              colors: [
-                                BackgroundDesign.startPageColor.withValues(
-                                  alpha: 0.0,
-                                ),
-                                BackgroundDesign.startPageColor,
-                              ],
-                            ),
-                          ),
-                        ),
+        return ValueListenableBuilder(
+          valueListenable: savedScholarships,
+          builder: (context, scholarSave, child) {
+            return ValueListenableBuilder(
+              valueListenable: savedSchools,
+              builder: (context, schoolSave, child) {
+                return Scaffold(
+                  backgroundColor: AppColors.bg,
+                  appBar: AppBar(
+                    backgroundColor: AppColors.bg,
+                    surfaceTintColor: Colors.transparent,
+                    elevation: 0,
+                    leading: IconButton(
+                      icon: const Icon(
+                        Icons.chevron_left,
+                        color: Colors.white,
+                        size: 28,
                       ),
+                      onPressed: () {
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        } else {
+                          navigationBarIndex.value = 2;
+                        }
+                      },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 16,
+                    actions: [
+                      IconButton(
+                        onPressed: _confirmLogout,
+                        icon: const Icon(Icons.logout_rounded),
+                        color: Colors.white,
+                        tooltip: 'Log out',
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _space8,
-                          Container(
+                    ],
+                  ),
+                  body: scholarSave.isEmpty || schoolSave.isEmpty
+                      ? Center(
+                          child: CircularProgressIndicator.adaptive(
+                            backgroundColor: AppColors.accent,
+                            year2023: true,
+                          ),
+                        )
+                      : SingleChildScrollView(
+                          child: Container(
                             width: double.infinity,
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: AppColors.surface.withValues(alpha: 0.95),
-                              borderRadius: BorderRadius.circular(24),
-                              border: Border.all(color: AppColors.border2),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.28),
-                                  blurRadius: 24,
-                                  offset: const Offset(0, 14),
-                                ),
-                              ],
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [AppColors.bodyBg, AppColors.bg],
+                              ),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 70,
-                                      height: 70,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.accent.withValues(
-                                          alpha: 0.16,
-                                        ),
-                                        borderRadius: BorderRadius.circular(14),
-                                        border: Border.all(
-                                          color: AppColors.accent,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          avatar,
-                                          style: const TextStyle(fontSize: 40),
+                            child: SafeArea(
+                              child: Stack(
+                                children: [
+                                  Positioned.fill(
+                                    child: Opacity(
+                                      opacity: 0.18,
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          gradient: RadialGradient(
+                                            center: Alignment.topCenter,
+                                            radius: 1.3,
+                                            colors: [
+                                              BackgroundDesign.startPageColor
+                                                  .withValues(alpha: 0.0),
+                                              BackgroundDesign.startPageColor,
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 16),
-                                    Column(
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 20,
+                                      vertical: 16,
+                                    ),
+                                    child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          name,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: FontStyles.previewName,
+                                        _space8,
+                                        Container(
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.all(20),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.surface.withValues(
+                                              alpha: 0.95,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              24,
+                                            ),
+                                            border: Border.all(
+                                              color: AppColors.border2,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black.withValues(
+                                                  alpha: 0.28,
+                                                ),
+                                                blurRadius: 24,
+                                                offset: const Offset(0, 14),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: 70,
+                                                    height: 70,
+                                                    decoration: BoxDecoration(
+                                                      color: AppColors.accent
+                                                          .withValues(
+                                                            alpha: 0.16,
+                                                          ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            14,
+                                                          ),
+                                                      border: Border.all(
+                                                        color: AppColors.accent,
+                                                      ),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        avatar,
+                                                        style: const TextStyle(
+                                                          fontSize: 40,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 16),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        name,
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: FontStyles
+                                                            .previewName,
+                                                      ),
+                                                      Text(
+                                                        email,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: FontStyles
+                                                            .previewEmail,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              _space10,
+                                              Row(
+                                                children: [
+                                                  _buildProfileChip(
+                                                    text: occupation,
+                                                    decoration: ContainerDesign
+                                                        .pillTagOccupation,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  _buildProfileChip(
+                                                    text: grade,
+                                                    decoration: ContainerDesign
+                                                        .pillTagGrade,
+                                                  ),
+                                                ],
+                                              ),
+                                              _space8,
+                                              Row(
+                                                children: [
+                                                  _buildProfileChip(
+                                                    text: school,
+                                                    decoration: ContainerDesign
+                                                        .pillTagGrade,
+                                                    ellipsis: true,
+                                                  ),
+                                                ],
+                                              ),
+                                              _space20,
+                                              ValueListenableBuilder(
+                                                valueListenable:
+                                                    userCredentials,
+                                                builder: (context, userData, child) {
+                                                  return userData == null
+                                                      ? Center(
+                                                          child: Text(
+                                                            "Not Logged In",
+                                                            style: GoogleFonts.dmSans(
+                                                              color: AppColors
+                                                                  .textMuted,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : Container(
+                                                          width:
+                                                              double.infinity,
+                                                          padding:
+                                                              const EdgeInsets.all(
+                                                                16,
+                                                              ),
+                                                          decoration: BoxDecoration(
+                                                            color: AppColors
+                                                                .surface2
+                                                                .withValues(
+                                                                  alpha: 0.9,
+                                                                ),
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  18,
+                                                                ),
+                                                            border: Border.all(
+                                                              color: AppColors
+                                                                  .border,
+                                                            ),
+                                                          ),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    'About Me:',
+                                                                    style: FontStyles
+                                                                        .profileAboutTitle,
+                                                                  ),
+                                                                  TextButton.icon(
+                                                                    onPressed:
+                                                                        _showEditAboutMeDialog,
+                                                                    icon: const Icon(
+                                                                      Icons
+                                                                          .edit_rounded,
+                                                                      size: 16,
+                                                                    ),
+                                                                    label:
+                                                                        const Text(
+                                                                          'Edit',
+                                                                        ),
+                                                                    style: TextButton.styleFrom(
+                                                                      foregroundColor:
+                                                                          AppColors
+                                                                              .accent,
+                                                                      padding: const EdgeInsets.symmetric(
+                                                                        horizontal:
+                                                                            8,
+                                                                        vertical:
+                                                                            4,
+                                                                      ),
+                                                                      minimumSize:
+                                                                          Size.zero,
+                                                                      tapTargetSize:
+                                                                          MaterialTapTargetSize
+                                                                              .shrinkWrap,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 6,
+                                                              ),
+                                                              Text(
+                                                                userData
+                                                                    .aboutMe,
+                                                                style: FontStyles
+                                                                    .profileAboutBody,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                },
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        Text(
-                                          email,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: FontStyles.previewEmail,
+                                        _space20,
+                                        Row(
+                                          spacing: 10,
+                                          children: [
+                                            Icon(
+                                              Icons.bookmarks_rounded,
+                                              color: AppColors.textPrimary,
+                                            ),
+                                            Text(
+                                              'Saved Schools',
+                                              style: FontStyles
+                                                  .profileSectionTitle,
+                                            ),
+                                          ],
+                                        ),
+                                        _space10,
+                                        ValueListenableBuilder(
+                                          valueListenable: savedSchools,
+                                          builder: (context, saved, child) {
+                                            if (saved.isEmpty) {
+                                              return Container(
+                                                height: 200,
+                                                width: double.infinity,
+                                                padding: const EdgeInsets.all(
+                                                  16,
+                                                ),
+                                                decoration: ContainerDesign
+                                                    .universitySections,
+                                                child: Center(
+                                                  child: Text(
+                                                    'No saved school yet.',
+                                                    style: FontStyles
+                                                        .profileEmptySavedSchools,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            return Container(
+                                              width: double.infinity,
+                                              height: 200,
+                                              padding: EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.surface
+                                                    .withValues(alpha: 0.95),
+                                                borderRadius:
+                                                    BorderRadius.circular(24),
+                                                border: Border.all(
+                                                  color: AppColors.border2,
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withValues(
+                                                          alpha: 0.28,
+                                                        ),
+                                                    blurRadius: 24,
+                                                    offset: const Offset(0, 14),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: ListView.separated(
+                                                physics:
+                                                    const BouncingScrollPhysics(),
+                                                itemCount: saved.length,
+                                                separatorBuilder: (_, __) =>
+                                                    const SizedBox(height: 12),
+                                                itemBuilder: (context, index) {
+                                                  final college = saved[index];
+                                                  return GestureDetector(
+                                                    onTap: () =>
+                                                        _openCollegeDescription(
+                                                          college,
+                                                        ),
+                                                    child: SavedSchoolCard(
+                                                      college: college,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        _space20,
+                                        Row(
+                                          spacing: 10,
+                                          children: [
+                                            FaIcon(
+                                              FontAwesomeIcons.heartCircleCheck,
+                                              color: AppColors.textPrimary,
+                                            ),
+                                            Text(
+                                              'Liked Scholarships',
+                                              style: FontStyles
+                                                  .profileSectionTitle,
+                                            ),
+                                          ],
+                                        ),
+                                        _space10,
+                                        ValueListenableBuilder(
+                                          valueListenable: savedScholarships,
+                                          builder: (context, saved, child) {
+                                            if (saved.isEmpty) {
+                                              return Container(
+                                                width: double.infinity,
+                                                height: 200,
+                                                padding: const EdgeInsets.all(
+                                                  16,
+                                                ),
+                                                decoration: ContainerDesign
+                                                    .universitySections,
+                                                child: Center(
+                                                  child: Text(
+                                                    'No saved scholarships yet.',
+                                                    style: FontStyles
+                                                        .profileEmptySavedSchools,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+
+                                            return Container(
+                                              width: double.infinity,
+                                              height: 200,
+                                              padding: EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.surface
+                                                    .withValues(alpha: 0.95),
+                                                borderRadius:
+                                                    BorderRadius.circular(24),
+                                                border: Border.all(
+                                                  color: AppColors.border2,
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withValues(
+                                                          alpha: 0.28,
+                                                        ),
+                                                    blurRadius: 24,
+                                                    offset: const Offset(0, 14),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: SavedScholarCard(),
+                                            );
+                                          },
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
-                                _space10,
-                                Row(
-                                  children: [
-                                    _buildProfileChip(
-                                      text: occupation,
-                                      decoration:
-                                          ContainerDesign.pillTagOccupation,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    _buildProfileChip(
-                                      text: grade,
-                                      decoration: ContainerDesign.pillTagGrade,
-                                    ),
-                                  ],
-                                ),
-                                _space8,
-                                Row(
-                                  children: [
-                                    _buildProfileChip(
-                                      text: school,
-                                      decoration: ContainerDesign.pillTagGrade,
-                                      ellipsis: true,
-                                    ),
-                                  ],
-                                ),
-                                _space20,
-                                ValueListenableBuilder(
-                                  valueListenable: userCredentials,
-                                  builder: (context, userData, child) {
-                                    return userData == null
-                                        ? Center(
-                                            child: Text(
-                                              "Not Logged In",
-                                              style: GoogleFonts.dmSans(
-                                                color: AppColors.textMuted,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w800,
-                                              ),
-                                            ),
-                                          )
-                                        : Container(
-                                            width: double.infinity,
-                                            padding: const EdgeInsets.all(16),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.surface2
-                                                  .withValues(alpha: 0.9),
-                                              borderRadius:
-                                                  BorderRadius.circular(18),
-                                              border: Border.all(
-                                                color: AppColors.border,
-                                              ),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      'About Me:',
-                                                      style: FontStyles
-                                                          .profileAboutTitle,
-                                                    ),
-                                                    TextButton.icon(
-                                                      onPressed:
-                                                          _showEditAboutMeDialog,
-                                                      icon: const Icon(
-                                                        Icons.edit_rounded,
-                                                        size: 16,
-                                                      ),
-                                                      label: const Text('Edit'),
-                                                      style: TextButton.styleFrom(
-                                                        foregroundColor:
-                                                            AppColors.accent,
-                                                        padding:
-                                                            const EdgeInsets.symmetric(
-                                                              horizontal: 8,
-                                                              vertical: 4,
-                                                            ),
-                                                        minimumSize: Size.zero,
-                                                        tapTargetSize:
-                                                            MaterialTapTargetSize
-                                                                .shrinkWrap,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 6),
-                                                Text(
-                                                  userData.aboutMe,
-                                                  style: FontStyles
-                                                      .profileAboutBody,
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                  },
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          _space20,
-                          Row(
-                            spacing: 10,
-                            children: [
-                              Icon(
-                                Icons.bookmarks_rounded,
-                                color: AppColors.textPrimary,
-                              ),
-                              Text(
-                                'Saved Schools',
-                                style: FontStyles.profileSectionTitle,
-                              ),
-                            ],
-                          ),
-                          _space10,
-                          ValueListenableBuilder(
-                            valueListenable: savedSchools,
-                            builder: (context, saved, child) {
-                              if (saved.isEmpty) {
-                                return Container(
-                                  height: 200,
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.all(16),
-                                  decoration:
-                                      ContainerDesign.universitySections,
-                                  child: Center(
-                                    child: Text(
-                                      'No saved school yet.',
-                                      style:
-                                          FontStyles.profileEmptySavedSchools,
-                                    ),
-                                  ),
-                                );
-                              }
-                              return Container(
-                                width: double.infinity,
-                                height: 200,
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.surface.withValues(
-                                    alpha: 0.95,
-                                  ),
-                                  borderRadius: BorderRadius.circular(24),
-                                  border: Border.all(color: AppColors.border2),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.28,
-                                      ),
-                                      blurRadius: 24,
-                                      offset: const Offset(0, 14),
-                                    ),
-                                  ],
-                                ),
-                                child: ListView.separated(
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: saved.length,
-                                  separatorBuilder: (_, __) =>
-                                      const SizedBox(height: 12),
-                                  itemBuilder: (context, index) {
-                                    final college = saved[index];
-                                    return GestureDetector(
-                                      onTap: () =>
-                                          _openCollegeDescription(college),
-                                      child: SavedSchoolCard(college: college),
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                          _space20,
-                          Row(
-                            spacing: 10,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.heartCircleCheck,
-                                color: AppColors.textPrimary,
-                              ),
-                              Text(
-                                'Liked Scholarships',
-                                style: FontStyles.profileSectionTitle,
-                              ),
-                            ],
-                          ),
-                          _space10,
-                          ValueListenableBuilder(
-                            valueListenable: savedScholarships,
-                            builder: (context, saved, child) {
-                              if (saved.isEmpty) {
-                                return Container(
-                                  width: double.infinity,
-                                  height: 200,
-                                  padding: const EdgeInsets.all(16),
-                                  decoration:
-                                      ContainerDesign.universitySections,
-                                  child: Center(
-                                    child: Text(
-                                      'No saved scholarships yet.',
-                                      style:
-                                          FontStyles.profileEmptySavedSchools,
-                                    ),
-                                  ),
-                                );
-                              }
-
-                              return Container(
-                                width: double.infinity,
-                                height: 200,
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.surface.withValues(
-                                    alpha: 0.95,
-                                  ),
-                                  borderRadius: BorderRadius.circular(24),
-                                  border: Border.all(color: AppColors.border2),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.28,
-                                      ),
-                                      blurRadius: 24,
-                                      offset: const Offset(0, 14),
-                                    ),
-                                  ],
-                                ),
-                                child: SavedScholarCard(),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+                        ),
+                );
+              },
+            );
+          },
         );
       },
     );

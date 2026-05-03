@@ -8,6 +8,7 @@ import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/school_save.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -22,6 +23,19 @@ class CollegeDescription extends StatefulWidget {
 class _CollegeDescriptionState extends State<CollegeDescription> {
   final ScrollController _tagScroll = ScrollController();
   bool _aboutExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    retrieveSavedSchool();
+  }
+
+  Future<void> retrieveSavedSchool() async {
+    if (availableColleges.value.isEmpty) {
+      await Database.getCollege();
+    }
+    SchoolSave.convertSavedSchools();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -575,7 +589,11 @@ Widget _cdStatItem(String value, String label, Color valueColor) => Expanded(
     children: [
       Text(
         value,
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: valueColor),
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w800,
+          color: valueColor,
+        ),
       ),
       const SizedBox(height: 2),
       Text(

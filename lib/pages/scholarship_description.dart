@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/functions/activity_functions.dart';
+import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/scholarship_save.dart';
 import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
+import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,6 +26,7 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
   @override
   void initState() {
     super.initState();
+    retrievedSavedScholarship();
     _checkedDocs = List.filled(
       widget.scholarship.requiredDocuments.length,
       false,
@@ -41,6 +44,15 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  Future<void> retrievedSavedScholarship() async {
+    if (availableScholarships.value.isEmpty) {
+      await Database.getScholarships();
+      Filter.getTopPick();
+      Filter.filterScholarships();
+    }
+    ScholarshipSave.convertSavedScholarship();
   }
 
   @override

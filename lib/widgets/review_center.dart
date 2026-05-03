@@ -8,6 +8,7 @@ import 'package:hakbang/design/button_design.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/models/review_center.dart' as rc_model;
 import 'package:hakbang/pages/review_center_description.dart';
+import 'package:hakbang/server/database/database.dart';
 
 class ReviewCenter extends StatefulWidget {
   const ReviewCenter({super.key});
@@ -20,52 +21,78 @@ class _ReviewCenterState extends State<ReviewCenter> {
   final TextEditingController _reviewCenterController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    retrieveReviewCenters();
+  }
+
+  Future<void> retrieveReviewCenters() async {
+    await Database.getHubs();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: SafeArea(
         top: false,
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildHeader(),
-                  const SizedBox(height: 20),
-                  buildTextField(
-                    'Search review centers...',
-                    _reviewCenterController,
-                  ),
-                  const SizedBox(height: 12),
-                  buildTags(
-                    labels: ["All", "On-site", "Online", "Hybrid"],
-                    notifier: selectedFilter,
-                    onChanged: () {
-                      _reviewCenterController.clear();
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  ValueListenableBuilder(
-                    valueListenable: reviewCenterSection,
-                    builder: (context, centers, child) {
-                      return buildTopDetails(centers.length);
-                    },
-                  ),
-                  const SizedBox(height: 6),
-                  Expanded(
-                    child: ValueListenableBuilder(
-                      valueListenable: reviewCenterSection,
-                      builder: (context, centers, child) {
-                        return buildHubs(centers);
-                      },
+        child: ValueListenableBuilder(
+          valueListenable: availableReviewCenters,
+          builder: (context, centers, child) {
+            return centers.isEmpty
+                ? Center(
+                    child: CircularProgressIndicator.adaptive(
+                      backgroundColor: AppColors.accent,
+                      year2023: true,
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+                  )
+                : Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 40,
+                          right: 20,
+                          left: 20,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            buildHeader(),
+                            const SizedBox(height: 20),
+                            buildTextField(
+                              'Search review centers...',
+                              _reviewCenterController,
+                            ),
+                            const SizedBox(height: 12),
+                            buildTags(
+                              labels: ["All", "On-site", "Online", "Hybrid"],
+                              notifier: selectedFilter,
+                              onChanged: () {
+                                _reviewCenterController.clear();
+                              },
+                            ),
+                            const SizedBox(height: 12),
+                            ValueListenableBuilder(
+                              valueListenable: reviewCenterSection,
+                              builder: (context, centers, child) {
+                                return buildTopDetails(centers.length);
+                              },
+                            ),
+                            const SizedBox(height: 6),
+                            Expanded(
+                              child: ValueListenableBuilder(
+                                valueListenable: reviewCenterSection,
+                                builder: (context, centers, child) {
+                                  return buildHubs(centers);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+          },
         ),
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
@@ -127,7 +126,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         ValueListenableBuilder(
-                                          valueListenable: savedSchools,
+                                          valueListenable: rawSavedSchools,
                                           builder: (context, saved, child) {
                                             return Text(
                                               "${saved.length}",
@@ -148,7 +147,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       ValueListenableBuilder(
-                                        valueListenable: savedScholarships,
+                                        valueListenable: rawSavedScholarships,
                                         builder: (context, scholars, child) {
                                           return Text(
                                             "${scholars.length}",

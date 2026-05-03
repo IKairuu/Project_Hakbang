@@ -201,16 +201,13 @@ class Database {
         body: jsonEncode({"email": email}),
       );
 
-      final List<ScholarshipObject> scholarList = [];
+      final List<Map<String, dynamic>> scholarList = [];
       final data = jsonDecode(response.body);
+
       for (Map<String, dynamic> dataObjs in data["data"]) {
-        for (ScholarshipObject scholars in availableScholarships.value) {
-          if (dataObjs["scholarship_name"] == scholars.scholarshipName) {
-            scholarList.add(scholars);
-          }
-        }
+        scholarList.add(dataObjs);
       }
-      savedScholarships.value = scholarList;
+      rawSavedScholarships.value = scholarList;
     } catch (error) {
       print(error);
     }
@@ -268,20 +265,12 @@ class Database {
       headers: headers,
       body: jsonEncode({"email": email}),
     );
-    final List<College> collegeList = [];
-    final Set<String> seenCollegeNames = <String>{};
+    final List<Map<String, dynamic>> collegeList = [];
     final data = jsonDecode(response.body);
-    if (data["status"] == 200) {
-      for (Map<String, dynamic> collegeNames in data["data"]) {
-        for (College college in availableColleges.value) {
-          if (college.collegeName == collegeNames["college_name"] &&
-              seenCollegeNames.add(college.collegeName)) {
-            collegeList.add(college);
-          }
-        }
-      }
+    for (Map<String, dynamic> collegeNames in data["data"]) {
+      collegeList.add(collegeNames);
     }
-    savedSchools.value = collegeList;
+    rawSavedSchools.value = collegeList;
   }
 
   static Future<void> saveSchool(String collegeName) async {
@@ -398,5 +387,6 @@ class Database {
       );
     }
     availableReviewCenters.value = hubList;
+    reviewCenterSection.value = availableReviewCenters.value;
   }
 }

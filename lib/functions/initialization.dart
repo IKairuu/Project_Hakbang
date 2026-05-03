@@ -1,4 +1,3 @@
-import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/sorting_functions.dart';
 import 'package:hakbang/models/ai_message.dart';
@@ -11,11 +10,10 @@ class Initialization {
     await Locations.initializeLocationServices();
     userPosition.value = await Locations.getUserLocation();
     await Database.getUserActivities(userCredentials.value!.email);
-    await Database.getHubs();
+    await Database.getSavedSchools(userCredentials.value!.email);
+    await Database.getSavedScholarships(userCredentials.value!.email);
     await SortingFunctions.sortASctivities();
     await refreshChat();
-
-    reviewCenterSection.value = availableReviewCenters.value;
   }
 
   static void refreshCollegeSelection() {
@@ -55,6 +53,9 @@ class Initialization {
     availableColleges.value = [];
     collegeSection.value = [];
     selectedSchoolHover.value = [];
+    rawSavedScholarships.value = [];
+    rawSavedSchools.value = [];
+    featuredScholarship.value = null;
 
     userPosition.value = null;
     selectedSchoolPosition.value = null;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
@@ -378,9 +379,18 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           _space20,
-                          Text(
-                            'Saved Schools',
-                            style: FontStyles.profileSectionTitle,
+                          Row(
+                            spacing: 10,
+                            children: [
+                              Icon(
+                                Icons.bookmarks_rounded,
+                                color: AppColors.textPrimary,
+                              ),
+                              Text(
+                                'Saved Schools',
+                                style: FontStyles.profileSectionTitle,
+                              ),
+                            ],
                           ),
                           _space10,
                           ValueListenableBuilder(
@@ -402,7 +412,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 );
                               }
-
                               return Container(
                                 width: double.infinity,
                                 height: 200,
@@ -441,9 +450,18 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                           ),
                           _space20,
-                          Text(
-                            'Liked Scholarships',
-                            style: FontStyles.profileSectionTitle,
+                          Row(
+                            spacing: 10,
+                            children: [
+                              FaIcon(
+                                FontAwesomeIcons.heartCircleCheck,
+                                color: AppColors.textPrimary,
+                              ),
+                              Text(
+                                'Liked Scholarships',
+                                style: FontStyles.profileSectionTitle,
+                              ),
+                            ],
                           ),
                           _space10,
                           ValueListenableBuilder(

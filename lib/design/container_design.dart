@@ -113,4 +113,10 @@ class ContainerDesign {
     borderRadius: BorderRadius.circular(24),
     border: Border.all(color: Color(0xFF7C3AED).withOpacity(0.35), width: 1.2),
   );
+
+  static final BoxDecoration homeButton = BoxDecoration(
+    color: AppColors.surface4,
+    borderRadius: BorderRadius.circular(20),
+    border: BoxBorder.all(color: AppColors.border2),
+  );
 }

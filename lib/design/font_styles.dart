@@ -311,4 +311,16 @@ class FontStyles {
     fontSize: 15,
     color: AppColors.textSecondary,
   );
+
+  static final TextStyle homeButton = GoogleFonts.dmSans(
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+  );
+
+  static final TextStyle homeSubtitle = GoogleFonts.dmSans(
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textMuted,
+  );
 }

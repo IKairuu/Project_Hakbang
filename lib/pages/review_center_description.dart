@@ -339,7 +339,7 @@ Widget buildDetailContent(ReviewCenter rc) {
             onPressed: () async {
               if (rc.website.isNotEmpty) {
                 final uri = Uri.tryParse(rc.website);
-                Launcher.launchBrowserView(uri!, rc.title, "assets/exams.svg");
+                Launcher.launchBrowserView(uri!, rc.title, "assets/exam.svg");
               }
             },
           ),
@@ -713,7 +713,7 @@ Widget buildStickyBottom(ReviewCenter rc) {
           onPressed: () {
             if (rc.website.isNotEmpty) {
               final uri = Uri.tryParse(rc.website);
-              Launcher.launchBrowserView(uri!, rc.title, "assets/exams.svg");
+              Launcher.launchBrowserView(uri!, rc.title, "assets/exam.svg");
             }
           },
           child: Text(

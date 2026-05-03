@@ -8,6 +8,7 @@ import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/pages/scholarship_description.dart';
 import 'package:hakbang/pages/view_all_scholarships.dart';
 import 'package:hakbang/design/font_styles.dart';
+import 'package:hakbang/server/database/database.dart';
 
 // ════════════════════════════════════════════════════════════════════════════
 class Scholarship extends StatefulWidget {
@@ -28,60 +29,95 @@ class _ScholarshipState extends State<Scholarship> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    retriveScholarships();
+  }
+
+  Future<void> retriveScholarships() async {
+    await Database.getScholarships();
+    Filter.getTopPick();
+    Filter.filterScholarships();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 10,
-        children: [
-          searchHeader(),
-          SizedBox(height: 2),
-          buildTextField("Search scholarships...", searchField, 0),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  scholarshipFeatured(),
-                  ValueListenableBuilder<int>(
-                    valueListenable: _tabIndex,
-                    builder: (context, tabIdx, child) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 18, bottom: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              spacing: 70,
-                              children: [
-                                _buildTab("Government", 0, tabIdx),
-                                _buildTab("Non-Governmental", 1, tabIdx),
-                              ],
+    return ValueListenableBuilder(
+      valueListenable: availableScholarships,
+      builder: (context, available, child) {
+        return available.isEmpty
+            ? Center(
+                child: CircularProgressIndicator.adaptive(
+                  backgroundColor: AppColors.accent,
+                  year2023: true,
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 10,
+                  children: [
+                    searchHeader(),
+                    SizedBox(height: 2),
+                    buildTextField("Search scholarships...", searchField, 0),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            scholarshipFeatured(),
+                            ValueListenableBuilder<int>(
+                              valueListenable: _tabIndex,
+                              builder: (context, tabIdx, child) {
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 18,
+                                        bottom: 0,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        spacing: 70,
+                                        children: [
+                                          _buildTab("Government", 0, tabIdx),
+                                          _buildTab(
+                                            "Non-Governmental",
+                                            1,
+                                            tabIdx,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    ValueListenableBuilder(
+                                      valueListenable: tabIdx == 0
+                                          ? governmentSection
+                                          : nonGovernmentSection,
+                                      builder: (ctx, section, _) =>
+                                          section.isEmpty
+                                          ? const SizedBox()
+                                          : Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 15,
+                                              ),
+                                              child: viewAll(context, tabIdx),
+                                            ),
+                                    ),
+                                    buildScholarGrids(tabIdx),
+                                  ],
+                                );
+                              },
                             ),
-                          ),
-                          ValueListenableBuilder(
-                            valueListenable: tabIdx == 0
-                                ? governmentSection
-                                : nonGovernmentSection,
-                            builder: (ctx, section, _) => section.isEmpty
-                                ? const SizedBox()
-                                : Padding(
-                                    padding: const EdgeInsets.only(top: 15),
-                                    child: viewAll(context, tabIdx),
-                                  ),
-                          ),
-                          buildScholarGrids(tabIdx),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+      },
     );
   }
 

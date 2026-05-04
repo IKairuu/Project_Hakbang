@@ -448,7 +448,6 @@ class _SignupPageState extends State<SignupPage> {
                                 await Locations.initializeLocationServices();
                                 userPosition.value =
                                     await Locations.getUserLocation();
-                                if (!mounted) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -456,7 +455,6 @@ class _SignupPageState extends State<SignupPage> {
                                   ),
                                 );
                               } catch (e) {
-                                if (!mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     behavior: SnackBarBehavior.floating,

@@ -68,7 +68,6 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
               ),
             );
           });
-
           _scrollToBottom();
         });
     setState(() => chatLoading.value = false);

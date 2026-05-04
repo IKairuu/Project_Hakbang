@@ -245,8 +245,8 @@ class _SignupPageState extends State<SignupPage> {
                       Row(
                         children: [
                           Container(
-                            height: 50,
-                            width: 50,
+                            height: 45,
+                            width: 45,
                             decoration: ContainerDesign.startImage,
                             child: Image.asset(
                               "assets/hakbang_logo.png",

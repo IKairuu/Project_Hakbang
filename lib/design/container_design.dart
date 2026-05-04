@@ -5,12 +5,12 @@ import 'package:hakbang/design/app_colors.dart';
 class ContainerDesign {
   static final BoxDecoration startImage = BoxDecoration(
     color: AppColors.accent,
-    borderRadius: BorderRadius.circular(35),
+    borderRadius: BorderRadius.circular(16),
     boxShadow: [
       BoxShadow(
         color: AppColors.accent.withValues(alpha: 153),
-        blurRadius: 25,
-        spreadRadius: 2,
+        blurRadius: 10,
+        spreadRadius: 1,
       ),
     ],
   );

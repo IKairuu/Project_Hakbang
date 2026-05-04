@@ -848,6 +848,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.5"
+  share_link:
+    dependency: "direct main"
+    description:
+      name: share_link
+      sha256: d04b33fd69f8d4ffbf63510ba6f5c66dc052281478908723caee4a7147a80028
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   sky_engine:
     dependency: transitive
     description: flutter

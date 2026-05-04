@@ -38,7 +38,7 @@ class _DiscoveryState extends State<Discovery> {
       valueListenable: availableColleges,
       builder: (context, schools, child) {
         return ValueListenableBuilder(
-          valueListenable: collegeSection,
+          valueListenable: availableColleges,
           builder: (context, section, child) {
             return schools.isEmpty || section.isEmpty
                 ? Center(

@@ -5,12 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/functions/activity_functions.dart';
+import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/functions/school_save.dart';
 import 'package:hakbang/models/college.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:share_link/share_link.dart';
 
 class CollegeDescription extends StatefulWidget {
   const CollegeDescription({super.key, required this.college});
@@ -64,7 +66,9 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                   color: AppColors.textPrimary,
                   size: 22,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await ShareLink.shareUri(Uri.parse(college.fbPage));
+                },
               ),
             ],
           ),
@@ -426,7 +430,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                         valueColor: AppColors.textPrimary,
                       ),
                       const SizedBox(height: 8),
-                      _cdContactRow(
+                      fbContact(
                         iconWidget: const Icon(
                           Icons.public,
                           color: Color(0xFF1877F2),
@@ -434,7 +438,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                         ),
                         iconBg: const Color(0xFF0A1520),
                         label: "FACEBOOK",
-                        value: college.fbPage,
+                        value: college,
                         valueColor: AppColors.blue,
                         isLink: true,
                       ),
@@ -662,5 +666,73 @@ Widget _cdContactRow({
         ),
       ),
     ],
+  ),
+);
+
+Widget fbContact({
+  required Widget iconWidget,
+  required Color iconBg,
+  required String label,
+  required College value,
+  required Color valueColor,
+  bool isLink = false,
+}) => GestureDetector(
+  onTap: () {
+    if (value.fbPage.isNotEmpty) {
+      final uri = Uri.tryParse(value.fbPage);
+      Launcher.launchBrowserView(
+        uri!,
+        "Visited FB Page: ${value.collegeName}",
+        "assets/university.svg",
+      );
+    }
+  },
+  child: Container(
+    padding: const EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      color: AppColors.surface2,
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(color: AppColors.border),
+    ),
+    child: Row(
+      children: [
+        Container(
+          height: 44,
+          width: 44,
+          decoration: BoxDecoration(
+            color: iconBg,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(child: iconWidget),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: _cdDm(
+                  11,
+                  weight: FontWeight.w700,
+                  color: AppColors.textMuted,
+                  spacing: 0.6,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                value.fbPage,
+                style: _cdDm(
+                  14,
+                  weight: FontWeight.w600,
+                  color: valueColor,
+                  decoration: isLink ? TextDecoration.underline : null,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
   ),
 );

@@ -357,7 +357,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               ),
                                             ),
                                             Text(
-                                              "Converse with Gabay AI.",
+                                              "Converse with Gabay AI Companion.",
                                               maxLines: 2,
                                               style: FontStyles.homeSubtitle,
                                             ),

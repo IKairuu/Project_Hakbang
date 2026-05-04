@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/background_design.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
@@ -100,6 +101,48 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
+  Future<void> _successfullSetup() async {
+    await showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          backgroundColor: AppColors.surface,
+          title: Text('Setup Successfull', style: FontStyles.logoutDialogTitle),
+          content: Text(
+            'Account successfully created',
+            style: FontStyles.profileAboutBody,
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                fullNameController.clear();
+                emailController.clear();
+                passwordController.clear();
+                confirmPasswordController.clear();
+                _selectedAvatarIndex = null;
+                _selectedOccupationIndex = null;
+                schoolController.clear();
+                gradeController.clear();
+                agreeToTerms.value = false;
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.accent,
+                foregroundColor: Colors.black,
+              ),
+              child: const Text('Login'),
+            ),
+          ],
+        );
+      },
+    );
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
+  }
+
   void _previousStep() {
     if (_currentStep > 0) {
       setState(() {
@@ -142,41 +185,7 @@ class _SignupPageState extends State<SignupPage> {
       };
       await Database.signupUser(data)
           .then((value) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  backgroundColor: Color(0xFF343943),
-                  title: Text(
-                    value["message"],
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  actions: [
-                    ElevatedButton(
-                      style: ButtonDesign.alertDialog,
-                      onPressed: () {
-                        fullNameController.clear();
-                        emailController.clear();
-                        passwordController.clear();
-                        confirmPasswordController.clear();
-                        _selectedAvatarIndex = null;
-                        _selectedOccupationIndex = null;
-                        schoolController.clear();
-                        gradeController.clear();
-                        agreeToTerms.value = false;
-                        Navigator.of(context).pop();
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
-                          (route) => false,
-                        );
-                      },
-                      child: Text("Ok"),
-                    ),
-                  ],
-                );
-              },
-            );
+            _successfullSetup();
           })
           .onError((error, stackTrace) {
             showDialog(
@@ -439,7 +448,6 @@ class _SignupPageState extends State<SignupPage> {
                                 await Locations.initializeLocationServices();
                                 userPosition.value =
                                     await Locations.getUserLocation();
-                                if (!mounted) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -447,7 +455,6 @@ class _SignupPageState extends State<SignupPage> {
                                   ),
                                 );
                               } catch (e) {
-                                if (!mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     behavior: SnackBarBehavior.floating,

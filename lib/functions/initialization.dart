@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 
 class Initialization {
   static Future<void> mainInitialization() async {
-    await Locations.initializeLocationServices();
     userPosition.value = await Locations.getUserLocation();
     await Database.getUserActivities(userCredentials.value!.email);
     await Database.getSavedSchools(userCredentials.value!.email);
@@ -56,6 +55,7 @@ class Initialization {
     rawSavedScholarships.value = [];
     rawSavedSchools.value = [];
     featuredScholarship.value = null;
+    locationEnabled.value = null;
 
     userPosition.value = null;
     selectedSchoolPosition.value = null;

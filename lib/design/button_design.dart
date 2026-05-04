@@ -1,0 +1,91 @@
+import 'package:flutter/material.dart';
+import 'package:hakbang/design/app_colors.dart';
+
+class ButtonDesign {
+  static final ButtonStyle mainButton = ElevatedButton.styleFrom(
+    backgroundColor: AppColors.accent,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  );
+
+  static final ButtonStyle signUpButton = ElevatedButton.styleFrom(
+    backgroundColor: AppColors.accent,
+    padding: const EdgeInsets.symmetric(vertical: 14),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    elevation: 0,
+  );
+
+  static final ButtonStyle findSchoolsContainer = ElevatedButton.styleFrom(
+    backgroundColor: Color(0xFF152034),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    padding: EdgeInsets.all(15),
+  );
+  static final ButtonStyle scholarhipContainer = ElevatedButton.styleFrom(
+    backgroundColor: Color(0xFF231833),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    padding: EdgeInsets.all(15),
+  );
+  static final ButtonStyle examHubContainer = ElevatedButton.styleFrom(
+    backgroundColor: Color(0xFF301b19),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    padding: EdgeInsets.all(15),
+  );
+  static final ButtonStyle askgabayContainer = ElevatedButton.styleFrom(
+    backgroundColor: Color(0xFF232a17),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    padding: EdgeInsets.all(15),
+  );
+
+  static final ButtonStyle backButton = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF0c0d10),
+    minimumSize: const Size(double.infinity, 52),
+
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16),
+      side: const BorderSide(
+        color: Color.fromARGB(255, 104, 104, 104),
+        width: 1,
+      ),
+    ),
+  );
+
+  static final ButtonStyle filterUniversitySelected = ElevatedButton.styleFrom(
+    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+    backgroundColor: Color(0xFF232a17),
+    shape: RoundedRectangleBorder(
+      side: BorderSide(color: AppColors.accent),
+      borderRadius: BorderRadiusGeometry.circular(20),
+    ),
+  );
+
+  static final ButtonStyle filterUniversityUnselected =
+      ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        backgroundColor: AppColors.bg,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Color(0xFF2a2c35)),
+          borderRadius: BorderRadiusGeometry.circular(20),
+        ),
+      );
+
+  static final ButtonStyle collegeSection = ElevatedButton.styleFrom();
+
+  // Checkbox design - lime green when checked
+  static final CheckboxThemeData checkboxDesign = CheckboxThemeData(
+    fillColor: WidgetStateProperty.resolveWith<Color>((
+      Set<WidgetState> states,
+    ) {
+      if (states.contains(WidgetState.selected)) {
+        return AppColors.accent; // Lime green when checked
+      }
+      return const Color(0xFF343943); // Dark gray when unchecked
+    }),
+    checkColor: WidgetStateProperty.all(Colors.black),
+    side: const BorderSide(color: Color(0xFF343943), width: 1.5),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+  );
+
+  static final ButtonStyle alertDialog = ElevatedButton.styleFrom(
+    backgroundColor: AppColors.accent,
+    padding: EdgeInsets.all(5),
+  );
+}

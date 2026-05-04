@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:hakbang/design/app_colors.dart';
+
+class SignupProgressIndicator extends StatelessWidget {
+  final int currentStep;
+  final int totalSteps;
+
+  const SignupProgressIndicator({
+    super.key,
+    required this.currentStep,
+    required this.totalSteps,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(totalSteps, (index) {
+        return Expanded(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            height: 5,
+            decoration: BoxDecoration(
+              color: index <= currentStep
+                  ? AppColors
+                        .accent // Active step - lime green
+                  : const Color(0xFF2a2d38), // Inactive step - gray
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}

@@ -34,6 +34,28 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  google_fonts: ^8.0.2
+  smooth_page_indicator: ^2.0.1
+  flutter_svg: ^2.2.4
+  lottie: ^3.3.2
+  http: ^1.6.0
+  geolocator: ^14.0.2
+  connectivity_plus: ^7.1.1
+  flutter_map: ^8.2.2
+  latlong2: ^0.9.1
+  flutter_map_tile_caching: ^10.1.1
+  flutter_osm_plugin: ^1.4.3
+  flutter_dotenv: ^6.0.0
+  faded_scrollable: ^1.0.1
+  fading_edge_scrollview: ^4.1.1
+  url_launcher: ^6.3.2
+  intl: ^0.20.2
+  marquee: ^2.3.0
+  circle_nav_bar: ^2.2.0
+  font_awesome_flutter: ^11.0.0
+  linear_progress_bar: ^3.0.0
+  dotted_border: ^3.1.0
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -50,13 +72,19 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/hakbang_logo2.png"
+
 flutter:
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets:
+      - assets/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

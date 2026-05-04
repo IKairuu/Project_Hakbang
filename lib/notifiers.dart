@@ -14,7 +14,8 @@ ValueNotifier<User?> userCredentials = ValueNotifier(null);
 ValueNotifier<String?> token = ValueNotifier(null);
 ValueNotifier<List<Activity>> activityList = ValueNotifier([]);
 ValueNotifier<bool> agreeToTerms = ValueNotifier(false);
-ValueNotifier<List<bool>> selectedFilter = ValueNotifier([
+ValueNotifier<List<bool>> selectedFilter = ValueNotifier([true, false, false]);
+ValueNotifier<List<bool>> selectedHubFilter = ValueNotifier([
   true,
   false,
   false,

@@ -24,8 +24,6 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
     'What is UPCAT?',
     'Best STEM schools',
     'Scholarship tips',
-    'UPG calculator help',
-    'Review chatTimetable',
   ];
 
   void sendMessage(String text) async {

@@ -181,16 +181,16 @@ class _LoginPageState extends State<LoginPage> {
                             'Enter your password',
                             '🔒',
                             _passwordController,
-                            isPassword: _isPassword,
+                            showPassword: _isPassword,
                             trailing: GestureDetector(
                               onTap: () =>
                                   setState(() => _isPassword = !_isPassword),
-                              child: Text(
-                                _isPassword ? '🙈' : '👁',
-                                style: TextStyle(
-                                  color: AppColors.textMuted,
-                                  fontSize: 16,
-                                ),
+                              child: Icon(
+                                _isPassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Color(0xFF828a8a),
+                                size: 20,
                               ),
                             ),
                           ),
@@ -376,7 +376,6 @@ Widget buildTextField(
   String placeholder,
   String iconEmoji,
   TextEditingController controller, {
-  bool isPassword = false,
   bool showPassword = false,
   Widget? trailing,
 }) {
@@ -398,7 +397,7 @@ Widget buildTextField(
         children: [
           TextField(
             controller: controller,
-            obscureText: isPassword && !showPassword,
+            obscureText: showPassword,
             cursorColor: AppColors.accent,
             style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
             decoration: InputDecoration(

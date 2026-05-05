@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/models/ai_message.dart';
@@ -32,44 +33,44 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
     setState(() => chatLoading.value = true);
 
     var messageData = {"message": trimmed};
-    setState(() {
-      chatMessages.value.add(
-        AiMessage(
-          text: trimmed,
-          role: "user",
-          chatTime: DateFormat('hh:mm a').format(DateTime.now()),
-        ),
-      );
-      _inputController.clear();
-    });
+
+    chatMessages.value = [
+      ...chatMessages.value,
+      AiMessage(
+        text: trimmed,
+        role: "user",
+        chatTime: DateFormat('hh:mm a').format(DateTime.now()),
+      ),
+    ];
+    _inputController.clear();
+
     _scrollToBottom();
 
     await AiChat.sendUsermessage(messageData)
         .then((value) {
-          setState(() {
-            chatMessages.value.add(
-              AiMessage(
-                text: value,
-                role: "model",
-                chatTime: DateFormat('hh:mm a').format(DateTime.now()),
-              ),
-            );
-          });
+          chatMessages.value = [
+            ...chatMessages.value,
+            AiMessage(
+              text: value,
+              role: "model",
+              chatTime: DateFormat('hh:mm a').format(DateTime.now()),
+            ),
+          ];
 
           _scrollToBottom();
         })
         .onError((error, stackTrace) {
-          setState(() {
-            chatMessages.value.add(
-              AiMessage(
-                text: 'Server Side error $error',
-                role: "model",
-                chatTime: DateFormat('hh:mm a').format(DateTime.now()),
-              ),
-            );
-          });
-          _scrollToBottom();
+          chatMessages.value = [
+            ...chatMessages.value,
+            AiMessage(
+              text: 'Server Side error $error',
+              role: "model",
+              chatTime: DateFormat('hh:mm a').format(DateTime.now()),
+            ),
+          ];
         });
+    _scrollToBottom();
+
     setState(() => chatLoading.value = false);
   }
 
@@ -110,7 +111,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
       constraints: BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width * 0.75,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         color: bubbleColor,
         borderRadius: borderRadius,
@@ -120,17 +121,34 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
               : const Color(0x11FFFFFF),
         ),
       ),
-      child: Text(
-        message.text,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 13,
-          height: 1.5,
-          fontWeight: message.role == "user"
-              ? FontWeight.w500
-              : FontWeight.w400,
-        ),
-      ),
+      child: message.role == "user"
+          ? Text(
+              message.text,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 13,
+                height: 1.5,
+                fontWeight: FontWeight.w500,
+              ),
+            )
+          : Markdown(
+              shrinkWrap: true,
+              padding: EdgeInsets.all(5),
+              physics: NeverScrollableScrollPhysics(),
+              styleSheet: MarkdownStyleSheet(
+                pPadding: EdgeInsets.zero,
+                listBulletPadding: EdgeInsets.zero,
+                blockSpacing: 0,
+                p: TextStyle(
+                  color: textColor,
+                  fontSize: 13,
+                  height: 1.5,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              selectable: true,
+              data: message.text,
+            ),
     );
   }
 

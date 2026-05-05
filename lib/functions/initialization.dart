@@ -31,7 +31,7 @@ class Initialization {
     chatMessages.value.add(
       AiMessage(
         text:
-            'Hi ${userCredentials.value!.name.split(" ")[0]}! 👋 I\'m Gabay, your college planning assistant. I can help you choose the right school, find scholarships, understand entrance exams, and calculate your UPG. What would you like to explore today?',
+            'Hi ${userCredentials.value!.name.split(" ")[0]}! 👋 I\'m Gabay, your college planning assistant. I can help you choose the right school, find scholarships, and understand entrance exams. What would you like to explore today?',
         role: "model",
         chatTime: DateFormat('hh:mm a').format(DateTime.now()),
       ),

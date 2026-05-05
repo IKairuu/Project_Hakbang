@@ -82,6 +82,9 @@ class _DiscoveryState extends State<Discovery> {
                                     fontSize: 14,
                                   ),
                                   onSubmitted: (value) {
+                                    setState(() {
+                                      onSelect.value = "";
+                                    });
                                     Filter.searchCollege(searchInput.text);
                                   },
                                   controller: searchInput,
@@ -123,6 +126,9 @@ class _DiscoveryState extends State<Discovery> {
                                         const BoxConstraints(),
                                     suffixIcon: IconButton(
                                       onPressed: () {
+                                        setState(() {
+                                          onSelect.value = "";
+                                        });
                                         Filter.searchCollege(searchInput.text);
                                       },
                                       icon: const Icon(Icons.search_outlined),

@@ -5,8 +5,6 @@ class Internet {
     final List<ConnectivityResult> connectivityResult = await (Connectivity()
         .checkConnectivity());
 
-    print(connectivityResult.contains(ConnectivityResult.mobile));
-
     if (connectivityResult.contains(ConnectivityResult.wifi) ||
         connectivityResult.contains(ConnectivityResult.mobile)) {
       return true;

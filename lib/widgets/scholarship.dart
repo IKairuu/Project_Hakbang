@@ -873,6 +873,7 @@ Widget viewAll(BuildContext context, int index) {
           },
         ),
       );
+      Filter.filterScholarships();
     },
     child: DottedBorder(
       options: RoundedRectDottedBorderOptions(

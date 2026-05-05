@@ -1,8 +1,10 @@
 import 'package:geolocator/geolocator.dart';
+import 'package:hakbang/notifiers.dart';
 
 class Locations {
   static Future<void> initializeLocationServices() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    locationEnabled.value = serviceEnabled;
 
     if (!serviceEnabled) {
       throw Exception('Location services are disabled');

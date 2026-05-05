@@ -66,7 +66,7 @@ class _ReviewCenterState extends State<ReviewCenter> {
                             const SizedBox(height: 12),
                             buildTags(
                               labels: ["All", "On-site", "Online", "Hybrid"],
-                              notifier: selectedFilter,
+                              notifier: selectedHubFilter,
                               onChanged: () {
                                 _reviewCenterController.clear();
                               },

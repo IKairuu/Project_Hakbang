@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
+import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/functions/internet.dart';
+import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/models/user.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/pages/main_page.dart';
@@ -210,7 +212,22 @@ class _LoginPageState extends State<LoginPage> {
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              onPressed: _handleLogin,
+                              onPressed: () async {
+                                try {
+                                  await Locations.initializeLocationServices();
+                                  _handleLogin();
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      behavior: SnackBarBehavior.floating,
+                                      content: Text(
+                                        'Location permission required to sign in',
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+
                               child: const Text('Sign In →'),
                             ),
                           ),
@@ -265,6 +282,12 @@ Widget buildHeader() {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
+      Container(
+        height: 45,
+        width: 45,
+        decoration: ContainerDesign.startImage,
+        child: Image.asset("assets/hakbang_logo.png", fit: BoxFit.cover),
+      ),
       const SizedBox(width: 10),
       RichText(
         text: TextSpan(

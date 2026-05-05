@@ -252,7 +252,7 @@ class _ScholarshipState extends State<Scholarship> {
                       );
                     },
                     child: SizedBox(
-                      height: 290,
+                      height: 340,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

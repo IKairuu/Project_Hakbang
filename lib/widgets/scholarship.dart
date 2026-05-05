@@ -585,6 +585,11 @@ class _ScholarshipState extends State<Scholarship> {
     return ValueListenableBuilder(
       valueListenable: tabIdx == 0 ? governmentSection : nonGovernmentSection,
       builder: (context, section, child) {
+        final media = MediaQuery.of(context);
+        final screenWidth = media.size.width;
+        int crossAxisCount = 2;
+        double itemWidth = screenWidth / crossAxisCount;
+        double itemHeight = itemWidth * 1.7;
         return section.isEmpty
             ? Padding(
                 padding: const EdgeInsets.only(top: 50, bottom: 20),
@@ -602,13 +607,12 @@ class _ScholarshipState extends State<Scholarship> {
                 itemCount: section.length,
                 shrinkWrap: true,
                 padding: EdgeInsets.only(top: 15),
-
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: 0.58,
+                  childAspectRatio: itemWidth / itemHeight,
                 ),
                 itemBuilder: (context, index) {
                   final theme = _cardTheme(section[index].color);

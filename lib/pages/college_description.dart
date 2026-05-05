@@ -342,7 +342,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                     ],
                   ),
                 ),
-
+                const SizedBox(height: 10),
                 _cdSectionDivider(),
 
                 // ── Programs Offered
@@ -352,10 +352,11 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _cdSectionLabel("PROGRAMS OFFERED"),
-                      const SizedBox(height: 10),
                       SizedBox(
                         height: 200,
                         child: ListView.builder(
+                          padding: EdgeInsets.only(top: 10),
+                          shrinkWrap: true,
                           itemCount: college.programs.length,
                           itemBuilder: (context, index) {
                             return Padding(

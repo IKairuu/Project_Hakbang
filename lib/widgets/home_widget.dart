@@ -215,6 +215,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               ),
                                               child: Text(
                                                 "Discover Schools",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.fade,
                                                 style: FontStyles.homeButton,
                                               ),
                                             ),
@@ -260,6 +262,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               ),
                                               child: Text(
                                                 "Scholarships",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.fade,
                                                 style: FontStyles.homeButton,
                                               ),
                                             ),
@@ -309,6 +313,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               ),
                                               child: Text(
                                                 "Review Centers",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.fade,
                                                 style: FontStyles.homeButton,
                                               ),
                                             ),
@@ -353,6 +359,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               ),
                                               child: Text(
                                                 "AI Companion",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.fade,
                                                 style: FontStyles.homeButton,
                                               ),
                                             ),

@@ -98,10 +98,6 @@ Hakbang is a cross-platform mobile application built with Flutter that serves as
 
 ## Core Features
 
-<div align="center">
-    <img src="assets/ppt/HAKBANG-13.png" alt="Hakbang core features" width="900"/>
-</div>
-
 ### 1. College Discovery
 - Browse a complete, live directory of colleges and universities fetched from the Hakbang backend.
 - View each college's name, address, type (public/private), contact information, Facebook page, programs offered, ratings, rankings, and about section.
@@ -148,10 +144,6 @@ Hakbang is a cross-platform mobile application built with Flutter that serves as
 ---
 
 ## App Flow & Architecture
-
-<div align="center">
-    <img src="assets/ppt/HAKBANG-16.png" alt="Hakbang app flow and architecture" width="900"/>
-</div>
 
 ```
 App Launch
@@ -202,10 +194,6 @@ App Launch
 
 ## Tech Stack
 
-<div align="center">
-    <img src="assets/ppt/HAKBANG-17.png" alt="Hakbang tech stack" width="900"/>
-</div>
-
 | Layer | Technology |
 |---|---|
 | **Framework** | Flutter 3.x |
@@ -236,10 +224,6 @@ App Launch
 ---
 
 ## Dependencies
-
-<div align="center">
-    <img src="assets/ppt/HAKBANG-18.png" alt="Hakbang dependencies" width="900"/>
-</div>
 
 ### Runtime Dependencies
 
@@ -289,10 +273,6 @@ flutter_launcher_icons: ^0.14.4
 
 ## State Management
 
-<div align="center">
-    <img src="assets/ppt/HAKBANG-19.png" alt="Hakbang state management" width="900"/>
-</div>
-
 Hakbang uses a lightweight, dependency-free state management approach built entirely on Flutter's built-in `ValueNotifier` and `ValueListenableBuilder`. All shared application state lives in a single file: `lib/notifiers.dart`.
 
 This approach was deliberately chosen to keep the app lean, avoid dependency lock-in, and ensure that any Flutter developer can read and contribute to state logic without learning an external library.
@@ -331,10 +311,6 @@ This approach was deliberately chosen to keep the app lean, avoid dependency loc
 ---
 
 ## Data Models
-
-<div align="center">
-    <img src="assets/ppt/HAKBANG-20.png" alt="Hakbang data models" width="900"/>
-</div>
 
 All models are plain Dart classes located in `lib/models/`.
 
@@ -385,10 +361,6 @@ description, iconName, date
 
 ## Backend & API
 
-<div align="center">
-    <img src="assets/ppt/HAKBANG-21.png" alt="Hakbang backend and API" width="900"/>
-</div>
-
 Hakbang communicates with two separate hosted backend services, both deployed on **Render**.
 
 ### Main API Server
@@ -429,10 +401,6 @@ Internet availability is checked before every login attempt using `lib/functions
 ---
 
 ## Project Structure
-
-<div align="center">
-    <img src="assets/ppt/HAKBANG-22.png" alt="Hakbang project structure" width="900"/>
-</div>
 
 ```
 lib/
@@ -521,10 +489,6 @@ assets/
 
 ## Design System
 
-<div align="center">
-    <img src="assets/ppt/HAKBANG-23.png" alt="Hakbang design system" width="900"/>
-</div>
-
 Hakbang uses a fully custom, centralized design system with a dark theme. All design tokens are defined in `lib/design/` and shared across the entire app — no inline colors or font sizes in widget files.
 
 ### Color Palette
@@ -550,10 +514,6 @@ The app uses a rich dark theme with a signature **lime accent (`#C8FF4D`)** as t
 ---
 
 ## Getting Started
-
-<div align="center">
-    <img src="assets/ppt/HAKBANG-24.png" alt="Hakbang getting started" width="900"/>
-</div>
 
 ### Prerequisites
 
@@ -595,10 +555,6 @@ No additional native setup is required beyond the standard Flutter Android confi
 
 ## Environment Setup
 
-<div align="center">
-    <img src="assets/ppt/HAKBANG-25.png" alt="Hakbang environment setup" width="900"/>
-</div>
-
 Hakbang uses `flutter_dotenv` to manage environment variables. Create a `.env` file in the project root:
 
 ```env
@@ -620,10 +576,6 @@ await dotenv.load(fileName: ".env");
 
 ## Roadmap
 
-<div align="center">
-    <img src="assets/ppt/HAKBANG-26.png" alt="Hakbang roadmap" width="900"/>
-</div>
-
 | Feature | Status |
 |---|---|
 | College discovery with map | ✅ Live |
@@ -644,10 +596,6 @@ await dotenv.load(fileName: ".env");
 ---
 
 ## Contributing
-
-<div align="center">
-    <img src="assets/ppt/HAKBANG-27.png" alt="Hakbang contributing" width="900"/>
-</div>
 
 This is a private project. Contributions are by invitation only. Please contact the maintainers before submitting pull requests.
 

@@ -98,6 +98,10 @@ Hakbang is a cross-platform mobile application built with Flutter that serves as
 
 ## Core Features
 
+<div align="center">
+    <img src="assets/ppt/HAKBANG-13.png" alt="Hakbang objectives" width="900"/>
+</div>
+
 ### 1. College Discovery
 - Browse a complete, live directory of colleges and universities fetched from the Hakbang backend.
 - View each college's name, address, type (public/private), contact information, Facebook page, programs offered, ratings, rankings, and about section.

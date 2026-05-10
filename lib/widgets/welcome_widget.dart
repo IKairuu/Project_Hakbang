@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/smooth_page_indicator_design.dart';
+import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/pages/login_page.dart';
 import 'package:hakbang/pages/signup_page.dart';
 import 'package:hakbang/widgets/about_app.dart';
@@ -96,13 +97,12 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   TextButton(
                     onPressed: () async {
                       try {
-                        if (!mounted) return;
+                        await Locations.initializeLocationServices();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                       } catch (e) {
-                        if (!mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             behavior: SnackBarBehavior.floating,

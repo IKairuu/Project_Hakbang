@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 
 class Initialization {
   static Future<void> mainInitialization() async {
-    await Locations.initializeLocationServices();
     userPosition.value = await Locations.getUserLocation();
     await Database.getUserActivities(userCredentials.value!.email);
     await Database.getSavedSchools(userCredentials.value!.email);
@@ -32,7 +31,7 @@ class Initialization {
     chatMessages.value.add(
       AiMessage(
         text:
-            'Hi ${userCredentials.value!.name.split(" ")[0]}! 👋 I\'m Gabay, your college planning assistant. I can help you choose the right school, find scholarships, understand entrance exams, and calculate your UPG. What would you like to explore today?',
+            'Hi ${userCredentials.value!.name.split(" ")[0]}! 👋 I\'m Gabay, your college planning assistant. I can help you choose the right school, find scholarships, and understand entrance exams. What would you like to explore today?',
         role: "model",
         chatTime: DateFormat('hh:mm a').format(DateTime.now()),
       ),
@@ -56,6 +55,7 @@ class Initialization {
     rawSavedScholarships.value = [];
     rawSavedSchools.value = [];
     featuredScholarship.value = null;
+    locationEnabled.value = null;
 
     userPosition.value = null;
     selectedSchoolPosition.value = null;

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/models/review_center.dart';
+import 'package:share_link/share_link.dart';
 
 class ReviewCenterDescription extends StatefulWidget {
   const ReviewCenterDescription({super.key, required this.reviewCenter});
@@ -46,7 +47,9 @@ class _ReviewCenterDescriptionState extends State<ReviewCenterDescription> {
                         color: AppColors.textPrimary,
                         size: 22,
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await ShareLink.shareUri(Uri.parse(rc.website));
+                      },
                     ),
                   ],
                 ),

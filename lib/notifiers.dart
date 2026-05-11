@@ -8,6 +8,7 @@ import 'package:hakbang/models/scholarship_object.dart';
 import 'package:hakbang/models/user.dart';
 import 'package:latlong2/latlong.dart';
 
+ValueNotifier<bool> connectedToServer = ValueNotifier(false);
 ValueNotifier<int> welcomePageIndex = ValueNotifier(0);
 ValueNotifier<int> navigationBarIndex = ValueNotifier(2);
 ValueNotifier<User?> userCredentials = ValueNotifier(null);

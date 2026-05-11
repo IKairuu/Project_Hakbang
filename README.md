@@ -1,242 +1,459 @@
-# Project Hakbang — App Walkthrough
+<div align="center">
 
-A Flutter app that helps students discover colleges, find scholarships, and get AI-powered guidance for their college journey.
+<img src="assets/hakbang_main_logo.png" alt="Hakbang Logo" width="120"/>
 
----
+# Hakbang
 
-## App Flow (Start to Finish)
+**Your All-in-One College Journey Companion**
 
-### 1. Entry Point — `lib/main.dart`
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=flat-square&logo=flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.11-0175C2?style=flat-square&logo=dart&logoColor=white)](https://dart.dev)
+[![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android-lightgrey?style=flat-square)](https://flutter.dev)
+[![Version](https://img.shields.io/badge/Version-1.0.0-C8FF4D?style=flat-square)](#)
+[![License](https://img.shields.io/badge/License-Private-red?style=flat-square)](#)
 
-The app starts here. It runs `MyApp`, which wraps everything in a `MaterialApp` and sets `MyHomePage` as the root. `MyHomePage` is just a `Scaffold` that loads `WidgetTree` as its body.
+*Empowering Filipino students to navigate the path to higher education — one step at a time.*
 
----
-
-### 2. Initialization — `lib/widget_tree.dart`
-
-`WidgetTree` is the first real logic gate. On `initState`, it calls `Locations.initializeLocationServices()` from `lib/functions/locations.dart`. This checks if the device has location enabled and requests permission if needed.
-
-After that, it renders `StartPage`.
+</div>
 
 ---
 
-### 3. Welcome Screen — `lib/pages/start_page.dart` → `lib/widgets/welcome_widget.dart`
+## Table of Contents
 
-`StartPage` is thin — it just returns `WelcomeWidget`.
-
-`WelcomeWidget` is the onboarding screen. It shows a **5-slide PageView**:
-
-| Slide | Widget | What it shows |
-|---|---|---|
-| 1 | `AboutApp` | What Hakbang is |
-| 2 | `ExploreContainer` | Discover schools feature preview |
-| 3 | `ScholarshipAi` | Scholarships feature preview |
-| 4 | `GabayAiSlide` | AI Gabay feature preview |
-| 5 | `ReviewCenterSlide` | Review hubs feature preview |
-
-Below the slides are:
-- **Dot indicator** — tap to jump to a slide
-- **"Get Started →"** button — goes to `SignupPage`
-- **"Sign In"** link — initializes location then goes to `LoginPage`
-
----
-
-### 4. Sign Up — `lib/pages/signup_page.dart`
-
-A 3-step flow controlled by a `PageController`. A progress indicator at the top (`SignupProgressIndicator`) shows which step the user is on.
-
-**Step 1** (`lib/widgets/signup_step1.dart`) — Credentials
-- Full name, email, password, confirm password
-
-**Step 2** (`lib/widgets/signup_step2.dart`) — Profile setup
-- Pick an avatar emoji (🦁 🦊 🐉 🦅 🐬)
-- Pick occupation: Student, Parent, or Counselor
-- Enter school name and grade level
-
-**Step 3** (`lib/widgets/signup_step3.dart`) — Review & confirm
-- Shows a summary of entered data
-- Option to agree to terms
-- **"Create Account"** → calls `Database.createUser()` → shows success dialog → redirects to `LoginPage`
+1. [Pitch Deck](#pitch-deck)
+2. [Background & Significance](#background--significance)
+3. [What is Hakbang?](#what-is-hakbang)
+4. [Target Users](#target-users)
+5. [Core Features](#core-features)
+6. [App Flow & Architecture](#app-flow--architecture)
+7. [Tech Stack](#tech-stack)
+8. [Dependencies](#dependencies)
+9. [State Management](#state-management)
+10. [Data Models](#data-models)
+11. [Backend & API](#backend--api)
+12. [Project Structure](#project-structure)
+13. [Design System](#design-system)
+14. [Getting Started](#getting-started)
+15. [Environment Setup](#environment-setup)
+16. [Roadmap](#roadmap)
 
 ---
 
-### 5. Login — `lib/pages/login_page.dart`
+## Pitch Deck
 
-The user enters email and password. On submit:
-
-1. Checks internet via `Internet.checkInternetConnection()` — if offline, goes to `NoInternetPage` with a retry wrapper.
-2. Calls `Database.userLogin(email, password)` → hits the REST API.
-3. On success (`status 200`):
-   - Stores the JWT token in the `token` notifier (`"Bearer <token>"`)
-   - Fetches full user data via `Database.getUserData()` and stores it in the `userCredentials` notifier
-   - Sets the default nav tab to Home (index 2)
-   - Calls `Initialization.mainInitialization()` (see below)
-   - Navigates to `MainPage`
+[View Hakbang Pitch Deck (PDF)](assets/ppt/HAKBANG_PitchDeck.pdf)
 
 ---
 
-### 6. Main Initialization — `lib/functions/initialization.dart`
+## Background & Significance
 
-Runs once right after login:
+<div align="center">
+    <img src="assets/ppt/HAKBANG-1.png" alt="Hakbang background and significance" width="900"/>
+</div>
+
+The transition from senior high school to college is one of the most consequential decisions a young Filipino will ever make. Yet millions of students face this crossroads with little more than word-of-mouth, outdated printed guides, or scattered information spread across dozens of disconnected websites.
+
+**The problems are real:**
+
+- Students in provincial and rural areas have severely limited access to accurate, up-to-date college information.
+- Scholarship opportunities go unclaimed every year simply because students do not know they exist, or cannot navigate the complicated application processes.
+- School guidance counselors are severely outnumbered, often managing hundreds of students at once, leaving many without personalized advice.
+- Review centers and entrance exam preparation resources are unevenly distributed, disadvantaging students outside Metro Manila.
+
+**Hakbang** (*Filipino for "step"* or *"stride"*) was built to close these gaps. The name reflects the app's core philosophy — every student deserves a clear, guided, and confident step forward into higher education, regardless of geography, socioeconomic background, or access to traditional resources.
+
+By aggregating college discovery, scholarship matching, AI-powered guidance, and review center information into a single mobile platform, Hakbang levels the playing field for Filipino students who would otherwise navigate this journey alone.
+
+---
+
+## What is Hakbang?
+
+<div align="center">
+    <img src="assets/ppt/HAKBANG-2.png" alt="What is Hakbang" width="900"/>
+</div>
+
+Hakbang is a cross-platform mobile application built with Flutter that serves as a comprehensive college planning assistant. It provides:
+
+- A **searchable, map-enabled directory** of colleges and universities.
+- A **curated scholarship database** categorized by government and non-government programs.
+- An **AI-powered chat assistant (Gabay)** that answers questions about admissions, entrance exams, scholarships, and career paths.
+- A **review center hub** that connects students with test preparation resources filtered by learning modality.
+- A **personal profile system** that tracks saved schools, saved scholarships, and user activity.
+
+---
+
+## Target Users
+
+<div align="center">
+    <img src="assets/ppt/HAKBANG-3.png" alt="Hakbang target users" width="900"/>
+</div>
+
+| Role | Description |
+|---|---|
+| **Student** | Senior high school or incoming college students exploring their options |
+| **Parent** | Parents monitoring scholarship deadlines and school options for their children |
+| **Counselor** | Guidance counselors who need a quick reference tool for advising sessions |
+
+---
+
+## Core Features
+
+<div align="center">
+    <img src="assets/ppt/HAKBANG-13.png" alt="Hakbang objectives" width="900"/>
+</div>
+
+### 1. College Discovery
+- Browse a complete, live directory of colleges and universities fetched from the Hakbang backend.
+- View each college's name, address, type (public/private), contact information, Facebook page, programs offered, ratings, rankings, and about section.
+- Interactive map view powered by OpenStreetMap and `flutter_map`, with geolocation-based positioning.
+- Save colleges to a personal list for quick future reference.
+- Search and filter colleges by name or category.
+
+### 2. Scholarship Hub
+- Full database of active scholarships, separated into **Government** and **Non-Government** categories.
+- Detailed scholarship profiles including: allowance amount, eligibility criteria, required documents, application steps, application timeline, benefits, service obligations, grant titles, minimum GWA requirements, deadlines, and slots available.
+- A **Featured Scholarship** section that highlights top-pick opportunities.
+- Tap-to-view scholarship detail pages with a clean, structured layout.
+- Save scholarships to a personal list.
+- Direct link to the scholarship's official website via `url_launcher`.
+
+### 3. Gabay — AI College Planning Assistant
+- Conversational AI chat interface powered by a dedicated AI backend service.
+- Personalized greeting that addresses the user by first name.
+- Markdown-rendered AI responses for structured, readable answers.
+- Pre-built suggestion chips for common questions (entrance exams, scholarships, school recommendations, career paths).
+- Full chat history maintained during the session via the `chatMessages` notifier.
+- Loading indicators while the AI processes a response.
+
+### 4. Review Center Hub
+- Curated list of review centers for college entrance exams.
+- Filter by modality: **All**, **On-site**, **Online**, **Hybrid**.
+- Search by center name.
+- Detailed center profiles: instructor info, ratings, price, exams covered, coverage topics, program overview, who the center is for, offers, and about section.
+- Best Seller badges for top-rated centers.
+
+### 5. User Profile & Activity
+- Personalized profile with avatar (emoji-based), full name, email, occupation, school, grade level, and a customizable "About Me" bio.
+- In-app bio editing with immediate API persistence.
+- Saved Schools list with swipe-to-remove.
+- Saved Scholarships list with swipe-to-remove.
+- Chronological activity log tracking user interactions within the app.
+
+### 6. Authentication & Onboarding
+- Animated 5-slide onboarding flow with feature previews.
+- 3-step registration wizard: credentials → profile setup → review & confirm.
+- JWT-based authentication; token stored securely in a `ValueNotifier` for the session.
+- Internet connectivity check before login attempts, with a dedicated offline page (Lottie-animated).
+
+---
+
+## App Flow & Architecture
 
 ```
-mainInitialization()
-  ├── Gets user's GPS position → userPosition notifier
-  ├── Fetches user activity log → activityList notifier
-  ├── Fetches saved schools → savedSchools notifier
-  ├── Fetches saved scholarships → savedScholarships notifier
-  ├── Sorts activities by date
-  └── Initializes Gabay chat with a greeting message
+App Launch
+│
+├── main.dart
+│     └── MyApp (MaterialApp)
+│           └── MyHomePage (Scaffold)
+│                 └── widget_tree.dart
+│                       ├── Requests location permission (GPS)
+│                       └── Loads StartPage
+│
+├── StartPage → WelcomeWidget (5-slide onboarding)
+│     ├── Slide 1: About App
+│     ├── Slide 2: Discover Schools preview
+│     ├── Slide 3: Scholarship AI preview
+│     ├── Slide 4: Gabay AI preview
+│     └── Slide 5: Review Centers preview
+│           ├── [Get Started] → SignupPage
+│           └── [Sign In]    → LoginPage
+│
+├── SignupPage (3-step PageController flow)
+│     ├── Step 1: Full name, email, password, confirm password
+│     ├── Step 2: Avatar, occupation, school name, grade level
+│     └── Step 3: Summary, T&C agreement → Database.createUser() → LoginPage
+│
+├── LoginPage
+│     ├── Internet check → NoInternetPage (if offline)
+│     ├── Database.userLogin() → JWT token stored in notifier
+│     ├── Database.getUserData() → userCredentials notifier populated
+│     ├── Initialization.mainInitialization()
+│     │     ├── GPS position fetched → userPosition notifier
+│     │     ├── Activity log fetched → activityList notifier
+│     │     ├── Saved schools fetched → savedSchools notifier
+│     │     ├── Saved scholarships fetched → savedScholarships notifier
+│     │     ├── Activities sorted by date
+│     │     └── Gabay chat initialized with personalized greeting
+│     └── MainPage
+│
+└── MainPage (IndexedStack + bottom nav — 5 tabs)
+      ├── Tab 0 — Discover   : College directory + map
+      ├── Tab 1 — Scholars   : Scholarship hub
+      ├── Tab 2 — Home       : Dashboard (default tab after login)
+      ├── Tab 3 — Gabay      : AI chat assistant
+      └── Tab 4 — Hubs       : Review center directory
 ```
 
 ---
 
-### 7. Main App — `lib/pages/main_page.dart`
+## Tech Stack
 
-A bottom navigation bar with 5 tabs. The active tab is tracked by the `navigationBarIndex` `ValueNotifier` in `lib/notifiers.dart`. Uses `IndexedStack` so switching tabs doesn't reload widgets.
-
----
-
-#### Tab 0 — Discover (`lib/widgets/discovery.dart`)
-
-- Fetches colleges from API on load (`Database.getCollege()`)
-- Shows a searchable list of colleges with a map view using `flutter_map`
-- Tapping a college opens `CollegeDescription` page (detailed view)
-- Users can save schools
-
-#### Tab 1 — Scholars (`lib/widgets/scholarship.dart`)
-
-- Fetches scholarships from API on load (`Database.getScholarships()`)
-- Shows featured scholarship + filtered tabs (Government / Non-Government)
-- Search bar filters the list
-- Tapping a scholarship opens `ScholarshipDescription` page
-- Users can save scholarships
-- "View All" opens `ViewAllScholarships` page
-
-#### Tab 2 — Home (`lib/widgets/home_widget.dart`) ← *default tab after login*
-
-- Greets the user by first name and shows their avatar
-- Quick-access cards for navigating the app
-- Tapping the avatar opens `ProfilePage`
-
-#### Tab 3 — Gabay (`lib/widgets/ai_gabay.dart`)
-
-- AI chat interface
-- Messages are stored in `chatMessages` notifier (list of `AiMessage` objects)
-- User types a message → calls `AiChat.sendUsermessage()` → hits the AI endpoint on the backend → response rendered as Markdown
-- Suggestion chips pre-fill common questions
-
-#### Tab 4 — Hubs (`lib/widgets/review_center.dart`)
-
-- Fetches review centers from API on load (`Database.getHubs()`)
-- Filterable by mode: All, On-site, Online, Hybrid
-- Search bar filters by name
-- Tapping a hub opens `ReviewCenterDescription` page
+| Layer | Technology |
+|---|---|
+| **Framework** | Flutter 3.x |
+| **Language** | Dart 3.11 |
+| **State Management** | `ValueNotifier` + `ValueListenableBuilder` (zero external state library) |
+| **Networking** | `http` package (REST API communication) |
+| **Authentication** | JWT Bearer Token (stored in-memory via `ValueNotifier`) |
+| **Maps** | OpenStreetMap via `flutter_map` + `flutter_osm_plugin` |
+| **Geolocation** | `geolocator` |
+| **Map Tile Caching** | `flutter_map_tile_caching` |
+| **Connectivity** | `connectivity_plus` |
+| **Fonts** | `google_fonts` |
+| **Icons** | `font_awesome_flutter` + Material Icons |
+| **Animations** | `lottie` (offline page), `smooth_page_indicator` |
+| **Markdown** | `flutter_markdown_plus` (AI chat responses) |
+| **URL Handling** | `url_launcher` |
+| **Date Formatting** | `intl` |
+| **Sharing** | `share_link` |
+| **Environment Variables** | `flutter_dotenv` |
+| **Scroll Effects** | `faded_scrollable`, `fading_edge_scrollview` |
+| **Navigation Bar** | `circle_nav_bar` |
+| **Progress Indicators** | `linear_progress_bar` |
+| **UI Utilities** | `dotted_border`, `marquee`, `flutter_svg` |
+| **App Icons** | `flutter_launcher_icons` |
+| **Backend Runtime** | Node.js (hosted on Render) |
+| **AI Service** | Separate AI backend (Render) |
 
 ---
 
-### 8. Profile — `lib/pages/profile_page.dart`
+## Dependencies
 
-Accessible by tapping the avatar on the Home tab.
+### Runtime Dependencies
 
-- Shows user info: name, email, occupation, school, grade, avatar, about me
-- **Edit About Me** — opens a dialog to update the bio, calls `Database.updateUserAboutMe()`
-- **Saved Schools** — list of saved colleges with swipe-to-unsave
-- **Saved Scholarships** — list of saved scholarships with swipe-to-unsave
-- **Logout** — calls `Initialization.clearSessionState()` which resets all notifiers, then navigates back to `LoginPage`
+```yaml
+# UI & Design
+google_fonts: ^8.0.2
+flutter_svg: ^2.2.4
+lottie: ^3.3.2
+smooth_page_indicator: ^2.0.1
+circle_nav_bar: ^2.2.0
+font_awesome_flutter: ^11.0.0
+linear_progress_bar: ^3.0.0
+dotted_border: ^3.1.0
+marquee: ^2.3.0
+faded_scrollable: ^1.0.1
+fading_edge_scrollview: ^4.1.1
+flutter_markdown_plus: ^1.0.7
+
+# Networking & APIs
+http: ^1.6.0
+flutter_dotenv: ^6.0.0
+
+# Maps & Geolocation
+flutter_map: ^8.2.2
+latlong2: ^0.9.1
+flutter_map_tile_caching: ^10.1.1
+flutter_osm_plugin: ^1.4.3
+geolocator: ^14.0.2
+
+# Connectivity
+connectivity_plus: ^7.1.1
+
+# Utilities
+url_launcher: ^6.3.2
+intl: ^0.20.2
+share_link: ^0.3.0
+```
+
+### Dev Dependencies
+
+```yaml
+flutter_lints: ^6.0.0
+flutter_launcher_icons: ^0.14.4
+```
 
 ---
 
-## State Management — `lib/notifiers.dart`
+## State Management
 
-All shared state lives here as `ValueNotifier` globals. No external state library is used — widgets listen via `ValueListenableBuilder`.
+Hakbang uses a lightweight, dependency-free state management approach built entirely on Flutter's built-in `ValueNotifier` and `ValueListenableBuilder`. All shared application state lives in a single file: `lib/notifiers.dart`.
 
-Key notifiers:
+This approach was deliberately chosen to keep the app lean, avoid dependency lock-in, and ensure that any Flutter developer can read and contribute to state logic without learning an external library.
+
+### Global Notifiers
 
 | Notifier | Type | Purpose |
 |---|---|---|
-| `userCredentials` | `User?` | Logged-in user data |
-| `token` | `String?` | JWT bearer token for API calls |
-| `navigationBarIndex` | `int` | Which tab is active |
-| `availableColleges` | `List<College>` | Colleges from API |
-| `availableScholarships` | `List<ScholarshipObject>` | Scholarships from API |
-| `availableReviewCenters` | `List<ReviewCenter>` | Hubs from API |
-| `savedSchools` | `List<College>` | User's saved schools |
-| `savedScholarships` | `List<ScholarshipObject>` | User's saved scholarships |
-| `chatMessages` | `List<AiMessage>` | Gabay chat history |
-| `userPosition` | `Position?` | User's GPS coordinates |
-| `activityList` | `List<Activity>` | User's recent activity |
+| `userCredentials` | `ValueNotifier<User?>` | Logged-in user's profile data |
+| `token` | `ValueNotifier<String?>` | JWT bearer token for authenticated API calls |
+| `navigationBarIndex` | `ValueNotifier<int>` | Active bottom navigation tab (default: 2 — Home) |
+| `welcomePageIndex` | `ValueNotifier<int>` | Current slide in the onboarding PageView |
+| `availableColleges` | `ValueNotifier<List<College>>` | Full college list from API |
+| `collegeSection` | `ValueNotifier<List<College>>` | Filtered/displayed college list |
+| `availableScholarships` | `ValueNotifier<List<ScholarshipObject>>` | Full scholarship list from API |
+| `governmentSection` | `ValueNotifier<List<ScholarshipObject>>` | Government scholarships subset |
+| `nonGovernmentSection` | `ValueNotifier<List<ScholarshipObject>>` | Non-government scholarships subset |
+| `featuredScholarship` | `ValueNotifier<ScholarshipObject?>` | The top-pick scholarship displayed prominently |
+| `availableReviewCenters` | `ValueNotifier<List<ReviewCenter>>` | Full review center list from API |
+| `reviewCenterSection` | `ValueNotifier<List<ReviewCenter>>` | Filtered review centers |
+| `savedSchools` | `ValueNotifier<List<College>>` | User's personally saved colleges |
+| `savedScholarships` | `ValueNotifier<List<ScholarshipObject>>` | User's personally saved scholarships |
+| `chatMessages` | `ValueNotifier<List<AiMessage>>` | Gabay AI chat message history |
+| `chatLoading` | `ValueNotifier<bool>` | Whether Gabay is waiting for an AI response |
+| `activityList` | `ValueNotifier<List<Activity>>` | User activity log, sorted by date |
+| `userPosition` | `ValueNotifier<Position?>` | User's current GPS coordinates |
+| `selectedSchoolPosition` | `ValueNotifier<LatLng?>` | Map-selected college coordinates |
+| `locationEnabled` | `ValueNotifier<bool?>` | Whether device location services are enabled |
+| `hasInternetConnection` | `ValueNotifier<bool>` | Current internet connectivity status |
+| `agreeToTerms` | `ValueNotifier<bool>` | Terms & conditions checkbox state (signup) |
+| `selectedFilter` | `ValueNotifier<List<bool>>` | Active scholarship filter tab |
+| `selectedHubFilter` | `ValueNotifier<List<bool>>` | Active review center modality filter |
+| `governmentSelected` | `ValueNotifier<bool>` | Which scholarship category tab is active |
+| `onSelect` | `ValueNotifier<String>` | Currently selected item identifier |
 
 ---
 
-## Backend — `lib/server/`
+## Data Models
 
-All HTTP calls go through `lib/server/database/database.dart`.
+All models are plain Dart classes located in `lib/models/`.
 
-- **Base URL:** `project-hakbang-server-vif8.onrender.com`
-- **Auth:** Bearer token sent in every authenticated request header
-- **AI chat URL:** `project-hakbang-server.onrender.com` (separate service)
+### `User`
+```
+name, email, avatar (emoji), grade, institution, occupation, role, aboutMe
+```
 
-Key methods:
+### `College`
+```
+id, collegeName, address, email, fbPage, telephone, type,
+latitude, longitude, logoLink, collegeImage,
+programs (List), tags (List),
+rating, programNumbers, about, ranking
+```
 
-| Method | Endpoint | What it does |
-|---|---|---|
-| `userLogin` | `POST /user/login` | Authenticates user, returns token |
-| `createUser` | `POST /user/register` | Creates a new account |
-| `getUserData` | `GET /user/...` | Fetches user profile |
-| `getCollege` | `GET /college/auth/available-colleges` | Loads all colleges |
-| `getScholarships` | `GET /scholarship/auth/active-scholarships` | Loads all scholarships |
-| `getHubs` | — | Loads review centers |
-| `getUserActivities` | — | Fetches activity log |
-| `getSavedSchools` | — | Fetches user's saved schools |
-| `getSavedScholarships` | — | Fetches user's saved scholarships |
-| `updateUserAboutMe` | — | Updates bio |
+### `ScholarshipObject`
+```
+id, scholarshipName, about, allowance, color, scholarshipIcon,
+government (bool), topPick, minGwa, deadline, limit, duration,
+grantTitle, organizationName, website,
+benefits (List), eligibility (List), applicationSteps (List),
+applicationTimeline (List), requiredDocuments (List),
+serviceObligation (Map), tags (List)
+```
 
-AI messages go through `lib/server/services/ai_chat.dart` → `POST /chat/auth/message`.
+### `ReviewCenter`
+```
+title, subtitle, description, instructor, managedBy,
+modalities, location, website, phone, email, exams,
+ratingNum, stars, ratingCount, price, originalPrice,
+isBestSeller (bool), emoji,
+coverage (List), centerOffers (List), whoThisIsFor (List),
+programOverview (Map), aboutThisCenter (Map)
+```
+
+### `AiMessage`
+```
+text, role ("user" | "model"), chatTime
+```
+
+### `Activity`
+```
+description, iconName, date
+```
 
 ---
 
-## Folder Structure
+## Backend & API
+
+Hakbang communicates with two separate hosted backend services, both deployed on **Render**.
+
+### Main API Server
+**Base URL:** `https://project-hakbang-server-vif8.onrender.com`
+
+| Method | HTTP | Endpoint | Description |
+|---|---|---|---|
+| `userLogin` | `POST` | `/user/login` | Authenticates credentials, returns JWT |
+| `createUser` | `POST` | `/user/register` | Creates a new user account |
+| `getUserData` | `GET` | `/user/...` | Fetches full user profile |
+| `getCollege` | `GET` | `/college/auth/available-colleges` | Returns full college directory |
+| `getScholarships` | `GET` | `/scholarship/auth/active-scholarships` | Returns all active scholarships |
+| `getHubs` | `GET` | *(hub endpoint)* | Returns review center list |
+| `getUserActivities` | `GET` | *(activity endpoint)* | Fetches user activity log |
+| `getSavedSchools` | `GET` | *(saved endpoint)* | Fetches user's saved colleges |
+| `getSavedScholarships` | `GET` | *(saved endpoint)* | Fetches user's saved scholarships |
+| `updateUserAboutMe` | `PATCH` | *(user endpoint)* | Updates user bio |
+
+All authenticated endpoints require:
+```
+Authorization: Bearer <token>
+```
+
+### AI Chat Service
+**Base URL:** `https://project-hakbang-server.onrender.com`
+
+| Method | HTTP | Endpoint | Description |
+|---|---|---|---|
+| `sendUsermessage` | `POST` | `/chat/auth/message` | Sends a user message and receives an AI response |
+
+The AI chat service is handled by `lib/server/services/ai_chat.dart` and returns plain text responses that are rendered as Markdown in the UI via `flutter_markdown_plus`.
+
+### Network Layer
+All HTTP logic is centralized in `lib/server/database/database.dart`. There is no HTTP interceptor abstraction — each method handles its own request, response parsing, and error signaling to keep API calls explicit and traceable.
+
+Internet availability is checked before every login attempt using `lib/functions/internet.dart`, which uses `connectivity_plus` to detect Wi-Fi or mobile data.
+
+---
+
+## Project Structure
 
 ```
 lib/
-├── main.dart              # App entry, MaterialApp setup
-├── widget_tree.dart       # Location init, loads StartPage
-├── notifiers.dart         # All ValueNotifier globals (shared state)
-├── pages/                 # Full screens
-│   ├── start_page.dart
-│   ├── login_page.dart
-│   ├── signup_page.dart
-│   ├── main_page.dart
-│   ├── profile_page.dart
-│   ├── college_description.dart
-│   ├── scholarship_description.dart
-│   ├── review_center_description.dart
-│   ├── view_all_scholarships.dart
-│   └── no_internet_page.dart
-├── widgets/               # Reusable UI pieces & tab content
-│   ├── welcome_widget.dart
-│   ├── home_widget.dart
-│   ├── discovery.dart
-│   ├── scholarship.dart
-│   ├── ai_gabay.dart
-│   ├── review_center.dart
-│   ├── signup_step1/2/3.dart
-│   └── ...
-├── functions/             # Logic helpers
-│   ├── locations.dart     # GPS permission & position
-│   ├── internet.dart      # Connectivity check
-│   ├── initialization.dart# Post-login data fetch
-│   ├── filter.dart        # List filtering logic
-│   ├── sorting_functions.dart
-│   ├── scholarship_save.dart
-│   ├── school_save.dart
-│   ├── verifications.dart
-│   └── activity_functions.dart
+├── main.dart                        # App entry point — MaterialApp root
+├── widget_tree.dart                 # Location init gate — loads StartPage
+├── notifiers.dart                   # All global ValueNotifier state
+│
+├── pages/                           # Full-screen route destinations
+│   ├── start_page.dart              # Shell for WelcomeWidget
+│   ├── login_page.dart              # Email/password login
+│   ├── signup_page.dart             # 3-step registration flow
+│   ├── main_page.dart               # Root shell with bottom nav (IndexedStack)
+│   ├── profile_page.dart            # User profile, saved items, logout
+│   ├── college_description.dart     # College detail page
+│   ├── scholarship_description.dart # Scholarship detail page
+│   ├── review_center_description.dart # Review center detail page
+│   ├── view_all_scholarships.dart   # Full scholarship listing page
+│   └── no_internet_page.dart        # Offline fallback with Lottie animation
+│
+├── widgets/                         # Reusable and tab-level UI components
+│   ├── welcome_widget.dart          # 5-slide onboarding PageView
+│   ├── home_widget.dart             # Home dashboard tab
+│   ├── discovery.dart               # College discovery tab
+│   ├── scholarship.dart             # Scholarships tab
+│   ├── ai_gabay.dart                # Gabay AI chat tab
+│   ├── review_center.dart           # Review center hubs tab
+│   ├── signup_step1.dart            # Signup: credentials step
+│   ├── signup_step2.dart            # Signup: profile setup step
+│   └── signup_step3.dart            # Signup: review & confirm step
+│
+├── functions/                       # Business logic helpers
+│   ├── initialization.dart          # Post-login data fetch & session clear
+│   ├── locations.dart               # GPS permission & position retrieval
+│   ├── internet.dart                # Connectivity detection
+│   ├── filter.dart                  # List filtering logic (colleges, hubs)
+│   ├── sorting_functions.dart       # Activity and list sort helpers
+│   ├── scholarship_save.dart        # Save/unsave scholarship logic
+│   ├── school_save.dart             # Save/unsave college logic
+│   ├── verifications.dart           # Input validation helpers
+│   ├── launcher.dart                # url_launcher wrapper
+│   └── activity_functions.dart     # Activity log write helpers
+│
 ├── server/
-│   ├── database/database.dart   # All REST API calls
-│   └── services/ai_chat.dart   # AI chat API call
-├── models/                # Data classes
+│   ├── database/
+│   │   └── database.dart            # All REST API calls (central HTTP layer)
+│   └── services/
+│       └── ai_chat.dart             # Gabay AI message API call
+│
+├── models/                          # Dart data classes (no ORM, plain Dart)
 │   ├── user.dart
 │   ├── college.dart
 │   ├── scholarship_object.dart
@@ -244,31 +461,160 @@ lib/
 │   ├── activity.dart
 │   ├── ai_message.dart
 │   └── occupation_option.dart
-└── design/                # Shared styles & themes
-    ├── app_colors.dart
-    ├── font_styles.dart
-    ├── button_design.dart
-    ├── container_design.dart
-    └── ...
+│
+└── design/                          # App-wide design system constants
+    ├── app_colors.dart              # Full color palette (dark theme)
+    ├── font_styles.dart             # Typography scale
+    ├── button_design.dart           # Shared button styles
+    ├── container_design.dart        # Card and container decorations
+    ├── input_design.dart            # TextField input decorations
+    ├── background_design.dart       # Page background colors
+    ├── padding_design.dart          # Spacing constants
+    ├── heights_values.dart          # Vertical spacing constants
+    ├── width_values.dart            # Horizontal spacing constants
+    └── smooth_page_indicator_design.dart  # Dot indicator configuration
+
+assets/
+├── hakbang_main_logo.png            # App icon source
+├── hakbang_logo.png                 # In-app logo variant
+├── noInternet.json                  # Lottie animation for offline page
+├── graduation-hat.svg
+├── university.svg
+├── scholarship.png
+├── school.png
+├── map.svg
+├── robot.svg
+├── house.svg
+├── exam.svg
+└── user.svg
 ```
 
 ---
 
-## Quick Flow Summary
+## Design System
 
+Hakbang uses a fully custom, centralized design system with a dark theme. All design tokens are defined in `lib/design/` and shared across the entire app — no inline colors or font sizes in widget files.
+
+### Color Palette
+
+The app uses a rich dark theme with a signature **lime accent (`#C8FF4D`)** as the primary brand color.
+
+| Token | Hex | Usage |
+|---|---|---|
+| `AppColors.bg` | `#0C0D10` | Page backgrounds |
+| `AppColors.bodyBg` | `#07080C` | Body/root background |
+| `AppColors.surface` | `#13141A` | Cards, bottom nav |
+| `AppColors.surface2` | `#1C1E27` | List items, text inputs |
+| `AppColors.surface3` | `#23263A` | Inactive states, avatar backgrounds |
+| `AppColors.accent` | `#C8FF4D` | Primary brand — buttons, active states |
+| `AppColors.onAccent` | `#0C0D10` | Dark text placed on accent color |
+| `AppColors.accentLight` | `#D9FE84` | Stat highlights, secondary accents |
+| `AppColors.blue` | `#4D8FFF` | Info states, links |
+| `AppColors.purple` | `#A855F7` | Scholarship-related UI |
+| `AppColors.coral` | `#FF6B4D` | Urgency indicators, deadlines |
+| `AppColors.teal` | `#4DFFB8` | Progress, success states |
+| `AppColors.border` | `rgba(255,255,255,0.07)` | Subtle dividers |
+
+---
+
+---
+
+### Prerequisites
+
+- Flutter SDK `^3.x` (with Dart `^3.11.1`)
+- Xcode (for iOS builds)
+- Android Studio / Android SDK (for Android builds)
+- A `.env` file with the required API keys (see [Environment Setup](#environment-setup))
+
+### Installation
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-org/project_hakbang.git
+cd project_hakbang
+
+# 2. Install dependencies
+flutter pub get
+
+# 3. Add your .env file (see Environment Setup below)
+
+# 4. Run on a connected device or simulator
+flutter run
 ```
-App launch
-  └── main.dart → widget_tree.dart
-        └── Request location permission
-              └── start_page.dart → welcome_widget.dart
-                    ├── [Get Started] → signup_page.dart (3 steps) → login_page.dart
-                    └── [Sign In]    → login_page.dart
-                                          └── Authenticate via API
-                                                └── Initialization (fetch all data)
-                                                      └── main_page.dart
-                                                            ├── Tab 0: Discover (colleges + map)
-                                                            ├── Tab 1: Scholars (scholarships)
-                                                            ├── Tab 2: Home (dashboard) ← default
-                                                            ├── Tab 3: Gabay (AI chat)
-                                                            └── Tab 4: Hubs (review centers)
+
+### iOS Setup
+
+```bash
+cd ios
+pod install
+cd ..
+flutter run
 ```
+
+### Android Setup
+
+No additional native setup is required beyond the standard Flutter Android configuration.
+
+---
+
+## Environment Setup
+
+Hakbang uses `flutter_dotenv` to manage environment variables. Create a `.env` file in the project root:
+
+```env
+# Example .env structure
+# Add any required API keys or base URL overrides here
+BASE_URL=https://project-hakbang-server-vif8.onrender.com
+AI_BASE_URL=https://project-hakbang-server.onrender.com
+```
+
+> **Important:** Never commit the `.env` file to version control. Ensure it is listed in `.gitignore`.
+
+The `.env` file is loaded in `main.dart` via:
+
+```dart
+await dotenv.load(fileName: ".env");
+```
+
+---
+
+## Roadmap
+
+| Feature | Status |
+|---|---|
+| College discovery with map | ✅ Live |
+| Scholarship hub | ✅ Live |
+| Gabay AI chat | ✅ Live |
+| Review center hub | ✅ Live |
+| User profiles & saved items | ✅ Live |
+| 3-step onboarding + auth | ✅ Live |
+| Activity log | ✅ Live |
+| Offline detection & fallback | ✅ Live |
+| Push notifications | 🔜 Planned |
+| Entrance exam mock tests | 🔜 Planned |
+| Scholarship deadline reminders | 🔜 Planned |
+| Community forums | 🔜 Planned |
+| College comparison tool | 🔜 Planned |
+| Multi-language support (Filipino / English) | 🔜 Planned |
+
+---
+
+## Contributing
+
+This is a private project. Contributions are by invitation only. Please contact the maintainers before submitting pull requests.
+
+---
+
+## License
+
+Private and proprietary. All rights reserved. Unauthorized use, reproduction, or distribution of any part of this codebase is strictly prohibited.
+
+---
+
+<div align="center">
+
+Built with ❤️ for Filipino students.
+
+*Hakbang — Every step toward your future starts here.*
+
+</div>

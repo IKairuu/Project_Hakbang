@@ -22,6 +22,8 @@ PODS:
   - permission_handler_apple (9.3.0):
     - Flutter
   - Polyline (5.1.0)
+  - share_link (0.2.0):
+    - Flutter
   - url_launcher_ios (0.0.1):
     - Flutter
   - Yams (5.0.6)
@@ -34,6 +36,7 @@ DEPENDENCIES:
   - objectbox_flutter_libs (from `.symlinks/plugins/objectbox_flutter_libs/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - share_link (from `.symlinks/plugins/share_link/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
@@ -59,6 +62,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  share_link:
+    :path: ".symlinks/plugins/share_link/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
@@ -74,6 +79,7 @@ SPEC CHECKSUMS:
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
   Polyline: 2a1f29f87f8d9b7de868940f4f76deb8c678a5b1
+  share_link: 719da072b9bd3564e05a9b686528f29abc46819d
   url_launcher_ios: 7a95fa5b60cc718a708b8f2966718e93db0cef1b
   Yams: e10dae147f517ed57ecae37c5e8681bdf8fcab65
 

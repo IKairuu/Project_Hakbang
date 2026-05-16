@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:hakbang/features/data/models/activity.dart';
-import 'package:hakbang/features/data/models/ai_message.dart';
-import 'package:hakbang/features/data/models/college.dart';
-import 'package:hakbang/features/data/models/review_center.dart';
-import 'package:hakbang/features/data/models/scholarship_object.dart';
-import 'package:hakbang/features/data/models/user.dart';
+import 'package:hakbang/features/user/data/models/activity.dart';
+import 'package:hakbang/features/user/data/models/ai_message.dart';
+import 'package:hakbang/features/user/data/models/college.dart';
+import 'package:hakbang/features/user/data/models/review_center.dart';
+import 'package:hakbang/features/user/data/models/scholarship_object.dart';
+import 'package:hakbang/features/user/data/models/user.dart';
 import 'package:latlong2/latlong.dart';
 
 ValueNotifier<bool> connectedToServer = ValueNotifier(false);

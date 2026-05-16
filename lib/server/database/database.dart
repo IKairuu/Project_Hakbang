@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:hakbang/functions/initialization.dart';
-import 'package:hakbang/features/data/models/activity.dart';
-import 'package:hakbang/features/data/models/college.dart';
-import 'package:hakbang/features/data/models/review_center.dart';
-import 'package:hakbang/features/data/models/scholarship_object.dart';
+import 'package:hakbang/features/user/data/models/activity.dart';
+import 'package:hakbang/features/user/data/models/college.dart';
+import 'package:hakbang/features/user/data/models/review_center.dart';
+import 'package:hakbang/features/user/data/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:http/http.dart' as http;
 

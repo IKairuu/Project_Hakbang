@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hakbang/design/app_colors.dart';
+import 'package:hakbang/features/user/presentation/design/app_colors.dart';
+import 'package:hakbang/features/user/presentation/pages/server_offline.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/features/presentation/pages/start_page.dart';
+import 'package:hakbang/features/user/presentation/pages/start_page.dart';
 import 'package:hakbang/server/initialize_server.dart';
 
 class WidgetTree extends StatefulWidget {
@@ -14,6 +15,7 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
+  ValueNotifier<bool> doneLoading = ValueNotifier(false);
   @override
   void initState() {
     super.initState();
@@ -26,10 +28,9 @@ class _WidgetTreeState extends State<WidgetTree> {
   }
 
   void connectToServer() async {
-    while (!connectedToServer.value) {
-      var execute = await InitializeServer.pingServer();
-      connectedToServer.value = execute["connected"];
-    }
+    var execute = await InitializeServer.pingServer();
+    connectedToServer.value = execute["connected"];
+    doneLoading.value = true;
   }
 
   @override
@@ -37,32 +38,39 @@ class _WidgetTreeState extends State<WidgetTree> {
     return ValueListenableBuilder(
       valueListenable: connectedToServer,
       builder: (context, value, child) {
-        return value
-            ? StartPage()
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircularProgressIndicator.adaptive(
-                      backgroundColor: AppColors.accent,
-                      year2023: true,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        "Connecting to Server...",
-                        style: GoogleFonts.dmSans(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
+        return ValueListenableBuilder(
+          valueListenable: doneLoading,
+          builder: (context, loading, child) {
+            return value && loading
+                ? StartPage()
+                : !loading
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CircularProgressIndicator.adaptive(
+                          backgroundColor: AppColors.accent,
+                          year2023: true,
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            "This may take long, Connecting to Server...",
+                            style: GoogleFonts.dmSans(
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              );
+                  )
+                : ServerOffline();
+          },
+        );
       },
     );
   }

@@ -1,4 +1,4 @@
-import 'package:hakbang/features/data/models/activity.dart';
+import 'package:hakbang/features/user/data/models/activity.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/database/database.dart';
 

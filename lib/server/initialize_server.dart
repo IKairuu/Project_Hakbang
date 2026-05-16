@@ -1,20 +1,22 @@
+import 'dart:async';
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class InitializeServer {
   static Future<Map<String, dynamic>> pingServer() async {
-    final mainUrl = "project-hakbang-server.onrender.com";
+    final dio = Dio();
+
     try {
-      final url = Uri.https(mainUrl, "ping");
-      final response = await http.get(url);
+      final response = await dio.get(
+        "https://project-hakbang-server.onrender.com/ping",
+      );
       final appResponse = {
-        "message": jsonDecode(response.body),
+        "message": response.data["message"],
         "connected": true,
       };
       return appResponse;
-    } catch (error) {
-      print(error);
+    } on TimeoutException {
       return {"connected": false};
     }
   }

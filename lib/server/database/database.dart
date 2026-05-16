@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/features/user/data/models/activity.dart';
 import 'package:hakbang/features/user/data/models/college.dart';
@@ -9,7 +10,8 @@ import 'package:hakbang/notifiers.dart';
 import 'package:http/http.dart' as http;
 
 class Database {
-  static String mainUrl = "project-hakbang-server.onrender.com";
+  static final dio = Dio();
+  static String mainUrl = "https://project-hakbang-server.onrender.com";
   static Future<void> getCollege() async {
     final url = Uri.https(mainUrl, "college/auth/available-colleges");
     final headers = {

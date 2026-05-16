@@ -1,7 +1,7 @@
 import 'package:hakbang/functions/initialization.dart';
-import 'package:hakbang/models/college.dart';
-import 'package:hakbang/models/review_center.dart';
-import 'package:hakbang/models/scholarship_object.dart';
+import 'package:hakbang/features/data/models/college.dart';
+import 'package:hakbang/features/data/models/review_center.dart';
+import 'package:hakbang/features/data/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
 
 class Filter {

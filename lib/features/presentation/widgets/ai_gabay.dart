@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
-import 'package:hakbang/models/ai_message.dart';
+import 'package:hakbang/features/data/models/ai_message.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/services/ai_chat.dart';
 import 'package:intl/intl.dart';

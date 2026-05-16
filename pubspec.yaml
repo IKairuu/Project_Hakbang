@@ -58,6 +58,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   share_link: ^0.3.0
   flutter_markdown_plus: ^1.0.7
+  dio: ^5.9.2
 
 dev_dependencies:
   flutter_test:

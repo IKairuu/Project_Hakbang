@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/pages/start_page.dart';
+import 'package:hakbang/features/presentation/pages/start_page.dart';
 import 'package:hakbang/server/initialize_server.dart';
 
 class WidgetTree extends StatefulWidget {

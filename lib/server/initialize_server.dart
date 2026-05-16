@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
@@ -8,9 +7,9 @@ class InitializeServer {
     final dio = Dio();
 
     try {
-      final response = await dio.get(
-        "https://project-hakbang-server.onrender.com/ping",
-      );
+      final response = await dio
+          .get("https://project-hakbang-server.onrender.com/ping")
+          .timeout(Duration(seconds: 30));
       final appResponse = {
         "message": response.data["message"],
         "connected": true,

@@ -64,72 +64,39 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } else {
-      var login = await Database.userLogin(email, password);
-      if (login.containsKey("error")) {
+      try {
+        var userData = await Database.userLogin(email, password);
+        userCredentials.value = User(
+          name: userData["message"]["name"],
+          email: userData["message"]["email"],
+          avatar: userData["message"]["avatar"],
+          grade: userData["message"]["grade"],
+          institution: userData["message"]["institution"],
+          occupation: userData["message"]["occupation"],
+          role: userData["message"]["role"],
+          aboutMe: userData["message"]["about_me"],
+        );
+        token.value = "Bearer ${userData["token"]}";
+        navigationBarIndex.value = 2;
+        await Initialization.mainInitialization();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,
-            content: Text("Cannot reach server. Please try again."),
+            content: Text("Successfully Logged In"),
           ),
         );
         setState(() => isLoading = false);
-        return;
-      }
-      token.value = "Bearer ${login["token"]}";
-      switch (login["status"]) {
-        case 200:
-          await Database.getUserData(login["data"])
-              .then((value) async {
-                userCredentials.value = User(
-                  name: value["data"]["name"],
-                  email: value["data"]["email"],
-                  avatar: value["data"]["avatar"],
-                  grade: value["data"]["grade"],
-                  institution: value["data"]["institution"],
-                  occupation: value["data"]["occupation"],
-                  role: value["data"]["role"],
-                  aboutMe: value["data"]["about_me"],
-                );
-
-                navigationBarIndex.value = 2;
-                await Initialization.mainInitialization();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    behavior: SnackBarBehavior.floating,
-                    content: Text(login["message"]),
-                  ),
-                );
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MainPage()),
-                );
-              })
-              .onError((error, stackTrace) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    behavior: SnackBarBehavior.floating,
-                    content: Text("Server Error"),
-                  ),
-                );
-              });
-
-          break;
-        case 401:
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              behavior: SnackBarBehavior.floating,
-              content: Text(login["message"]),
-            ),
-          );
-          break;
-        default:
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              behavior: SnackBarBehavior.floating,
-              content: Text("${login['message']}"),
-            ),
-          );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainPage()),
+        );
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(error.toString()),
+          ),
+        );
       }
     }
 

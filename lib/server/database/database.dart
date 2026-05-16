@@ -118,24 +118,13 @@ class Database {
     String email,
     String password,
   ) async {
-    final url = Uri.https(mainUrl, "user/login");
-    final userMessage = jsonEncode({"email": email, "password": password});
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    };
+    final userMessage = {"email": email, "password": password};
 
     try {
-      final response = await http.post(
-        url,
-        headers: headers,
-        body: userMessage,
-      );
-      if (response.body.isEmpty)
-        return {"error": "Server returned empty response"};
-      return jsonDecode(response.body);
-    } catch (e) {
-      return {"message": e.toString()};
+      final response = await dio.post("$mainUrl/user/login", data: userMessage);
+      return response.data;
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
     }
   }
 
@@ -164,18 +153,14 @@ class Database {
   }
 
   static Future<void> getUserActivities(String email) async {
-    final url = Uri.https(mainUrl, "user/auth/get-activities");
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-
-    final data = jsonEncode({"email": email});
-    final response = await http.post(url, headers: headers, body: data);
+    final headers = {"Authorization": token.value!};
+    final response = await dio.get(
+      "$mainUrl/user/auth/get-activities/$email",
+      options: Options(headers: headers),
+    );
 
     List<Activity> activities = [];
-    for (Map<String, dynamic> acts in jsonDecode(response.body)["data"]) {
+    for (Map<String, dynamic> acts in response.data["data"]) {
       activities.add(
         Activity(
           description: acts["description"],
@@ -188,31 +173,18 @@ class Database {
   }
 
   static Future<void> getSavedScholarships(String email) async {
-    final url = Uri.https(mainUrl, "user/auth/get-saved-scholarship");
+    final headers = {"Authorization": token.value!};
+    final response = await dio.get(
+      "$mainUrl/user/auth/get-saved-scholarship/$email",
+      options: Options(headers: headers),
+    );
 
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-
-    try {
-      final response = await http.post(
-        url,
-        headers: headers,
-        body: jsonEncode({"email": email}),
-      );
-
-      final List<Map<String, dynamic>> scholarList = [];
-      final data = jsonDecode(response.body);
-
-      for (Map<String, dynamic> dataObjs in data["data"]) {
-        scholarList.add(dataObjs);
-      }
-      rawSavedScholarships.value = scholarList;
-    } catch (error) {
-      print(error);
+    final List<Map<String, dynamic>> scholarList = [];
+    final data = response.data;
+    for (Map<String, dynamic> dataObjs in data["data"]) {
+      scholarList.add(dataObjs);
     }
+    rawSavedScholarships.value = scholarList;
   }
 
   static Future<void> saveScholarship(String scholarName) async {
@@ -254,21 +226,14 @@ class Database {
   }
 
   static Future<void> getSavedSchools(String email) async {
-    final url = Uri.https(mainUrl, "user/auth/get-saved-schools");
+    final headers = {"Authorization": token.value!};
 
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-
-    final response = await http.post(
-      url,
-      headers: headers,
-      body: jsonEncode({"email": email}),
+    final response = await dio.get(
+      "$mainUrl/user/auth/get-saved-schools/$email",
+      options: Options(headers: headers),
     );
     final List<Map<String, dynamic>> collegeList = [];
-    final data = jsonDecode(response.body);
+    final data = response.data;
     for (Map<String, dynamic> collegeNames in data["data"]) {
       collegeList.add(collegeNames);
     }

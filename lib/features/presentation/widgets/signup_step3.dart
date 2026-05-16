@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
-import 'package:hakbang/models/occupation_option.dart';
+import 'package:hakbang/features/data/models/occupation_option.dart';
 import 'package:hakbang/notifiers.dart';
 
 class SignupStep3 extends StatefulWidget {

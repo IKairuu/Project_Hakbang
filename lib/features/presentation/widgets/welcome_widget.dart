@@ -3,13 +3,13 @@ import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/smooth_page_indicator_design.dart';
 import 'package:hakbang/functions/locations.dart';
-import 'package:hakbang/pages/login_page.dart';
-import 'package:hakbang/pages/signup_page.dart';
-import 'package:hakbang/widgets/about_app.dart';
-import 'package:hakbang/widgets/explore_container.dart';
-import 'package:hakbang/widgets/gabay_ai_slide.dart';
-import 'package:hakbang/widgets/review_center_slide.dart';
-import 'package:hakbang/widgets/scholarship_ai.dart';
+import 'package:hakbang/features/presentation/pages/login_page.dart';
+import 'package:hakbang/features/presentation/pages/signup_page.dart';
+import 'package:hakbang/features/presentation/widgets/about_app.dart';
+import 'package:hakbang/features/presentation/widgets/explore_container.dart';
+import 'package:hakbang/features/presentation/widgets/gabay_ai_slide.dart';
+import 'package:hakbang/features/presentation/widgets/review_center_slide.dart';
+import 'package:hakbang/features/presentation/widgets/scholarship_ai.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class WelcomeWidget extends StatefulWidget {

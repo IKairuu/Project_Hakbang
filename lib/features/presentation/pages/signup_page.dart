@@ -8,16 +8,16 @@ import 'package:hakbang/functions/internet.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/verifications.dart';
 import 'package:hakbang/main.dart';
-import 'package:hakbang/models/occupation_option.dart';
+import 'package:hakbang/features/data/models/occupation_option.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/pages/login_page.dart';
-import 'package:hakbang/pages/no_internet_page.dart';
+import 'package:hakbang/features/presentation/pages/login_page.dart';
+import 'package:hakbang/features/presentation/pages/no_internet_page.dart';
 import 'package:hakbang/server/database/database.dart';
-import 'package:hakbang/widgets/signup_step1.dart';
-import 'package:hakbang/widgets/signup_step2.dart';
-import 'package:hakbang/widgets/signup_step3.dart';
-import 'package:hakbang/widgets/signup_progress_indicator.dart';
-import 'package:hakbang/widgets/auth_gradient_bg.dart';
+import 'package:hakbang/features/presentation/widgets/signup_step1.dart';
+import 'package:hakbang/features/presentation/widgets/signup_step2.dart';
+import 'package:hakbang/features/presentation/widgets/signup_step3.dart';
+import 'package:hakbang/features/presentation/widgets/signup_progress_indicator.dart';
+import 'package:hakbang/features/presentation/widgets/auth_gradient_bg.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});

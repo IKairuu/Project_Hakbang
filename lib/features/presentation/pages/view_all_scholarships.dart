@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/design/app_colors.dart';
-import 'package:hakbang/models/scholarship_object.dart';
+import 'package:hakbang/features/data/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/pages/scholarship_description.dart';
+import 'package:hakbang/features/presentation/pages/scholarship_description.dart';
 
 class ViewAllScholarships extends StatefulWidget {
   const ViewAllScholarships({super.key, required this.government});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hakbang/widgets/welcome_widget.dart';
+import 'package:hakbang/features/presentation/widgets/welcome_widget.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});

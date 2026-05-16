@@ -5,13 +5,13 @@ import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/functions/internet.dart';
 import 'package:hakbang/functions/locations.dart';
-import 'package:hakbang/models/user.dart';
+import 'package:hakbang/features/data/models/user.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/pages/main_page.dart';
-import 'package:hakbang/pages/no_internet_page.dart';
-import 'package:hakbang/pages/signup_page.dart';
+import 'package:hakbang/features/presentation/pages/main_page.dart';
+import 'package:hakbang/features/presentation/pages/no_internet_page.dart';
+import 'package:hakbang/features/presentation/pages/signup_page.dart';
 import 'package:hakbang/server/database/database.dart';
-import 'package:hakbang/widgets/auth_gradient_bg.dart';
+import 'package:hakbang/features/presentation/widgets/auth_gradient_bg.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

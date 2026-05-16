@@ -6,8 +6,8 @@ import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/design/button_design.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hakbang/models/review_center.dart' as rc_model;
-import 'package:hakbang/pages/review_center_description.dart';
+import 'package:hakbang/features/data/models/review_center.dart' as rc_model;
+import 'package:hakbang/features/presentation/pages/review_center_description.dart';
 import 'package:hakbang/server/database/database.dart';
 
 class ReviewCenter extends StatefulWidget {

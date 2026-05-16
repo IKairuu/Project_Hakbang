@@ -8,15 +8,15 @@ import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/functions/scholarship_save.dart';
 import 'package:hakbang/functions/school_save.dart';
-import 'package:hakbang/models/college.dart';
+import 'package:hakbang/features/data/models/college.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/pages/college_description.dart';
-import 'package:hakbang/pages/login_page.dart';
+import 'package:hakbang/features/presentation/pages/college_description.dart';
+import 'package:hakbang/features/presentation/pages/login_page.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/server/database/database.dart';
-import 'package:hakbang/widgets/edit_about_me_dialog.dart';
-import 'package:hakbang/widgets/saved_scholar_card.dart';
-import 'package:hakbang/widgets/saved_school_card.dart';
+import 'package:hakbang/features/presentation/widgets/edit_about_me_dialog.dart';
+import 'package:hakbang/features/presentation/widgets/saved_scholar_card.dart';
+import 'package:hakbang/features/presentation/widgets/saved_school_card.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

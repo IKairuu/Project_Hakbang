@@ -1,4 +1,4 @@
-import 'package:hakbang/models/scholarship_object.dart';
+import 'package:hakbang/features/data/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/database/database.dart';
 

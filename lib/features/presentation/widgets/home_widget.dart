@@ -5,7 +5,7 @@ import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/pages/profile_page.dart';
+import 'package:hakbang/features/presentation/pages/profile_page.dart';
 import 'package:marquee/marquee.dart';
 import 'package:hakbang/design/app_colors.dart';
 

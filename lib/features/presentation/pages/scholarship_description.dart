@@ -5,7 +5,7 @@ import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/functions/scholarship_save.dart';
-import 'package:hakbang/models/scholarship_object.dart';
+import 'package:hakbang/features/data/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';

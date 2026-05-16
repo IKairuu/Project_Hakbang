@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/design/container_design.dart';
 import 'package:hakbang/design/font_styles.dart';
-import 'package:hakbang/models/college.dart';
+import 'package:hakbang/features/data/models/college.dart';
 
 class SavedSchoolCard extends StatelessWidget {
   final College college;

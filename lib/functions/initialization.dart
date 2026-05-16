@@ -1,6 +1,6 @@
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/sorting_functions.dart';
-import 'package:hakbang/models/ai_message.dart';
+import 'package:hakbang/features/data/models/ai_message.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';

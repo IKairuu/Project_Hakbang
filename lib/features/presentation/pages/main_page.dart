@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/design/app_colors.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/widgets/ai_gabay.dart';
-import 'package:hakbang/widgets/discovery.dart';
-import 'package:hakbang/widgets/home_widget.dart';
-import 'package:hakbang/widgets/scholarship.dart';
-import 'package:hakbang/widgets/review_center.dart';
+import 'package:hakbang/features/presentation/widgets/ai_gabay.dart';
+import 'package:hakbang/features/presentation/widgets/discovery.dart';
+import 'package:hakbang/features/presentation/widgets/home_widget.dart';
+import 'package:hakbang/features/presentation/widgets/scholarship.dart';
+import 'package:hakbang/features/presentation/widgets/review_center.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

@@ -7,7 +7,7 @@ import 'package:hakbang/design/button_design.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/functions/school_save.dart';
-import 'package:hakbang/models/college.dart';
+import 'package:hakbang/features/data/models/college.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';

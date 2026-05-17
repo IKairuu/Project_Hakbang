@@ -150,33 +150,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> retrieveSavedObjects() async {
-    final messenger = ScaffoldMessenger.of(context);
     if (availableColleges.value.isEmpty) {
-      await Database.getCollege().onError((error, stackTrace) {
-        messenger.showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Text(
-              error.toString(),
-              style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
-            ),
-          ),
-        );
-      });
+      await Database.getCollege();
     }
 
     if (availableScholarships.value.isEmpty) {
-      await Database.getScholarships().onError((error, stackTrace) {
-        messenger.showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Text(
-              error.toString(),
-              style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
-            ),
-          ),
-        );
-      });
+      await Database.getScholarships();
       Filter.getTopPick();
       Filter.filterScholarships();
     }

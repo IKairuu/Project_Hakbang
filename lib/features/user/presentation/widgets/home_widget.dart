@@ -457,6 +457,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         ? Center(
                                             child: Text(
                                               "There are no recent activities",
+                                              style: GoogleFonts.dmSans(
+                                                color: AppColors.textSecondary,
+                                              ),
                                             ),
                                           )
                                         : ListView.builder(

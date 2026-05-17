@@ -143,12 +143,18 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                                   "Like removed: ${s.scholarshipName}",
                                   "assets/graduation-hat.svg",
                                 );
-                                ScaffoldMessenger.of(
-                                  context,
-                                ).showSnackBar(SnackBar(content: Text(res)));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(res),
+                                  ),
+                                );
                               } catch (error) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(error.toString())),
+                                  SnackBar(
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(error.toString()),
+                                  ),
                                 );
                               }
                             } else {
@@ -164,12 +170,18 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                                   "Scholarship Liked : ${s.scholarshipName}",
                                   "assets/graduation-hat.svg",
                                 );
-                                ScaffoldMessenger.of(
-                                  context,
-                                ).showSnackBar(SnackBar(content: Text(res)));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(res),
+                                  ),
+                                );
                               } catch (error) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(error.toString())),
+                                  SnackBar(
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(error.toString()),
+                                  ),
                                 );
                               }
                             }
@@ -1180,13 +1192,19 @@ Widget buildScholarCta(
                   "Like removed: ${s.scholarshipName}",
                   "assets/graduation-hat.svg",
                 );
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(res)));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    content: Text(res),
+                  ),
+                );
               } catch (error) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(error.toString())));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    content: Text(error.toString()),
+                  ),
+                );
               }
             } else {
               try {
@@ -1197,13 +1215,19 @@ Widget buildScholarCta(
                   "Scholarship Liked : ${s.scholarshipName}",
                   "assets/graduation-hat.svg",
                 );
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(res)));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    content: Text(res),
+                  ),
+                );
               } catch (error) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(error.toString())));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    content: Text(error.toString()),
+                  ),
+                );
               }
             }
           },

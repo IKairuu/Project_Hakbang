@@ -1,6 +1,5 @@
 import 'package:hakbang/features/user/data/models/college.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/server/database/database.dart';
 
 class SchoolSave {
   static void saveSchool(College addedCollege) async {

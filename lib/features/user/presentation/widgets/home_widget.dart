@@ -413,10 +413,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             behavior: SnackBarBehavior.floating,
                                             content: Text(
                                               "There are no activities",
-                                              style: TextStyle(
-                                                color: AppColors.textSecondary,
-                                                fontSize: 14,
-                                              ),
                                             ),
                                           ),
                                         );
@@ -431,14 +427,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             SnackBar(
                                               behavior:
                                                   SnackBarBehavior.floating,
-                                              content: Text(
-                                                error.toString(),
-                                                style: TextStyle(
-                                                  color:
-                                                      AppColors.textSecondary,
-                                                  fontSize: 14,
-                                                ),
-                                              ),
+                                              content: Text(error.toString()),
                                             ),
                                           );
                                         }
@@ -468,10 +457,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         ? Center(
                                             child: Text(
                                               "There are no recent activities",
-                                              style: TextStyle(
-                                                color: AppColors.textSecondary,
-                                                fontSize: 14,
-                                              ),
                                             ),
                                           )
                                         : ListView.builder(

@@ -6,8 +6,7 @@ import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/design/font_styles.dart';
 import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hakbang/features/user/data/models/review_center.dart'
-    as rc_model;
+import 'package:hakbang/features/center/center_model.dart' as rc_model;
 import 'package:hakbang/features/user/presentation/pages/review_center_description.dart';
 import 'package:hakbang/server/database/database.dart';
 
@@ -272,7 +271,7 @@ Widget buildHubs(dynamic centers) {
             context,
             MaterialPageRoute(
               builder: (_) => ReviewCenterDescription(
-                reviewCenter: rc_model.ReviewCenter(
+                reviewCenter: rc_model.CenterModel(
                   title: center.title ?? '',
                   instructor: center.instructor ?? '',
                   ratingNum: center.ratingNum ?? '',

@@ -1,4 +1,4 @@
-class College {
+class CollegeModel {
   int id;
   String address;
   String collegeName;
@@ -17,7 +17,7 @@ class College {
   String about;
   String ranking;
 
-  College({
+  CollegeModel({
     required this.id,
     required this.address,
     required this.collegeName,

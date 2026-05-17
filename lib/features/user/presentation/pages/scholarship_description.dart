@@ -5,14 +5,14 @@ import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/functions/scholarship_save.dart';
-import 'package:hakbang/features/user/data/models/scholarship_object.dart';
+import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';
 
 class ScholarshipDescription extends StatefulWidget {
   const ScholarshipDescription({super.key, required this.scholarship});
-  final ScholarshipObject scholarship;
+  final ScholarshipModel scholarship;
 
   @override
   State<ScholarshipDescription> createState() => _ScholarshipDescriptionState();
@@ -449,7 +449,7 @@ Color _sdTagColor(String tag) {
       _ => (accent: AppColors.blue, accentDim: AppColors.blueDim),
     };
 
-Widget buildScholarHero(ScholarshipObject s, Color accent, Color accentDim) {
+Widget buildScholarHero(ScholarshipModel s, Color accent, Color accentDim) {
   final heroBg = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -583,7 +583,7 @@ Widget buildScholarHero(ScholarshipObject s, Color accent, Color accentDim) {
 }
 
 Widget buildScholarHeader(
-  ScholarshipObject s,
+  ScholarshipModel s,
   String orgName,
   Color accent,
   Color accentDim,
@@ -726,7 +726,7 @@ Widget _sdStatPill(String val, String label, Color valColor) {
   );
 }
 
-Widget buildScholarDeadlineBar(ScholarshipObject s) {
+Widget buildScholarDeadlineBar(ScholarshipModel s) {
   if (s.deadline <= 0) return const SizedBox.shrink();
 
   final deadline = s.deadline;
@@ -1132,7 +1132,7 @@ Widget buildScholarApplySteps(List<dynamic> steps, BuildContext context) {
 }
 
 Widget buildScholarCta(
-  ScholarshipObject s,
+  ScholarshipModel s,
   Color accent,
   bool isSaved,
   VoidCallback onSaveToggle,

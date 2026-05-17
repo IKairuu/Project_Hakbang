@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
-import 'package:hakbang/features/user/data/models/scholarship_object.dart';
+import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/scholarship_description.dart';
 
@@ -334,7 +334,7 @@ Color _valTagColor(String tag) {
   return colors[tag.hashCode.abs() % colors.length];
 }
 
-Color _valStatusColor(ScholarshipObject s) {
+Color _valStatusColor(ScholarshipModel s) {
   for (final t in s.tags) {
     final tl = t.toString().toLowerCase();
     if (tl == 'open') return const Color(0xFF4ade80);

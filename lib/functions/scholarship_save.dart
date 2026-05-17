@@ -1,9 +1,9 @@
-import 'package:hakbang/features/user/data/models/scholarship_object.dart';
+import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/notifiers.dart';
 
 class ScholarshipSave {
-  static void saveScholarship(ScholarshipObject addedScholar) async {
-    final updated = List<ScholarshipObject>.from(savedScholarships.value);
+  static void saveScholarship(ScholarshipModel addedScholar) async {
+    final updated = List<ScholarshipModel>.from(savedScholarships.value);
     final rawUpdated = List<Map<String, dynamic>>.from(
       rawSavedScholarships.value,
     );
@@ -30,8 +30,8 @@ class ScholarshipSave {
     }
   }
 
-  static void removeScholarship(ScholarshipObject remove) async {
-    final update = List<ScholarshipObject>.from(savedScholarships.value)
+  static void removeScholarship(ScholarshipModel remove) async {
+    final update = List<ScholarshipModel>.from(savedScholarships.value)
       ..removeWhere(
         (element) =>
             element.id == remove.id ||
@@ -48,9 +48,9 @@ class ScholarshipSave {
   }
 
   static void convertSavedScholarship() {
-    final List<ScholarshipObject> scholarList = [];
+    final List<ScholarshipModel> scholarList = [];
     for (Map<String, dynamic> dataObjs in rawSavedScholarships.value) {
-      for (ScholarshipObject scholars in availableScholarships.value) {
+      for (ScholarshipModel scholars in availableScholarships.value) {
         if (dataObjs["scholarship_name"] == scholars.scholarshipName) {
           scholarList.add(scholars);
         }

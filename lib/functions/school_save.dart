@@ -1,9 +1,9 @@
-import 'package:hakbang/features/user/data/models/college.dart';
+import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/notifiers.dart';
 
 class SchoolSave {
-  static void saveSchool(College addedCollege) async {
-    final updated = List<College>.from(savedSchools.value);
+  static void saveSchool(CollegeModel addedCollege) async {
+    final updated = List<CollegeModel>.from(savedSchools.value);
     final rawUpdated = List<Map<String, dynamic>>.from(rawSavedSchools.value);
     final alreadySaved = updated.any(
       (school) =>
@@ -28,8 +28,8 @@ class SchoolSave {
     }
   }
 
-  static void removeSchool(College removeCollege) async {
-    final updated = List<College>.from(savedSchools.value)
+  static void removeSchool(CollegeModel removeCollege) async {
+    final updated = List<CollegeModel>.from(savedSchools.value)
       ..removeWhere(
         (school) =>
             school.id == removeCollege.id ||
@@ -44,9 +44,9 @@ class SchoolSave {
   }
 
   static void convertSavedSchools() {
-    final List<College> collegeList = [];
+    final List<CollegeModel> collegeList = [];
     for (Map<String, dynamic> collegeNames in rawSavedSchools.value) {
-      for (College college in availableColleges.value) {
+      for (CollegeModel college in availableColleges.value) {
         if (college.collegeName == collegeNames["college_name"]) {
           collegeList.add(college);
         }

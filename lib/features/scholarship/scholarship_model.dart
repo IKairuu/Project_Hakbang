@@ -1,4 +1,4 @@
-class ScholarshipObject {
+class ScholarshipModel {
   String allowance;
   int id;
   String about;
@@ -22,7 +22,7 @@ class ScholarshipObject {
   int topPick;
   String website;
 
-  ScholarshipObject({
+  ScholarshipModel({
     required this.allowance,
     required this.id,
     required this.about,

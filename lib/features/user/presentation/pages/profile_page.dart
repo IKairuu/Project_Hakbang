@@ -8,7 +8,7 @@ import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/functions/scholarship_save.dart';
 import 'package:hakbang/functions/school_save.dart';
-import 'package:hakbang/features/user/data/models/college.dart';
+import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/college_description.dart';
 import 'package:hakbang/features/user/presentation/pages/login_page.dart';
@@ -117,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  void _openCollegeDescription(College college) {
+  void _openCollegeDescription(CollegeModel college) {
     Navigator.push(
       context,
       MaterialPageRoute(

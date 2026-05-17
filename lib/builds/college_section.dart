@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:hakbang/functions/initialization.dart';
-import 'package:hakbang/features/user/data/models/college.dart';
+import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/college_description.dart';
 import 'package:latlong2/latlong.dart';
@@ -16,7 +16,7 @@ class CollegeSection extends StatefulWidget {
     required this.college,
     required this.sectionIndex,
   });
-  final College college;
+  final CollegeModel college;
   final int sectionIndex;
   @override
   State<CollegeSection> createState() => _CollegeSectionState();

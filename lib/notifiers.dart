@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hakbang/features/user/data/models/activity.dart';
 import 'package:hakbang/features/user/data/models/ai_message.dart';
-import 'package:hakbang/features/user/data/models/college.dart';
-import 'package:hakbang/features/user/data/models/review_center.dart';
-import 'package:hakbang/features/user/data/models/scholarship_object.dart';
+import 'package:hakbang/features/college/college_model.dart';
+import 'package:hakbang/features/center/center_model.dart';
+import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/features/user/data/models/user.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -26,24 +26,22 @@ ValueNotifier<List<bool>> selectedHubFilter = ValueNotifier([
 ValueNotifier<Position?> userPosition = ValueNotifier(null);
 ValueNotifier<LatLng?> selectedSchoolPosition = ValueNotifier(null);
 ValueNotifier<List<bool>> selectedSchoolHover = ValueNotifier([]);
-ValueNotifier<List<College>> availableColleges = ValueNotifier([]);
+ValueNotifier<List<CollegeModel>> availableColleges = ValueNotifier([]);
 ValueNotifier<String> onSelect = ValueNotifier("");
-ValueNotifier<List<ScholarshipObject>> availableScholarships = ValueNotifier(
-  [],
-);
+ValueNotifier<List<ScholarshipModel>> availableScholarships = ValueNotifier([]);
 ValueNotifier<List<Map<String, dynamic>>> rawSavedScholarships = ValueNotifier(
   [],
 );
 ValueNotifier<List<Map<String, dynamic>>> rawSavedSchools = ValueNotifier([]);
 ValueNotifier<bool> governmentSelected = ValueNotifier(true);
-ValueNotifier<List<ScholarshipObject>> governmentSection = ValueNotifier([]);
-ValueNotifier<List<ScholarshipObject>> nonGovernmentSection = ValueNotifier([]);
-ValueNotifier<List<College>> collegeSection = ValueNotifier([]);
+ValueNotifier<List<ScholarshipModel>> governmentSection = ValueNotifier([]);
+ValueNotifier<List<ScholarshipModel>> nonGovernmentSection = ValueNotifier([]);
+ValueNotifier<List<CollegeModel>> collegeSection = ValueNotifier([]);
 ValueNotifier<List<AiMessage>> chatMessages = ValueNotifier([]);
 ValueNotifier<bool> chatLoading = ValueNotifier(false);
-ValueNotifier<List<College>> savedSchools = ValueNotifier([]);
-ValueNotifier<List<ScholarshipObject>> savedScholarships = ValueNotifier([]);
+ValueNotifier<List<CollegeModel>> savedSchools = ValueNotifier([]);
+ValueNotifier<List<ScholarshipModel>> savedScholarships = ValueNotifier([]);
 ValueNotifier<bool> hasInternetConnection = ValueNotifier(false);
-ValueNotifier<List<ReviewCenter>> availableReviewCenters = ValueNotifier([]);
-ValueNotifier<List<ReviewCenter>> reviewCenterSection = ValueNotifier([]);
-ValueNotifier<ScholarshipObject?> featuredScholarship = ValueNotifier(null);
+ValueNotifier<List<CenterModel>> availableReviewCenters = ValueNotifier([]);
+ValueNotifier<List<CenterModel>> reviewCenterSection = ValueNotifier([]);
+ValueNotifier<ScholarshipModel?> featuredScholarship = ValueNotifier(null);

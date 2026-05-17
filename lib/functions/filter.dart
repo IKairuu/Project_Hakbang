@@ -1,25 +1,25 @@
 import 'package:hakbang/functions/initialization.dart';
-import 'package:hakbang/features/user/data/models/college.dart';
-import 'package:hakbang/features/user/data/models/review_center.dart';
-import 'package:hakbang/features/user/data/models/scholarship_object.dart';
+import 'package:hakbang/features/college/college_model.dart';
+import 'package:hakbang/features/center/center_model.dart';
+import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/notifiers.dart';
 
 class Filter {
-  static void filterCollegeSection(List<College> colleges) {
+  static void filterCollegeSection(List<CollegeModel> colleges) {
     collegeSection.value = [];
     if (selectedFilter.value[0]) {
       collegeSection.value = availableColleges.value;
     }
 
     if (selectedFilter.value[1]) {
-      for (College data in colleges) {
+      for (CollegeModel data in colleges) {
         if (data.type == "state university") {
           collegeSection.value.add(data);
         }
       }
     }
     if (selectedFilter.value[2]) {
-      for (College data in colleges) {
+      for (CollegeModel data in colleges) {
         if (data.type == "private") {
           collegeSection.value.add(data);
         }
@@ -57,7 +57,7 @@ class Filter {
 
   static void filterReviewHubs(String title) {
     Initialization.refreshReviewCenters();
-    for (ReviewCenter center in availableReviewCenters.value) {
+    for (CenterModel center in availableReviewCenters.value) {
       if (title.toLowerCase() == "all") {
         reviewCenterSection.value = availableReviewCenters.value;
         break;
@@ -71,8 +71,8 @@ class Filter {
   }
 
   static void searchReviewHubs(String input) {
-    List<ReviewCenter> searchedList = [];
-    for (ReviewCenter center in reviewCenterSection.value) {
+    List<CenterModel> searchedList = [];
+    for (CenterModel center in reviewCenterSection.value) {
       for (String word in input.toLowerCase().split(" ")) {
         if (center.title.toLowerCase().split(" ").contains(word)) {
           searchedList.add(center);
@@ -93,7 +93,7 @@ class Filter {
   static void filterScholarships() {
     governmentSection.value = [];
     nonGovernmentSection.value = [];
-    for (ScholarshipObject scholar in availableScholarships.value) {
+    for (ScholarshipModel scholar in availableScholarships.value) {
       if (scholar.government) {
         governmentSection.value.add(scholar);
       } else {
@@ -103,8 +103,8 @@ class Filter {
   }
 
   static void searchScholarship(String input, bool government) {
-    List<ScholarshipObject> searchedList = [];
-    for (ScholarshipObject objs in availableScholarships.value) {
+    List<ScholarshipModel> searchedList = [];
+    for (ScholarshipModel objs in availableScholarships.value) {
       for (String word in input.split(" ")) {
         if (objs.scholarshipName
                 .toLowerCase()

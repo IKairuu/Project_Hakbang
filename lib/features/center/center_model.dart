@@ -1,4 +1,4 @@
-class ReviewCenter {
+class CenterModel {
   String title;
   String instructor;
   String ratingNum;
@@ -23,7 +23,7 @@ class ReviewCenter {
   List<dynamic> whoThisIsFor;
   Map<String, dynamic> aboutThisCenter;
 
-  ReviewCenter({
+  CenterModel({
     required this.title,
     required this.instructor,
     required this.ratingNum,

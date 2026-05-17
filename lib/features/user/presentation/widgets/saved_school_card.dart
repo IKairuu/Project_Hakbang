@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hakbang/features/user/presentation/design/container_design.dart';
 import 'package:hakbang/features/user/presentation/design/font_styles.dart';
-import 'package:hakbang/features/user/data/models/college.dart';
+import 'package:hakbang/features/college/college_model.dart';
 
 class SavedSchoolCard extends StatelessWidget {
-  final College college;
+  final CollegeModel college;
 
   const SavedSchoolCard({super.key, required this.college});
 

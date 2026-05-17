@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/features/user/data/models/scholarship_object.dart';
+import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/features/user/presentation/pages/scholarship_description.dart';
 import 'package:hakbang/features/user/presentation/pages/view_all_scholarships.dart';
 import 'package:hakbang/features/user/presentation/design/font_styles.dart';
@@ -983,7 +983,7 @@ Color _cardTagColor(String tag) {
   return colors[tag.hashCode.abs() % colors.length];
 }
 
-Color _cardStatusColor(ScholarshipObject s) {
+Color _cardStatusColor(ScholarshipModel s) {
   for (final t in s.tags) {
     final tl = t.toString().toLowerCase();
     if (tl == 'open') return const Color(0xFF4ade80);

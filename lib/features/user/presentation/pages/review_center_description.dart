@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/functions/launcher.dart';
-import 'package:hakbang/features/user/data/models/review_center.dart';
+import 'package:hakbang/features/center/center_model.dart';
 import 'package:share_link/share_link.dart';
 
 class ReviewCenterDescription extends StatefulWidget {
   const ReviewCenterDescription({super.key, required this.reviewCenter});
-  final ReviewCenter reviewCenter;
+  final CenterModel reviewCenter;
 
   @override
   State<ReviewCenterDescription> createState() =>
@@ -122,7 +122,7 @@ Widget buildSectionDivider() {
   );
 }
 
-Widget buildCoverBanner(ReviewCenter rc) {
+Widget buildCoverBanner(CenterModel rc) {
   return Container(
     width: double.infinity,
     height: 200,
@@ -185,7 +185,7 @@ Widget buildBestsellerBadge() {
   );
 }
 
-Widget buildRatingRow(ReviewCenter rc) {
+Widget buildRatingRow(CenterModel rc) {
   return Row(
     children: [
       Text(
@@ -219,7 +219,7 @@ Widget buildMetaRow(IconData icon, String text) {
   );
 }
 
-Widget buildPriceRow(ReviewCenter rc) {
+Widget buildPriceRow(CenterModel rc) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.baseline,
     textBaseline: TextBaseline.alphabetic,
@@ -251,7 +251,7 @@ Widget buildPriceRow(ReviewCenter rc) {
   );
 }
 
-Widget buildDetailContent(ReviewCenter rc) {
+Widget buildDetailContent(CenterModel rc) {
   return Padding(
     padding: const EdgeInsets.all(16),
     child: Column(
@@ -670,7 +670,7 @@ Widget buildAboutSection({
   );
 }
 
-Widget buildStickyBottom(ReviewCenter rc) {
+Widget buildStickyBottom(CenterModel rc) {
   return Container(
     padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
     decoration: const BoxDecoration(

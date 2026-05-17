@@ -7,7 +7,7 @@ import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/functions/school_save.dart';
-import 'package:hakbang/features/user/data/models/college.dart';
+import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +16,7 @@ import 'package:share_link/share_link.dart';
 
 class CollegeDescription extends StatefulWidget {
   const CollegeDescription({super.key, required this.college});
-  final College college;
+  final CollegeModel college;
 
   @override
   State<CollegeDescription> createState() => _CollegeDescriptionState();
@@ -745,7 +745,7 @@ Widget fbContact({
   required Widget iconWidget,
   required Color iconBg,
   required String label,
-  required College value,
+  required CollegeModel value,
   required Color valueColor,
   bool isLink = false,
 }) => GestureDetector(

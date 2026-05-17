@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/features/user/data/models/activity.dart';
-import 'package:hakbang/features/user/data/models/college.dart';
-import 'package:hakbang/features/user/data/models/review_center.dart';
-import 'package:hakbang/features/user/data/models/scholarship_object.dart';
+import 'package:hakbang/features/college/college_model.dart';
+import 'package:hakbang/features/center/center_model.dart';
+import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/notifiers.dart';
 
 class Database {
@@ -12,37 +12,37 @@ class Database {
   static Future<void> getCollege() async {
     final headers = {"Authorization": token.value!};
 
-    List<College> colleges = [];
+    List<CollegeModel> collegeList = [];
     try {
       final response = await dio.get(
         "$mainUrl/auth/college/available-colleges",
         options: Options(headers: headers),
       );
       Map<String, dynamic> data = response.data;
-      for (Map<String, dynamic> college in data["data"]) {
-        colleges.add(
-          College(
-            id: college["ID"],
-            address: college["address"],
-            collegeName: college["college_name"],
-            email: college["email"],
-            fbPage: college["fb_page"],
-            telephone: college["telephone"],
-            type: college["type"],
-            latitude: college["latitude"],
-            longitude: college["longitude"],
-            logoLink: college["logo_link"],
-            programs: college["program_offered"],
-            tags: college["tags"],
-            collegeImage: college["college_image"],
-            rating: college["rating"],
-            programNumbers: college["program_numbers"],
-            about: college["about"],
-            ranking: college["ranking"],
+      for (Map<String, dynamic> colleges in data["data"]) {
+        collegeList.add(
+          CollegeModel(
+            id: colleges["ID"],
+            address: colleges["address"],
+            collegeName: colleges["college_name"],
+            email: colleges["email"],
+            fbPage: colleges["fb_page"],
+            telephone: colleges["telephone"],
+            type: colleges["type"],
+            latitude: colleges["latitude"],
+            longitude: colleges["longitude"],
+            logoLink: colleges["logo_link"],
+            programs: colleges["program_offered"],
+            tags: colleges["tags"],
+            collegeImage: colleges["college_image"],
+            rating: colleges["rating"],
+            programNumbers: colleges["program_numbers"],
+            about: colleges["about"],
+            ranking: colleges["ranking"],
           ),
         );
       }
-      availableColleges.value = colleges;
+      availableColleges.value = collegeList;
       collegeSection.value = availableColleges.value;
       Initialization.refreshCollegeSelection();
     } on DioException catch (error) {
@@ -53,7 +53,7 @@ class Database {
   static Future<void> getScholarships() async {
     final headers = {"Authorization": token.value!};
     try {
-      List<ScholarshipObject> scholarships = [];
+      List<ScholarshipModel> scholarships = [];
       final response = await dio.get(
         "$mainUrl/auth/scholarship/active-scholarships",
         options: Options(headers: headers),
@@ -62,7 +62,7 @@ class Database {
       final Map<String, dynamic> data = response.data;
       for (Map<String, dynamic> scholars in data["data"]) {
         scholarships.add(
-          ScholarshipObject(
+          ScholarshipModel(
             allowance: scholars["Allowance"],
             id: scholars["ID"],
             about: scholars["about"],
@@ -256,10 +256,10 @@ class Database {
     }
   }
 
-  static Future<String> removeSavedSchool(String collegeName) async {
+  static Future<String> removeSavedSchool(String collegName) async {
     final headers = {"Authorization": token.value!};
     final data = {
-      "college_name": collegeName,
+      "college_name": collegName,
       "email": userCredentials.value!.email,
     };
     try {
@@ -317,10 +317,10 @@ class Database {
         "$mainUrl/auth/review-hub/get-review-centers",
         options: Options(headers: headers),
       );
-      List<ReviewCenter> hubList = [];
+      List<CenterModel> hubList = [];
       for (dynamic data in response.data["data"]) {
         hubList.add(
-          ReviewCenter(
+          CenterModel(
             title: data["title"],
             instructor: data["instructor"],
             ratingNum: data["rating_num"],

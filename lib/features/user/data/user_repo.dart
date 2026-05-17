@@ -3,14 +3,11 @@ import 'package:hakbang/features/user/data/user_datasource.dart';
 import 'package:hakbang/notifiers.dart';
 
 class UserRepo {
-  static Future<Map<String, dynamic>> signupUser(
-    Map<String, dynamic> userData,
-  ) async {
+  static Future<void> signupUser(Map<String, dynamic> userData) async {
     try {
-      final response = await UserDatasource.signupUserRouter(userData);
-      return response;
+      await UserDatasource.signupUserRouter(userData);
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -22,7 +19,7 @@ class UserRepo {
       final response = await UserDatasource.userLoginRouter(email, password);
       return response;
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -31,7 +28,7 @@ class UserRepo {
       final response = await UserDatasource.updateUserAboutMeRouter(data);
       return response["message"];
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -50,7 +47,7 @@ class UserRepo {
       }
       activityList.value = activities;
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -58,7 +55,7 @@ class UserRepo {
     try {
       await UserDatasource.addActivityRouter(activity);
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -68,7 +65,7 @@ class UserRepo {
 
       return response["message"];
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 }

@@ -39,7 +39,7 @@ class CenterRepo {
       availableReviewCenters.value = hubList;
       reviewCenterSection.value = availableReviewCenters.value;
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 }

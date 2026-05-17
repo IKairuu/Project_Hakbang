@@ -183,42 +183,43 @@ class _SignupPageState extends State<SignupPage> {
           "about_me": "",
         },
       };
-      await UserRepo.signupUser(data)
-          .then((value) {
-            _successfullSetup();
-          })
-          .onError((error, stackTrace) {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text("Server Error ${error.toString()}"),
-                backgroundColor: Color(0xFF343943),
-                actions: [
-                  ElevatedButton(
-                    style: ButtonDesign.alertDialog,
-                    onPressed: () {
-                      fullNameController.clear();
-                      emailController.clear();
-                      passwordController.clear();
-                      confirmPasswordController.clear();
-                      _selectedAvatarIndex = null;
-                      _selectedOccupationIndex = null;
-                      schoolController.clear();
-                      gradeController.clear();
-                      agreeToTerms.value = false;
-                      Navigator.of(context).pop();
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                        (route) => false,
-                      );
-                    },
-                    child: Text("Ok"),
-                  ),
-                ],
+
+      try {
+        await UserRepo.signupUser(data);
+        _successfullSetup();
+      } catch (error) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Error", style: FontStyles.logoutDialogTitle),
+            content: Text('$error', style: FontStyles.profileAboutBody),
+            backgroundColor: AppColors.surface,
+            actions: [
+              ElevatedButton(
+                style: ButtonDesign.alertDialog,
+                onPressed: () {
+                  fullNameController.clear();
+                  emailController.clear();
+                  passwordController.clear();
+                  confirmPasswordController.clear();
+                  _selectedAvatarIndex = null;
+                  _selectedOccupationIndex = null;
+                  schoolController.clear();
+                  gradeController.clear();
+                  agreeToTerms.value = false;
+                  Navigator.of(context).pop();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false,
+                  );
+                },
+                child: Text("Ok"),
               ),
-            );
-          });
+            ],
+          ),
+        );
+      }
     }
 
     // UI-only form; add submission behavior later.

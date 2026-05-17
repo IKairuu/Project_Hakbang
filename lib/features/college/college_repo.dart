@@ -35,7 +35,7 @@ class CollegeRepo {
       collegeSection.value = availableColleges.value;
       Initialization.refreshCollegeSelection();
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -48,7 +48,7 @@ class CollegeRepo {
       }
       rawSavedSchools.value = collegeList;
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -57,7 +57,7 @@ class CollegeRepo {
       final response = await CollegeDatasource.saveSchoolRouter(collegeName);
       return response["message"];
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -68,7 +68,7 @@ class CollegeRepo {
       );
       return response["message"];
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 }

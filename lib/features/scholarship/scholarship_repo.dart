@@ -38,7 +38,7 @@ class ScholarshipRepo {
       }
       availableScholarships.value = scholarships;
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -53,7 +53,7 @@ class ScholarshipRepo {
       }
       rawSavedScholarships.value = scholarList;
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -64,7 +64,7 @@ class ScholarshipRepo {
       );
       return response["message"];
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -75,7 +75,7 @@ class ScholarshipRepo {
       );
       return response["message"];
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 }

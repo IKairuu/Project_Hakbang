@@ -1,6 +1,6 @@
 import 'package:hakbang/features/user/data/models/activity.dart';
+import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/server/database/database.dart';
 
 class ActivityFunctions {
   static void addUserActivity(
@@ -14,7 +14,7 @@ class ActivityFunctions {
       date: date,
     );
     activityList.value.insert(0, activity);
-    await Database.addActivity(activity);
+    await UserRepo.addActivity(activity);
   }
 
   static void removeActivities() async {

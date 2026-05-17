@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:hakbang/features/college/college_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:hakbang/features/user/presentation/design/container_design.dart';
@@ -7,7 +8,6 @@ import 'package:hakbang/features/user/presentation/design/font_styles.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/builds/college_section.dart';
-import 'package:hakbang/server/database/database.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,7 +29,7 @@ class _DiscoveryState extends State<Discovery> {
   }
 
   Future<void> retrieveSchools() async {
-    await Database.getCollege();
+    await CollegeRepo.getCollege();
   }
 
   @override

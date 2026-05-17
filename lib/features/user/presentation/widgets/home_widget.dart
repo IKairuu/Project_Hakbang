@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/features/user/presentation/design/container_design.dart';
 import 'package:hakbang/features/user/presentation/design/font_styles.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/profile_page.dart';
-import 'package:hakbang/server/database/database.dart';
 import 'package:marquee/marquee.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 
@@ -418,7 +418,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         );
                                       } else {
                                         try {
-                                          await Database.removeActivities();
+                                          await UserRepo.removeActivities();
                                           ActivityFunctions.removeActivities();
                                         } catch (error) {
                                           ScaffoldMessenger.of(

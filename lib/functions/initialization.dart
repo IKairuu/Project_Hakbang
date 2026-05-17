@@ -1,16 +1,18 @@
+import 'package:hakbang/features/college/college_repo.dart';
+import 'package:hakbang/features/scholarship/scholarship_repo.dart';
+import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/sorting_functions.dart';
 import 'package:hakbang/features/user/data/models/ai_message.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';
 
 class Initialization {
   static Future<void> mainInitialization() async {
     userPosition.value = await Locations.getUserLocation();
-    await Database.getUserActivities(userCredentials.value!.email);
-    await Database.getSavedSchools(userCredentials.value!.email);
-    await Database.getSavedScholarships(userCredentials.value!.email);
+    await UserRepo.getUserActivities(userCredentials.value!.email);
+    await CollegeRepo.getSavedSchools(userCredentials.value!.email);
+    await ScholarshipRepo.getSavedScholarships(userCredentials.value!.email);
     await SortingFunctions.sortASctivities();
     await refreshChat();
   }

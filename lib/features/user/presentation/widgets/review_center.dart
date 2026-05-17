@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:hakbang/features/center/center_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
@@ -8,7 +9,6 @@ import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/center/center_model.dart' as rc_model;
 import 'package:hakbang/features/user/presentation/pages/review_center_description.dart';
-import 'package:hakbang/server/database/database.dart';
 
 class ReviewCenter extends StatefulWidget {
   const ReviewCenter({super.key});
@@ -27,7 +27,7 @@ class _ReviewCenterState extends State<ReviewCenter> {
   }
 
   Future<void> retrieveReviewCenters() async {
-    await Database.getHubs();
+    await CenterRepo.getHubs();
   }
 
   @override

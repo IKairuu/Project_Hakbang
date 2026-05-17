@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/features/college/college_repo.dart';
+import 'package:hakbang/features/scholarship/scholarship_repo.dart';
+import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/background_design.dart';
 import 'package:hakbang/features/user/presentation/design/font_styles.dart';
@@ -13,7 +16,6 @@ import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/college_description.dart';
 import 'package:hakbang/features/user/presentation/pages/login_page.dart';
 import 'package:hakbang/features/user/presentation/design/container_design.dart';
-import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/features/user/presentation/widgets/edit_about_me_dialog.dart';
 import 'package:hakbang/features/user/presentation/widgets/saved_scholar_card.dart';
 import 'package:hakbang/features/user/presentation/widgets/saved_school_card.dart';
@@ -47,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       userCredentials.value!.aboutMe = editedText;
     });
-    await Database.updateUserAboutMe(data)
+    await UserRepo.updateUserAboutMe(data)
         .then((value) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -151,11 +153,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> retrieveSavedObjects() async {
     if (availableColleges.value.isEmpty) {
-      await Database.getCollege();
+      await CollegeRepo.getCollege();
     }
 
     if (availableScholarships.value.isEmpty) {
-      await Database.getScholarships();
+      await ScholarshipRepo.getScholarships();
       Filter.getTopPick();
       Filter.filterScholarships();
     }

@@ -2,6 +2,7 @@ import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/features/college/college_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:hakbang/functions/activity_functions.dart';
@@ -9,7 +10,6 @@ import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/functions/school_save.dart';
 import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/server/database/database.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:share_link/share_link.dart';
@@ -36,7 +36,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
     if (availableColleges.value.isEmpty) {
       final messenger = ScaffoldMessenger.of(context);
       try {
-        await Database.getCollege();
+        await CollegeRepo.getCollege();
       } catch (error) {
         messenger.showSnackBar(SnackBar(content: Text(error.toString())));
       }
@@ -215,7 +215,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                 if (isSaved) {
                                   try {
                                     String res =
-                                        await Database.removeSavedSchool(
+                                        await CollegeRepo.removeSavedSchool(
                                           college.collegeName,
                                         );
                                     SchoolSave.removeSchool(college);
@@ -254,7 +254,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                   }
                                 } else {
                                   try {
-                                    String res = await Database.saveSchool(
+                                    String res = await CollegeRepo.saveSchool(
                                       college.collegeName,
                                     );
 

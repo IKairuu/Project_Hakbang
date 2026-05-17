@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/background_design.dart';
 import 'package:hakbang/features/user/presentation/design/button_design.dart';
@@ -12,7 +13,6 @@ import 'package:hakbang/features/user/data/models/occupation_option.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/login_page.dart';
 import 'package:hakbang/features/user/presentation/pages/no_internet_page.dart';
-import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/features/user/presentation/widgets/signup_step1.dart';
 import 'package:hakbang/features/user/presentation/widgets/signup_step2.dart';
 import 'package:hakbang/features/user/presentation/widgets/signup_step3.dart';
@@ -183,7 +183,7 @@ class _SignupPageState extends State<SignupPage> {
           "about_me": "",
         },
       };
-      await Database.signupUser(data)
+      await UserRepo.signupUser(data)
           .then((value) {
             _successfullSetup();
           })

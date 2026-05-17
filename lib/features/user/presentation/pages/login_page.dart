@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/container_design.dart';
 import 'package:hakbang/functions/initialization.dart';
@@ -10,7 +11,6 @@ import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/main_page.dart';
 import 'package:hakbang/features/user/presentation/pages/no_internet_page.dart';
 import 'package:hakbang/features/user/presentation/pages/signup_page.dart';
-import 'package:hakbang/server/database/database.dart';
 import 'package:hakbang/features/user/presentation/widgets/auth_gradient_bg.dart';
 
 class LoginPage extends StatefulWidget {
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
       );
     } else {
       try {
-        var userData = await Database.userLogin(email, password);
+        var userData = await UserRepo.userLogin(email, password);
         userCredentials.value = User(
           name: userData["message"]["name"],
           email: userData["message"]["email"],

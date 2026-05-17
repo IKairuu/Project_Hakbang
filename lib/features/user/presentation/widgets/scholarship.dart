@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/features/scholarship/scholarship_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/notifiers.dart';
@@ -8,7 +9,6 @@ import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/features/user/presentation/pages/scholarship_description.dart';
 import 'package:hakbang/features/user/presentation/pages/view_all_scholarships.dart';
 import 'package:hakbang/features/user/presentation/design/font_styles.dart';
-import 'package:hakbang/server/database/database.dart';
 
 // ════════════════════════════════════════════════════════════════════════════
 class Scholarship extends StatefulWidget {
@@ -35,7 +35,7 @@ class _ScholarshipState extends State<Scholarship> {
   }
 
   Future<void> retriveScholarships() async {
-    await Database.getScholarships();
+    await ScholarshipRepo.getScholarships();
     Filter.getTopPick();
     Filter.filterScholarships();
   }

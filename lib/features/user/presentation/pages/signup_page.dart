@@ -191,7 +191,7 @@ class _SignupPageState extends State<SignupPage> {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: Text("Server Error"),
+                title: Text("Server Error ${error.toString()}"),
                 backgroundColor: Color(0xFF343943),
                 actions: [
                   ElevatedButton(

@@ -29,8 +29,6 @@ class ScholarshipSave {
       });
       rawSavedScholarships.value = rawUpdated;
     }
-
-    await Database.saveScholarship(addedScholar.scholarshipName);
   }
 
   static void removeScholarship(ScholarshipObject remove) async {
@@ -48,7 +46,6 @@ class ScholarshipSave {
 
     savedScholarships.value = update;
     rawSavedScholarships.value = rawUpdate;
-    await Database.removeSavedScholarship(remove.scholarshipName);
   }
 
   static void convertSavedScholarship() {

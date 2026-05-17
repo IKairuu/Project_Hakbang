@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/features/user/data/models/activity.dart';
@@ -7,65 +5,61 @@ import 'package:hakbang/features/user/data/models/college.dart';
 import 'package:hakbang/features/user/data/models/review_center.dart';
 import 'package:hakbang/features/user/data/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:http/http.dart' as http;
 
 class Database {
   static final dio = Dio();
   static String mainUrl = "https://project-hakbang-server.onrender.com";
   static Future<void> getCollege() async {
-    final url = Uri.https(mainUrl, "college/auth/available-colleges");
-    final headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      "Authorization": token.value!,
-    };
+    final headers = {"Authorization": token.value!};
 
     List<College> colleges = [];
-    final response = await http.get(url, headers: headers);
-    Map<String, dynamic> data = jsonDecode(response.body);
-    for (Map<String, dynamic> college in data["data"]) {
-      colleges.add(
-        College(
-          id: college["ID"],
-          address: college["address"],
-          collegeName: college["college_name"],
-          email: college["email"],
-          fbPage: college["fb_page"],
-          telephone: college["telephone"],
-          type: college["type"],
-          latitude: college["latitude"],
-          longitude: college["longitude"],
-          logoLink: college["logo_link"],
-          programs: college["program_offered"],
-          tags: college["tags"],
-          collegeImage: college["college_image"],
-          rating: college["rating"],
-          programNumbers: college["program_numbers"],
-          about: college["about"],
-          ranking: college["ranking"],
-        ),
+    try {
+      final response = await dio.get(
+        "$mainUrl/auth/college/available-colleges",
+        options: Options(headers: headers),
       );
+      Map<String, dynamic> data = response.data;
+      for (Map<String, dynamic> college in data["data"]) {
+        colleges.add(
+          College(
+            id: college["ID"],
+            address: college["address"],
+            collegeName: college["college_name"],
+            email: college["email"],
+            fbPage: college["fb_page"],
+            telephone: college["telephone"],
+            type: college["type"],
+            latitude: college["latitude"],
+            longitude: college["longitude"],
+            logoLink: college["logo_link"],
+            programs: college["program_offered"],
+            tags: college["tags"],
+            collegeImage: college["college_image"],
+            rating: college["rating"],
+            programNumbers: college["program_numbers"],
+            about: college["about"],
+            ranking: college["ranking"],
+          ),
+        );
+      }
+      availableColleges.value = colleges;
+      collegeSection.value = availableColleges.value;
+      Initialization.refreshCollegeSelection();
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
     }
-    availableColleges.value = colleges;
-    collegeSection.value = availableColleges.value;
-    Initialization.refreshCollegeSelection();
   }
 
   static Future<void> getScholarships() async {
-    final url = Uri.https(mainUrl, "scholarship/auth/active-scholarships");
-    final headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      "Authorization": token.value!,
-    };
-
+    final headers = {"Authorization": token.value!};
     try {
       List<ScholarshipObject> scholarships = [];
-      final response = await http.get(url, headers: headers);
-      final Map<String, dynamic> data = jsonDecode(response.body);
+      final response = await dio.get(
+        "$mainUrl/auth/scholarship/active-scholarships",
+        options: Options(headers: headers),
+      );
 
-      if (response.statusCode != 200 || data["data"] == null) return;
-
+      final Map<String, dynamic> data = response.data;
       for (Map<String, dynamic> scholars in data["data"]) {
         scholarships.add(
           ScholarshipObject(
@@ -95,23 +89,22 @@ class Database {
         );
       }
       availableScholarships.value = scholarships;
-    } catch (error) {
-      print(error);
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
     }
   }
 
   static Future<Map<String, dynamic>> signupUser(
     Map<String, dynamic> userData,
   ) async {
-    final url = Uri.https(mainUrl, "user/signup");
-    final headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    };
-    final data = jsonEncode(userData["data"]);
-    var response = await http.post(url, headers: headers, body: data);
-    final message = jsonDecode(response.body);
-    return message;
+    try {
+      final data = userData["data"];
+      final response = await dio.post("$mainUrl/user/signup", data: data);
+      final message = response.data["message"];
+      return message;
+    } on DioException catch (error) {
+      return error.response?.data["message"];
+    }
   }
 
   static Future<Map<String, dynamic>> userLogin(
@@ -128,232 +121,236 @@ class Database {
     }
   }
 
-  static Future<Map<String, dynamic>> getUserData(String email) async {
-    final url = Uri.https(mainUrl, "user/auth/$email/get-user-data");
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-    final response = await http.get(url, headers: headers);
-    return jsonDecode(response.body);
-  }
-
   static Future<void> updateUserAboutMe(Map<String, dynamic> data) async {
-    final url = Uri.https(mainUrl, "user/auth/change-about-me");
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-    final message = jsonEncode(data);
-
-    final response = await http.put(url, body: message, headers: headers);
-    return jsonDecode(response.body);
+    final headers = {"Authorization": token.value!};
+    final message = data;
+    try {
+      final response = await dio.put(
+        "$mainUrl/user/auth/change-about-me",
+        data: message,
+        options: Options(headers: headers),
+      );
+      return response.data["message"];
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
+    }
   }
 
   static Future<void> getUserActivities(String email) async {
     final headers = {"Authorization": token.value!};
-    final response = await dio.get(
-      "$mainUrl/user/auth/get-activities/$email",
-      options: Options(headers: headers),
-    );
-
-    List<Activity> activities = [];
-    for (Map<String, dynamic> acts in response.data["data"]) {
-      activities.add(
-        Activity(
-          description: acts["description"],
-          iconName: acts["iconName"],
-          date: acts["date"],
-        ),
+    try {
+      final response = await dio.get(
+        "$mainUrl/user/auth/get-activities/$email",
+        options: Options(headers: headers),
       );
+
+      List<Activity> activities = [];
+      for (Map<String, dynamic> acts in response.data["data"]) {
+        activities.add(
+          Activity(
+            description: acts["description"],
+            iconName: acts["iconName"],
+            date: acts["date"],
+          ),
+        );
+      }
+      activityList.value = activities;
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
     }
-    activityList.value = activities;
   }
 
   static Future<void> getSavedScholarships(String email) async {
     final headers = {"Authorization": token.value!};
-    final response = await dio.get(
-      "$mainUrl/user/auth/get-saved-scholarship/$email",
-      options: Options(headers: headers),
-    );
+    try {
+      final response = await dio.get(
+        "$mainUrl/user/auth/get-saved-scholarship/$email",
+        options: Options(headers: headers),
+      );
 
-    final List<Map<String, dynamic>> scholarList = [];
-    final data = response.data;
-    for (Map<String, dynamic> dataObjs in data["data"]) {
-      scholarList.add(dataObjs);
+      final List<Map<String, dynamic>> scholarList = [];
+      final data = response.data;
+      for (Map<String, dynamic> dataObjs in data["data"]) {
+        scholarList.add(dataObjs);
+      }
+      rawSavedScholarships.value = scholarList;
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
     }
-    rawSavedScholarships.value = scholarList;
   }
 
-  static Future<void> saveScholarship(String scholarName) async {
-    final url = Uri.https(mainUrl, "user/auth/post-saved-scholarship");
-
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-
-    final data = jsonEncode({
+  static Future<String> saveScholarship(String scholarName) async {
+    final headers = {"Authorization": token.value!};
+    final data = {
       "scholarship_name": scholarName,
       "email": userCredentials.value!.email,
-    });
+    };
+    try {
+      final response = await dio.post(
+        "$mainUrl/user/auth/post-saved-scholarship",
+        data: data,
+        options: Options(headers: headers),
+      );
 
-    final response = await http.post(url, headers: headers, body: data);
-
-    return jsonDecode(response.body);
+      return response.data["message"];
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
+    }
   }
 
-  static Future<void> removeSavedScholarship(String scholarName) async {
-    final url = Uri.https(mainUrl, "user/auth/remove-saved-scholarship");
+  static Future<String> removeSavedScholarship(String scholarName) async {
+    final headers = {"Authorization": token.value!};
 
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-
-    final data = jsonEncode({
+    final data = {
       "scholarship_name": scholarName,
       "email": userCredentials.value!.email,
-    });
+    };
+    try {
+      final response = await dio.post(
+        "$mainUrl/user/auth/remove-saved-scholarship",
+        data: data,
+        options: Options(headers: headers),
+      );
 
-    final response = await http.post(url, headers: headers, body: data);
-
-    return jsonDecode(response.body);
+      return response.data["message"];
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
+    }
   }
 
   static Future<void> getSavedSchools(String email) async {
     final headers = {"Authorization": token.value!};
-
-    final response = await dio.get(
-      "$mainUrl/user/auth/get-saved-schools/$email",
-      options: Options(headers: headers),
-    );
-    final List<Map<String, dynamic>> collegeList = [];
-    final data = response.data;
-    for (Map<String, dynamic> collegeNames in data["data"]) {
-      collegeList.add(collegeNames);
+    try {
+      final response = await dio.get(
+        "$mainUrl/user/auth/get-saved-schools/$email",
+        options: Options(headers: headers),
+      );
+      final List<Map<String, dynamic>> collegeList = [];
+      final data = response.data;
+      for (Map<String, dynamic> collegeNames in data["data"]) {
+        collegeList.add(collegeNames);
+      }
+      rawSavedSchools.value = collegeList;
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
     }
-    rawSavedSchools.value = collegeList;
   }
 
-  static Future<void> saveSchool(String collegeName) async {
-    final url = Uri.https(mainUrl, "user/auth/post-saved-schools");
+  static Future<String> saveSchool(String collegeName) async {
+    final headers = {"Authorization": token.value!};
 
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-
-    final data = jsonEncode({
+    final data = {
       "college_name": collegeName,
       "email": userCredentials.value!.email,
-    });
+    };
+    try {
+      final response = await dio.post(
+        "$mainUrl/user/auth/post-saved-schools",
+        data: data,
+        options: Options(headers: headers),
+      );
 
-    final response = await http.post(url, headers: headers, body: data);
-
-    return jsonDecode(response.body);
+      return response.data["message"];
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
+    }
   }
 
-  static Future<void> removeSavedSchool(String collegeName) async {
-    final url = Uri.https(mainUrl, "user/auth/remove-saved-school");
-
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-
-    final data = jsonEncode({
+  static Future<String> removeSavedSchool(String collegeName) async {
+    final headers = {"Authorization": token.value!};
+    final data = {
       "college_name": collegeName,
       "email": userCredentials.value!.email,
-    });
+    };
+    try {
+      final response = await dio.post(
+        "$mainUrl/user/auth/remove-saved-school",
+        data: data,
+        options: Options(headers: headers),
+      );
 
-    final response = await http.post(url, headers: headers, body: data);
-
-    return jsonDecode(response.body);
+      return response.data["message"];
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
+    }
   }
 
   static Future<void> addActivity(Activity activity) async {
-    final url = Uri.https(mainUrl, "user/auth/post-activity");
-
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-    final data = jsonEncode({
+    final headers = {"Authorization": token.value!};
+    final data = {
       "date": activity.date,
       "description": activity.description,
       "email": userCredentials.value!.email,
       "iconName": activity.iconName,
-    });
-
-    final response = await http.post(url, headers: headers, body: data);
-
-    return jsonDecode(response.body);
+    };
+    try {
+      await dio.post(
+        "$mainUrl/user/auth/post-activity",
+        data: data,
+        options: Options(headers: headers),
+      );
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
+    }
   }
 
   static Future<void> removeActivities() async {
-    final url = Uri.https(mainUrl, "user/auth/remove-activities");
+    final headers = {"Authorization": token.value!};
 
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
+    try {
+      final response = await dio.delete(
+        "$mainUrl/user/auth/remove-activities/${userCredentials.value!.email}",
+        options: Options(headers: headers),
+      );
 
-    final data = jsonEncode({"email": userCredentials.value!.email});
-    final response = await http.post(url, headers: headers, body: data);
-
-    return jsonDecode(response.body);
+      return response.data["message"];
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
+    }
   }
 
   static Future<void> getHubs() async {
-    final url = Uri.https(mainUrl, "review-hub/auth/get-review-centers");
+    final headers = {"Authorization": token.value!};
 
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": token.value!,
-    };
-
-    final response = await http.get(url, headers: headers);
-    List<ReviewCenter> hubList = [];
-    for (dynamic data in jsonDecode(response.body)["data"]) {
-      hubList.add(
-        ReviewCenter(
-          title: data["title"],
-          instructor: data["instructor"],
-          ratingNum: data["rating_num"],
-          stars: data["stars"],
-          ratingCount: data["rating_count"],
-          price: data["price"],
-          originalPrice: data["original_price"],
-          isBestSeller: data["is_best_seller"],
-          emoji: data["emoji"],
-          coverage: data["coverage"],
-          programOverview: data["program_overview"],
-          centerOffers: data["center_offers"],
-          whoThisIsFor: data["who_this_is_for"],
-          aboutThisCenter: data["about_center"],
-          description: data["description"],
-          email: data["email"],
-          exams: data["exams"],
-          location: data["location"],
-          managedBy: data["managed_by"],
-          modalities: data["modalities"],
-          phone: data["phone"],
-          subtitle: data["subtitle"],
-          website: data["website"],
-        ),
+    try {
+      final response = await dio.get(
+        "$mainUrl/auth/review-hub/get-review-centers",
+        options: Options(headers: headers),
       );
+      List<ReviewCenter> hubList = [];
+      for (dynamic data in response.data["data"]) {
+        hubList.add(
+          ReviewCenter(
+            title: data["title"],
+            instructor: data["instructor"],
+            ratingNum: data["rating_num"],
+            stars: data["stars"],
+            ratingCount: data["rating_count"],
+            price: data["price"],
+            originalPrice: data["original_price"],
+            isBestSeller: data["is_best_seller"],
+            emoji: data["emoji"],
+            coverage: data["coverage"],
+            programOverview: data["program_overview"],
+            centerOffers: data["center_offers"],
+            whoThisIsFor: data["who_this_is_for"],
+            aboutThisCenter: data["about_center"],
+            description: data["description"],
+            email: data["email"],
+            exams: data["exams"],
+            location: data["location"],
+            managedBy: data["managed_by"],
+            modalities: data["modalities"],
+            phone: data["phone"],
+            subtitle: data["subtitle"],
+            website: data["website"],
+          ),
+        );
+      }
+      availableReviewCenters.value = hubList;
+      reviewCenterSection.value = availableReviewCenters.value;
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
     }
-    availableReviewCenters.value = hubList;
-    reviewCenterSection.value = availableReviewCenters.value;
   }
 }

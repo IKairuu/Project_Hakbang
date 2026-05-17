@@ -47,14 +47,23 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       userCredentials.value!.aboutMe = editedText;
     });
-    await Database.updateUserAboutMe(data).then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          content: Text("Successfully changed"),
-        ),
-      );
-    });
+    await Database.updateUserAboutMe(data)
+        .then((value) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text("Successfully changed"),
+            ),
+          );
+        })
+        .onError((error, stackTrace) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text(error.toString()),
+            ),
+          );
+        });
   }
 
   String _withFallback(String? value, String fallback) {
@@ -141,12 +150,33 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> retrieveSavedObjects() async {
+    final messenger = ScaffoldMessenger.of(context);
     if (availableColleges.value.isEmpty) {
-      await Database.getCollege();
+      await Database.getCollege().onError((error, stackTrace) {
+        messenger.showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              error.toString(),
+              style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+            ),
+          ),
+        );
+      });
     }
 
     if (availableScholarships.value.isEmpty) {
-      await Database.getScholarships();
+      await Database.getScholarships().onError((error, stackTrace) {
+        messenger.showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              error.toString(),
+              style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+            ),
+          ),
+        );
+      });
       Filter.getTopPick();
       Filter.filterScholarships();
     }

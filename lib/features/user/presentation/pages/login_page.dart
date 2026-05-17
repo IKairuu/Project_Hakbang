@@ -39,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
   void _handleLogin() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
+    final messenger = ScaffoldMessenger.of(context);
     FocusScope.of(context).unfocus();
     if (email.isEmpty || password.isEmpty) {
       setState(() {
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => isLoading = true);
     setState(() => _showError = false);
     if (!await Internet.checkInternetConnection()) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      messenger.showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
           content: Text("There is no internet connection"),
@@ -79,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
         token.value = "Bearer ${userData["token"]}";
         navigationBarIndex.value = 2;
         await Initialization.mainInitialization();
-        ScaffoldMessenger.of(context).showSnackBar(
+        messenger.showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,
             content: Text("Successfully Logged In"),
@@ -91,7 +92,8 @@ class _LoginPageState extends State<LoginPage> {
           MaterialPageRoute(builder: (context) => MainPage()),
         );
       } catch (error) {
-        ScaffoldMessenger.of(context).showSnackBar(
+        Initialization.clearSessionState();
+        messenger.showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,
             content: Text(error.toString()),

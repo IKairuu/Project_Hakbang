@@ -34,7 +34,12 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
 
   Future<void> retrieveSavedSchool() async {
     if (availableColleges.value.isEmpty) {
-      await Database.getCollege();
+      final messenger = ScaffoldMessenger.of(context);
+      try {
+        await Database.getCollege();
+      } catch (error) {
+        messenger.showSnackBar(SnackBar(content: Text(error.toString())));
+      }
     }
     SchoolSave.convertSavedSchools();
   }
@@ -206,9 +211,14 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                             height: 50,
                             child: ElevatedButton(
                               style: ButtonDesign.mainButton,
-                              onPressed: () {
-                                setState(() {
-                                  if (isSaved) {
+                              onPressed: () async {
+                                if (isSaved) {
+                                  try {
+                                    String res =
+                                        await Database.removeSavedSchool(
+                                          college.collegeName,
+                                        );
+                                    SchoolSave.removeSchool(college);
                                     ActivityFunctions.addUserActivity(
                                       DateFormat(
                                         "MMM dd, yyyy",
@@ -216,8 +226,39 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                       "School Unsaved: ${college.collegeName}",
                                       "assets/university.svg",
                                     );
-                                    SchoolSave.removeSchool(college);
-                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        content: Text(
+                                          res,
+                                          style: TextStyle(
+                                            color: AppColors.textSecondary,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  } catch (error) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        content: Text(
+                                          error.toString(),
+                                          style: TextStyle(
+                                            color: AppColors.textSecondary,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  try {
+                                    String res = await Database.saveSchool(
+                                      college.collegeName,
+                                    );
+
+                                    SchoolSave.saveSchool(college);
                                     ActivityFunctions.addUserActivity(
                                       DateFormat(
                                         "MMM dd, yyyy",
@@ -225,9 +266,33 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                       "School Saved: ${college.collegeName}",
                                       "assets/university.svg",
                                     );
-                                    SchoolSave.saveSchool(college);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        content: Text(
+                                          res,
+                                          style: TextStyle(
+                                            color: AppColors.textSecondary,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  } catch (error) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        content: Text(
+                                          error.toString(),
+                                          style: TextStyle(
+                                            color: AppColors.textSecondary,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    );
                                   }
-                                });
+                                }
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

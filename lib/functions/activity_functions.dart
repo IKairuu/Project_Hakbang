@@ -19,6 +19,5 @@ class ActivityFunctions {
 
   static void removeActivities() async {
     activityList.value = [];
-    await Database.removeActivities();
   }
 }

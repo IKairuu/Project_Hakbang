@@ -6,6 +6,7 @@ import 'package:hakbang/features/user/presentation/design/font_styles.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/profile_page.dart';
+import 'package:hakbang/server/database/database.dart';
 import 'package:marquee/marquee.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 
@@ -403,9 +404,27 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ),
                                   ),
                                   TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        if (activityList.value.isEmpty) {
+                                    onPressed: () async {
+                                      if (activityList.value.isEmpty) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            behavior: SnackBarBehavior.floating,
+                                            content: Text(
+                                              "There are no activities",
+                                              style: TextStyle(
+                                                color: AppColors.textSecondary,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        try {
+                                          await Database.removeActivities();
+                                          ActivityFunctions.removeActivities();
+                                        } catch (error) {
                                           ScaffoldMessenger.of(
                                             context,
                                           ).showSnackBar(
@@ -413,7 +432,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               behavior:
                                                   SnackBarBehavior.floating,
                                               content: Text(
-                                                "There are no activities",
+                                                error.toString(),
                                                 style: TextStyle(
                                                   color:
                                                       AppColors.textSecondary,
@@ -422,10 +441,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               ),
                                             ),
                                           );
-                                        } else {
-                                          ActivityFunctions.removeActivities();
                                         }
-                                      });
+                                      }
                                     },
                                     child: Text(
                                       "Clear",

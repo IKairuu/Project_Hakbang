@@ -27,8 +27,6 @@ class SchoolSave {
       });
       rawSavedSchools.value = rawUpdated;
     }
-
-    await Database.saveSchool(addedCollege.collegeName);
   }
 
   static void removeSchool(College removeCollege) async {
@@ -44,8 +42,6 @@ class SchoolSave {
       );
     savedSchools.value = updated;
     rawSavedSchools.value = rawUpdated;
-
-    await Database.removeSavedSchool(removeCollege.collegeName);
   }
 
   static void convertSavedSchools() {

@@ -128,25 +128,50 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                             color: isSaved ? accent : Colors.white,
                             size: 18,
                           ),
-                          onTap: () {
+                          onTap: () async {
                             if (isSaved) {
-                              ActivityFunctions.addUserActivity(
-                                DateFormat(
-                                  "MMM dd, yyyy",
-                                ).format(DateTime.now()),
-                                "Like removed: ${s.scholarshipName}",
-                                "assets/graduation-hat.svg",
-                              );
-                              ScholarshipSave.removeScholarship(s);
+                              try {
+                                String res =
+                                    await Database.removeSavedScholarship(
+                                      s.scholarshipName,
+                                    );
+                                ScholarshipSave.removeScholarship(s);
+                                ActivityFunctions.addUserActivity(
+                                  DateFormat(
+                                    "MMM dd, yyyy",
+                                  ).format(DateTime.now()),
+                                  "Like removed: ${s.scholarshipName}",
+                                  "assets/graduation-hat.svg",
+                                );
+                                ScaffoldMessenger.of(
+                                  context,
+                                ).showSnackBar(SnackBar(content: Text(res)));
+                              } catch (error) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(error.toString())),
+                                );
+                              }
                             } else {
-                              ActivityFunctions.addUserActivity(
-                                DateFormat(
-                                  "MMM dd, yyyy",
-                                ).format(DateTime.now()),
-                                "Scholarship Liked : ${s.scholarshipName}",
-                                "assets/graduation-hat.svg",
-                              );
-                              ScholarshipSave.saveScholarship(s);
+                              try {
+                                String res = await Database.saveScholarship(
+                                  s.scholarshipName,
+                                );
+                                ScholarshipSave.saveScholarship(s);
+                                ActivityFunctions.addUserActivity(
+                                  DateFormat(
+                                    "MMM dd, yyyy",
+                                  ).format(DateTime.now()),
+                                  "Scholarship Liked : ${s.scholarshipName}",
+                                  "assets/graduation-hat.svg",
+                                );
+                                ScaffoldMessenger.of(
+                                  context,
+                                ).showSnackBar(SnackBar(content: Text(res)));
+                              } catch (error) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(error.toString())),
+                                );
+                              }
                             }
                           },
                           bgColor: isSaved ? accentDim : null,
@@ -229,7 +254,10 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                             buildSdDivider(),
                             buildScholarSection(
                               'How to Apply',
-                              buildScholarApplySteps(s.applicationSteps),
+                              buildScholarApplySteps(
+                                s.applicationSteps,
+                                context,
+                              ),
                             ),
                           ],
                           const SizedBox(height: 32),
@@ -244,6 +272,7 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                 accent,
                 isSaved,
                 () => setState(() => isSaved = !isSaved),
+                context,
               ),
             ],
           );
@@ -1032,7 +1061,7 @@ Widget buildScholarObligation(Map<String, dynamic> obligation) {
   );
 }
 
-Widget buildScholarApplySteps(List<dynamic> steps) {
+Widget buildScholarApplySteps(List<dynamic> steps, BuildContext context) {
   return Column(
     children: List.generate(steps.length, (i) {
       final step = steps[i];
@@ -1095,6 +1124,7 @@ Widget buildScholarCta(
   Color accent,
   bool isSaved,
   VoidCallback onSaveToggle,
+  BuildContext context,
 ) {
   return Container(
     padding: const EdgeInsets.fromLTRB(18, 14, 18, 28),
@@ -1138,21 +1168,43 @@ Widget buildScholarCta(
         ),
         const SizedBox(width: 10),
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             if (isSaved) {
-              ActivityFunctions.addUserActivity(
-                DateFormat("MMM dd, yyyy").format(DateTime.now()),
-                "Like removed: ${s.scholarshipName}",
-                "assets/graduation-hat.svg",
-              );
-              ScholarshipSave.removeScholarship(s);
+              try {
+                String res = await Database.removeSavedScholarship(
+                  s.scholarshipName,
+                );
+                ScholarshipSave.removeScholarship(s);
+                ActivityFunctions.addUserActivity(
+                  DateFormat("MMM dd, yyyy").format(DateTime.now()),
+                  "Like removed: ${s.scholarshipName}",
+                  "assets/graduation-hat.svg",
+                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(res)));
+              } catch (error) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(error.toString())));
+              }
             } else {
-              ActivityFunctions.addUserActivity(
-                DateFormat("MMM dd, yyyy").format(DateTime.now()),
-                "Scholarship Liked : ${s.scholarshipName}",
-                "assets/graduation-hat.svg",
-              );
-              ScholarshipSave.saveScholarship(s);
+              try {
+                String res = await Database.saveScholarship(s.scholarshipName);
+                ScholarshipSave.saveScholarship(s);
+                ActivityFunctions.addUserActivity(
+                  DateFormat("MMM dd, yyyy").format(DateTime.now()),
+                  "Scholarship Liked : ${s.scholarshipName}",
+                  "assets/graduation-hat.svg",
+                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(res)));
+              } catch (error) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(error.toString())));
+              }
             }
           },
           child: AnimatedContainer(

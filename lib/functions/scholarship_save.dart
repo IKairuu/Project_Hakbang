@@ -1,6 +1,5 @@
 import 'package:hakbang/features/user/data/models/scholarship_object.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/server/database/database.dart';
 
 class ScholarshipSave {
   static void saveScholarship(ScholarshipObject addedScholar) async {

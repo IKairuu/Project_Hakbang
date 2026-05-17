@@ -1,25 +1,21 @@
-import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:http/http.dart' as http;
 
 class AiChat {
   static Future<String> sendUsermessage(dynamic chat) async {
-    final url = Uri.https(
-      "project-hakbang-server.onrender.com",
-      "chat/auth/message",
-    );
-    final headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      "Authorization": token.value!,
+    final dio = Dio();
+    final headers = {"Authorization": token.value!};
+    final data = {
+      "message": chat["message"],
+      "email": userCredentials.value!.email,
     };
 
-    final response = await http.post(
-      url,
-      headers: headers,
-      body: jsonEncode({"message": chat["message"]}),
+    final response = await dio.post(
+      "https://project-hakbang-server.onrender.com/auth/chat/message",
+      data: data,
+      options: Options(headers: headers),
     );
 
-    return jsonDecode(response.body)["message"];
+    return response.data["message"];
   }
 }

@@ -229,26 +229,14 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         behavior: SnackBarBehavior.floating,
-                                        content: Text(
-                                          res,
-                                          style: TextStyle(
-                                            color: AppColors.textSecondary,
-                                            fontSize: 14,
-                                          ),
-                                        ),
+                                        content: Text(res),
                                       ),
                                     );
                                   } catch (error) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         behavior: SnackBarBehavior.floating,
-                                        content: Text(
-                                          error.toString(),
-                                          style: TextStyle(
-                                            color: AppColors.textSecondary,
-                                            fontSize: 14,
-                                          ),
-                                        ),
+                                        content: Text(error.toString()),
                                       ),
                                     );
                                   }
@@ -269,26 +257,14 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         behavior: SnackBarBehavior.floating,
-                                        content: Text(
-                                          res,
-                                          style: TextStyle(
-                                            color: AppColors.textSecondary,
-                                            fontSize: 14,
-                                          ),
-                                        ),
+                                        content: Text(res),
                                       ),
                                     );
                                   } catch (error) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         behavior: SnackBarBehavior.floating,
-                                        content: Text(
-                                          error.toString(),
-                                          style: TextStyle(
-                                            color: AppColors.textSecondary,
-                                            fontSize: 14,
-                                          ),
-                                        ),
+                                        content: Text(error.toString()),
                                       ),
                                     );
                                   }

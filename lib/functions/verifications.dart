@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hakbang/notifiers.dart';
 
 class Verifications {
@@ -39,5 +41,19 @@ class Verifications {
   static bool checkTerms() {
     if (!agreeToTerms.value) return false;
     return true;
+  }
+
+  static Future<void> authentication() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn.instance;
+    final GoogleSignInAccount? user = await googleSignIn.authenticate();
+
+    if (user == null) {
+      throw "Account not found";
+    }
+
+    final GoogleSignInAuthentication auth = user.authentication;
+    final credential = GoogleAuthProvider.credential(idToken: auth.idToken);
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

@@ -31,6 +31,7 @@ class AppColors {
 
   // ── Blue — state / info
   static const blue = Color(0xFF4D8FFF);
+  static const google = Color(0xFF4889f4);
   static const blueDim = Color(0x264D8FFF); // rgba(77,143,255,0.15)
   static const oceanBlue = Color(0xFF1E3A8A);
   static const darkBlue = Color(0xFF0B1A2B);

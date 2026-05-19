@@ -14,6 +14,13 @@ class ButtonDesign {
     elevation: 0,
   );
 
+  static final ButtonStyle googleSignIn = ElevatedButton.styleFrom(
+    backgroundColor: AppColors.google,
+    padding: const EdgeInsets.symmetric(vertical: 5),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    elevation: 0,
+  );
+
   static final ButtonStyle findSchoolsContainer = ElevatedButton.styleFrom(
     backgroundColor: Color(0xFF152034),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:hakbang/features/user/presentation/design/input_design.dart';
@@ -84,6 +85,29 @@ class _SignupStep1State extends State<SignupStep1> {
     );
   }
 
+  Widget _buildGoogleSignInButton() {
+    return SizedBox(
+      height: 50,
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {},
+        style: ButtonDesign.googleSignIn,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          spacing: 10,
+          children: [
+            FaIcon(FontAwesomeIcons.google, color: Colors.white),
+            Text(
+              'Sign Up with Google →',
+              style: FontStyles.signupContinueButton,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildEmojiPrefixContent(String emoji) {
     return Padding(
       padding: const EdgeInsets.only(left: 12, right: 6),
@@ -161,6 +185,8 @@ class _SignupStep1State extends State<SignupStep1> {
               ),
             ),
             const SizedBox(height: 20),
+            _buildGoogleSignInButton(),
+            const SizedBox(height: 5),
             SizedBox(
               height: 50,
               width: double.infinity,

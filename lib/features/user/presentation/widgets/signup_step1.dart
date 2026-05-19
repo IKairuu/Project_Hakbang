@@ -20,8 +20,6 @@ class SignupStep1 extends StatefulWidget {
 
   const SignupStep1({
     super.key,
-    required this.fullNameController,
-    required this.emailController,
     required this.passwordController,
     required this.confirmPasswordController,
     required this.showPassword,
@@ -30,6 +28,8 @@ class SignupStep1 extends StatefulWidget {
     required this.onConfirmPasswordVisibilityToggle,
     required this.onContinue,
     required this.onSignIn,
+    required this.fullNameController,
+    required this.emailController,
   });
 
   @override
@@ -38,6 +38,9 @@ class SignupStep1 extends StatefulWidget {
 
 class _SignupStep1State extends State<SignupStep1> {
   static const _iconColor = Color(0xFF828a8a);
+  late TextEditingController fullName = widget.fullNameController;
+  late TextEditingController email = widget.emailController;
+  ValueNotifier<bool> authenticated = ValueNotifier(false);
 
   InputDecoration _getInputDecoration(String hintText) {
     return InputDesign.unfocusedInputDecoration(hintText);
@@ -69,20 +72,27 @@ class _SignupStep1State extends State<SignupStep1> {
     required String hintText,
     Widget? prefixIcon,
     Widget? suffixIcon,
+    bool isEmail = false,
     bool obscureText = false,
   }) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      cursorColor: AppColors.accent,
-      decoration: _getInputDecoration(hintText).copyWith(
-        prefixIcon: prefixIcon,
-        prefixIconConstraints: prefixIcon != null
-            ? const BoxConstraints(minWidth: 0, minHeight: 0)
-            : null,
-        suffixIcon: suffixIcon,
-      ),
-      style: FontStyles.inputText,
+    return ValueListenableBuilder(
+      valueListenable: authenticated,
+      builder: (context, auth, child) {
+        return TextField(
+          controller: controller,
+          enabled: isEmail ? !auth : true,
+          obscureText: obscureText,
+          cursorColor: AppColors.accent,
+          decoration: _getInputDecoration(hintText).copyWith(
+            prefixIcon: prefixIcon,
+            prefixIconConstraints: prefixIcon != null
+                ? const BoxConstraints(minWidth: 0, minHeight: 0)
+                : null,
+            suffixIcon: suffixIcon,
+          ),
+          style: FontStyles.inputText,
+        );
+      },
     );
   }
 
@@ -92,7 +102,20 @@ class _SignupStep1State extends State<SignupStep1> {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () async {
-          await Verifications.authentication();
+          try {
+            var userDetails = await Verifications.authentication();
+            if (userDetails != null) {
+              fullName.text = userDetails["fullname"];
+              email.text = userDetails["email"];
+              setState(() {
+                authenticated.value = true;
+              });
+            }
+          } catch (error) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(error.toString())));
+          }
         },
         style: ButtonDesign.googleSignIn,
         child: Row(
@@ -136,73 +159,82 @@ class _SignupStep1State extends State<SignupStep1> {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: Text("Create account ✨", style: FontStyles.signupHeader),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 25),
-              child: Text(
-                "Step 1 of 3 — Your account details",
-                style: FontStyles.stepSubtitle,
-              ),
-            ),
-            _buildInputLabel("FULL NAME"),
-            _buildInputField(
-              controller: widget.fullNameController,
-              hintText: 'Maria dela Cruz',
-              prefixIcon: _buildEmojiPrefixContent('👤'),
-            ),
-            const SizedBox(height: 14),
-            _buildInputLabel("EMAIL ADDRESS"),
-            _buildInputField(
-              controller: widget.emailController,
-              hintText: 'you@example.com',
-              prefixIcon: _buildEmailPrefixIcon(),
-            ),
-            const SizedBox(height: 14),
-            _buildInputLabel("PASSWORD"),
-            _buildInputField(
-              controller: widget.passwordController,
-              hintText: 'Create a strong password',
-              obscureText: !widget.showPassword,
-              prefixIcon: _buildEmojiPrefixContent('🔒'),
-              suffixIcon: _buildPasswordSuffix(
-                isVisible: widget.showPassword,
-                onPressed: widget.onPasswordVisibilityToggle,
-              ),
-            ),
-            const SizedBox(height: 14),
-            _buildInputLabel("CONFIRM PASSWORD"),
-            _buildInputField(
-              controller: widget.confirmPasswordController,
-              hintText: 'Re-enter password',
-              obscureText: !widget.showConfirmPassword,
-              prefixIcon: _buildEmojiPrefixContent('🔒'),
-              suffixIcon: _buildPasswordSuffix(
-                isVisible: widget.showConfirmPassword,
-                onPressed: widget.onConfirmPasswordVisibilityToggle,
-              ),
-            ),
-            const SizedBox(height: 20),
-            _buildGoogleSignInButton(),
-            const SizedBox(height: 5),
-            SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: widget.onContinue,
-                style: ButtonDesign.signUpButton,
-                child: Text(
-                  'Continue →',
-                  style: FontStyles.signupContinueButton,
+        child: ValueListenableBuilder(
+          valueListenable: authenticated,
+          builder: (context, auth, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(
+                    "Create account ✨",
+                    style: FontStyles.signupHeader,
+                  ),
                 ),
-              ),
-            ),
-          ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 25),
+                  child: Text(
+                    "Step 1 of 3 — Your account details",
+                    style: FontStyles.stepSubtitle,
+                  ),
+                ),
+                _buildInputLabel("FULL NAME"),
+                _buildInputField(
+                  controller: fullName,
+                  hintText: 'Maria dela Cruz',
+                  prefixIcon: _buildEmojiPrefixContent('👤'),
+                ),
+                const SizedBox(height: 14),
+                _buildInputLabel("EMAIL ADDRESS"),
+                _buildInputField(
+                  controller: email,
+                  hintText: 'you@example.com',
+                  isEmail: true,
+                  prefixIcon: _buildEmailPrefixIcon(),
+                ),
+                const SizedBox(height: 14),
+                _buildInputLabel("PASSWORD"),
+                _buildInputField(
+                  controller: widget.passwordController,
+                  hintText: 'Create a strong password',
+                  obscureText: !widget.showPassword,
+                  prefixIcon: _buildEmojiPrefixContent('🔒'),
+                  suffixIcon: _buildPasswordSuffix(
+                    isVisible: widget.showPassword,
+                    onPressed: widget.onPasswordVisibilityToggle,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                _buildInputLabel("CONFIRM PASSWORD"),
+                _buildInputField(
+                  controller: widget.confirmPasswordController,
+                  hintText: 'Re-enter password',
+                  obscureText: !widget.showConfirmPassword,
+                  prefixIcon: _buildEmojiPrefixContent('🔒'),
+                  suffixIcon: _buildPasswordSuffix(
+                    isVisible: widget.showConfirmPassword,
+                    onPressed: widget.onConfirmPasswordVisibilityToggle,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                !auth ? _buildGoogleSignInButton() : SizedBox(),
+                const SizedBox(height: 5),
+                SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: widget.onContinue,
+                    style: ButtonDesign.signUpButton,
+                    child: Text(
+                      'Continue →',
+                      style: FontStyles.signupContinueButton,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

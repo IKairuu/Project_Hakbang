@@ -43,7 +43,7 @@ class Verifications {
     return true;
   }
 
-  static Future<void> authentication() async {
+  static Future<Map<String, dynamic>?> authentication() async {
     try {
       final GoogleSignInAccount user = await GoogleSignIn.instance
           .authenticate();
@@ -55,9 +55,12 @@ class Verifications {
       );
 
       final userData = userCredential.user;
-      print(userData?.email);
+      if (userData == null) {
+        return null;
+      }
+      return {"email": userData.email, "fullname": userData.displayName};
     } on GoogleSignInException catch (error) {
-      print(error);
+      throw error.toString();
     }
   }
 }

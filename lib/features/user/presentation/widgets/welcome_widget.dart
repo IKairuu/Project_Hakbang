@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/font_styles.dart';
 import 'package:hakbang/features/user/presentation/design/smooth_page_indicator_design.dart';
+import 'package:hakbang/features/user/presentation/pages/auth_options.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/features/user/presentation/pages/login_page.dart';
-import 'package:hakbang/features/user/presentation/pages/signup_page.dart';
 import 'package:hakbang/features/user/presentation/widgets/about_app.dart';
 import 'package:hakbang/features/user/presentation/widgets/explore_container.dart';
 import 'package:hakbang/features/user/presentation/widgets/gabay_ai_slide.dart';
@@ -75,7 +75,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignupPage()),
+                      MaterialPageRoute(builder: (context) => AuthOptions()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

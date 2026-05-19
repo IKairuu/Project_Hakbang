@@ -20,7 +20,13 @@ import 'package:hakbang/features/user/presentation/widgets/signup_progress_indic
 import 'package:hakbang/features/user/presentation/widgets/auth_gradient_bg.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+  final String authFullname;
+  final String authemail;
+  const SignupPage({
+    super.key,
+    required this.authFullname,
+    required this.authemail,
+  });
 
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -67,8 +73,8 @@ class _SignupPageState extends State<SignupPage> {
     _pageController = PageController();
 
     // Step 1 controllers
-    fullNameController = TextEditingController();
-    emailController = TextEditingController();
+    fullNameController = TextEditingController(text: widget.authFullname);
+    emailController = TextEditingController(text: widget.authemail);
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
 

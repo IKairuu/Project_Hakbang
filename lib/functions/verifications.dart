@@ -59,8 +59,8 @@ class Verifications {
         return null;
       }
       return {"email": userData.email, "fullname": userData.displayName};
-    } on GoogleSignInException catch (error) {
-      throw error.toString();
+    } on GoogleSignInException {
+      throw "Session Canceled";
     }
   }
 }

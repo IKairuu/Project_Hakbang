@@ -44,16 +44,20 @@ class Verifications {
   }
 
   static Future<void> authentication() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn.instance;
-    final GoogleSignInAccount? user = await googleSignIn.authenticate();
+    try {
+      final GoogleSignInAccount user = await GoogleSignIn.instance
+          .authenticate();
 
-    if (user == null) {
-      throw "Account not found";
+      final GoogleSignInAuthentication auth = user.authentication;
+      final credential = GoogleAuthProvider.credential(idToken: auth.idToken);
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(
+        credential,
+      );
+
+      final userData = userCredential.user;
+      print(userData?.email);
+    } on GoogleSignInException catch (error) {
+      print(error);
     }
-
-    final GoogleSignInAuthentication auth = user.authentication;
-    final credential = GoogleAuthProvider.credential(idToken: auth.idToken);
-
-    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

@@ -45,7 +45,7 @@ dependencies:
   latlong2: ^0.9.1
   flutter_map_tile_caching: ^10.1.1
   flutter_osm_plugin: ^1.4.3
-  flutter_dotenv: ^6.0.0
+  flutter_dotenv: ^6.0.1
   faded_scrollable: ^1.0.1
   fading_edge_scrollview: ^4.1.1
   url_launcher: ^6.3.2
@@ -61,6 +61,7 @@ dependencies:
   dio: ^5.9.2
   google_sign_in: ^7.2.0
   firebase_auth: ^6.5.1
+  firebase_core: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  change_app_package_name: ^1.5.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -90,6 +92,7 @@ flutter:
   uses-material-design: true
   assets:
       - assets/
+      - .env
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

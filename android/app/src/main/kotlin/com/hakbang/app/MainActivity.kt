@@ -1,4 +1,4 @@
-package com.example.hakbang
+package com.hakbang.app
 
 import io.flutter.embedding.android.FlutterActivity
 

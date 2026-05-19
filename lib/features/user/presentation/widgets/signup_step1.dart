@@ -4,6 +4,7 @@ import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:hakbang/features/user/presentation/design/input_design.dart';
 import 'package:hakbang/features/user/presentation/design/font_styles.dart';
+import 'package:hakbang/functions/verifications.dart';
 
 class SignupStep1 extends StatefulWidget {
   final TextEditingController fullNameController;
@@ -90,7 +91,9 @@ class _SignupStep1State extends State<SignupStep1> {
       height: 50,
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () async {
+          await Verifications.authentication();
+        },
         style: ButtonDesign.googleSignIn,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

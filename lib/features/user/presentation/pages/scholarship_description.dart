@@ -691,8 +691,12 @@ Widget buildScholarHeader(
             const SizedBox(width: 8),
             Expanded(
               child: _sdStatPill(
-                s.endTime != null
-                    ? '${Duration(days: s.endTime!.difference(DateTime.now().toLocal()).inDays)}d'
+                s.endTime != null ||
+                        s.endTime!
+                                .difference(DateTime.now().toLocal())
+                                .inDays <=
+                            0
+                    ? '${s.endTime!.difference(DateTime.now().toLocal()).inDays}d'
                     : 'N/A',
                 'Days Left',
                 AppColors.coral,
@@ -764,7 +768,7 @@ Widget buildScholarDeadlineBar(ScholarshipModel s) {
             ),
             Text(
               s.endTime != null
-                  ? '${Duration(days: s.endTime!.difference(DateTime.now().toLocal()).inDays).inDays} days left'
+                  ? '${s.endTime!.difference(DateTime.now().toLocal()).inDays} days left'
                   : 'Closed',
               style: _sdDm(
                 11,
@@ -1020,9 +1024,8 @@ Widget buildScholarTimeline(List<dynamic> timeline, Color accent) {
 }
 
 Widget buildScholarObligation(Map<String, dynamic>? obligation) {
-  final obligationText = (obligation!['note'] ?? '').toString();
+  final obligationText = (obligation!['obligation'] ?? '').toString();
   final hasObligation = (obligation['required'] == true);
-
   if (hasObligation) {
     return Container(
       padding: const EdgeInsets.all(14),

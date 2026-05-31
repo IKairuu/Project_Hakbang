@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/features/center/center_model.dart';
+import 'package:intl/intl.dart';
 import 'package:share_link/share_link.dart';
 
 class ReviewCenterDescription extends StatefulWidget {
@@ -230,7 +231,10 @@ Widget buildPriceRow(CenterModel rc) {
     textBaseline: TextBaseline.alphabetic,
     children: [
       Text(
-        rc.currentPrice.toString(),
+        NumberFormat.currency(
+          symbol: '₱',
+          locale: 'en_PH',
+        ).format(rc.currentPrice),
         style: _dm(
           28,
           weight: FontWeight.w700,
@@ -240,7 +244,10 @@ Widget buildPriceRow(CenterModel rc) {
       ),
       const SizedBox(width: 10),
       Text(
-        rc.lastPrice.toString(),
+        NumberFormat.currency(
+          symbol: '₱',
+          locale: 'en_PH',
+        ).format(rc.lastPrice),
         style: _dm(
           16,
           color: AppColors.textMuted,
@@ -686,7 +693,10 @@ Widget buildStickyBottom(CenterModel rc) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                rc.currentPrice.toString(),
+                NumberFormat.currency(
+                  symbol: '₱',
+                  locale: 'en_PH',
+                ).format(rc.currentPrice),
                 style: _dm(
                   22,
                   weight: FontWeight.w700,
@@ -695,7 +705,10 @@ Widget buildStickyBottom(CenterModel rc) {
                 ),
               ),
               Text(
-                rc.lastPrice.toString(),
+                NumberFormat.currency(
+                  symbol: '₱',
+                  locale: 'en_PH',
+                ).format(rc.lastPrice),
                 style: _dm(
                   12,
                   color: AppColors.textMuted,

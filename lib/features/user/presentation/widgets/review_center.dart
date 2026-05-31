@@ -10,6 +10,7 @@ import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/center/center_model.dart' as rc_model;
 import 'package:hakbang/features/user/presentation/pages/review_center_description.dart';
+import 'package:intl/intl.dart';
 
 class ReviewCenter extends StatefulWidget {
   const ReviewCenter({super.key});
@@ -386,7 +387,10 @@ Widget buildHubs(dynamic centers) {
                       Row(
                         children: [
                           Text(
-                            center.currentPrice.toString(),
+                            NumberFormat.currency(
+                              symbol: '₱',
+                              locale: 'en_PH',
+                            ).format(center.currentPrice),
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w700,
@@ -396,7 +400,10 @@ Widget buildHubs(dynamic centers) {
                           const SizedBox(width: 8),
                           if (center.lastPrice != null)
                             Text(
-                              center.lastPrice.toString(),
+                              NumberFormat.currency(
+                                symbol: '₱',
+                                locale: 'en_PH',
+                              ).format(center.lastPrice),
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Color.fromRGBO(240, 241, 245, 0.3),

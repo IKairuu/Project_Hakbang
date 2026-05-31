@@ -31,10 +31,10 @@ class _ScholarshipState extends State<Scholarship> {
   @override
   void initState() {
     super.initState();
-    retriveScholarships();
+    retrieveScholarships();
   }
 
-  Future<void> retriveScholarships() async {
+  Future<void> retrieveScholarships() async {
     await ScholarshipRepo.getScholarships();
     Filter.getTopPick();
     Filter.filterScholarships();

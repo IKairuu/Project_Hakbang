@@ -61,7 +61,7 @@ class Filter {
       if (title.toLowerCase() == "all") {
         reviewCenterSection.value = availableReviewCenters.value;
         break;
-      } else if (center.modalities
+      } else if (center.modalities!
           .toLowerCase()
           .split(" ")
           .contains(title.toLowerCase())) {

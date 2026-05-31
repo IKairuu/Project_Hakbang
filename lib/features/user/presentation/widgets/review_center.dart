@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:easy_stars/easy_stars.dart';
 import 'package:flutter/material.dart';
 import 'package:hakbang/features/center/center_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
@@ -272,30 +273,29 @@ Widget buildHubs(dynamic centers) {
             MaterialPageRoute(
               builder: (_) => ReviewCenterDescription(
                 reviewCenter: rc_model.CenterModel(
-                  title: center.title ?? '',
-                  instructor: center.instructor ?? '',
-                  ratingNum: center.ratingNum ?? '',
-                  stars: center.stars ?? '',
-                  ratingCount: center.ratingCount ?? '',
-                  price: center.price ?? '',
-                  originalPrice: center.originalPrice ?? '',
-                  isBestSeller: center.isBestSeller ?? false,
+                  id: center.id,
+                  title: center.title,
+                  instructor: center.instructor,
+                  ratingNum: center.ratingNum,
+                  ratingCount: center.ratingCount,
+                  currentPrice: center.currentPrice,
+                  lastPrice: center.lastPrice,
                   emoji: center.emoji ?? '🎓',
-                  subtitle: center.subtitle ?? '',
-                  description: center.description ?? '',
-                  managedBy: center.managedBy ?? '',
-                  modalities: center.modalities ?? '',
-                  location: center.location ?? '',
-                  website: center.website ?? '',
-                  phone: center.phone ?? '',
-                  email: center.email ?? '',
-                  exams: center.exams ?? '',
-                  coverage: List<dynamic>.from(center.coverage ?? []),
+                  subtitle: center.subtitle,
+                  description: center.description,
+                  managedBy: center.managedBy,
+                  modalities: center.modalities,
+                  location: center.location,
+                  website: center.website,
+                  phone: center.phone,
+                  email: center.email,
+                  exams: center.exams,
+                  coverage: center.coverage,
                   programOverview: Map<String, dynamic>.from(
                     center.programOverview ?? {},
                   ),
                   centerOffers: List<dynamic>.from(center.centerOffers ?? []),
-                  whoThisIsFor: List<dynamic>.from(center.whoThisIsFor ?? []),
+                  beneficiaries: List<dynamic>.from(center.beneficiaries ?? []),
                   aboutThisCenter: Map<String, dynamic>.from(
                     center.aboutThisCenter ?? {},
                   ),
@@ -358,7 +358,7 @@ Widget buildHubs(dynamic centers) {
                     Row(
                       children: [
                         Text(
-                          center.ratingNum ?? '',
+                          center.ratingNum.toString(),
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -366,17 +366,14 @@ Widget buildHubs(dynamic centers) {
                           ),
                         ),
                         const SizedBox(width: 4),
-                        Text(
-                          center.stars ?? '',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Color(0xFFF0A500),
-                            letterSpacing: -1,
-                          ),
+                        EasyStarsDisplay(
+                          initialRating: center.ratingNum,
+                          readOnly: true,
+                          filledColor: Colors.yellow,
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          center.ratingCount ?? '',
+                          center.ratingCount.toString(),
                           style: TextStyle(
                             fontSize: 11,
                             color: Color.fromRGBO(240, 241, 245, 0.3),
@@ -384,12 +381,12 @@ Widget buildHubs(dynamic centers) {
                         ),
                       ],
                     ),
-                    if ((center.price ?? '').isNotEmpty) ...[
+                    if (center.currentPrice != 0) ...[
                       const SizedBox(height: 5),
                       Row(
                         children: [
                           Text(
-                            center.price ?? '',
+                            center.currentPrice.toString(),
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w700,
@@ -397,9 +394,9 @@ Widget buildHubs(dynamic centers) {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          if ((center.originalPrice ?? '').isNotEmpty)
+                          if (center.lastPrice != null)
                             Text(
-                              center.originalPrice ?? '',
+                              center.lastPrice.toString(),
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Color.fromRGBO(240, 241, 245, 0.3),
@@ -410,7 +407,7 @@ Widget buildHubs(dynamic centers) {
                       ),
                     ],
                     const SizedBox(height: 5),
-                    if (center.isBestSeller)
+                    if (center.ratingNum > 4.8 && center.ratingCount >= 10)
                       Container(
                         padding: const EdgeInsets.symmetric(
                           vertical: 3,

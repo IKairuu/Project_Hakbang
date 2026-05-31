@@ -11,7 +11,7 @@ class CollegeRepo {
       for (Map<String, dynamic> colleges in data["data"]) {
         collegeList.add(
           CollegeModel(
-            id: colleges["ID"],
+            id: colleges["id"],
             address: colleges["address"],
             collegeName: colleges["college_name"],
             email: colleges["email"],

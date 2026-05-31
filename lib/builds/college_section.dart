@@ -49,7 +49,7 @@ class _CollegeSectionState extends State<CollegeSection> {
                   displayTags.add('UPCAT');
                 } else {
                   displayTags.add(
-                    widget.college.programNumbers.isNotEmpty
+                    widget.college.programNumbers != 0
                         ? '${widget.college.programNumbers}+ Programs'
                         : '195+ Programs',
                   );

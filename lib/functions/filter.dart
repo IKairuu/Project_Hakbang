@@ -86,7 +86,7 @@ class Filter {
 
   static void getTopPick() {
     featuredScholarship.value = availableScholarships.value.reduce(
-      (a, b) => a.topPick > b.topPick ? a : b,
+      (a, b) => a.likes > b.likes ? a : b,
     );
   }
 

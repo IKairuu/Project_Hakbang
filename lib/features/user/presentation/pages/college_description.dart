@@ -101,7 +101,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       Positioned(
                         top: 12,
                         right: 16,
-                        child: _cdRatingBadge(college.rating),
+                        child: _cdRatingBadge(college.rating.toString()),
                       ),
                     ],
                   ),
@@ -182,7 +182,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                         child: Row(
                           children: [
                             _cdStatItem(
-                              college.programNumbers,
+                              college.programNumbers.toString(),
                               "PROGRAMS",
                               AppColors.accentLight,
                             ),

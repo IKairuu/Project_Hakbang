@@ -489,7 +489,7 @@ class _ScholarshipState extends State<Scholarship> {
                                         ),
                                       ),
                                       Text(
-                                        "${featured.deadline} days left",
+                                        "${featured.endTime!.difference(featured.startTime!).inDays} days left",
                                         style: GoogleFonts.dmSans(
                                           color: AppColors.accentLight,
                                           fontWeight: FontWeight.w700,
@@ -499,34 +499,45 @@ class _ScholarshipState extends State<Scholarship> {
                                     ],
                                   ),
                                   const SizedBox(height: 5),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(4),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          height: 3,
-                                          color: AppColors.border2,
-                                        ),
-                                        FractionallySizedBox(
-                                          widthFactor:
-                                              (featured.limit -
-                                                  featured.deadline) /
-                                              featured.limit,
-                                          child: Container(
-                                            height: 3,
-                                            decoration: const BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  AppColors.blue,
-                                                  AppColors.accent,
-                                                ],
+                                  featured.startTime == null ||
+                                          featured.endTime == null
+                                      ? SizedBox()
+                                      : ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            4,
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                height: 3,
+                                                color: AppColors.border2,
                                               ),
-                                            ),
+                                              FractionallySizedBox(
+                                                widthFactor:
+                                                    (featured.endTime!
+                                                        .difference(
+                                                          featured.startTime!,
+                                                        )
+                                                        .inDays) /
+                                                    featured.startTime!.day,
+                                                child: Container(
+                                                  height: 3,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                        gradient:
+                                                            LinearGradient(
+                                                              colors: [
+                                                                AppColors.blue,
+                                                                AppColors
+                                                                    .accent,
+                                                              ],
+                                                            ),
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -807,7 +818,7 @@ class _ScholarshipState extends State<Scholarship> {
                                     ),
                                     Expanded(child: SizedBox()),
                                     Text(
-                                      "${section[index].deadline} days",
+                                      "${section[index].endTime!.difference(section[index].startTime!).inDays} days",
                                       style: GoogleFonts.dmSans(
                                         color: AppColors.accentLight,
                                         fontWeight: FontWeight.w500,
@@ -817,35 +828,42 @@ class _ScholarshipState extends State<Scholarship> {
                                   ],
                                 ),
                                 const SizedBox(height: 3),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(2),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        height: 2,
-                                        color: AppColors.border2,
-                                      ),
-                                      FractionallySizedBox(
-                                        widthFactor:
-                                            (section[index].limit -
-                                                section[index].deadline) /
-                                            section[index].limit,
-                                        child: Container(
-                                          height: 2,
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              stops: const [0.0, 0.8],
-                                              colors: [
-                                                theme.accent,
-                                                AppColors.accent,
-                                              ],
+                                section[index].startTime == null ||
+                                        section[index].endTime == null
+                                    ? SizedBox()
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(2),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              height: 2,
+                                              color: AppColors.border2,
                                             ),
-                                          ),
+                                            FractionallySizedBox(
+                                              widthFactor:
+                                                  (section[index].endTime!
+                                                      .difference(
+                                                        section[index]
+                                                            .startTime!,
+                                                      )
+                                                      .inDays) /
+                                                  section[index].startTime!.day,
+                                              child: Container(
+                                                height: 2,
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    stops: const [0.0, 0.8],
+                                                    colors: [
+                                                      theme.accent,
+                                                      AppColors.accent,
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
                               ],
                             ),
                           ),
@@ -990,9 +1008,13 @@ Color _cardStatusColor(ScholarshipModel s) {
     if (tl.contains('closing')) return AppColors.coral;
     if (tl == 'closed') return const Color(0xFF888888);
   }
-  if (s.deadline > 30) return const Color(0xFF4ade80);
-  if (s.deadline > 0) return AppColors.coral;
-  return const Color(0xFF888888);
+  if (s.endTime!.difference(s.startTime!).inDays > 30) {
+    return const Color(0xFF4ade80);
+  }
+  if (s.endTime!.difference(s.startTime!).inDays > 0) return AppColors.coral;
+  {
+    return const Color(0xFF888888);
+  }
 }
 
 class _SchGridPainter extends CustomPainter {

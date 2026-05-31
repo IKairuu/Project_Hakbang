@@ -259,10 +259,19 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                             ),
                           ],
                           buildSdDivider(),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(18, 16, 18, 4),
-                            child: buildScholarObligation(s.serviceObligation),
-                          ),
+                          s.serviceObligation == null
+                              ? SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    18,
+                                    16,
+                                    18,
+                                    4,
+                                  ),
+                                  child: buildScholarObligation(
+                                    s.serviceObligation,
+                                  ),
+                                ),
                           if (s.applicationSteps.isNotEmpty) ...[
                             buildSdDivider(),
                             buildScholarSection(
@@ -666,7 +675,7 @@ Widget buildScholarHeader(
           children: [
             Expanded(
               child: _sdStatPill(
-                s.minGwa > 0 ? s.minGwa.toStringAsFixed(2) : 'N/A',
+                s.minGwa != null ? s.minGwa!.toStringAsFixed(2) : 'N/A',
                 'Min GWA',
                 AppColors.accentLight,
               ),
@@ -682,7 +691,9 @@ Widget buildScholarHeader(
             const SizedBox(width: 8),
             Expanded(
               child: _sdStatPill(
-                s.deadline > 0 ? '${s.deadline}d' : 'N/A',
+                s.startTime != null || s.endTime != null
+                    ? '${Duration(days: s.endTime!.difference(s.startTime!).inDays)}d'
+                    : 'N/A',
                 'Days Left',
                 AppColors.coral,
               ),
@@ -728,11 +739,11 @@ Widget _sdStatPill(String val, String label, Color valColor) {
 }
 
 Widget buildScholarDeadlineBar(ScholarshipModel s) {
-  if (s.deadline <= 0) return const SizedBox.shrink();
+  if (s.endTime == null) return const SizedBox.shrink();
 
-  final deadline = s.deadline;
-  final windowDays = s.limit;
-  final pct = ((windowDays - deadline) / windowDays);
+  final deadline = s.endTime;
+  final windowDays = DateTime.now();
+  final pct = ((deadline!.difference(windowDays).inDays) / windowDays.day);
   final accent = _sdColorOf(s.color).accent;
   final barGradient = LinearGradient(colors: [accent, AppColors.accent]);
 
@@ -753,7 +764,9 @@ Widget buildScholarDeadlineBar(ScholarshipModel s) {
               ),
             ),
             Text(
-              s.deadline > 0 ? '${s.deadline} days left' : 'Closed',
+              s.endTime != null || s.startTime != null
+                  ? '${Duration(days: s.endTime!.difference(s.startTime!).inDays).inDays} days left'
+                  : 'Closed',
               style: _sdDm(
                 11,
                 weight: FontWeight.w700,
@@ -1007,8 +1020,8 @@ Widget buildScholarTimeline(List<dynamic> timeline, Color accent) {
   );
 }
 
-Widget buildScholarObligation(Map<String, dynamic> obligation) {
-  final obligationText = (obligation['note'] ?? '').toString();
+Widget buildScholarObligation(Map<String, dynamic>? obligation) {
+  final obligationText = (obligation!['note'] ?? '').toString();
   final hasObligation = (obligation['required'] == true);
 
   if (hasObligation) {

@@ -17,13 +17,11 @@ class CollegeDatasource {
     }
   }
 
-  static Future<Map<String, dynamic>> getSavedSchoolsRouter(
-    String email,
-  ) async {
+  static Future<Map<String, dynamic>> getSavedSchoolsRouter() async {
     final headers = {"Authorization": token.value!};
     try {
       final response = await dio.get(
-        "$mainUrl/user/auth/get-saved-schools/$email",
+        "$mainUrl/user/auth/get-saved-schools",
         options: Options(headers: headers),
       );
       return response.data;

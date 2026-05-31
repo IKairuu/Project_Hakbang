@@ -39,9 +39,9 @@ class CollegeRepo {
     }
   }
 
-  static Future<void> getSavedSchools(String email) async {
+  static Future<void> getSavedSchools() async {
     try {
-      final response = await CollegeDatasource.getSavedSchoolsRouter(email);
+      final response = await CollegeDatasource.getSavedSchoolsRouter();
       final List<Map<String, dynamic>> collegeList = [];
       for (Map<String, dynamic> collegeNames in response["data"]) {
         collegeList.add(collegeNames);

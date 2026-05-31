@@ -47,18 +47,18 @@ class UserRepo {
     }
   }
 
-  static Future<String> updateUserAboutMe(Map<String, dynamic> data) async {
+  static Future<String> updateUserAboutMe(String editedText) async {
     try {
-      final response = await UserDatasource.updateUserAboutMeRouter(data);
+      final response = await UserDatasource.updateUserAboutMeRouter(editedText);
       return response["message"];
     } catch (error) {
       rethrow;
     }
   }
 
-  static Future<void> getUserActivities(String email) async {
+  static Future<void> getUserActivities() async {
     try {
-      final response = await UserDatasource.getUserActivitiesRouter(email);
+      final response = await UserDatasource.getUserActivitiesRouter();
       List<Activity> activities = [];
       for (Map<String, dynamic> acts in response["data"]) {
         activities.add(

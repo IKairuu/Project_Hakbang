@@ -68,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
       try {
         var userData = await UserRepo.userLogin(email, password);
         userCredentials.value = User(
+          id: userData["message"]["id"],
           name: userData["message"]["name"],
           email: userData["message"]["email"],
           avatar: userData["message"]["avatar"],

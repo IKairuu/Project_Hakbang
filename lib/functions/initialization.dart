@@ -10,9 +10,9 @@ import 'package:intl/intl.dart';
 class Initialization {
   static Future<void> mainInitialization() async {
     userPosition.value = await Locations.getUserLocation();
-    await UserRepo.getUserActivities(userCredentials.value!.email);
-    await CollegeRepo.getSavedSchools(userCredentials.value!.email);
-    await ScholarshipRepo.getSavedScholarships(userCredentials.value!.email);
+    await UserRepo.getUserActivities();
+    await CollegeRepo.getSavedSchools();
+    await ScholarshipRepo.getSavedScholarships();
     await SortingFunctions.sortASctivities();
     await refreshChat();
   }

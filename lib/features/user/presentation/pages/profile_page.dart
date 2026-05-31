@@ -42,14 +42,10 @@ class _ProfilePageState extends State<ProfilePage> {
       return;
     }
 
-    final data = {
-      "email": userCredentials.value!.email,
-      "about_me": editedText,
-    };
     setState(() {
       userCredentials.value!.aboutMe = editedText;
     });
-    await UserRepo.updateUserAboutMe(data)
+    await UserRepo.updateUserAboutMe(editedText)
         .then((value) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

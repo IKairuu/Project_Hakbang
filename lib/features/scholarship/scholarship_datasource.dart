@@ -17,13 +17,11 @@ class ScholarshipDatasource {
     }
   }
 
-  static Future<Map<String, dynamic>> getSavedScholarshipsRouter(
-    String email,
-  ) async {
+  static Future<Map<String, dynamic>> getSavedScholarshipsRouter() async {
     final headers = {"Authorization": token.value!};
     try {
       final response = await dio.get(
-        "$mainUrl/user/auth/get-saved-scholarship/$email",
+        "$mainUrl/user/auth/get-saved-scholarship",
         options: Options(headers: headers),
       );
 

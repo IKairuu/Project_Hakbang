@@ -42,12 +42,10 @@ class ScholarshipRepo {
     }
   }
 
-  static Future<void> getSavedScholarships(String email) async {
+  static Future<void> getSavedScholarships() async {
     try {
       final List<Map<String, dynamic>> scholarList = [];
-      final response = await ScholarshipDatasource.getSavedScholarshipsRouter(
-        email,
-      );
+      final response = await ScholarshipDatasource.getSavedScholarshipsRouter();
       for (Map<String, dynamic> dataObjs in response["data"]) {
         scholarList.add(dataObjs);
       }

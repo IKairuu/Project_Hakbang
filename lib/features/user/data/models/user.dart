@@ -1,4 +1,5 @@
 class User {
+  String id;
   String name;
   String email;
   String avatar;
@@ -9,6 +10,7 @@ class User {
   String aboutMe;
 
   User({
+    required this.id,
     required this.name,
     required this.email,
     required this.avatar,

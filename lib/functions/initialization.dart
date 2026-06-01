@@ -11,7 +11,7 @@ class Initialization {
   static Future<void> mainInitialization() async {
     userPosition.value = await Locations.getUserLocation();
     await UserRepo.getUserActivities();
-    await CollegeRepo.getSavedSchools();
+    await UserRepo.getSavedSchools();
     await ScholarshipRepo.getSavedScholarships();
     await SortingFunctions.sortASctivities();
     await refreshChat();

@@ -92,4 +92,35 @@ class UserRepo {
       rethrow;
     }
   }
+
+  static Future<void> getSavedSchools() async {
+    try {
+      final response = await UserDatasource.getSavedSchoolsRouter();
+      final List<Map<String, dynamic>> collegeList = [];
+      for (Map<String, dynamic> collegeNames in response["data"]) {
+        collegeList.add(collegeNames);
+      }
+      rawSavedSchools.value = collegeList;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<String> saveSchool(String collegeName) async {
+    try {
+      final response = await UserDatasource.saveSchoolRouter(collegeName);
+      return response["message"];
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<String> removeSavedSchool(String collegName) async {
+    try {
+      final response = await UserDatasource.removeSavedSchoolRouter(collegName);
+      return response["message"];
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

@@ -38,37 +38,4 @@ class CollegeRepo {
       rethrow;
     }
   }
-
-  static Future<void> getSavedSchools() async {
-    try {
-      final response = await CollegeDatasource.getSavedSchoolsRouter();
-      final List<Map<String, dynamic>> collegeList = [];
-      for (Map<String, dynamic> collegeNames in response["data"]) {
-        collegeList.add(collegeNames);
-      }
-      rawSavedSchools.value = collegeList;
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  static Future<String> saveSchool(String collegeName) async {
-    try {
-      final response = await CollegeDatasource.saveSchoolRouter(collegeName);
-      return response["message"];
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  static Future<String> removeSavedSchool(String collegName) async {
-    try {
-      final response = await CollegeDatasource.removeSavedSchoolRouter(
-        collegName,
-      );
-      return response["message"];
-    } catch (error) {
-      rethrow;
-    }
-  }
 }

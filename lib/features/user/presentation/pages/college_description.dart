@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/college/college_repo.dart';
+import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:hakbang/functions/activity_functions.dart';
@@ -215,7 +216,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                 if (isSaved) {
                                   try {
                                     String res =
-                                        await CollegeRepo.removeSavedSchool(
+                                        await UserRepo.removeSavedSchool(
                                           college.collegeName,
                                         );
                                     SchoolSave.removeSchool(college);
@@ -242,7 +243,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                   }
                                 } else {
                                   try {
-                                    String res = await CollegeRepo.saveSchool(
+                                    String res = await UserRepo.saveSchool(
                                       college.collegeName,
                                     );
 

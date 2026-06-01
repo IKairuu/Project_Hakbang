@@ -1,7 +1,7 @@
 class Activity {
   final String description;
   final String iconName;
-  final String date;
+  final DateTime date;
 
   Activity({
     required this.description,

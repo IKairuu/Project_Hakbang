@@ -64,8 +64,8 @@ class UserRepo {
         activities.add(
           Activity(
             description: acts["description"],
-            iconName: acts["iconName"],
-            date: acts["date"],
+            iconName: acts["icon_name"],
+            date: DateTime.parse(acts["date"]),
           ),
         );
       }
@@ -96,9 +96,9 @@ class UserRepo {
   static Future<void> getSavedSchools() async {
     try {
       final response = await UserDatasource.getSavedSchoolsRouter();
-      final List<Map<String, dynamic>> collegeList = [];
+      final List<String> collegeList = [];
       for (Map<String, dynamic> collegeNames in response["data"]) {
-        collegeList.add(collegeNames);
+        collegeList.add(collegeNames["college_id"]);
       }
       savedSchools.value = collegeList;
     } catch (error) {
@@ -115,9 +115,9 @@ class UserRepo {
     }
   }
 
-  static Future<String> removeSavedSchool(String collegName) async {
+  static Future<String> removeSavedSchool(String collegeId) async {
     try {
-      final response = await UserDatasource.removeSavedSchoolRouter(collegName);
+      final response = await UserDatasource.removeSavedSchoolRouter(collegeId);
       return response["message"];
     } catch (error) {
       rethrow;

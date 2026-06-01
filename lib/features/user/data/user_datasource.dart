@@ -151,12 +151,13 @@ class UserDatasource {
   ) async {
     final headers = {"Authorization": token.value!};
     try {
-      final response = await dio.post(
+      final response = await dio.delete(
         "$mainUrl/user/auth/remove-saved-school/$collegeId",
         options: Options(headers: headers),
       );
       return response.data;
     } on DioException catch (error) {
+      print(error);
       throw error.response?.data["message"];
     }
   }

@@ -11,7 +11,6 @@ import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/functions/school_save.dart';
 import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:share_link/share_link.dart';
 
@@ -218,11 +217,12 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                         await UserRepo.removeSavedSchool(
                                           college.id,
                                         );
-                                    SchoolSave.removeSchool(college);
+                                    setState(
+                                      () =>
+                                          savedSchools.value.remove(college.id),
+                                    );
                                     ActivityFunctions.addUserActivity(
-                                      DateFormat(
-                                        "MMM dd, yyyy",
-                                      ).format(DateTime.now()),
+                                      DateTime.now().toLocal(),
                                       "School Unsaved: ${college.collegeName}",
                                       "assets/university.svg",
                                     );
@@ -245,12 +245,12 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                     String res = await UserRepo.saveSchool(
                                       college.id,
                                     );
-
+                                    setState(
+                                      () => savedSchools.value.add(college.id),
+                                    );
                                     SchoolSave.saveSchool(college);
                                     ActivityFunctions.addUserActivity(
-                                      DateFormat(
-                                        "MMM dd, yyyy",
-                                      ).format(DateTime.now()),
+                                      DateTime.now().toLocal(),
                                       "School Saved: ${college.collegeName}",
                                       "assets/university.svg",
                                     );

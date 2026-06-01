@@ -11,11 +11,4 @@ class SchoolSave {
       savedSchools.value = updated;
     }
   }
-
-  static void removeSchool(CollegeModel removeCollege) async {
-    final updated = List<dynamic>.from(savedSchools.value)
-      ..removeWhere((school) => school.id == removeCollege.id);
-
-    savedSchools.value = updated;
-  }
 }

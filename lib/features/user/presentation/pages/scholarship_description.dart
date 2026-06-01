@@ -137,9 +137,7 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                                     );
                                 ScholarshipSave.removeScholarship(s);
                                 ActivityFunctions.addUserActivity(
-                                  DateFormat(
-                                    "MMM dd, yyyy",
-                                  ).format(DateTime.now()),
+                                  DateTime.now().toLocal(),
                                   "Like removed: ${s.scholarshipName}",
                                   "assets/graduation-hat.svg",
                                 );
@@ -164,9 +162,7 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                                 );
                                 ScholarshipSave.saveScholarship(s);
                                 ActivityFunctions.addUserActivity(
-                                  DateFormat(
-                                    "MMM dd, yyyy",
-                                  ).format(DateTime.now()),
+                                  DateTime.now().toLocal(),
                                   "Scholarship Liked : ${s.scholarshipName}",
                                   "assets/graduation-hat.svg",
                                 );
@@ -1203,7 +1199,7 @@ Widget buildScholarCta(
                 );
                 ScholarshipSave.removeScholarship(s);
                 ActivityFunctions.addUserActivity(
-                  DateFormat("MMM dd, yyyy").format(DateTime.now()),
+                  DateTime.now().toLocal(),
                   "Like removed: ${s.scholarshipName}",
                   "assets/graduation-hat.svg",
                 );
@@ -1226,7 +1222,7 @@ Widget buildScholarCta(
                 String res = await UserRepo.saveScholarship(s.scholarshipName);
                 ScholarshipSave.saveScholarship(s);
                 ActivityFunctions.addUserActivity(
-                  DateFormat("MMM dd, yyyy").format(DateTime.now()),
+                  DateTime.now().toLocal(),
                   "Scholarship Liked : ${s.scholarshipName}",
                   "assets/graduation-hat.svg",
                 );

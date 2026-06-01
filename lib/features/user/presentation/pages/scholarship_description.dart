@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/scholarship/scholarship_repo.dart';
+import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/filter.dart';
@@ -52,7 +53,6 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
       Filter.getTopPick();
       Filter.filterScholarships();
     }
-    ScholarshipSave.convertSavedScholarship();
   }
 
   @override
@@ -132,7 +132,7 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                             if (isSaved) {
                               try {
                                 String res =
-                                    await ScholarshipRepo.removeSavedScholarship(
+                                    await UserRepo.removeSavedScholarship(
                                       s.scholarshipName,
                                     );
                                 ScholarshipSave.removeScholarship(s);
@@ -159,10 +159,9 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                               }
                             } else {
                               try {
-                                String res =
-                                    await ScholarshipRepo.saveScholarship(
-                                      s.scholarshipName,
-                                    );
+                                String res = await UserRepo.saveScholarship(
+                                  s.scholarshipName,
+                                );
                                 ScholarshipSave.saveScholarship(s);
                                 ActivityFunctions.addUserActivity(
                                   DateFormat(
@@ -1199,7 +1198,7 @@ Widget buildScholarCta(
           onTap: () async {
             if (isSaved) {
               try {
-                String res = await ScholarshipRepo.removeSavedScholarship(
+                String res = await UserRepo.removeSavedScholarship(
                   s.scholarshipName,
                 );
                 ScholarshipSave.removeScholarship(s);
@@ -1224,9 +1223,7 @@ Widget buildScholarCta(
               }
             } else {
               try {
-                String res = await ScholarshipRepo.saveScholarship(
-                  s.scholarshipName,
-                );
+                String res = await UserRepo.saveScholarship(s.scholarshipName);
                 ScholarshipSave.saveScholarship(s);
                 ActivityFunctions.addUserActivity(
                   DateFormat("MMM dd, yyyy").format(DateTime.now()),

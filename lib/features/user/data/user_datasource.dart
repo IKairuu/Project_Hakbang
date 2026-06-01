@@ -131,14 +131,9 @@ class UserDatasource {
     }
   }
 
-  static Future<Map<String, dynamic>> saveSchoolRouter(
-    String collegeName,
-  ) async {
+  static Future<Map<String, dynamic>> saveSchoolRouter(String collegeId) async {
     final headers = {"Authorization": token.value!};
-    final data = {
-      "college_name": collegeName,
-      "email": userCredentials.value!.email,
-    };
+    final data = {"college_id": collegeId};
     try {
       final response = await dio.post(
         "$mainUrl/user/auth/post-saved-schools",
@@ -152,19 +147,69 @@ class UserDatasource {
   }
 
   static Future<Map<String, dynamic>> removeSavedSchoolRouter(
-    String collegName,
+    String collegeId,
+  ) async {
+    final headers = {"Authorization": token.value!};
+    try {
+      final response = await dio.post(
+        "$mainUrl/user/auth/remove-saved-school/$collegeId",
+        options: Options(headers: headers),
+      );
+      return response.data;
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
+    }
+  }
+
+  static Future<Map<String, dynamic>> getSavedScholarshipsRouter() async {
+    final headers = {"Authorization": token.value!};
+    try {
+      final response = await dio.get(
+        "$mainUrl/user/auth/get-saved-scholarship",
+        options: Options(headers: headers),
+      );
+
+      return response.data;
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
+    }
+  }
+
+  static Future<Map<String, dynamic>> saveScholarshipRouter(
+    String scholarName,
   ) async {
     final headers = {"Authorization": token.value!};
     final data = {
-      "college_name": collegName,
+      "scholarship_name": scholarName,
       "email": userCredentials.value!.email,
     };
     try {
       final response = await dio.post(
-        "$mainUrl/user/auth/remove-saved-school",
+        "$mainUrl/user/auth/post-saved-scholarship",
         data: data,
         options: Options(headers: headers),
       );
+      return response.data;
+    } on DioException catch (error) {
+      throw error.response?.data["message"];
+    }
+  }
+
+  static Future<Map<String, dynamic>> removeSavedScholarshipRouter(
+    String scholarName,
+  ) async {
+    final headers = {"Authorization": token.value!};
+    final data = {
+      "scholarship_name": scholarName,
+      "email": userCredentials.value!.email,
+    };
+    try {
+      final response = await dio.post(
+        "$mainUrl/user/auth/remove-saved-scholarship",
+        data: data,
+        options: Options(headers: headers),
+      );
+
       return response.data;
     } on DioException catch (error) {
       throw error.response?.data["message"];

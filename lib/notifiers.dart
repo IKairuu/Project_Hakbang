@@ -29,18 +29,14 @@ ValueNotifier<List<bool>> selectedSchoolHover = ValueNotifier([]);
 ValueNotifier<List<CollegeModel>> availableColleges = ValueNotifier([]);
 ValueNotifier<String> onSelect = ValueNotifier("");
 ValueNotifier<List<ScholarshipModel>> availableScholarships = ValueNotifier([]);
-ValueNotifier<List<Map<String, dynamic>>> rawSavedScholarships = ValueNotifier(
-  [],
-);
-ValueNotifier<List<Map<String, dynamic>>> rawSavedSchools = ValueNotifier([]);
 ValueNotifier<bool> governmentSelected = ValueNotifier(true);
 ValueNotifier<List<ScholarshipModel>> governmentSection = ValueNotifier([]);
 ValueNotifier<List<ScholarshipModel>> nonGovernmentSection = ValueNotifier([]);
 ValueNotifier<List<CollegeModel>> collegeSection = ValueNotifier([]);
 ValueNotifier<List<AiMessage>> chatMessages = ValueNotifier([]);
 ValueNotifier<bool> chatLoading = ValueNotifier(false);
-ValueNotifier<List<CollegeModel>> savedSchools = ValueNotifier([]);
-ValueNotifier<List<ScholarshipModel>> savedScholarships = ValueNotifier([]);
+ValueNotifier<List<dynamic>> savedSchools = ValueNotifier([]);
+ValueNotifier<List<dynamic>> savedScholarships = ValueNotifier([]);
 ValueNotifier<bool> hasInternetConnection = ValueNotifier(false);
 ValueNotifier<List<CenterModel>> availableReviewCenters = ValueNotifier([]);
 ValueNotifier<List<CenterModel>> reviewCenterSection = ValueNotifier([]);

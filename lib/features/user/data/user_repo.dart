@@ -100,15 +100,15 @@ class UserRepo {
       for (Map<String, dynamic> collegeNames in response["data"]) {
         collegeList.add(collegeNames);
       }
-      rawSavedSchools.value = collegeList;
+      savedSchools.value = collegeList;
     } catch (error) {
       rethrow;
     }
   }
 
-  static Future<String> saveSchool(String collegeName) async {
+  static Future<String> saveSchool(String collegeId) async {
     try {
-      final response = await UserDatasource.saveSchoolRouter(collegeName);
+      final response = await UserDatasource.saveSchoolRouter(collegeId);
       return response["message"];
     } catch (error) {
       rethrow;
@@ -118,6 +118,38 @@ class UserRepo {
   static Future<String> removeSavedSchool(String collegName) async {
     try {
       final response = await UserDatasource.removeSavedSchoolRouter(collegName);
+      return response["message"];
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<void> getSavedScholarships() async {
+    try {
+      final List<Map<String, dynamic>> scholarList = [];
+      final response = await UserDatasource.getSavedScholarshipsRouter();
+      for (Map<String, dynamic> dataObjs in response["data"]) {
+        scholarList.add(dataObjs);
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<String> saveScholarship(String scholarName) async {
+    try {
+      final response = await UserDatasource.saveScholarshipRouter(scholarName);
+      return response["message"];
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<String> removeSavedScholarship(String scholarName) async {
+    try {
+      final response = await UserDatasource.removeSavedScholarshipRouter(
+        scholarName,
+      );
       return response["message"];
     } catch (error) {
       rethrow;

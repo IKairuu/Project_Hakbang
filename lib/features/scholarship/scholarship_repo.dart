@@ -41,39 +41,4 @@ class ScholarshipRepo {
       rethrow;
     }
   }
-
-  static Future<void> getSavedScholarships() async {
-    try {
-      final List<Map<String, dynamic>> scholarList = [];
-      final response = await ScholarshipDatasource.getSavedScholarshipsRouter();
-      for (Map<String, dynamic> dataObjs in response["data"]) {
-        scholarList.add(dataObjs);
-      }
-      rawSavedScholarships.value = scholarList;
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  static Future<String> saveScholarship(String scholarName) async {
-    try {
-      final response = await ScholarshipDatasource.saveScholarshipRouter(
-        scholarName,
-      );
-      return response["message"];
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  static Future<String> removeSavedScholarship(String scholarName) async {
-    try {
-      final response = await ScholarshipDatasource.removeSavedScholarshipRouter(
-        scholarName,
-      );
-      return response["message"];
-    } catch (error) {
-      rethrow;
-    }
-  }
 }

@@ -127,7 +127,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         ValueListenableBuilder(
-                                          valueListenable: rawSavedSchools,
+                                          valueListenable: savedSchools,
                                           builder: (context, saved, child) {
                                             return Text(
                                               "${saved.length}",
@@ -148,7 +148,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       ValueListenableBuilder(
-                                        valueListenable: rawSavedScholarships,
+                                        valueListenable: savedScholarships,
                                         builder: (context, scholars, child) {
                                           return Text(
                                             "${scholars.length}",

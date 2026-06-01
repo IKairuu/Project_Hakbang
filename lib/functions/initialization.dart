@@ -1,5 +1,3 @@
-import 'package:hakbang/features/college/college_repo.dart';
-import 'package:hakbang/features/scholarship/scholarship_repo.dart';
 import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/sorting_functions.dart';
@@ -12,7 +10,7 @@ class Initialization {
     userPosition.value = await Locations.getUserLocation();
     await UserRepo.getUserActivities();
     await UserRepo.getSavedSchools();
-    await ScholarshipRepo.getSavedScholarships();
+    await UserRepo.getSavedScholarships();
     await SortingFunctions.sortASctivities();
     await refreshChat();
   }
@@ -54,8 +52,6 @@ class Initialization {
     availableColleges.value = [];
     collegeSection.value = [];
     selectedSchoolHover.value = [];
-    rawSavedScholarships.value = [];
-    rawSavedSchools.value = [];
     featuredScholarship.value = null;
     locationEnabled.value = null;
 

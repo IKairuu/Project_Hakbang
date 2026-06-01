@@ -42,7 +42,6 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
         messenger.showSnackBar(SnackBar(content: Text(error.toString())));
       }
     }
-    SchoolSave.convertSavedSchools();
   }
 
   @override
@@ -206,7 +205,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       ValueListenableBuilder(
                         valueListenable: savedSchools,
                         builder: (context, saved, child) {
-                          final isSaved = saved.contains(college);
+                          final isSaved = saved.contains(college.id);
                           return SizedBox(
                             width: double.infinity,
                             height: 50,
@@ -217,7 +216,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                   try {
                                     String res =
                                         await UserRepo.removeSavedSchool(
-                                          college.collegeName,
+                                          college.id,
                                         );
                                     SchoolSave.removeSchool(college);
                                     ActivityFunctions.addUserActivity(
@@ -244,7 +243,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                 } else {
                                   try {
                                     String res = await UserRepo.saveSchool(
-                                      college.collegeName,
+                                      college.id,
                                     );
 
                                     SchoolSave.saveSchool(college);

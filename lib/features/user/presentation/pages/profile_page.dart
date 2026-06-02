@@ -189,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       onPressed: () {
                         if (Navigator.canPop(context)) {
-                          Navigator.pop(context);
+                          Navigator.pop(context, true);
                         } else {
                           navigationBarIndex.value = 2;
                         }

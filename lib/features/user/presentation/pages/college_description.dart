@@ -8,7 +8,6 @@ import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/launcher.dart';
-import 'package:hakbang/functions/school_save.dart';
 import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:latlong2/latlong.dart';
@@ -217,10 +216,13 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                         await UserRepo.removeSavedSchool(
                                           college.id,
                                         );
-                                    setState(
-                                      () =>
-                                          savedSchools.value.remove(college.id),
-                                    );
+                                    setState(() {
+                                      final updated = List<String>.from(
+                                        savedSchools.value,
+                                      );
+                                      updated.remove(college.id);
+                                      savedSchools.value = updated;
+                                    });
                                     ActivityFunctions.addUserActivity(
                                       DateTime.now().toLocal(),
                                       "School Unsaved: ${college.collegeName}",
@@ -248,7 +250,6 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                     setState(
                                       () => savedSchools.value.add(college.id),
                                     );
-                                    SchoolSave.saveSchool(college);
                                     ActivityFunctions.addUserActivity(
                                       DateTime.now().toLocal(),
                                       "School Saved: ${college.collegeName}",

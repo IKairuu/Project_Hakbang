@@ -185,6 +185,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  easy_stars:
+    dependency: "direct main"
+    description:
+      name: easy_stars
+      sha256: d19ffd611659026fbfb2f8697b0498f84add8896a89568799740829a044e3888
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.9"
   faded_scrollable:
     dependency: "direct main"
     description:

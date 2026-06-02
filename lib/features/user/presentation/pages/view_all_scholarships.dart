@@ -239,7 +239,7 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
                                           ),
                                           const Expanded(child: SizedBox()),
                                           Text(
-                                            "${s.deadline} days left",
+                                            "${Duration(days: s.endTime!.difference(s.startTime!).inDays).inDays} days left",
                                             style: GoogleFonts.dmSans(
                                               color: AppColors.accentLight,
                                               fontWeight: FontWeight.w500,
@@ -260,10 +260,16 @@ class _ViewAllScholarshipsState extends State<ViewAllScholarships> {
                                               color: AppColors.border2,
                                             ),
                                             FractionallySizedBox(
-                                              widthFactor: s.limit == 0
+                                              widthFactor:
+                                                  s.startTime == null ||
+                                                      s.endTime == null
                                                   ? 0.0
-                                                  : ((s.limit - s.deadline) /
-                                                            s.limit)
+                                                  : ((s.endTime!
+                                                                .difference(
+                                                                  s.startTime!,
+                                                                )
+                                                                .inDays) /
+                                                            s.startTime!.day)
                                                         .clamp(0.0, 1.0),
                                               child: Container(
                                                 height: 2,
@@ -341,7 +347,11 @@ Color _valStatusColor(ScholarshipModel s) {
     if (tl.contains('closing')) return AppColors.coral;
     if (tl == 'closed') return const Color(0xFF888888);
   }
-  if (s.deadline > 30) return const Color(0xFF4ade80);
-  if (s.deadline > 0) return AppColors.coral;
-  return const Color(0xFF888888);
+  if (s.endTime!.difference(s.startTime!).inDays > 30) {
+    return const Color(0xFF4ade80);
+  }
+  if (s.endTime!.difference(s.startTime!).inDays > 0) return AppColors.coral;
+  {
+    return const Color(0xFF888888);
+  }
 }

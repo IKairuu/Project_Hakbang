@@ -187,7 +187,6 @@ class _SignupPageState extends State<SignupPage> {
           "occupation": occupations[_selectedOccupationIndex!].title,
           "institution": schoolController.text,
           "grade": gradeController.text,
-          "role": "user",
           "about_me": "",
         },
       };

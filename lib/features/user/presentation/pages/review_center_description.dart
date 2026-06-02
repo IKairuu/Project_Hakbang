@@ -1,8 +1,10 @@
+import 'package:easy_stars/easy_stars.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/features/center/center_model.dart';
+import 'package:intl/intl.dart';
 import 'package:share_link/share_link.dart';
 
 class ReviewCenterDescription extends StatefulWidget {
@@ -66,7 +68,7 @@ class _ReviewCenterDescriptionState extends State<ReviewCenterDescription> {
                       buildSectionDivider(),
                       buildCenterOffers(rc.centerOffers),
                       buildSectionDivider(),
-                      buildWhoIsFor(rc.whoThisIsFor),
+                      buildWhoIsFor(rc.beneficiaries),
                       buildSectionDivider(),
                       buildAboutSection(
                         aboutData: rc.aboutThisCenter,
@@ -189,11 +191,15 @@ Widget buildRatingRow(CenterModel rc) {
   return Row(
     children: [
       Text(
-        rc.ratingNum,
+        rc.ratingNum.toString(),
         style: _dm(15, weight: FontWeight.w700, color: _gold),
       ),
       const SizedBox(width: 6),
-      Text(rc.stars, style: _dm(14, color: _gold, spacing: -1)),
+      EasyStarsDisplay(
+        initialRating: rc.ratingNum,
+        readOnly: true,
+        filledColor: Colors.yellow,
+      ),
       const SizedBox(width: 6),
       Text(
         "${rc.ratingCount} reviews",
@@ -225,7 +231,10 @@ Widget buildPriceRow(CenterModel rc) {
     textBaseline: TextBaseline.alphabetic,
     children: [
       Text(
-        rc.price,
+        NumberFormat.currency(
+          symbol: '₱',
+          locale: 'en_PH',
+        ).format(rc.currentPrice),
         style: _dm(
           28,
           weight: FontWeight.w700,
@@ -235,7 +244,10 @@ Widget buildPriceRow(CenterModel rc) {
       ),
       const SizedBox(width: 10),
       Text(
-        rc.originalPrice,
+        NumberFormat.currency(
+          symbol: '₱',
+          locale: 'en_PH',
+        ).format(rc.lastPrice),
         style: _dm(
           16,
           color: AppColors.textMuted,
@@ -270,7 +282,7 @@ Widget buildDetailContent(CenterModel rc) {
         if (rc.subtitle.isNotEmpty)
           Text(rc.subtitle, style: _dm(14, color: AppColors.textSecondary)),
         const SizedBox(height: 10),
-        if (rc.isBestSeller == true) ...[
+        if (rc.ratingNum >= 4.8 && rc.ratingCount > 10) ...[
           buildBestsellerBadge(),
           const SizedBox(height: 10),
         ],
@@ -299,12 +311,7 @@ Widget buildDetailContent(CenterModel rc) {
               ? rc.location
               : "Location info not yet available",
         ),
-        buildMetaRow(
-          Icons.desktop_mac_outlined,
-          rc.modalities.isNotEmpty
-              ? rc.modalities
-              : "Online · On-site · Hybrid available",
-        ),
+        buildMetaRow(Icons.desktop_mac_outlined, rc.modalities!),
         buildMetaRow(
           Icons.calendar_today_outlined,
           "Check center for next batch",
@@ -315,7 +322,8 @@ Widget buildDetailContent(CenterModel rc) {
         ),
         if (rc.phone.isNotEmpty) buildMetaRow(Icons.phone_outlined, rc.phone),
         if (rc.email.isNotEmpty) buildMetaRow(Icons.email_outlined, rc.email),
-        if (rc.exams.isNotEmpty) buildMetaRow(Icons.school_outlined, rc.exams),
+        if (rc.exams.isNotEmpty)
+          buildMetaRow(Icons.school_outlined, rc.exams.join(",")),
         const SizedBox(height: 14),
         buildPriceRow(rc),
         const SizedBox(height: 14),
@@ -685,7 +693,10 @@ Widget buildStickyBottom(CenterModel rc) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                rc.price,
+                NumberFormat.currency(
+                  symbol: '₱',
+                  locale: 'en_PH',
+                ).format(rc.currentPrice),
                 style: _dm(
                   22,
                   weight: FontWeight.w700,
@@ -694,7 +705,10 @@ Widget buildStickyBottom(CenterModel rc) {
                 ),
               ),
               Text(
-                rc.originalPrice,
+                NumberFormat.currency(
+                  symbol: '₱',
+                  locale: 'en_PH',
+                ).format(rc.lastPrice),
                 style: _dm(
                   12,
                   color: AppColors.textMuted,

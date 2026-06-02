@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/college/college_repo.dart';
+import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/features/user/presentation/design/button_design.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/launcher.dart';
-import 'package:hakbang/functions/school_save.dart';
 import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:share_link/share_link.dart';
 
@@ -41,7 +40,6 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
         messenger.showSnackBar(SnackBar(content: Text(error.toString())));
       }
     }
-    SchoolSave.convertSavedSchools();
   }
 
   @override
@@ -101,7 +99,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       Positioned(
                         top: 12,
                         right: 16,
-                        child: _cdRatingBadge(college.rating),
+                        child: _cdRatingBadge(college.rating.toString()),
                       ),
                     ],
                   ),
@@ -182,7 +180,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                         child: Row(
                           children: [
                             _cdStatItem(
-                              college.programNumbers,
+                              college.programNumbers.toString(),
                               "PROGRAMS",
                               AppColors.accentLight,
                             ),
@@ -205,7 +203,7 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                       ValueListenableBuilder(
                         valueListenable: savedSchools,
                         builder: (context, saved, child) {
-                          final isSaved = saved.contains(college);
+                          final isSaved = saved.contains(college.id);
                           return SizedBox(
                             width: double.infinity,
                             height: 50,
@@ -215,14 +213,18 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                 if (isSaved) {
                                   try {
                                     String res =
-                                        await CollegeRepo.removeSavedSchool(
-                                          college.collegeName,
+                                        await UserRepo.removeSavedSchool(
+                                          college.id,
                                         );
-                                    SchoolSave.removeSchool(college);
+                                    setState(() {
+                                      final updated = List<String>.from(
+                                        savedSchools.value,
+                                      );
+                                      updated.remove(college.id);
+                                      savedSchools.value = updated;
+                                    });
                                     ActivityFunctions.addUserActivity(
-                                      DateFormat(
-                                        "MMM dd, yyyy",
-                                      ).format(DateTime.now()),
+                                      DateTime.now().toLocal(),
                                       "School Unsaved: ${college.collegeName}",
                                       "assets/university.svg",
                                     );
@@ -242,15 +244,14 @@ class _CollegeDescriptionState extends State<CollegeDescription> {
                                   }
                                 } else {
                                   try {
-                                    String res = await CollegeRepo.saveSchool(
-                                      college.collegeName,
+                                    String res = await UserRepo.saveSchool(
+                                      college.id,
                                     );
-
-                                    SchoolSave.saveSchool(college);
+                                    setState(
+                                      () => savedSchools.value.add(college.id),
+                                    );
                                     ActivityFunctions.addUserActivity(
-                                      DateFormat(
-                                        "MMM dd, yyyy",
-                                      ).format(DateTime.now()),
+                                      DateTime.now().toLocal(),
                                       "School Saved: ${college.collegeName}",
                                       "assets/university.svg",
                                     );

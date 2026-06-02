@@ -1,18 +1,16 @@
-import 'package:hakbang/features/college/college_repo.dart';
-import 'package:hakbang/features/scholarship/scholarship_repo.dart';
+import 'package:hakbang/features/companion/companion_model.dart';
 import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/sorting_functions.dart';
-import 'package:hakbang/features/user/data/models/ai_message.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:intl/intl.dart';
 
 class Initialization {
   static Future<void> mainInitialization() async {
     userPosition.value = await Locations.getUserLocation();
-    await UserRepo.getUserActivities(userCredentials.value!.email);
-    await CollegeRepo.getSavedSchools(userCredentials.value!.email);
-    await ScholarshipRepo.getSavedScholarships(userCredentials.value!.email);
+    await UserRepo.getUserActivities();
+    await UserRepo.getSavedSchools();
+    await UserRepo.getSavedScholarships();
     await SortingFunctions.sortASctivities();
     await refreshChat();
   }
@@ -31,7 +29,7 @@ class Initialization {
   static Future<void> refreshChat() async {
     chatMessages.value.clear();
     chatMessages.value.add(
-      AiMessage(
+      CompanionModel(
         text:
             'Hi ${userCredentials.value!.name.split(" ")[0]}! 👋 I\'m Gabay, your college planning assistant. I can help you choose the right school, find scholarships, and understand entrance exams. What would you like to explore today?',
         role: "model",
@@ -54,8 +52,6 @@ class Initialization {
     availableColleges.value = [];
     collegeSection.value = [];
     selectedSchoolHover.value = [];
-    rawSavedScholarships.value = [];
-    rawSavedSchools.value = [];
     featuredScholarship.value = null;
     locationEnabled.value = null;
 

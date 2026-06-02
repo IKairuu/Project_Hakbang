@@ -126,11 +126,12 @@ class UserRepo {
 
   static Future<void> getSavedScholarships() async {
     try {
-      final List<Map<String, dynamic>> scholarList = [];
+      final List<String> scholarList = [];
       final response = await UserDatasource.getSavedScholarshipsRouter();
       for (Map<String, dynamic> scholars in response["data"]) {
         scholarList.add(scholars["scholarship_id"]);
       }
+      savedScholarships.value = scholarList;
     } catch (error) {
       rethrow;
     }

@@ -8,7 +8,6 @@ import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/launcher.dart';
 import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:intl/intl.dart';
 
 class ScholarshipDescription extends StatefulWidget {
   const ScholarshipDescription({super.key, required this.scholarship});

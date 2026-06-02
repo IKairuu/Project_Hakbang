@@ -18,7 +18,7 @@ class SavedSchoolCard extends StatelessWidget {
         tags.add('UPCAT');
       } else {
         tags.add(
-          college.programNumbers.isNotEmpty
+          college.programNumbers != 0
               ? '${college.programNumbers}+ Programs'
               : '195+ Programs',
         );

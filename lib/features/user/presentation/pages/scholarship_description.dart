@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/scholarship/scholarship_repo.dart';
+import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/launcher.dart';
-import 'package:hakbang/functions/scholarship_save.dart';
 import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:intl/intl.dart';
 
 class ScholarshipDescription extends StatefulWidget {
   const ScholarshipDescription({super.key, required this.scholarship});
@@ -52,7 +51,6 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
       Filter.getTopPick();
       Filter.filterScholarships();
     }
-    ScholarshipSave.convertSavedScholarship();
   }
 
   @override
@@ -66,7 +64,7 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
       body: ValueListenableBuilder(
         valueListenable: savedScholarships,
         builder: (context, save, child) {
-          bool isSaved = save.contains(widget.scholarship);
+          bool isSaved = save.contains(widget.scholarship.id);
           return Column(
             children: [
               Expanded(
@@ -132,14 +130,12 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                             if (isSaved) {
                               try {
                                 String res =
-                                    await ScholarshipRepo.removeSavedScholarship(
+                                    await UserRepo.removeSavedScholarship(
                                       s.scholarshipName,
                                     );
-                                ScholarshipSave.removeScholarship(s);
+                                removeSavedScholarship(s.id);
                                 ActivityFunctions.addUserActivity(
-                                  DateFormat(
-                                    "MMM dd, yyyy",
-                                  ).format(DateTime.now()),
+                                  DateTime.now().toLocal(),
                                   "Like removed: ${s.scholarshipName}",
                                   "assets/graduation-hat.svg",
                                 );
@@ -159,15 +155,12 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                               }
                             } else {
                               try {
-                                String res =
-                                    await ScholarshipRepo.saveScholarship(
-                                      s.scholarshipName,
-                                    );
-                                ScholarshipSave.saveScholarship(s);
+                                String res = await UserRepo.saveScholarship(
+                                  s.id,
+                                );
+                                addSavedScholarship(s.id);
                                 ActivityFunctions.addUserActivity(
-                                  DateFormat(
-                                    "MMM dd, yyyy",
-                                  ).format(DateTime.now()),
+                                  DateTime.now().toLocal(),
                                   "Scholarship Liked : ${s.scholarshipName}",
                                   "assets/graduation-hat.svg",
                                 );
@@ -259,10 +252,19 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                             ),
                           ],
                           buildSdDivider(),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(18, 16, 18, 4),
-                            child: buildScholarObligation(s.serviceObligation),
-                          ),
+                          s.serviceObligation == null
+                              ? SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    18,
+                                    16,
+                                    18,
+                                    4,
+                                  ),
+                                  child: buildScholarObligation(
+                                    s.serviceObligation,
+                                  ),
+                                ),
                           if (s.applicationSteps.isNotEmpty) ...[
                             buildSdDivider(),
                             buildScholarSection(
@@ -666,7 +668,7 @@ Widget buildScholarHeader(
           children: [
             Expanded(
               child: _sdStatPill(
-                s.minGwa > 0 ? s.minGwa.toStringAsFixed(2) : 'N/A',
+                s.minGwa != null ? s.minGwa!.toStringAsFixed(2) : 'N/A',
                 'Min GWA',
                 AppColors.accentLight,
               ),
@@ -682,7 +684,13 @@ Widget buildScholarHeader(
             const SizedBox(width: 8),
             Expanded(
               child: _sdStatPill(
-                s.deadline > 0 ? '${s.deadline}d' : 'N/A',
+                s.endTime != null ||
+                        s.endTime!
+                                .difference(DateTime.now().toLocal())
+                                .inDays <=
+                            0
+                    ? '${s.endTime!.difference(DateTime.now().toLocal()).inDays}d'
+                    : 'N/A',
                 'Days Left',
                 AppColors.coral,
               ),
@@ -728,11 +736,10 @@ Widget _sdStatPill(String val, String label, Color valColor) {
 }
 
 Widget buildScholarDeadlineBar(ScholarshipModel s) {
-  if (s.deadline <= 0) return const SizedBox.shrink();
-
-  final deadline = s.deadline;
-  final windowDays = s.limit;
-  final pct = ((windowDays - deadline) / windowDays);
+  if (s.endTime == null) return const SizedBox.shrink();
+  final pct =
+      DateTime.now().toLocal().difference(s.startTime!).inDays /
+      s.endTime!.difference(s.startTime!).inDays;
   final accent = _sdColorOf(s.color).accent;
   final barGradient = LinearGradient(colors: [accent, AppColors.accent]);
 
@@ -753,7 +760,9 @@ Widget buildScholarDeadlineBar(ScholarshipModel s) {
               ),
             ),
             Text(
-              s.deadline > 0 ? '${s.deadline} days left' : 'Closed',
+              s.endTime != null
+                  ? '${s.endTime!.difference(DateTime.now().toLocal()).inDays} days left'
+                  : 'Closed',
               style: _sdDm(
                 11,
                 weight: FontWeight.w700,
@@ -1007,10 +1016,9 @@ Widget buildScholarTimeline(List<dynamic> timeline, Color accent) {
   );
 }
 
-Widget buildScholarObligation(Map<String, dynamic> obligation) {
-  final obligationText = (obligation['note'] ?? '').toString();
+Widget buildScholarObligation(Map<String, dynamic>? obligation) {
+  final obligationText = (obligation!['obligation'] ?? '').toString();
   final hasObligation = (obligation['required'] == true);
-
   if (hasObligation) {
     return Container(
       padding: const EdgeInsets.all(14),
@@ -1184,12 +1192,10 @@ Widget buildScholarCta(
           onTap: () async {
             if (isSaved) {
               try {
-                String res = await ScholarshipRepo.removeSavedScholarship(
-                  s.scholarshipName,
-                );
-                ScholarshipSave.removeScholarship(s);
+                String res = await UserRepo.removeSavedScholarship(s.id);
+                removeSavedScholarship(s.id);
                 ActivityFunctions.addUserActivity(
-                  DateFormat("MMM dd, yyyy").format(DateTime.now()),
+                  DateTime.now().toLocal(),
                   "Like removed: ${s.scholarshipName}",
                   "assets/graduation-hat.svg",
                 );
@@ -1209,12 +1215,10 @@ Widget buildScholarCta(
               }
             } else {
               try {
-                String res = await ScholarshipRepo.saveScholarship(
-                  s.scholarshipName,
-                );
-                ScholarshipSave.saveScholarship(s);
+                String res = await UserRepo.saveScholarship(s.id);
+                addSavedScholarship(s.id);
                 ActivityFunctions.addUserActivity(
-                  DateFormat("MMM dd, yyyy").format(DateTime.now()),
+                  DateTime.now().toLocal(),
                   "Scholarship Liked : ${s.scholarshipName}",
                   "assets/graduation-hat.svg",
                 );
@@ -1257,6 +1261,18 @@ Widget buildScholarCta(
       ],
     ),
   );
+}
+
+void removeSavedScholarship(String id) {
+  final updated = List<String>.from(savedScholarships.value);
+  updated.remove(id);
+  savedScholarships.value = updated;
+}
+
+void addSavedScholarship(String id) {
+  final updated = List<String>.from(savedScholarships.value);
+  updated.add(id);
+  savedScholarships.value = updated;
 }
 
 class _SdGridPainter extends CustomPainter {

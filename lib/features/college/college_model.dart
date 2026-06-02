@@ -1,5 +1,5 @@
 class CollegeModel {
-  int id;
+  String id;
   String address;
   String collegeName;
   String email;
@@ -12,10 +12,10 @@ class CollegeModel {
   List<dynamic> programs;
   List<dynamic> tags;
   String collegeImage;
-  String rating;
-  String programNumbers;
+  double rating;
+  int programNumbers;
   String about;
-  String ranking;
+  int ranking;
 
   CollegeModel({
     required this.id,

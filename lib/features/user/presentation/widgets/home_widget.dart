@@ -7,6 +7,7 @@ import 'package:hakbang/features/user/presentation/design/font_styles.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/profile_page.dart';
+import 'package:intl/intl.dart';
 import 'package:marquee/marquee.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 
@@ -127,7 +128,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         ValueListenableBuilder(
-                                          valueListenable: rawSavedSchools,
+                                          valueListenable: savedSchools,
                                           builder: (context, saved, child) {
                                             return Text(
                                               "${saved.length}",
@@ -148,7 +149,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       ValueListenableBuilder(
-                                        valueListenable: rawSavedScholarships,
+                                        valueListenable: savedScholarships,
                                         builder: (context, scholars, child) {
                                           return Text(
                                             "${scholars.length}",
@@ -537,7 +538,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                               ),
                                                             ),
                                                             Text(
-                                                              acts[index].date,
+                                                              DateFormat(
+                                                                    "MMM. dd, yyyy",
+                                                                  )
+                                                                  .format(
+                                                                    acts[index]
+                                                                        .date,
+                                                                  )
+                                                                  .toString(),
                                                               style: FontStyles
                                                                   .activityDateStyle,
                                                             ),

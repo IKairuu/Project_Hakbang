@@ -1,25 +1,25 @@
 class ScholarshipModel {
   String allowance;
-  int id;
+  String id;
   String about;
   String color;
   List<dynamic> applicationSteps;
   List<dynamic> applicationTimeline;
   List<dynamic> benefits;
-  int deadline;
-  int limit;
-  int duration;
+  DateTime? startTime;
+  DateTime? endTime;
+  int? duration;
   List<dynamic> eligibility;
   bool government;
-  Map<String, dynamic> grantTitle;
-  double minGwa;
+  Map<String, dynamic>? grantTitle;
+  double? minGwa;
   Map<String, dynamic> organizationName;
   List<dynamic> requiredDocuments;
   String scholarshipName;
   String scholarshipIcon;
-  Map<String, dynamic> serviceObligation;
+  Map<String, dynamic>? serviceObligation;
   List<dynamic> tags;
-  int topPick;
+  int likes;
   String website;
 
   ScholarshipModel({
@@ -30,20 +30,20 @@ class ScholarshipModel {
     required this.applicationSteps,
     required this.applicationTimeline,
     required this.benefits,
-    required this.deadline,
-    required this.limit,
-    required this.duration,
+    this.startTime,
+    this.endTime,
+    this.duration,
     required this.eligibility,
     required this.government,
-    required this.grantTitle,
-    required this.minGwa,
+    this.grantTitle,
+    this.minGwa,
     required this.organizationName,
     required this.requiredDocuments,
     required this.scholarshipName,
     required this.scholarshipIcon,
-    required this.serviceObligation,
+    this.serviceObligation,
     required this.tags,
-    required this.topPick,
+    required this.likes,
     required this.website,
   });
 }

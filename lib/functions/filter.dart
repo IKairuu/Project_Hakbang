@@ -61,7 +61,7 @@ class Filter {
       if (title.toLowerCase() == "all") {
         reviewCenterSection.value = availableReviewCenters.value;
         break;
-      } else if (center.modalities
+      } else if (center.modalities!
           .toLowerCase()
           .split(" ")
           .contains(title.toLowerCase())) {
@@ -86,7 +86,7 @@ class Filter {
 
   static void getTopPick() {
     featuredScholarship.value = availableScholarships.value.reduce(
-      (a, b) => a.topPick > b.topPick ? a : b,
+      (a, b) => a.likes > b.likes ? a : b,
     );
   }
 

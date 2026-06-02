@@ -1,5 +1,4 @@
 import 'package:hakbang/functions/activity_functions.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Launcher {
@@ -12,7 +11,7 @@ class Launcher {
       throw Exception("Could not launch $url");
     }
     ActivityFunctions.addUserActivity(
-      DateFormat("MMM dd, yyyy").format(DateTime.now()),
+      DateTime.now().toLocal(),
       "Visited $name",
       icon,
     );

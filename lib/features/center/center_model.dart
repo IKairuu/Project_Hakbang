@@ -1,42 +1,40 @@
 class CenterModel {
+  String id;
   String title;
   String instructor;
-  String ratingNum;
-  String stars;
-  String ratingCount;
-  String price;
-  String originalPrice;
-  bool isBestSeller;
+  double ratingNum;
+  int ratingCount;
+  double currentPrice;
+  double? lastPrice;
   String emoji;
   String subtitle;
   String description;
   String managedBy;
-  String modalities;
+  String? modalities;
   String location;
   String website;
   String phone;
   String email;
-  String exams;
+  List<dynamic> exams;
   List<dynamic> coverage;
   Map<String, dynamic> programOverview;
   List<dynamic> centerOffers;
-  List<dynamic> whoThisIsFor;
+  List<dynamic> beneficiaries;
   Map<String, dynamic> aboutThisCenter;
 
   CenterModel({
+    required this.id,
     required this.title,
     required this.instructor,
     required this.ratingNum,
-    required this.stars,
     required this.ratingCount,
-    required this.price,
-    required this.originalPrice,
-    required this.isBestSeller,
+    required this.currentPrice,
+    this.lastPrice,
     required this.emoji,
     required this.subtitle,
     required this.description,
     required this.managedBy,
-    required this.modalities,
+    this.modalities,
     required this.location,
     required this.website,
     required this.phone,
@@ -45,7 +43,7 @@ class CenterModel {
     required this.coverage,
     required this.programOverview,
     required this.centerOffers,
-    required this.whoThisIsFor,
+    required this.beneficiaries,
     required this.aboutThisCenter,
   });
 }

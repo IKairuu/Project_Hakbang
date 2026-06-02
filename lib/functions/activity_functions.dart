@@ -4,7 +4,7 @@ import 'package:hakbang/notifiers.dart';
 
 class ActivityFunctions {
   static void addUserActivity(
-    String date,
+    DateTime date,
     String description,
     String iconName,
   ) async {

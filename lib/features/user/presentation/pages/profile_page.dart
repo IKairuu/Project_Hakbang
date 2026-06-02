@@ -9,8 +9,6 @@ import 'package:hakbang/features/user/presentation/design/background_design.dart
 import 'package:hakbang/features/user/presentation/design/font_styles.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/initialization.dart';
-import 'package:hakbang/functions/scholarship_save.dart';
-import 'package:hakbang/functions/school_save.dart';
 import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/college_description.dart';
@@ -42,14 +40,10 @@ class _ProfilePageState extends State<ProfilePage> {
       return;
     }
 
-    final data = {
-      "email": userCredentials.value!.email,
-      "about_me": editedText,
-    };
     setState(() {
       userCredentials.value!.aboutMe = editedText;
     });
-    await UserRepo.updateUserAboutMe(data)
+    await UserRepo.updateUserAboutMe(editedText)
         .then((value) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -161,8 +155,6 @@ class _ProfilePageState extends State<ProfilePage> {
       Filter.getTopPick();
       Filter.filterScholarships();
     }
-    ScholarshipSave.convertSavedScholarship();
-    SchoolSave.convertSavedSchools();
   }
 
   @override
@@ -197,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       onPressed: () {
                         if (Navigator.canPop(context)) {
-                          Navigator.pop(context);
+                          Navigator.pop(context, true);
                         } else {
                           navigationBarIndex.value = 2;
                         }
@@ -516,15 +508,26 @@ class _ProfilePageState extends State<ProfilePage> {
                                           separatorBuilder: (_, __) =>
                                               const SizedBox(height: 12),
                                           itemBuilder: (context, index) {
-                                            final college = saved[index];
-                                            return GestureDetector(
-                                              onTap: () =>
-                                                  _openCollegeDescription(
-                                                    college,
+                                            return ValueListenableBuilder(
+                                              valueListenable:
+                                                  availableColleges,
+                                              builder: (context, avail, child) {
+                                                final college = avail
+                                                    .firstWhere(
+                                                      (college) =>
+                                                          college.id ==
+                                                          saved[index],
+                                                    );
+                                                return GestureDetector(
+                                                  onTap: () =>
+                                                      _openCollegeDescription(
+                                                        college,
+                                                      ),
+                                                  child: SavedSchoolCard(
+                                                    college: college,
                                                   ),
-                                              child: SavedSchoolCard(
-                                                college: college,
-                                              ),
+                                                );
+                                              },
                                             );
                                           },
                                         ),

@@ -25,7 +25,9 @@ class _SavedScholarCardState extends State<SavedScholarCard> {
               shrinkWrap: true,
               itemCount: section.length,
               itemBuilder: (context, index) {
-                final s = section[index];
+                final s = availableScholarships.value.firstWhere(
+                  (scholars) => scholars.id == section[index],
+                );
                 final theme = _valCardTheme(s.color);
                 return GestureDetector(
                   onTap: () => Navigator.push(
@@ -178,7 +180,7 @@ class _SavedScholarCardState extends State<SavedScholarCard> {
                                           ),
                                           const Expanded(child: SizedBox()),
                                           Text(
-                                            "${s.deadline} days left",
+                                            "${s.endTime!.difference(DateTime.now().toLocal()).inDays} days left",
                                             style: GoogleFonts.dmSans(
                                               color: AppColors.accentLight,
                                               fontWeight: FontWeight.w500,
@@ -199,10 +201,21 @@ class _SavedScholarCardState extends State<SavedScholarCard> {
                                               color: AppColors.border2,
                                             ),
                                             FractionallySizedBox(
-                                              widthFactor: s.limit == 0
+                                              widthFactor:
+                                                  s.endTime == null ||
+                                                      s.startTime == null
                                                   ? 0.0
-                                                  : ((s.limit - s.deadline) /
-                                                            s.limit)
+                                                  : (DateTime.now()
+                                                                .toLocal()
+                                                                .difference(
+                                                                  s.startTime!,
+                                                                )
+                                                                .inDays /
+                                                            s.endTime!
+                                                                .difference(
+                                                                  s.startTime!,
+                                                                )
+                                                                .inDays)
                                                         .clamp(0.0, 1.0),
                                               child: Container(
                                                 height: 2,
@@ -280,7 +293,11 @@ Color _valStatusColor(ScholarshipModel s) {
     if (tl.contains('closing')) return AppColors.coral;
     if (tl == 'closed') return const Color(0xFF888888);
   }
-  if (s.deadline > 30) return const Color(0xFF4ade80);
-  if (s.deadline > 0) return AppColors.coral;
-  return const Color(0xFF888888);
+  if (s.endTime!.difference(s.startTime!).inDays > 30) {
+    return const Color(0xFF4ade80);
+  }
+  if (s.endTime!.difference(s.startTime!).inDays > 0) return AppColors.coral;
+  {
+    return const Color(0xFF888888);
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hakbang/features/companion/companion_model.dart';
 import 'package:hakbang/features/user/data/models/activity.dart';
-import 'package:hakbang/features/user/data/models/ai_message.dart';
 import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/features/center/center_model.dart';
 import 'package:hakbang/features/scholarship/scholarship_model.dart';
@@ -29,18 +29,14 @@ ValueNotifier<List<bool>> selectedSchoolHover = ValueNotifier([]);
 ValueNotifier<List<CollegeModel>> availableColleges = ValueNotifier([]);
 ValueNotifier<String> onSelect = ValueNotifier("");
 ValueNotifier<List<ScholarshipModel>> availableScholarships = ValueNotifier([]);
-ValueNotifier<List<Map<String, dynamic>>> rawSavedScholarships = ValueNotifier(
-  [],
-);
-ValueNotifier<List<Map<String, dynamic>>> rawSavedSchools = ValueNotifier([]);
 ValueNotifier<bool> governmentSelected = ValueNotifier(true);
 ValueNotifier<List<ScholarshipModel>> governmentSection = ValueNotifier([]);
 ValueNotifier<List<ScholarshipModel>> nonGovernmentSection = ValueNotifier([]);
 ValueNotifier<List<CollegeModel>> collegeSection = ValueNotifier([]);
-ValueNotifier<List<AiMessage>> chatMessages = ValueNotifier([]);
+ValueNotifier<List<CompanionModel>> chatMessages = ValueNotifier([]);
 ValueNotifier<bool> chatLoading = ValueNotifier(false);
-ValueNotifier<List<CollegeModel>> savedSchools = ValueNotifier([]);
-ValueNotifier<List<ScholarshipModel>> savedScholarships = ValueNotifier([]);
+ValueNotifier<List<dynamic>> savedSchools = ValueNotifier([]);
+ValueNotifier<List<dynamic>> savedScholarships = ValueNotifier([]);
 ValueNotifier<bool> hasInternetConnection = ValueNotifier(false);
 ValueNotifier<List<CenterModel>> availableReviewCenters = ValueNotifier([]);
 ValueNotifier<List<CenterModel>> reviewCenterSection = ValueNotifier([]);

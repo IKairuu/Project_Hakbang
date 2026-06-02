@@ -180,7 +180,7 @@ class _SavedScholarCardState extends State<SavedScholarCard> {
                                           ),
                                           const Expanded(child: SizedBox()),
                                           Text(
-                                            "${s.endTime!.difference(s.startTime!).inDays} days left",
+                                            "${s.endTime!.difference(DateTime.now().toLocal()).inDays} days left",
                                             style: GoogleFonts.dmSans(
                                               color: AppColors.accentLight,
                                               fontWeight: FontWeight.w500,
@@ -202,15 +202,20 @@ class _SavedScholarCardState extends State<SavedScholarCard> {
                                             ),
                                             FractionallySizedBox(
                                               widthFactor:
-                                                  s.endTime != null ||
-                                                      s.startTime != null
+                                                  s.endTime == null ||
+                                                      s.startTime == null
                                                   ? 0.0
-                                                  : ((s.endTime!
+                                                  : (DateTime.now()
+                                                                .toLocal()
                                                                 .difference(
                                                                   s.startTime!,
                                                                 )
-                                                                .inDays) /
-                                                            s.startTime!.day)
+                                                                .inDays /
+                                                            s.endTime!
+                                                                .difference(
+                                                                  s.startTime!,
+                                                                )
+                                                                .inDays)
                                                         .clamp(0.0, 1.0),
                                               child: Container(
                                                 height: 2,

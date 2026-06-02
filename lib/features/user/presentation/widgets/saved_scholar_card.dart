@@ -25,7 +25,9 @@ class _SavedScholarCardState extends State<SavedScholarCard> {
               shrinkWrap: true,
               itemCount: section.length,
               itemBuilder: (context, index) {
-                final s = section[index];
+                final s = availableScholarships.value.firstWhere(
+                  (scholars) => scholars.id == section[index],
+                );
                 final theme = _valCardTheme(s.color);
                 return GestureDetector(
                   onTap: () => Navigator.push(

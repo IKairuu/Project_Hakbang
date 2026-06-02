@@ -6,7 +6,6 @@ import 'package:hakbang/features/user/presentation/design/app_colors.dart';
 import 'package:hakbang/functions/activity_functions.dart';
 import 'package:hakbang/functions/filter.dart';
 import 'package:hakbang/functions/launcher.dart';
-import 'package:hakbang/functions/scholarship_save.dart';
 import 'package:hakbang/features/scholarship/scholarship_model.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:intl/intl.dart';
@@ -66,7 +65,7 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
       body: ValueListenableBuilder(
         valueListenable: savedScholarships,
         builder: (context, save, child) {
-          bool isSaved = save.contains(widget.scholarship);
+          bool isSaved = save.contains(widget.scholarship.id);
           return Column(
             children: [
               Expanded(
@@ -135,7 +134,7 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                                     await UserRepo.removeSavedScholarship(
                                       s.scholarshipName,
                                     );
-                                ScholarshipSave.removeScholarship(s);
+                                removeSavedScholarship(s.id);
                                 ActivityFunctions.addUserActivity(
                                   DateTime.now().toLocal(),
                                   "Like removed: ${s.scholarshipName}",
@@ -158,9 +157,9 @@ class _ScholarshipDescriptionState extends State<ScholarshipDescription> {
                             } else {
                               try {
                                 String res = await UserRepo.saveScholarship(
-                                  s.scholarshipName,
+                                  s.id,
                                 );
-                                ScholarshipSave.saveScholarship(s);
+                                addSavedScholarship(s.id);
                                 ActivityFunctions.addUserActivity(
                                   DateTime.now().toLocal(),
                                   "Scholarship Liked : ${s.scholarshipName}",
@@ -1194,10 +1193,8 @@ Widget buildScholarCta(
           onTap: () async {
             if (isSaved) {
               try {
-                String res = await UserRepo.removeSavedScholarship(
-                  s.scholarshipName,
-                );
-                ScholarshipSave.removeScholarship(s);
+                String res = await UserRepo.removeSavedScholarship(s.id);
+                removeSavedScholarship(s.id);
                 ActivityFunctions.addUserActivity(
                   DateTime.now().toLocal(),
                   "Like removed: ${s.scholarshipName}",
@@ -1219,8 +1216,8 @@ Widget buildScholarCta(
               }
             } else {
               try {
-                String res = await UserRepo.saveScholarship(s.scholarshipName);
-                ScholarshipSave.saveScholarship(s);
+                String res = await UserRepo.saveScholarship(s.id);
+                addSavedScholarship(s.id);
                 ActivityFunctions.addUserActivity(
                   DateTime.now().toLocal(),
                   "Scholarship Liked : ${s.scholarshipName}",
@@ -1265,6 +1262,18 @@ Widget buildScholarCta(
       ],
     ),
   );
+}
+
+void removeSavedScholarship(String id) {
+  final updated = List<String>.from(savedScholarships.value);
+  updated.remove(id);
+  savedScholarships.value = updated;
+}
+
+void addSavedScholarship(String id) {
+  final updated = List<String>.from(savedScholarships.value);
+  updated.add(id);
+  savedScholarships.value = updated;
 }
 
 class _SdGridPainter extends CustomPainter {

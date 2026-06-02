@@ -128,8 +128,8 @@ class UserRepo {
     try {
       final List<Map<String, dynamic>> scholarList = [];
       final response = await UserDatasource.getSavedScholarshipsRouter();
-      for (Map<String, dynamic> dataObjs in response["data"]) {
-        scholarList.add(dataObjs);
+      for (Map<String, dynamic> scholars in response["data"]) {
+        scholarList.add(scholars["scholarship_id"]);
       }
     } catch (error) {
       rethrow;
@@ -145,10 +145,10 @@ class UserRepo {
     }
   }
 
-  static Future<String> removeSavedScholarship(String scholarName) async {
+  static Future<String> removeSavedScholarship(String scholarId) async {
     try {
       final response = await UserDatasource.removeSavedScholarshipRouter(
-        scholarName,
+        scholarId,
       );
       return response["message"];
     } catch (error) {

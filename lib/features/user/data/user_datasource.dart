@@ -177,13 +177,10 @@ class UserDatasource {
   }
 
   static Future<Map<String, dynamic>> saveScholarshipRouter(
-    String scholarName,
+    String scholarId,
   ) async {
     final headers = {"Authorization": token.value!};
-    final data = {
-      "scholarship_name": scholarName,
-      "email": userCredentials.value!.email,
-    };
+    final data = {"scholarship_id": scholarId};
     try {
       final response = await dio.post(
         "$mainUrl/user/auth/post-saved-scholarship",
@@ -197,17 +194,12 @@ class UserDatasource {
   }
 
   static Future<Map<String, dynamic>> removeSavedScholarshipRouter(
-    String scholarName,
+    String scholarId,
   ) async {
     final headers = {"Authorization": token.value!};
-    final data = {
-      "scholarship_name": scholarName,
-      "email": userCredentials.value!.email,
-    };
     try {
-      final response = await dio.post(
-        "$mainUrl/user/auth/remove-saved-scholarship",
-        data: data,
+      final response = await dio.delete(
+        "$mainUrl/user/auth/remove-saved-scholarship/$scholarId",
         options: Options(headers: headers),
       );
 

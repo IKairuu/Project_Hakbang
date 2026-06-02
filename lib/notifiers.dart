@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hakbang/features/companion/companion_model.dart';
 import 'package:hakbang/features/user/data/models/activity.dart';
-import 'package:hakbang/features/user/data/models/ai_message.dart';
 import 'package:hakbang/features/college/college_model.dart';
 import 'package:hakbang/features/center/center_model.dart';
 import 'package:hakbang/features/scholarship/scholarship_model.dart';
@@ -33,7 +33,7 @@ ValueNotifier<bool> governmentSelected = ValueNotifier(true);
 ValueNotifier<List<ScholarshipModel>> governmentSection = ValueNotifier([]);
 ValueNotifier<List<ScholarshipModel>> nonGovernmentSection = ValueNotifier([]);
 ValueNotifier<List<CollegeModel>> collegeSection = ValueNotifier([]);
-ValueNotifier<List<AiMessage>> chatMessages = ValueNotifier([]);
+ValueNotifier<List<CompanionModel>> chatMessages = ValueNotifier([]);
 ValueNotifier<bool> chatLoading = ValueNotifier(false);
 ValueNotifier<List<dynamic>> savedSchools = ValueNotifier([]);
 ValueNotifier<List<dynamic>> savedScholarships = ValueNotifier([]);

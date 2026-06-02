@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hakbang/features/companion/companion_model.dart';
+import 'package:hakbang/features/companion/companion_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
-import 'package:hakbang/features/user/data/models/ai_message.dart';
 import 'package:hakbang/notifiers.dart';
-import 'package:hakbang/server/services/ai_chat.dart';
 import 'package:intl/intl.dart';
 
 class AiGabay extends StatefulWidget {
@@ -32,11 +32,9 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
     if (trimmed.isEmpty || text.isEmpty) return;
     setState(() => chatLoading.value = true);
 
-    var messageData = {"message": trimmed};
-
     chatMessages.value = [
       ...chatMessages.value,
-      AiMessage(
+      CompanionModel(
         text: trimmed,
         role: "user",
         chatTime: DateFormat('hh:mm a').format(DateTime.now()),
@@ -46,11 +44,11 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
 
     _scrollToBottom();
 
-    await AiChat.sendUsermessage(messageData)
+    await CompanionRepo.sendUserMessage(trimmed)
         .then((value) {
           chatMessages.value = [
             ...chatMessages.value,
-            AiMessage(
+            CompanionModel(
               text: value,
               role: "model",
               chatTime: DateFormat('hh:mm a').format(DateTime.now()),
@@ -62,7 +60,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
         .onError((error, stackTrace) {
           chatMessages.value = [
             ...chatMessages.value,
-            AiMessage(
+            CompanionModel(
               text: 'Server Side error $error',
               role: "model",
               chatTime: DateFormat('hh:mm a').format(DateTime.now()),
@@ -86,7 +84,7 @@ class _AiGabayState extends State<AiGabay> with AutomaticKeepAliveClientMixin {
     });
   }
 
-  Widget _buildBubble(AiMessage message) {
+  Widget _buildBubble(CompanionModel message) {
     final bubbleColor = message.role == "user"
         ? AppColors.accent
         : AppColors.surface2;

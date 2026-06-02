@@ -1,7 +1,7 @@
+import 'package:hakbang/features/companion/companion_model.dart';
 import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/functions/sorting_functions.dart';
-import 'package:hakbang/features/user/data/models/ai_message.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:intl/intl.dart';
 
@@ -29,7 +29,7 @@ class Initialization {
   static Future<void> refreshChat() async {
     chatMessages.value.clear();
     chatMessages.value.add(
-      AiMessage(
+      CompanionModel(
         text:
             'Hi ${userCredentials.value!.name.split(" ")[0]}! 👋 I\'m Gabay, your college planning assistant. I can help you choose the right school, find scholarships, and understand entrance exams. What would you like to explore today?',
         role: "model",

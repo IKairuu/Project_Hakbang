@@ -23,6 +23,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  ValueNotifier<bool> saveLogin = ValueNotifier(false);
   bool isLoading = false;
 
   bool _isPassword = true;
@@ -106,6 +107,28 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => isLoading = false);
   }
 
+  Widget buildSaveCredential() {
+    return Row(
+      children: [
+        Text(
+          "Keep me logged in",
+          style: GoogleFonts.dmSans(color: AppColors.textPrimary),
+        ),
+        ValueListenableBuilder(
+          valueListenable: saveLogin,
+          builder: (context, save, child) {
+            return Checkbox.adaptive(
+              activeColor: AppColors.accent,
+              checkColor: Colors.black,
+              value: save,
+              onChanged: (value) => saveLogin.value = !saveLogin.value,
+            );
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,7 +187,8 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 30),
+                          buildSaveCredential(),
+                          const SizedBox(height: 15),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(

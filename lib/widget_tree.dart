@@ -18,8 +18,11 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
-  ValueNotifier<bool> doneLoading = ValueNotifier(false);
-  ValueNotifier<bool> userLoggedIn = ValueNotifier(false);
+  ValueNotifier<Map<String, bool>> startup = ValueNotifier({
+    "server": false,
+    "cache": false,
+    "userLogged": false,
+  });
   @override
   void initState() {
     super.initState();
@@ -47,66 +50,61 @@ class _WidgetTreeState extends State<WidgetTree> {
   Future<void> loggedIn() async {
     if (await storage.value!.containsKey(key: "email") == false ||
         await storage.value!.containsKey(key: "pass") == false) {
-      userLoggedIn.value = false;
+      startup.value = {...startup.value, "userLogged": false};
     } else {
       String? email = await storage.value!.read(key: "email");
       String? password = await storage.value!.read(key: "pass");
       if (email != null && password != null) {
-        LoginFunction.userLogin(email, password);
-        userLoggedIn.value = true;
+        await LoginFunction.userLogin(email, password);
+        startup.value = {...startup.value, "userLogged": true};
       }
     }
-    doneLoading.value = true;
+    startup.value = {...startup.value, "cache": true};
   }
 
   void connectToServer() async {
     var execute = await InitializeServer.pingServer();
     connectedToServer.value = execute["connected"];
+    startup.value = {...startup.value, "server": true};
   }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: connectedToServer,
-      builder: (context, value, child) {
-        return ValueListenableBuilder(
-          valueListenable: doneLoading,
-          builder: (context, loading, child) {
-            return value && loading
-                ? ValueListenableBuilder(
-                    valueListenable: userLoggedIn,
-                    builder: (context, logged, child) {
-                      return logged ? MainPage() : StartPage();
-                    },
-                  )
-                : !loading
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CircularProgressIndicator.adaptive(
-                          backgroundColor: AppColors.accent,
-                          year2023: true,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            "This may take long, Connecting to Server...",
-                            style: GoogleFonts.dmSans(
-                              color: AppColors.textPrimary,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ],
+      valueListenable: startup,
+      builder: (context, check, child) {
+        return check["server"]! && check["cache"]!
+            ? check["userLogged"]!
+                  ? MainPage()
+                  : StartPage()
+            : !check["server"]! || !check["cache"]!
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator.adaptive(
+                      backgroundColor: AppColors.accent,
+                      year2023: true,
                     ),
-                  )
-                : ServerOffline();
-          },
-        );
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        !check["server"]!
+                            ? "This may take long, Connecting to Server..."
+                            : "Checking cache...",
+                        style: GoogleFonts.dmSans(
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : ServerOffline();
       },
     );
   }

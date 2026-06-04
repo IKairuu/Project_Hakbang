@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
       );
     } else {
       try {
-        LoginFunction.userLogin(email, password);
+        await LoginFunction.userLogin(email, password);
         if (saveLogin.value) {
           await storage.value!.write(key: "email", value: email);
           await storage.value!.write(key: "pass", value: password);

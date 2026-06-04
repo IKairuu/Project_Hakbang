@@ -4,7 +4,7 @@ import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/notifiers.dart';
 
 class LoginFunction {
-  static void userLogin(String email, String password) async {
+  static Future<void> userLogin(String email, String password) async {
     var userData = await UserRepo.userLogin(email, password);
     userCredentials.value = User(
       id: userData["message"]["id"],

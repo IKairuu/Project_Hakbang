@@ -38,7 +38,7 @@ class Initialization {
     );
   }
 
-  static void clearSessionState() {
+  static void clearSessionState() async {
     token.value = null;
     userCredentials.value = null;
     agreeToTerms.value = false;
@@ -65,5 +65,7 @@ class Initialization {
     selectedFilter.value = [true, false, false, false];
     onSelect.value = "";
     navigationBarIndex.value = 0;
+
+    await storage.value!.deleteAll();
   }
 }

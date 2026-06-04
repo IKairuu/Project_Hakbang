@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hakbang/features/companion/companion_model.dart';
 import 'package:hakbang/features/user/data/models/activity.dart';
@@ -16,6 +17,7 @@ ValueNotifier<String?> token = ValueNotifier(null);
 ValueNotifier<List<Activity>> activityList = ValueNotifier([]);
 ValueNotifier<bool> agreeToTerms = ValueNotifier(false);
 ValueNotifier<bool?> locationEnabled = ValueNotifier(null);
+ValueNotifier<FlutterSecureStorage?> storage = ValueNotifier(null);
 ValueNotifier<List<bool>> selectedFilter = ValueNotifier([true, false, false]);
 ValueNotifier<List<bool>> selectedHubFilter = ValueNotifier([
   true,

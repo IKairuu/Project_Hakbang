@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hakbang/features/user/data/user_repo.dart';
 import 'package:hakbang/features/user/presentation/design/app_colors.dart';
@@ -8,6 +9,7 @@ import 'package:hakbang/functions/initialization.dart';
 import 'package:hakbang/functions/internet.dart';
 import 'package:hakbang/functions/locations.dart';
 import 'package:hakbang/features/user/data/models/user.dart';
+import 'package:hakbang/functions/login_function.dart';
 import 'package:hakbang/notifiers.dart';
 import 'package:hakbang/features/user/presentation/pages/main_page.dart';
 import 'package:hakbang/features/user/presentation/pages/no_internet_page.dart';
@@ -67,21 +69,11 @@ class _LoginPageState extends State<LoginPage> {
       );
     } else {
       try {
-        var userData = await UserRepo.userLogin(email, password);
-        userCredentials.value = User(
-          id: userData["message"]["id"],
-          name: userData["message"]["name"],
-          email: userData["message"]["email"],
-          avatar: userData["message"]["avatar"],
-          grade: userData["message"]["grade"],
-          institution: userData["message"]["institution"],
-          occupation: userData["message"]["occupation"],
-          role: userData["message"]["role"],
-          aboutMe: userData["message"]["about_me"],
-        );
-        token.value = "Bearer ${userData["token"]}";
-        navigationBarIndex.value = 2;
-        await Initialization.mainInitialization();
+        LoginFunction.userLogin(email, password);
+        if (saveLogin.value) {
+          await storage.value!.write(key: "email", value: email);
+          await storage.value!.write(key: "pass", value: password);
+        }
         messenger.showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,

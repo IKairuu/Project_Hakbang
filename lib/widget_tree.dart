@@ -89,7 +89,7 @@ class _WidgetTreeState extends State<WidgetTree> {
                       year2023: true,
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(20),
                       child: Text(
                         !check["server"]!
                             ? "This may take long, Connecting to Server..."

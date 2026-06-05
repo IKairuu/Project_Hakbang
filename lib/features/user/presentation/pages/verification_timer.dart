@@ -23,11 +23,11 @@ class VerificationTimer extends StatefulWidget {
 }
 
 class _VerificationTimerState extends State<VerificationTimer> {
-  static ValueNotifier<int> endTime = ValueNotifier(
+  ValueNotifier<int> endTime = ValueNotifier(
     DateTime.now().millisecondsSinceEpoch + 1000 * 59,
   );
   late ValueNotifier<String> activeToken = ValueNotifier(widget.token);
-  ValueNotifier<CountdownTimerController> countTime = ValueNotifier(
+  late ValueNotifier<CountdownTimerController> countTime = ValueNotifier(
     CountdownTimerController(endTime: endTime.value),
   );
 
@@ -90,6 +90,13 @@ class _VerificationTimerState extends State<VerificationTimer> {
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    countTime.value.dispose();
+    endTime.value = DateTime.now().millisecondsSinceEpoch + 1000 * 59;
+    super.dispose();
   }
 
   @override

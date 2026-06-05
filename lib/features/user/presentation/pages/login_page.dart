@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   ValueNotifier<bool> saveLogin = ValueNotifier(false);
-  bool isLoading = false;
+  ValueNotifier<bool> isLoading = ValueNotifier(false);
 
   bool _isPassword = true;
   bool _showError = false;
@@ -48,52 +48,51 @@ class _LoginPageState extends State<LoginPage> {
       });
       return;
     }
-    setState(() => isLoading = true);
+    isLoading.value = true;
     setState(() => _showError = false);
-    if (!await Internet.checkInternetConnection()) {
+    final hasInternet = await Internet.checkInternetConnection();
+    if (!hasInternet) {
       messenger.showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
           content: Text("There is no internet connection"),
         ),
       );
-      setState(() => isLoading = false);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => NoInternetPage(currentWidget: LoginPage()),
         ),
       );
-    } else {
-      try {
-        await LoginFunction.userLogin(email, password);
-        if (saveLogin.value) {
-          await storage.value!.write(key: "email", value: email);
-          await storage.value!.write(key: "pass", value: password);
-        }
-        messenger.showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Text("Successfully Logged In"),
-          ),
-        );
-        setState(() => isLoading = false);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MainPage()),
-        );
-      } catch (error) {
-        Initialization.clearSessionState();
-        messenger.showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Text(error.toString()),
-          ),
-        );
-      }
+      return;
     }
-
-    setState(() => isLoading = false);
+    try {
+      await LoginFunction.userLogin(email, password);
+      if (saveLogin.value) {
+        await storage.value!.write(key: "email", value: email);
+        await storage.value!.write(key: "pass", value: password);
+      }
+      messenger.showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text("Successfully Logged In"),
+        ),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MainPage()),
+      );
+    } catch (error) {
+      Initialization.clearSessionState();
+      messenger.showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(error.toString()),
+        ),
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Widget buildSaveCredential() {
@@ -122,141 +121,150 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bg,
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator.adaptive(
-                backgroundColor: AppColors.accent,
-                year2023: true,
-              ),
-            )
-          : Stack(
-              children: [
-                Positioned.fill(child: AuthGradientBg()),
-                SafeArea(
-                  bottom: false,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(28, 0, 28, 0),
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 20),
-                          buildHeader(),
-                          const SizedBox(height: 32),
-                          buildTitle(),
-                          if (_showError) ...[
-                            const SizedBox(height: 20),
-                            buildErrorBanner(_errorText),
-                          ],
-                          const SizedBox(height: 28),
-                          buildTextField(
-                            'EMAIL ADDRESS',
-                            'you@example.com',
-                            '✉',
-                            _emailController,
-                          ),
-                          const SizedBox(height: 14),
-                          buildTextField(
-                            'PASSWORD',
-                            'Enter your password',
-                            '🔒',
-                            _passwordController,
-                            showPassword: _isPassword,
-                            trailing: GestureDetector(
-                              onTap: () =>
-                                  setState(() => _isPassword = !_isPassword),
-                              child: Icon(
-                                _isPassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: Color(0xFF828a8a),
-                                size: 20,
+      body: ValueListenableBuilder(
+        valueListenable: isLoading,
+        builder: (context, loading, child) {
+          return loading
+              ? Center(
+                  child: CircularProgressIndicator.adaptive(
+                    backgroundColor: AppColors.accent,
+                    year2023: true,
+                  ),
+                )
+              : Stack(
+                  children: [
+                    Positioned.fill(child: AuthGradientBg()),
+                    SafeArea(
+                      bottom: false,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(28, 0, 28, 0),
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 20),
+                              buildHeader(),
+                              const SizedBox(height: 32),
+                              buildTitle(),
+                              if (_showError) ...[
+                                const SizedBox(height: 20),
+                                buildErrorBanner(_errorText),
+                              ],
+                              const SizedBox(height: 28),
+                              buildTextField(
+                                'EMAIL ADDRESS',
+                                'you@example.com',
+                                '✉',
+                                _emailController,
                               ),
-                            ),
-                          ),
-                          buildSaveCredential(),
-                          const SizedBox(height: 15),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.accent,
-                                foregroundColor: AppColors.onAccent,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 20,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                textStyle: GoogleFonts.dmSans(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              onPressed: () async {
-                                try {
-                                  await Locations.initializeLocationServices();
-                                  _handleLogin();
-                                } catch (e) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      behavior: SnackBarBehavior.floating,
-                                      content: Text(
-                                        'Location permission required to sign in',
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-
-                              child: const Text('Sign In →'),
-                            ),
-                          ),
-                          const SizedBox(height: 18),
-                          buildDivider(),
-                          const SizedBox(height: 18),
-                          SizedBox(
-                            width: double.infinity,
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: AppColors.border2),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 20,
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const AuthOptions(),
+                              const SizedBox(height: 14),
+                              buildTextField(
+                                'PASSWORD',
+                                'Enter your password',
+                                '🔒',
+                                _passwordController,
+                                showPassword: _isPassword,
+                                trailing: GestureDetector(
+                                  onTap: () => setState(
+                                    () => _isPassword = !_isPassword,
                                   ),
-                                );
-                              },
-                              child: Text(
-                                'Create Account',
-                                style: GoogleFonts.dmSans(
-                                  color: AppColors.textPrimary,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
+                                  child: Icon(
+                                    _isPassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Color(0xFF828a8a),
+                                    size: 20,
+                                  ),
                                 ),
                               ),
-                            ),
+                              buildSaveCredential(),
+                              const SizedBox(height: 15),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.accent,
+                                    foregroundColor: AppColors.onAccent,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 20,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    textStyle: GoogleFonts.dmSans(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    try {
+                                      await Locations.initializeLocationServices();
+                                      _handleLogin();
+                                    } catch (e) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          behavior: SnackBarBehavior.floating,
+                                          content: Text(
+                                            'Location permission required to sign in',
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+
+                                  child: const Text('Sign In →'),
+                                ),
+                              ),
+                              const SizedBox(height: 18),
+                              buildDivider(),
+                              const SizedBox(height: 18),
+                              SizedBox(
+                                width: double.infinity,
+                                child: OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    side: BorderSide(color: AppColors.border2),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 20,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AuthOptions(),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    'Create Account',
+                                    style: GoogleFonts.dmSans(
+                                      color: AppColors.textPrimary,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              buildFooterText(),
+                              const SizedBox(height: 12),
+                            ],
                           ),
-                          const SizedBox(height: 16),
-                          buildFooterText(),
-                          const SizedBox(height: 12),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ),
+                  ],
+                );
+        },
+      ),
     );
   }
 }

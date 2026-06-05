@@ -30,6 +30,7 @@ class _VerificationTimerState extends State<VerificationTimer> {
   late ValueNotifier<CountdownTimerController> countTime = ValueNotifier(
     CountdownTimerController(endTime: endTime.value),
   );
+  ValueNotifier<bool> resendLoading = ValueNotifier(false);
 
   Widget _buildCodeField(String token) {
     return Pinput(
@@ -164,34 +165,53 @@ class _VerificationTimerState extends State<VerificationTimer> {
                         endTime: end,
                         widgetBuilder: (context, time) {
                           if (time == null) {
-                            return TextButton(
-                              onPressed: () async {
-                                try {
-                                  var data = await UserRepo.requestCode(
-                                    widget.email,
-                                  );
-                                  setState(() {
-                                    activeToken.value = data["token"];
-                                    endTime.value =
-                                        DateTime.now().millisecondsSinceEpoch +
-                                        1000 * 60;
-                                    countTime.value = CountdownTimerController(
-                                      endTime: endTime.value,
-                                    );
-                                  });
-                                } catch (error) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(error.toString())),
-                                  );
-                                }
+                            return ValueListenableBuilder(
+                              valueListenable: resendLoading,
+                              builder: (context, loading, child) {
+                                return loading
+                                    ? CircularProgressIndicator(
+                                        color: AppColors.accent,
+                                      )
+                                    : TextButton(
+                                        onPressed: () async {
+                                          try {
+                                            resendLoading.value = true;
+                                            var data =
+                                                await UserRepo.requestCode(
+                                                  widget.email,
+                                                );
+                                            setState(() {
+                                              activeToken.value = data["token"];
+                                              endTime.value =
+                                                  DateTime.now()
+                                                      .millisecondsSinceEpoch +
+                                                  1000 * 60;
+                                              countTime.value =
+                                                  CountdownTimerController(
+                                                    endTime: endTime.value,
+                                                  );
+                                            });
+                                          } catch (error) {
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: Text(error.toString()),
+                                              ),
+                                            );
+                                          } finally {
+                                            resendLoading.value = false;
+                                          }
+                                        },
+                                        child: Text(
+                                          "Resend Code?",
+                                          style: GoogleFonts.dmSans(
+                                            color: AppColors.blue,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      );
                               },
-                              child: Text(
-                                "Resend Code?",
-                                style: GoogleFonts.dmSans(
-                                  color: AppColors.blue,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
                             );
                           }
                           return Text(

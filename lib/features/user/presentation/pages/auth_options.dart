@@ -18,7 +18,8 @@ class AuthOptions extends StatefulWidget {
 
 class _AuthOptionsState extends State<AuthOptions> {
   TextEditingController emailController = TextEditingController();
-  ValueNotifier<bool> isVisible = ValueNotifier(false);
+  ValueNotifier<bool> isLoading = ValueNotifier(false);
+
   Widget _buildGoogleSignInButton() {
     return SizedBox(
       height: 50,
@@ -26,6 +27,7 @@ class _AuthOptionsState extends State<AuthOptions> {
       child: ElevatedButton(
         onPressed: () async {
           try {
+            isLoading.value = true;
             var userDetails = await Verifications.authentication();
             if (userDetails == null) {
               throw "No Email found";
@@ -48,6 +50,8 @@ class _AuthOptionsState extends State<AuthOptions> {
                 content: Text(error.toString()),
               ),
             );
+          } finally {
+            isLoading.value = false;
           }
         },
         style: ButtonDesign.googleSignIn,
@@ -74,6 +78,7 @@ class _AuthOptionsState extends State<AuthOptions> {
       child: ElevatedButton(
         onPressed: () async {
           try {
+            isLoading.value = true;
             var data = await UserRepo.requestCode(emailController.text);
             Navigator.push(
               context,
@@ -91,6 +96,8 @@ class _AuthOptionsState extends State<AuthOptions> {
                 content: Text(error.toString()),
               ),
             );
+          } finally {
+            isLoading.value = false;
           }
         },
         style: ButtonDesign.signUpButton,
@@ -220,36 +227,53 @@ class _AuthOptionsState extends State<AuthOptions> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildLogo(),
-                const SizedBox(height: 5),
-                _buildTitle(),
-                const SizedBox(height: 20),
-                _buildInputField(
-                  controller: emailController,
-                  hintText: "Input Email here",
-                  prefixIcon: FaIcon(
-                    FontAwesomeIcons.google,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                _buildContinueButton(),
-                const SizedBox(height: 20),
-                _buildSeparators(),
-                const SizedBox(height: 10),
-                _buildGoogleSignInButton(),
-              ],
+      body: ValueListenableBuilder(
+        valueListenable: isLoading,
+        builder: (context, loading, child) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Center(
+                child: loading
+                    ? ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: MediaQuery.of(context).size.height,
+                        ),
+                        child: Align(
+                          alignment: Alignment(0, -0.2),
+                          child: CircularProgressIndicator(
+                            color: AppColors.accent,
+                          ),
+                        ),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildLogo(),
+                          const SizedBox(height: 5),
+                          _buildTitle(),
+                          const SizedBox(height: 20),
+                          _buildInputField(
+                            controller: emailController,
+                            hintText: "Input Email here",
+                            prefixIcon: FaIcon(
+                              FontAwesomeIcons.google,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          _buildContinueButton(),
+                          const SizedBox(height: 20),
+                          _buildSeparators(),
+                          const SizedBox(height: 10),
+                          _buildGoogleSignInButton(),
+                        ],
+                      ),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
